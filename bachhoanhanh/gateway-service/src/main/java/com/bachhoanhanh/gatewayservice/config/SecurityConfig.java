@@ -17,6 +17,13 @@ public class SecurityConfig {
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers("/products/**").authenticated()
                         .pathMatchers("/orders/**").authenticated()
+                        .pathMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/aggregate/**",
+                                "/webjars/**"
+                        ).permitAll()
                         .anyExchange().permitAll()
                 )
                 .oauth2ResourceServer(oauth -> oauth.jwt());

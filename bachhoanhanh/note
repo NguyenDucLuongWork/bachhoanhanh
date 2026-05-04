@@ -4,3 +4,6 @@ C:\Windows\System32\drivers\etc\hosts
 
 docker compose down -v
 docker compose --env-file .env.local up --build -d
+
+
+http://bachhoanhanh/swagger-ui.html

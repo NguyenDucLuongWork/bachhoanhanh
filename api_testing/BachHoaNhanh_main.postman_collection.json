@@ -1,0 +1,99 @@
+{
+  "info": {
+    "_postman_id": "5156c40c-94e9-458c-a644-30bce1767e55",
+    "name": "BachHoaNhanh_main",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31016948"
+  },
+  "item": [
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text",
+              "uuid": "88caf25b-2b4d-48bf-884d-fe326e05ecb6"
+            },
+            {
+              "key": "client_id",
+              "value": "gateway-client",
+              "type": "text",
+              "uuid": "d3cd7787-a23d-4251-8c0f-c3c6bd45c975"
+            },
+            {
+              "key": "username",
+              "value": "testuser",
+              "type": "text",
+              "uuid": "9b7c8aea-4709-437e-b026-d1434c43cc4c"
+            },
+            {
+              "key": "password",
+              "value": "123456",
+              "type": "text",
+              "uuid": "139c0318-6b48-46b9-b4d3-c1f6171a51e3"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token",
+          "protocol": "http",
+          "host": [
+            "bachhoanhanh"
+          ],
+          "path": [
+            "auth",
+            "realms",
+            "bachhoanhanh",
+            "protocol",
+            "openid-connect",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get with token",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1V3dYdlNyVlo3UE00SGZoTGotSHJKWTJBZTctQWVOTktzM0lpOGYwWXZRIn0.eyJleHAiOjE3Nzc4NzU1ODAsImlhdCI6MTc3Nzg3NTI4MCwianRpIjoiN2JjOTQ3NDMtYjljMS00ZTBjLTlkNmItYWMzZjdhMWU2ZDFjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIzZDBhN2M2Ny0xMTBjLTQ4MDgtYWQwNC1iN2NlNGQwODk3ZjgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkNTIzNTk0YS1mNzIxLTQyNDYtODBiMi05NTM1OGYyMTBlZjEiLCJhY3IiOiIxIiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiZDUyMzU5NGEtZjcyMS00MjQ2LTgwYjItOTUzNThmMjEwZWYxIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJUZXN0IFVzZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0dXNlciIsImdpdmVuX25hbWUiOiJUZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn0.PXt6fUfKOGfJc8AuSuR3nBE5g7RuiVdO3flVFpDHgd0Se8Ji3RhnwzHo6q9zUqcD-BBCxt37nnY2LKlVg_7EEhERHw7ScmQVv0UOVbbj_uLUT0-PaGR3aSZ0c94miTtjNz8TGVqpFWfZOtvjd5iZ3rJDVKxh5g-R-v87rwPmSaSqGnTKQdZGJ73HsoTlnvaoXBoSuvnKO9OXhCkAWOV-dIZdYuTnnf8K9JYBkOpXY7_oQxMeEYrGPAsXSMOaAVwBIB7VeAFhl5VrLmCxIZ5vS2_b7zfaX1WuCPHGtSAFknoqDFMCM2hwi59WcK_UtRJbSz4UIXD5EsWsQt2s3uQiXA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://bachhoanhanh/orders/1",
+          "protocol": "http",
+          "host": [
+            "bachhoanhanh"
+          ],
+          "path": [
+            "orders",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}
