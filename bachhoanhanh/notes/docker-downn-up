@@ -1,0 +1,2 @@
+docker compose down -v
+docker compose --env-file .env.local up --build -d
