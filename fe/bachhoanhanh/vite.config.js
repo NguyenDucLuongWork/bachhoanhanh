@@ -4,6 +4,24 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(),],
-  
+  plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      '/api/auth': {
+        target: 'http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/auth/, ''),
+      },
+      '/api/products': {
+        target: 'http://bachhoanhanh/products',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/products/, ''),
+      },
+      '/api/orders': {
+        target: 'http://bachhoanhanh/orders',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/orders/, ''),
+      },
+    },
+  },
 })

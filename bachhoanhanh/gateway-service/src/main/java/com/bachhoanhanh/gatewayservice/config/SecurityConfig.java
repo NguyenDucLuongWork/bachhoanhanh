@@ -17,6 +17,7 @@ public class SecurityConfig {
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers("/products/**").authenticated()
                         .pathMatchers("/orders/**").authenticated()
+                        .pathMatchers("/brands/**").authenticated()
                         .pathMatchers(
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",

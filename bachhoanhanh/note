@@ -7,3 +7,5 @@ docker compose --env-file .env.local up --build -d
 
 
 http://bachhoanhanh/swagger-ui.html
+
+http://bachhoanhanh/aggregate/product-service/v3/api-docs
