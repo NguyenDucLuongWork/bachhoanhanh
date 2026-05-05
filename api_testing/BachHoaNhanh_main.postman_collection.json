@@ -1,0 +1,143 @@
+{
+  "info": {
+    "_postman_id": "089d9283-49b8-4272-b70f-b0a59ba52889",
+    "name": "BachHoaNhanh_main Copy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31016948"
+  },
+  "item": [
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text",
+              "uuid": "88caf25b-2b4d-48bf-884d-fe326e05ecb6"
+            },
+            {
+              "key": "client_id",
+              "value": "gateway-client",
+              "type": "text",
+              "uuid": "d3cd7787-a23d-4251-8c0f-c3c6bd45c975"
+            },
+            {
+              "key": "username",
+              "value": "testuser",
+              "type": "text",
+              "uuid": "9b7c8aea-4709-437e-b026-d1434c43cc4c"
+            },
+            {
+              "key": "password",
+              "value": "123456",
+              "type": "text",
+              "uuid": "139c0318-6b48-46b9-b4d3-c1f6171a51e3"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token",
+          "protocol": "http",
+          "host": [
+            "bachhoanhanh"
+          ],
+          "path": [
+            "auth",
+            "realms",
+            "bachhoanhanh",
+            "protocol",
+            "openid-connect",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://bachhoanhanh/products",
+          "protocol": "http",
+          "host": [
+            "bachhoanhanh"
+          ],
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get catalog as tree",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://bachhoanhanh/catalogs?tree=true",
+          "protocol": "http",
+          "host": [
+            "bachhoanhanh"
+          ],
+          "path": [
+            "catalogs"
+          ],
+          "query": [
+            {
+              "key": "tree",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "testpayment",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJHSVdWdFVkTGRxMnExTUMwLV8tZGhkQ2trS1lXRTd5MGpHTW5VSGpUVk9JIn0.eyJleHAiOjE3Nzc5OTU5NjcsImlhdCI6MTc3Nzk5NTY2NywianRpIjoiNWZjZGZhZmMtNmRlMS00ZjNmLThiNmUtZDgxZjIyMmM5Y2ZjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNWU1ODE5ZS03ZGNhLTRlZjItYmZkOS0xMGQ4M2Y0OTA0NzAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkMjY5NWJiMS1mY2RiLTQyMWItYTJlOC1mYzdmMjM2OTA5NTQiLCJhY3IiOiIxIiwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiZDI2OTViYjEtZmNkYi00MjFiLWEyZTgtZmM3ZjIzNjkwOTU0IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJUZXN0IFVzZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0dXNlciIsImdpdmVuX25hbWUiOiJUZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn0.fbP5tPwbFlJze1j6JUCg-f6nWQkWJsT_4p5wH-cFKcpi7B5dFBe8h30UMbwRzK-8gfUidZAthZmdgkZOgU1P2LPPqznfb2X9lr6k5jwFUm8ZbXHRS_hc0eopG_M_0Nr5eJpy8M5hReK4LL3yRvKUhUt_z1X3xhlLIthAqipXp46UEc4lLK6V7j4zk6xd_YZ-Y73VxuigllJDBKxJTo-NbnmUJQfdxmyVKuDNFEYEbMQ9w5yutC4rnDuKjQ3a_-adNIEWvWGGqYNUEqIKEzN_QHtU9Js3NL073TrG6I92MqBuFh3ywyNX6kKRf0BcMMiH-d_rOsQklSDNb8aGYIwJAw",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://bachhoanhanh/payments/test",
+          "protocol": "http",
+          "host": [
+            "bachhoanhanh"
+          ],
+          "path": [
+            "payments",
+            "test"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

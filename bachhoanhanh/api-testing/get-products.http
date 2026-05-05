@@ -1,0 +1,3 @@
+### Get Products
+GET http://bachhoanhanh/products
+Accept: application/json
