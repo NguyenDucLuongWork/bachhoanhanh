@@ -4,44 +4,14 @@ CREATE DATABASE IF NOT EXISTS branddb;
 CREATE DATABASE IF NOT EXISTS catalogdb;
 CREATE DATABASE IF NOT EXISTS paymentdb;
 
+-- Cấp quyền cho appuser trên tất cả DB liên quan
+GRANT ALL PRIVILEGES ON productdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON orderdb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON branddb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON catalogdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON paymentdb.* TO 'appuser'@'%';
 FLUSH PRIVILEGES;
 
--- ─────────────────────────────────────────
--- PRODUCT DB
--- ─────────────────────────────────────────
-USE productdb;
-
-CREATE TABLE IF NOT EXISTS product (
-                                       id    BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                       name  VARCHAR(255),
-    price DOUBLE
-    );
-
-INSERT INTO product (name, price) VALUES
-                                      ('Pork Belly',        5.99),
-                                      ('Chicken Breast',    4.49),
-                                      ('Salmon Fillet',     8.99),
-                                      ('Free-Range Eggs',   3.29),
-                                      ('Whole Milk',        1.99),
-                                      ('Cheddar Cheese',    4.79),
-                                      ('White Rice (5kg)',  6.49),
-                                      ('Spaghetti',         1.59),
-                                      ('Carrot',            0.99),
-                                      ('Broccoli',          1.49),
-                                      ('Tomato',            1.29),
-                                      ('Spinach',           1.89),
-                                      ('Apple',             2.49),
-                                      ('Banana',            1.19),
-                                      ('Orange',            2.09),
-                                      ('Cooking Oil (1L)',  3.99),
-                                      ('Soy Sauce (500ml)', 2.29),
-                                      ('Sugar (1kg)',       1.49),
-                                      ('Salt (500g)',       0.79),
-                                      ('Instant Noodles',   0.59);
 
 -- ─────────────────────────────────────────
 -- BRAND DB
@@ -115,3 +85,46 @@ INSERT INTO catalog (id, name, image, parent_catalog_id) VALUES
                                                              ('pantry-cooking-oil', 'Cooking Oil',  'cat_oil.png',   'pantry'),
                                                              ('pantry-sauces',      'Sauces',       'cat_sauce.png', 'pantry'),
                                                              ('pantry-sugar-salt',  'Sugar & Salt', 'cat_sugar.png', 'pantry');
+
+
+-- ─────────────────────────────────────────
+-- PRODUCT DB (Cập nhật theo Entity mới)
+-- ─────────────────────────────────────────
+USE productdb;
+
+-- Xóa dữ liệu cũ để tránh trùng lặp nếu chạy lại
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE attribute;
+TRUNCATE TABLE base_product;
+TRUNCATE TABLE prototype;
+TRUNCATE TABLE attribute_type;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- 1. Chèn Attribute Types
+INSERT INTO attribute_type (name, data_type) VALUES
+                                                 ('EXPIRY_DATE', 'Date'),
+                                                 ('WEIGHT',      'Weight'),
+                                                 ('ORIGIN',      'String'),
+                                                 ('UNIT',        'Unit');
+
+-- 2. Chèn Prototypes (Mẫu sản phẩm)
+INSERT INTO prototype (product_id, catalog_id, name, packed_attributes) VALUES
+                                                                            ('MEAT_FRESH', 'meat-seafood-pork', 'Thịt tươi sống', 'EXPIRY_DATE,WEIGHT,ORIGIN'),
+                                                                            ('VEGGIE_PACK', 'fresh-food-vegetables', 'Rau củ đóng gói', 'EXPIRY_DATE,WEIGHT'),
+                                                                            ('MILK_BOTTLE', 'dairy-eggs-milk', 'Sữa chai', 'EXPIRY_DATE,UNIT');
+
+-- 3. Chèn Base Products (Dùng AUTO_INCREMENT cho product_id)
+INSERT INTO base_product (barcode, name, image, description, original_price, prototype_id) VALUES
+                                                                                               ('893000111', 'Ba rọi heo VietGAP', 'pork.png', 'Thịt heo sạch', 120000, 'MEAT_FRESH'),
+                                                                                               ('893000222', 'Xà lách thủy canh', 'lettuce.png', 'Rau sạch', 25000, 'VEGGIE_PACK'),
+                                                                                               ('893000333', 'Sữa tươi TH 1L', 'milk.png', 'Sữa tươi nguyên chất', 35000, 'MILK_BOTTLE');
+
+-- 4. Chèn Attributes (LƯU Ý: product_id ở đây phải khớp với ID tự tăng ở bảng trên)
+-- Thường Ba rọi sẽ là ID 1, Xà lách là ID 2
+INSERT INTO attribute (product_id, type, value) VALUES
+                                                    ('1', 'EXPIRY_DATE', '2026-05-10'),
+                                                    ('1', 'WEIGHT',      '500g'),
+                                                    ('1', 'ORIGIN',      'Long An'),
+                                                    ('2', 'EXPIRY_DATE', '2026-05-07'),
+                                                    ('2', 'WEIGHT',      '200g'),
+                                                    ('3', 'UNIT',        '1 Lít');

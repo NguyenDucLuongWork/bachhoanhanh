@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
-public class ProductController {
+@RequestMapping("/products-old")
+public class ProductOldController {
 
     private final ProductService service;
 
-    public ProductController(ProductService service) {
+    public ProductOldController(ProductService service) {
         this.service = service;
     }
 

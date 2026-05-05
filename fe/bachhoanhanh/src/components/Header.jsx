@@ -8,6 +8,12 @@ export function Header({ username, currentPage, onNavigate, onLogout }) {
         {username && (
           <>
             <button
+              onClick={() => onNavigate('catalogs')}
+              className={currentPage === 'catalogs' ? 'active' : ''}
+            >
+              Catalogs
+            </button>
+            <button
               onClick={() => onNavigate('products')}
               className={currentPage === 'products' ? 'active' : ''}
             >

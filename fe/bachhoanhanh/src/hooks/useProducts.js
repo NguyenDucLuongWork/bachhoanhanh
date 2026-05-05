@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-const PRODUCTS_URL = '/api/products'
+const PRODUCTS_URL = '/products'
 
 export function useProducts(token) {
   const [products, setProducts] = useState([])
@@ -23,7 +23,7 @@ export function useProducts(token) {
   }, [token])
 
   const addProduct = useCallback(
-    async (name, price) => {
+    async (productData) => {
       try {
         const headers = {
           'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export function useProducts(token) {
         const res = await fetch(PRODUCTS_URL, {
           method: 'POST',
           headers,
-          body: JSON.stringify({ name, price }),
+          body: JSON.stringify(productData),
         })
         if (!res.ok) throw new Error('Create failed')
         await loadProducts()
@@ -45,7 +45,7 @@ export function useProducts(token) {
   )
 
   const updateProduct = useCallback(
-    async (id, name, price) => {
+    async (id, productData) => {
       try {
         const headers = {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export function useProducts(token) {
         const res = await fetch(PRODUCTS_URL + '/' + id, {
           method: 'PUT',
           headers,
-          body: JSON.stringify({ id, name, price }),
+          body: JSON.stringify(productData),
         })
         if (!res.ok) throw new Error('Update failed')
         await loadProducts()
@@ -84,6 +84,51 @@ export function useProducts(token) {
     [token, loadProducts]
   )
 
+  const searchProducts = useCallback(
+    async (name) => {
+      try {
+        const headers = token ? { Authorization: 'Bearer ' + token } : {}
+        const res = await fetch(PRODUCTS_URL + '/search?name=' + encodeURIComponent(name), { headers })
+        if (!res.ok) throw new Error('Search failed')
+        const data = await res.json()
+        return { success: true, data }
+      } catch (e) {
+        return { success: false, message: e.message }
+      }
+    },
+    [token]
+  )
+
+  const getProductsByPrototype = useCallback(
+    async (prototypeId) => {
+      try {
+        const headers = token ? { Authorization: 'Bearer ' + token } : {}
+        const res = await fetch(PRODUCTS_URL + '/by-prototype/' + prototypeId, { headers })
+        if (!res.ok) throw new Error('Failed to load products by prototype')
+        const data = await res.json()
+        return { success: true, data }
+      } catch (e) {
+        return { success: false, message: e.message }
+      }
+    },
+    [token]
+  )
+
+  const getProductByBarcode = useCallback(
+    async (barcode) => {
+      try {
+        const headers = token ? { Authorization: 'Bearer ' + token } : {}
+        const res = await fetch(PRODUCTS_URL + '/barcode/' + barcode, { headers })
+        if (!res.ok) throw new Error('Failed to get product by barcode')
+        const data = await res.json()
+        return { success: true, data }
+      } catch (e) {
+        return { success: false, message: e.message }
+      }
+    },
+    [token]
+  )
+
   return {
     products,
     loading,
@@ -91,5 +136,8 @@ export function useProducts(token) {
     addProduct,
     updateProduct,
     deleteProduct,
+    searchProducts,
+    getProductsByPrototype,
+    getProductByBarcode,
   }
 }

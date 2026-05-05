@@ -17,9 +17,17 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchange -> exchange
 
-                        // ===== PRODUCTS =====
-                        .pathMatchers(HttpMethod.GET, "/products/**").permitAll()
-                        .pathMatchers("/products/**").authenticated()
+                        // ===== PRODUCTS (Mới & Cũ) =====
+                        .pathMatchers(HttpMethod.GET, "/products/**", "/products-old/**").permitAll()
+                        .pathMatchers("/products/**", "/products-old/**").authenticated()
+
+                        // ===== ATTRIBUTE TYPES (Mới thêm) =====
+                        .pathMatchers(HttpMethod.GET, "/attribute-types/**").permitAll()
+                        .pathMatchers("/attribute-types/**").authenticated()
+
+                        // ===== PROTOTYPES (Mới thêm) =====
+                        .pathMatchers(HttpMethod.GET, "/prototypes/**").permitAll()
+                        .pathMatchers("/prototypes/**").authenticated()
 
                         // ===== BRANDS =====
                         .pathMatchers(HttpMethod.GET, "/brands/**").permitAll()

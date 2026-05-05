@@ -5,7 +5,7 @@ import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
 
-export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct, onDeleteProduct, onRefresh }) {
+export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct, onDeleteProduct, onRefresh, prototypes, catalogs, selectedCatalog, onSelectCatalog }) {
   const [filteredProducts, setFilteredProducts] = useState(products)
   const [searchQuery, setSearchQuery] = useState('')
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
@@ -16,18 +16,25 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
   const [modalLoading, setModalLoading] = useState(false)
 
   useEffect(() => {
-    setFilteredProducts(
-      products.filter(
+    let filtered = products
+    if (selectedCatalog) {
+      const catalogPrototypes = prototypes.filter(p => p.catalogId === selectedCatalog).map(p => p.productId)
+      filtered = filtered.filter(p => catalogPrototypes.includes(p.prototypeId))
+    }
+    if (searchQuery) {
+      filtered = filtered.filter(
         (p) =>
           p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          String(p.id).includes(searchQuery)
+          String(p.productId).includes(searchQuery) ||
+          (p.barcode && p.barcode.includes(searchQuery))
       )
-    )
-  }, [products, searchQuery])
+    }
+    setFilteredProducts(filtered)
+  }, [products, searchQuery, selectedCatalog, prototypes])
 
-  const handleAddProduct = async (name, price) => {
+  const handleAddProduct = async (productData) => {
     setModalLoading(true)
-    const result = await onAddProduct(name, price)
+    const result = await onAddProduct(productData)
     if (result.success) {
       showToast(result.message)
       setIsAddModalOpen(false)
@@ -42,9 +49,9 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
     setIsEditModalOpen(true)
   }
 
-  const handleSaveEdit = async (name, price) => {
+  const handleSaveEdit = async (productData) => {
     setModalLoading(true)
-    const result = await onUpdateProduct(selectedProduct.id, name, price)
+    const result = await onUpdateProduct(selectedProduct.productId, productData)
     if (result.success) {
       showToast(result.message)
       setIsEditModalOpen(false)
@@ -95,6 +102,25 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         </button>
       </div>
 
+      {/* Catalog Tabs */}
+      <div className="tabs" style={{ marginBottom: '20px' }}>
+        <button
+          className={`tab ${!selectedCatalog ? 'active' : ''}`}
+          onClick={() => onSelectCatalog(null)}
+        >
+          All
+        </button>
+        {catalogs.map(catalog => (
+          <button
+            key={catalog.id}
+            className={`tab ${selectedCatalog === catalog.id ? 'active' : ''}`}
+            onClick={() => onSelectCatalog(catalog.id)}
+          >
+            {catalog.name}
+          </button>
+        ))}
+      </div>
+
       <div className="search-bar">
         <input
           type="text"
@@ -116,7 +142,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         <div className="products-grid">
           {filteredProducts.map((product) => (
             <ProductCard
-              key={product.id}
+              key={product.productId}
               product={product}
               onEdit={handleEditProduct}
               onDelete={handleDeleteClick}
@@ -131,6 +157,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         onClose={() => setIsAddModalOpen(false)}
         onSave={handleAddProduct}
         product={null}
+        prototypes={prototypes}
       />
 
       <ProductModal
@@ -142,6 +169,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         }}
         onSave={handleSaveEdit}
         product={selectedProduct}
+        prototypes={prototypes}
       />
 
       <DeleteConfirmModal
