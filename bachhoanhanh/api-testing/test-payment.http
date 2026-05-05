@@ -1,0 +1,3 @@
+GET http://bachhoanhanh/payments/test
+Authorization: Bearer {{auth_token}}
+Accept: application/json

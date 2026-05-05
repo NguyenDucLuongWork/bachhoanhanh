@@ -1,0 +1,14 @@
+### Login to get Access Token
+# This request exchanges credentials for an OAuth2 token
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id=gateway-client&
+username=testuser&
+password=123456
+
+> {%
+    // This script automatically sets the token for subsequent requests
+    client.global.set("auth_token", response.body.access_token);
+%}

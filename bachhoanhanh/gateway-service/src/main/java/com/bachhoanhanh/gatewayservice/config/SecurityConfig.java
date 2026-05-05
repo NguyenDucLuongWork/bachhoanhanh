@@ -32,6 +32,9 @@ public class SecurityConfig {
                         // ===== ORDERS ===== (luôn cần token)
                         .pathMatchers("/orders/**").authenticated()
 
+                        // ===== PAYMENTS =====
+                        .pathMatchers("/payments/**").authenticated()
+
                         // Swagger public
                         .pathMatchers(
                                 "/swagger-ui.html",

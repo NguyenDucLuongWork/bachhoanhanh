@@ -2,10 +2,12 @@ CREATE DATABASE IF NOT EXISTS productdb;
 CREATE DATABASE IF NOT EXISTS orderdb;
 CREATE DATABASE IF NOT EXISTS branddb;
 CREATE DATABASE IF NOT EXISTS catalogdb;
+CREATE DATABASE IF NOT EXISTS paymentdb;
 
 GRANT ALL PRIVILEGES ON orderdb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON branddb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON catalogdb.* TO 'appuser'@'%';
+GRANT ALL PRIVILEGES ON paymentdb.* TO 'appuser'@'%';
 FLUSH PRIVILEGES;
 
 -- ─────────────────────────────────────────

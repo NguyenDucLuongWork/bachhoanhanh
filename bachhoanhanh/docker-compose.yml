@@ -136,6 +136,23 @@ services:
       eureka-server:
         condition: service_started
 
+  payment-service:
+    build: ./payment-service
+    container_name: payment-service
+    restart: always
+    ports:
+      - "8085:8085"
+    environment:
+      DB_URL: ${PAYMENT_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
@@ -159,3 +176,5 @@ services:
         condition: service_started
       redis:
         condition: service_healthy
+      payment-service:
+        condition: service_started
