@@ -1,20 +1,47 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { formatPrice } from '../utils/helpers'
 import { showToast } from './Toast'
 
-export function OrderDetailsModal({ isOpen, orderData, onClose, onPaymentCompleted }) {
+export function OrderDetailsModal({
+  isOpen,
+  orderData,
+  onClose,
+  onPaymentCompleted,
+  onGoHome,
+  token,
+  staticQrImageUrl,
+}) {
   const [order, setOrder] = useState(null)
-  const [payLoading, setPayLoading] = useState(false)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [paymentInfo, setPaymentInfo] = useState(null)
   const [autoOpenPayment, setAutoOpenPayment] = useState(() => {
     try {
       return localStorage.getItem('autoOpenPayment') === '1'
-    } catch (e) {
+    } catch {
       return false
     }
   })
   const [autoOpened, setAutoOpened] = useState(false)
+  const [paymentCompleted, setPaymentCompleted] = useState(false)
+  const [confirmingPayment, setConfirmingPayment] = useState(false)
+
+  const getAuthHeaders = useCallback(() => (token ? { Authorization: 'Bearer ' + token } : {}), [token])
+
+  const getQrImageUrl = useCallback(() => {
+    if (!paymentInfo) return null
+    if (paymentInfo.qrUrl) return paymentInfo.qrUrl
+    if (staticQrImageUrl) return staticQrImageUrl
+    if (!paymentInfo.paymentUrl) return null
+
+    const targetUrl = paymentInfo.paymentUrl.startsWith('http')
+      ? paymentInfo.paymentUrl
+      : window.location.origin + '/api' + paymentInfo.paymentUrl
+
+    return (
+      'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' +
+      encodeURIComponent(targetUrl)
+    )
+  }, [paymentInfo, staticQrImageUrl])
 
   useEffect(() => {
     if (orderData) {
@@ -31,14 +58,14 @@ export function OrderDetailsModal({ isOpen, orderData, onClose, onPaymentComplet
       try {
         const res = await fetch('/api/payments/checkout', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
           body: JSON.stringify({ orderId: orderData.id, amount: orderData.total }),
         })
         if (!res.ok) throw new Error('Failed to create checkout')
         const data = await res.json()
         if (!cancelled) setPaymentInfo(data)
-      } catch (e) {
-        showToast(e.message || 'Cannot create payment', true)
+      } catch (err) {
+        showToast(err.message || 'Cannot create payment', true)
       } finally {
         setCheckoutLoading(false)
       }
@@ -48,23 +75,54 @@ export function OrderDetailsModal({ isOpen, orderData, onClose, onPaymentComplet
     return () => {
       cancelled = true
     }
-  }, [isOpen, orderData])
+  }, [isOpen, orderData, getAuthHeaders])
 
-  // Auto-open payment URL when paymentInfo becomes available and user enabled the option
+  // Auto-open payment QR when paymentInfo becomes available and user enabled the option
   useEffect(() => {
-    if (!paymentInfo || !paymentInfo.paymentUrl) return
+    const qrImageUrl = getQrImageUrl()
+    if (!qrImageUrl) return
     if (!autoOpenPayment) return
     if (autoOpened) return // avoid opening repeatedly if paymentInfo doesn't change
 
     try {
-      const url = '/api' + paymentInfo.paymentUrl
-      window.open(url, '_blank')
+      window.open(qrImageUrl, '_blank')
       setAutoOpened(true)
     } catch (e) {
       // ignore pop-up blocked errors — user can still click Open Payment
       console.warn('Auto-open payment failed', e)
     }
-  }, [paymentInfo, autoOpenPayment, autoOpened])
+  }, [paymentInfo, autoOpenPayment, autoOpened, getQrImageUrl])
+
+  // Poll payment status and auto-close when paid
+  useEffect(() => {
+    if (!isOpen || !orderData || orderData.status !== 'pending') return
+    if (!paymentInfo || paymentCompleted) return
+
+    let cancelled = false
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch('/api/payments/status/' + orderData.id, {
+          headers: getAuthHeaders(),
+        })
+        if (!res.ok) return
+        const data = await res.json()
+        if (!cancelled && data.status === 'paid') {
+          setPaymentCompleted(true)
+          showToast('Payment completed')
+          if (onPaymentCompleted) onPaymentCompleted()
+          if (onGoHome) onGoHome()
+          onClose()
+        }
+      } catch {
+        // ignore transient polling errors
+      }
+    }, 3000)
+
+    return () => {
+      cancelled = true
+      clearInterval(interval)
+    }
+  }, [isOpen, orderData, paymentInfo, paymentCompleted, onPaymentCompleted, onGoHome, onClose, getAuthHeaders])
 
   if (!isOpen || !order) return null
 
@@ -160,26 +218,33 @@ export function OrderDetailsModal({ isOpen, orderData, onClose, onPaymentComplet
                 setAutoOpenPayment(val)
                 try {
                   localStorage.setItem('autoOpenPayment', val ? '1' : '0')
-                } catch (err) {}
+                } catch {
+                  // ignore storage errors
+                }
               }}
             />
             <span style={{ fontSize: '13px' }}>Auto-open payment when ready</span>
           </label>
-          {paymentInfo && paymentInfo.paymentUrl && (
+          {getQrImageUrl() && (
             <div style={{ marginLeft: 'auto' }}>
-              {/* QR image (uses external QR generation service) */}
               <img
                 alt="Payment QR"
                 style={{ width: 72, height: 72, borderRadius: 6, border: '1px solid var(--border)' }}
-                src={
-                  'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' +
-                  encodeURIComponent(window.location.origin + '/api' + paymentInfo.paymentUrl)
-                }
+                src={getQrImageUrl()}
               />
             </div>
           )}
-
         </div>
+
+        {getQrImageUrl() && (
+          <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'center' }}>
+            <img
+              alt="Payment QR Large"
+              style={{ width: 220, height: 220, borderRadius: 8, border: '1px solid var(--border)' }}
+              src={getQrImageUrl()}
+            />
+          </div>
+        )}
 
         <div className="modal-footer">
                   {order.status === 'pending' && (
@@ -187,19 +252,17 @@ export function OrderDetailsModal({ isOpen, orderData, onClose, onPaymentComplet
                       <button
                         className="btn btn-ghost btn-sm"
                         onClick={() => {
-                          // Open payment URL in new tab (proxied via /api)
-                          if (paymentInfo && paymentInfo.paymentUrl) {
-                            const url = '/api' + paymentInfo.paymentUrl
-                            window.open(url, '_blank')
+                          const qrImageUrl = getQrImageUrl()
+                          if (qrImageUrl) {
+                            window.open(qrImageUrl, '_blank')
                           } else {
-                            showToast('Payment url not ready', true)
+                            showToast('Payment QR not ready', true)
                           }
                         }}
                         disabled={checkoutLoading}
                       >
                         {checkoutLoading ? 'Preparing...' : 'Open Payment'}
                       </button>
-
                       <button
                         className="btn btn-accent"
                         onClick={async () => {
@@ -207,11 +270,11 @@ export function OrderDetailsModal({ isOpen, orderData, onClose, onPaymentComplet
                             showToast('No payment created', true)
                             return
                           }
-                          setPayLoading(true)
+                          setConfirmingPayment(true)
                           try {
                             const res = await fetch('/api/payments/' + paymentInfo.paymentId + '/pay', {
                               method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
+                              headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
                             })
                             if (!res.ok) {
                               const txt = await res.text()
@@ -219,16 +282,17 @@ export function OrderDetailsModal({ isOpen, orderData, onClose, onPaymentComplet
                             }
                             showToast('Payment completed')
                             if (onPaymentCompleted) onPaymentCompleted()
+                            if (onGoHome) onGoHome()
                             onClose()
                           } catch (e) {
                             showToast(e.message || 'Payment error', true)
                           } finally {
-                            setPayLoading(false)
+                            setConfirmingPayment(false)
                           }
                         }}
-                        disabled={payLoading || checkoutLoading}
+                        disabled={confirmingPayment || checkoutLoading}
                       >
-                        {payLoading ? 'Completing...' : 'Mark as Paid'}
+                        {confirmingPayment ? 'Confirming...' : 'Confirm Payment'}
                       </button>
                     </>
                   )}

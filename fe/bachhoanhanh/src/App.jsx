@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { LoginPage } from './pages/LoginPage'
@@ -14,9 +14,8 @@ function App() {
   const [currentPage, setCurrentPage] = useState('login')
   const { token, username, loading, login, logout, isLoggedIn } = useAuth()
   const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct } = useProducts(token)
-  const { orders, loading: ordersLoading, loadOrders, getOrderDetails, updateOrderStatus, cancelOrder } = useOrders(token)
+  const { orders, loading: ordersLoading, loadOrders, getOrderDetails, cancelOrder } = useOrders(token)
   const { toasts } = useToast()
-  const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -66,6 +65,8 @@ function App() {
             onGetOrderDetails={getOrderDetails}
             onCancelOrder={cancelOrder}
             onRefresh={loadOrders}
+            onGoHome={() => setCurrentPage('products')}
+            token={token}
           />
         )}
       </main>
