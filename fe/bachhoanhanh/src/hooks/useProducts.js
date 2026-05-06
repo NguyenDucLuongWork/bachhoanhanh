@@ -129,6 +129,21 @@ export function useProducts(token) {
     [token]
   )
 
+  const getProductById = useCallback(
+    async (id) => {
+      try {
+        const headers = token ? { Authorization: 'Bearer ' + token } : {}
+        const res = await fetch(PRODUCTS_URL + '/' + id, { headers })
+        if (!res.ok) throw new Error('Failed to load product details')
+        const data = await res.json()
+        return { success: true, data }
+      } catch (e) {
+        return { success: false, message: e.message }
+      }
+    },
+    [token]
+  )
+
   return {
     products,
     loading,
@@ -139,5 +154,6 @@ export function useProducts(token) {
     searchProducts,
     getProductsByPrototype,
     getProductByBarcode,
+    getProductById,
   }
 }

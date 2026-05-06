@@ -54,6 +54,14 @@ public class ProductController {
                 .toList();
     }
 
+    @GetMapping("/by-catalog/{catalogId}")
+    public List<ProductResponse> getByCatalog(@PathVariable String catalogId) {
+        return baseProductService.getByCatalog(catalogId).stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+
     // ─── POST / PUT / DELETE ──────────────────────────────────────────────────
 
     @PostMapping
@@ -73,7 +81,7 @@ public class ProductController {
         BaseProduct updated = baseProductService.update(id, toEntity(request));
 
         if (request.getAttributes() != null && !request.getAttributes().isEmpty()) {
-            attributeService.setAll(String.valueOf(id), request.getAttributes());
+            attributeService.setAll(id, request.getAttributes());
         }
 
         return toResponseWithAttributes(updated);
@@ -95,6 +103,7 @@ public class ProductController {
                 .name(p.getName())
                 .image(p.getImage())
                 .description(p.getDescription())
+                .catalogId(p.getCatalogId())       // ← thêm
                 .originalPrice(p.getOriginalPrice())
                 .prototypeId(p.getPrototypeId())
                 .build();
@@ -103,7 +112,7 @@ public class ProductController {
     /** Load attributes — dùng cho detail (GET by id, barcode) */
     private ProductResponse toResponseWithAttributes(BaseProduct p) {
         Map<String, String> attrs = attributeService.getProductAttributeMap(
-                String.valueOf(p.getProductId())
+                p.getProductId()
         );
         return ProductResponse.builder()
                 .productId(p.getProductId())
@@ -111,6 +120,7 @@ public class ProductController {
                 .name(p.getName())
                 .image(p.getImage())
                 .description(p.getDescription())
+                .catalogId(p.getCatalogId())       // ← thêm
                 .originalPrice(p.getOriginalPrice())
                 .prototypeId(p.getPrototypeId())
                 .attributes(attrs)
@@ -123,6 +133,7 @@ public class ProductController {
         p.setName(r.getName());
         p.setImage(r.getImage());
         p.setDescription(r.getDescription());
+        p.setCatalogId(r.getCatalogId());          // ← thêm
         p.setOriginalPrice(r.getOriginalPrice());
         p.setPrototypeId(r.getPrototypeId());
         return p;

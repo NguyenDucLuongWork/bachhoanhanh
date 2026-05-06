@@ -32,4 +32,5 @@ public interface BaseProductRepository extends JpaRepository<BaseProduct, Long> 
      * Tìm kiếm sản phẩm theo tên (hỗ trợ tìm kiếm gần đúng trên UI).
      */
     List<BaseProduct> findByNameContainingIgnoreCase(String name);
+    List<BaseProduct> findByCatalogId(String catalogId);
 }

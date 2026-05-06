@@ -5,27 +5,19 @@ export function Header({ username, currentPage, onNavigate, onLogout }) {
         Bach<span>Hoa</span>Nhanh
       </div>
       <nav id="main-nav">
+        <button
+          onClick={() => onNavigate('products')}
+          className={currentPage === 'products' || currentPage === 'product-detail' ? 'active' : ''}
+        >
+          Products
+        </button>
         {username && (
-          <>
-            <button
-              onClick={() => onNavigate('catalogs')}
-              className={currentPage === 'catalogs' ? 'active' : ''}
-            >
-              Catalogs
-            </button>
-            <button
-              onClick={() => onNavigate('products')}
-              className={currentPage === 'products' ? 'active' : ''}
-            >
-              Products
-            </button>
-            <button
-              onClick={() => onNavigate('orders')}
-              className={currentPage === 'orders' ? 'active' : ''}
-            >
-              Orders
-            </button>
-          </>
+          <button
+            onClick={() => onNavigate('orders')}
+            className={currentPage === 'orders' ? 'active' : ''}
+          >
+            Orders
+          </button>
         )}
       </nav>
       <div className="nav-right">

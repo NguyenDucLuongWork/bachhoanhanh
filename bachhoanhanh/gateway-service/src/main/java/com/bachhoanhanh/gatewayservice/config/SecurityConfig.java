@@ -18,8 +18,8 @@ public class SecurityConfig {
                 .authorizeExchange(exchange -> exchange
 
                         // ===== PRODUCTS (Mới & Cũ) =====
-                        .pathMatchers(HttpMethod.GET, "/products/**", "/products-old/**").permitAll()
-                        .pathMatchers("/products/**", "/products-old/**").authenticated()
+                        .pathMatchers(HttpMethod.GET, "/products/**").permitAll()
+                        .pathMatchers("/products/**").authenticated()
 
                         // ===== ATTRIBUTE TYPES (Mới thêm) =====
                         .pathMatchers(HttpMethod.GET, "/attribute-types/**").permitAll()

@@ -5,7 +5,28 @@ import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
 
-export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct, onDeleteProduct, onRefresh, prototypes, catalogs, selectedCatalog, onSelectCatalog }) {
+const findCatalogAndParent = (nodes, id, parent = null) => {
+  for (const node of nodes) {
+    if (node.id === id) return { node, parent }
+    if (node.children?.length) {
+      const found = findCatalogAndParent(node.children, id, node)
+      if (found) return found
+    }
+  }
+  return null
+}
+
+const collectCatalogIds = (node) => {
+  const ids = [node.id]
+  if (node.children?.length) {
+    node.children.forEach((child) => {
+      ids.push(...collectCatalogIds(child))
+    })
+  }
+  return ids
+}
+
+export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct, onDeleteProduct, onRefresh, prototypes, catalogs, selectedCatalog, onSelectCatalog, onViewProduct }) {
   const [filteredProducts, setFilteredProducts] = useState(products)
   const [searchQuery, setSearchQuery] = useState('')
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
@@ -18,8 +39,9 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
   useEffect(() => {
     let filtered = products
     if (selectedCatalog) {
-      const catalogPrototypes = prototypes.filter(p => p.catalogId === selectedCatalog).map(p => p.productId)
-      filtered = filtered.filter(p => catalogPrototypes.includes(p.prototypeId))
+      const selectedEntry = findCatalogAndParent(catalogs, selectedCatalog)
+      const selectedIds = selectedEntry?.node ? collectCatalogIds(selectedEntry.node) : [selectedCatalog]
+      filtered = filtered.filter((p) => selectedIds.includes(p.catalogId))
     }
     if (searchQuery) {
       filtered = filtered.filter(
@@ -30,12 +52,13 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
       )
     }
     setFilteredProducts(filtered)
-  }, [products, searchQuery, selectedCatalog, prototypes])
+  }, [products, searchQuery, selectedCatalog, prototypes, catalogs])
 
   const handleAddProduct = async (productData) => {
     setModalLoading(true)
     const result = await onAddProduct(productData)
     if (result.success) {
+      await onRefresh()
       showToast(result.message)
       setIsAddModalOpen(false)
     } else {
@@ -53,6 +76,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
     setModalLoading(true)
     const result = await onUpdateProduct(selectedProduct.productId, productData)
     if (result.success) {
+      await onRefresh()
       showToast(result.message)
       setIsEditModalOpen(false)
       setSelectedProduct(null)
@@ -71,6 +95,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
     setModalLoading(true)
     const result = await onDeleteProduct(deletingId)
     if (result.success) {
+      await onRefresh()
       showToast(result.message)
       setIsDeleteModalOpen(false)
       setDeletingId(null)
@@ -79,6 +104,10 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
     }
     setModalLoading(false)
   }
+
+  const selectedEntry = selectedCatalog ? findCatalogAndParent(catalogs, selectedCatalog) : null
+  const activeTopId = selectedEntry ? (selectedEntry.parent?.id || selectedEntry.node.id) : null
+  const activeBranch = selectedEntry ? (selectedEntry.node.children?.length ? selectedEntry.node : selectedEntry.parent) : null
 
   if (loading) {
     return (
@@ -102,24 +131,41 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         </button>
       </div>
 
-      {/* Catalog Tabs */}
-      <div className="tabs" style={{ marginBottom: '20px' }}>
+      {/* Catalog Navigation */}
+      <div className="tabs" style={{ marginBottom: '14px' }}>
         <button
           className={`tab ${!selectedCatalog ? 'active' : ''}`}
           onClick={() => onSelectCatalog(null)}
         >
           All
         </button>
-        {catalogs.map(catalog => (
-          <button
-            key={catalog.id}
-            className={`tab ${selectedCatalog === catalog.id ? 'active' : ''}`}
-            onClick={() => onSelectCatalog(catalog.id)}
-          >
-            {catalog.name}
-          </button>
-        ))}
+        {catalogs.map((catalog) => {
+          const isTopActive = activeTopId === catalog.id
+          return (
+            <button
+              key={catalog.id}
+              className={`tab ${isTopActive ? 'active' : ''}`}
+              onClick={() => onSelectCatalog(catalog.id)}
+            >
+              {catalog.name}
+            </button>
+          )
+        })}
       </div>
+
+      {activeBranch?.children?.length ? (
+        <div className="tabs" style={{ marginBottom: '20px', paddingLeft: '12px' }}>
+          {activeBranch.children.map((child) => (
+            <button
+              key={child.id}
+              className={`tab ${selectedCatalog === child.id ? 'active' : ''}`}
+              onClick={() => onSelectCatalog(child.id)}
+            >
+              {child.name}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <div className="search-bar">
         <input
@@ -144,6 +190,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
             <ProductCard
               key={product.productId}
               product={product}
+              onView={onViewProduct}
               onEdit={handleEditProduct}
               onDelete={handleDeleteClick}
             />
@@ -158,6 +205,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         onSave={handleAddProduct}
         product={null}
         prototypes={prototypes}
+        catalogs={catalogs}
       />
 
       <ProductModal
@@ -170,6 +218,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         onSave={handleSaveEdit}
         product={selectedProduct}
         prototypes={prototypes}
+        catalogs={catalogs}
       />
 
       <DeleteConfirmModal

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { LoginPage } from './pages/LoginPage'
-import { CatalogsPage } from './pages/CatalogsPage'
 import { ProductsPage } from './pages/ProductsPage'
+import { ProductDetailPage } from './pages/ProductDetailPage'
 import { OrdersPage } from './pages/OrdersPage'
 import { ToastContainer, useToast } from './components/Toast'
 import { useAuth } from './hooks/useAuth'
@@ -14,28 +14,52 @@ import { useOrders } from './hooks/useOrders'
 import './styles/theme.css'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('login')
+  const [currentPage, setCurrentPage] = useState('products')
   const { token, username, loading, login, logout, isLoggedIn } = useAuth()
-  const { catalogs: catalogList, loading: catalogsLoading, loadCatalogTree, addCatalog, updateCatalog, deleteCatalog } = useCatalogs(token)
+  const { catalogs: catalogList, loadCatalogTree } = useCatalogs(token)
   const { prototypes, loadPrototypes } = usePrototypes(token)
-  const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct } = useProducts(token)
+  const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct, getProductById } = useProducts(token)
   const { orders, loading: ordersLoading, loadOrders, getOrderDetails, updateOrderStatus, cancelOrder } = useOrders(token)
   const [selectedCatalog, setSelectedCatalog] = useState(null)
+  const [productDetailId, setProductDetailId] = useState(null)
   const { toasts } = useToast()
 
   useEffect(() => {
-    if (isLoggedIn) {
-      setCurrentPage('catalogs')
-      loadCatalogTree()
-      loadPrototypes()
-      loadProducts()
-    }
-  }, [isLoggedIn, token, loadCatalogTree, loadPrototypes, loadProducts])
+    loadCatalogTree()
+    loadPrototypes()
+    loadProducts()
+  }, [loadCatalogTree, loadPrototypes, loadProducts])
 
   useEffect(() => {
-    // Build catalogs from unique catalogIds in prototypes if needed, but now we have catalogList
-    // For now, use catalogList directly
-  }, [prototypes])
+    if (isLoggedIn && currentPage === 'login') {
+      setCurrentPage('products')
+    }
+  }, [isLoggedIn, currentPage])
+
+  useEffect(() => {
+    const pathname = window.location.pathname
+    if (pathname.startsWith('/products/')) {
+      const id = pathname.split('/products/')[1]
+      if (id) {
+        setProductDetailId(id)
+        setCurrentPage('product-detail')
+        window.history.replaceState({ page: 'product-detail', productId: id }, '', pathname)
+        return
+      }
+    }
+    window.history.replaceState({ page: 'products' }, '', '/')
+  }, [])
+
+  useEffect(() => {
+    const handlePopState = (event) => {
+      const state = event.state || { page: 'products' }
+      setCurrentPage(state.page || 'products')
+      setProductDetailId(state.productId || null)
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
 
   const handleLogin = async (user, pass) => {
     const result = await login(user, pass)
@@ -47,11 +71,38 @@ function App() {
 
   const handleLogout = () => {
     logout()
-    setCurrentPage('login')
+    setProductDetailId(null)
+    setCurrentPage('products')
+    window.history.pushState({ page: 'products' }, '', '/')
+  }
+
+  const navigateTo = (page, id) => {
+    if (page === 'products') {
+      setProductDetailId(null)
+      window.history.pushState({ page: 'products' }, '', '/')
+    } else if (page === 'product-detail' && id) {
+      setProductDetailId(id)
+      window.history.pushState({ page: 'product-detail', productId: id }, '', `/products/${id}`)
+    } else {
+      window.history.pushState({ page }, '', '/')
+    }
+    setCurrentPage(page)
   }
 
   const handleNavigate = (page) => {
-    setCurrentPage(page)
+    if (page === 'products') {
+      navigateTo('products')
+    } else {
+      setCurrentPage(page)
+    }
+  }
+
+  const handleViewProduct = (id) => {
+    navigateTo('product-detail', id)
+  }
+
+  const handleBackToProducts = () => {
+    navigateTo('products')
   }
 
   return (
@@ -60,17 +111,7 @@ function App() {
 
       <main>
         {currentPage === 'login' && <LoginPage onLoginSuccess={handleLogin} loading={loading} />}
-        {currentPage === 'catalogs' && isLoggedIn && (
-          <CatalogsPage
-            catalogs={catalogList}
-            loading={catalogsLoading}
-            onAddCatalog={addCatalog}
-            onUpdateCatalog={updateCatalog}
-            onDeleteCatalog={deleteCatalog}
-            onRefresh={loadCatalogTree}
-          />
-        )}
-        {currentPage === 'products' && isLoggedIn && (
+        {currentPage === 'products' && (
           <ProductsPage
             products={products}
             loading={productsLoading}
@@ -82,6 +123,14 @@ function App() {
             catalogs={catalogList}
             selectedCatalog={selectedCatalog}
             onSelectCatalog={setSelectedCatalog}
+            onViewProduct={handleViewProduct}
+          />
+        )}
+        {currentPage === 'product-detail' && productDetailId && (
+          <ProductDetailPage
+            productId={productDetailId}
+            onBack={handleBackToProducts}
+            getProductById={getProductById}
           />
         )}
         {currentPage === 'orders' && isLoggedIn && (

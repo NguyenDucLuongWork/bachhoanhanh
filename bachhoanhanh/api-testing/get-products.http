@@ -1,3 +1,7 @@
 ### Get Products
 GET http://bachhoanhanh/products
 Accept: application/json
+
+### Get 1 Product
+GET http://bachhoanhanh/products/3
+Accept: application/json

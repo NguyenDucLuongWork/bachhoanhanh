@@ -9,7 +9,8 @@ public class ProductRequest {
     private String name;
     private String image;
     private String description;
+    private String catalogId;
     private double originalPrice;
     private String prototypeId;
-    private Map<String, String> attributes; // null = không set attribute
+    private Map<String, String> attributes;
 }

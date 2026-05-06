@@ -1,34 +1,73 @@
 import { useState, useEffect } from 'react'
 
-export function ProductModal({ isOpen, title, onClose, onSave, product, prototypes }) {
+const flattenCatalogs = (catalogs, prefix = '') =>
+  catalogs.flatMap((catalog) => [
+    { id: catalog.id, name: `${prefix}${catalog.name}` },
+    ...(catalog.children?.length ? flattenCatalogs(catalog.children, `${prefix}  `) : []),
+  ])
+
+export function ProductModal({ isOpen, title, onClose, onSave, product, prototypes, catalogs }) {
   const [barcode, setBarcode] = useState('')
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
   const [originalPrice, setOriginalPrice] = useState('')
-  const [prototypeId, setPrototypeId] = useState('')
+  const [selectedPrototypeId, setSelectedPrototypeId] = useState('')
+  const [catalogId, setCatalogId] = useState('')
   const [attributes, setAttributes] = useState({})
   const [isLoading, setIsLoading] = useState(false)
 
+  const getPrototypeById = (id) => prototypes.find((proto) => proto.productId === id || proto.id === id)
+
+  const getAttributeKeys = (proto) => {
+    if (!proto) return []
+    if (Array.isArray(proto.unpackedAttributes) && proto.unpackedAttributes.length) {
+      return proto.unpackedAttributes
+    }
+    if (typeof proto.packedAttributes === 'string') {
+      return proto.packedAttributes.split(',').map((item) => item.trim()).filter(Boolean)
+    }
+    return []
+  }
+
+  const buildAttributes = (proto, existing = {}) => {
+    const keys = getAttributeKeys(proto)
+    return keys.reduce((acc, key) => {
+      acc[key] = existing[key] ?? ''
+      return acc
+    }, {})
+  }
+
   useEffect(() => {
     if (product) {
+      const protoId = product.prototypeId || ''
+      const proto = getPrototypeById(protoId)
       setBarcode(product.barcode || '')
       setName(product.name || '')
       setImage(product.image || '')
       setDescription(product.description || '')
       setOriginalPrice(product.originalPrice || '')
-      setPrototypeId(product.prototypeId || '')
-      setAttributes(product.attributes || {})
+      setSelectedPrototypeId(protoId)
+      setCatalogId(product.catalogId || '')
+      setAttributes(buildAttributes(proto, product.attributes || {}))
     } else {
       setBarcode('')
       setName('')
       setImage('')
       setDescription('')
       setOriginalPrice('')
-      setPrototypeId('')
+      setSelectedPrototypeId('')
+      setCatalogId('')
       setAttributes({})
     }
-  }, [product, isOpen])
+  }, [product, isOpen, prototypes])
+
+  useEffect(() => {
+    if (!selectedPrototypeId) return
+    const proto = getPrototypeById(selectedPrototypeId)
+    if (!proto) return
+    setAttributes((prev) => buildAttributes(proto, prev))
+  }, [selectedPrototypeId, prototypes])
 
   const handleSave = async () => {
     if (!name || !originalPrice) return
@@ -39,7 +78,8 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
       image,
       description,
       originalPrice: parseFloat(originalPrice),
-      prototypeId,
+      catalogId: catalogId || null,
+      prototypeId: selectedPrototypeId,
       attributes,
     }
     await onSave(productData)
@@ -124,10 +164,25 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
           />
         </div>
         <div className="field">
+          <label>Catalog</label>
+          <select
+            value={catalogId}
+            onChange={(e) => setCatalogId(e.target.value)}
+            disabled={isLoading}
+          >
+            <option value="">Select catalog</option>
+            {flattenCatalogs(catalogs || []).map((catalog) => (
+              <option key={catalog.id} value={catalog.id}>
+                {catalog.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
           <label>Prototype</label>
           <select
-            value={prototypeId}
-            onChange={(e) => setPrototypeId(e.target.value)}
+            value={selectedPrototypeId}
+            onChange={(e) => setSelectedPrototypeId(e.target.value)}
             disabled={isLoading}
           >
             <option value="">Select prototype</option>
