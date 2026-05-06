@@ -6,7 +6,7 @@ const flattenCatalogs = (catalogs, prefix = '') =>
     ...(catalog.children?.length ? flattenCatalogs(catalog.children, `${prefix}  `) : []),
   ])
 
-export function ProductModal({ isOpen, title, onClose, onSave, product, prototypes, catalogs }) {
+export function ProductModal({ isOpen, title, onClose, onSave, product, prototypes, catalogs, attributeTypes }) {
   const [barcode, setBarcode] = useState('')
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
@@ -18,6 +18,11 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
   const [isLoading, setIsLoading] = useState(false)
 
   const getPrototypeById = (id) => prototypes.find((proto) => proto.productId === id || proto.id === id)
+
+  const getAttributeDataType = (key) => {
+    const type = attributeTypes?.find((t) => t.name === key)
+    return type?.dataType || 'String'
+  }
 
   const getAttributeKeys = (proto) => {
     if (!proto) return []
@@ -36,6 +41,58 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
       acc[key] = existing[key] ?? ''
       return acc
     }, {})
+  }
+
+  const renderAttributeInput = (key, value, onChange) => {
+    const dataType = getAttributeDataType(key)
+
+    switch (dataType) {
+      case 'Date':
+        return (
+          <input
+            type="date"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isLoading}
+            style={{ flex: 2 }}
+          />
+        )
+      case 'Number':
+      case 'Weight':
+        return (
+          <input
+            type="number"
+            placeholder="Value"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isLoading}
+            style={{ flex: 2 }}
+          />
+        )
+      case 'Unit':
+        return (
+          <input
+            type="number"
+            placeholder="Value"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isLoading}
+            style={{ flex: 2 }}
+          />
+        )
+      case 'String':
+      default:
+        return (
+          <input
+            type="text"
+            placeholder="Value"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isLoading}
+            style={{ flex: 2 }}
+          />
+        )
+    }
   }
 
   useEffect(() => {
@@ -109,8 +166,10 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
 
   return (
     <div className="modal-bg open">
-      <div className="modal">
-        <h3>{title}</h3>
+      <div className="modal" style={{ maxHeight: '90vh', overflowY: 'auto', overflowX: 'hidden' }}>
+        <div style={{ position: 'sticky', top: 0, background: 'var(--surface)', paddingBottom: '12px', marginBottom: '12px', borderBottom: '0.5px solid var(--border)', zIndex: 10 }}>
+          <h3 style={{ marginTop: 0 }}>{title}</h3>
+        </div>
         <div className="field">
           <label>Barcode</label>
           <input
@@ -193,27 +252,24 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
         </div>
         <div className="field">
           <label>Attributes</label>
-          {Object.entries(attributes).map(([key, value]) => (
-            <div key={key} style={{ display: 'flex', gap: '10px', marginBottom: '5px' }}>
-              <input
-                type="text"
-                placeholder="Key"
-                value={key}
-                disabled
-                style={{ flex: 1 }}
-              />
-              <input
-                type="text"
-                placeholder="Value"
-                value={value}
-                onChange={(e) => handleAttributeChange(key, e.target.value)}
-                disabled={isLoading}
-                style={{ flex: 2 }}
-              />
-              <button type="button" onClick={() => removeAttribute(key)} disabled={isLoading}>Remove</button>
-            </div>
-          ))}
-          <button type="button" onClick={addAttribute} disabled={isLoading}>Add Attribute</button>
+          {Object.entries(attributes).map(([key, value]) => {
+            const dataType = getAttributeDataType(key)
+            return (
+              <div key={key} style={{ display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '4px' }}>{key}</div>
+                  <div style={{ fontSize: '11px', color: 'var(--muted)' }}>({dataType})</div>
+                </div>
+                {renderAttributeInput(key, value, (newVal) => handleAttributeChange(key, newVal))}
+                <button type="button" onClick={() => removeAttribute(key)} disabled={isLoading} style={{ padding: '6px 12px' }}>
+                  Remove
+                </button>
+              </div>
+            )
+          })}
+          <button type="button" onClick={addAttribute} disabled={isLoading}>
+            Add Attribute
+          </button>
         </div>
         <div className="modal-footer">
           <button className="btn btn-ghost" onClick={onClose} disabled={isLoading}>

@@ -1,10 +1,25 @@
 import { useState, useCallback } from 'react'
 
 const PRODUCTS_URL = '/products'
+const ATTRIBUTE_TYPES_URL = '/attribute-types'
 
 export function useProducts(token) {
   const [products, setProducts] = useState([])
+  const [attributeTypes, setAttributeTypes] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const loadAttributeTypes = useCallback(async () => {
+    try {
+      const headers = token ? { Authorization: 'Bearer ' + token } : {}
+      const res = await fetch(ATTRIBUTE_TYPES_URL, { headers })
+      if (!res.ok) throw new Error('Failed to load attribute types')
+      const data = await res.json()
+      setAttributeTypes(data)
+      return { success: true, data }
+    } catch (e) {
+      return { success: false, message: e.message }
+    }
+  }, [token])
 
   const loadProducts = useCallback(async () => {
     setLoading(true)
@@ -35,13 +50,14 @@ export function useProducts(token) {
           body: JSON.stringify(productData),
         })
         if (!res.ok) throw new Error('Create failed')
-        await loadProducts()
-        return { success: true, message: 'Product added' }
+        const data = await res.json()
+        setProducts((prev) => [...prev, data])
+        return { success: true, message: 'Product added', data }
       } catch (e) {
         return { success: false, message: e.message }
       }
     },
-    [token, loadProducts]
+    [token]
   )
 
   const updateProduct = useCallback(
@@ -57,13 +73,14 @@ export function useProducts(token) {
           body: JSON.stringify(productData),
         })
         if (!res.ok) throw new Error('Update failed')
-        await loadProducts()
-        return { success: true, message: 'Product updated' }
+        const data = await res.json()
+        setProducts((prev) => prev.map((p) => (p.productId === id ? data : p)))
+        return { success: true, message: 'Product updated', data }
       } catch (e) {
         return { success: false, message: e.message }
       }
     },
-    [token, loadProducts]
+    [token]
   )
 
   const deleteProduct = useCallback(
@@ -75,13 +92,13 @@ export function useProducts(token) {
           headers,
         })
         if (!res.ok) throw new Error('Delete failed')
-        await loadProducts()
+        setProducts((prev) => prev.filter((p) => p.productId !== id))
         return { success: true, message: 'Product deleted' }
       } catch (e) {
         return { success: false, message: e.message }
       }
     },
-    [token, loadProducts]
+    [token]
   )
 
   const searchProducts = useCallback(
@@ -147,7 +164,9 @@ export function useProducts(token) {
   return {
     products,
     loading,
+    attributeTypes,
     loadProducts,
+    loadAttributeTypes,
     addProduct,
     updateProduct,
     deleteProduct,

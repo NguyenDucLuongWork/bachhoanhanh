@@ -64,6 +64,30 @@ services:
     volumes:
       - ./keycloak/realm:/opt/keycloak/data/import
 
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    restart: always
+    ports:
+      - "8086:8086"
+    environment:
+      DB_URL: ${USER_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+      KEYCLOAK_SERVER_URL: http://keycloak:8080
+      KEYCLOAK_REALM: bachhoanhanh
+      KEYCLOAK_ADMIN_CLIENT_ID: user-service-client
+      KEYCLOAK_ADMIN_CLIENT_SECRET: user-service-secret
+      KEYCLOAK_JWK_URI: ${JWT_JWK}        # ← this was missing entirely
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+      keycloak:
+        condition: service_started
+
   product-service:
     build: ./product-service
     container_name: product-service
@@ -175,6 +199,8 @@ services:
       order-service:
         condition: service_started
       catalog-service:
+        condition: service_started
+      user-service: # Thêm dòng này
         condition: service_started
       redis:
         condition: service_healthy

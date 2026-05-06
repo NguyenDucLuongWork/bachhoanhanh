@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════
--- DATABASE INITIALIZATION SCRIPT
+-- DATABASE INITIALIZATION SCRIPT (UPDATED)
 -- ═══════════════════════════════════════════════════════
 
 CREATE DATABASE IF NOT EXISTS productdb;
@@ -7,14 +7,71 @@ CREATE DATABASE IF NOT EXISTS orderdb;
 CREATE DATABASE IF NOT EXISTS branddb;
 CREATE DATABASE IF NOT EXISTS catalogdb;
 CREATE DATABASE IF NOT EXISTS paymentdb;
+CREATE DATABASE IF NOT EXISTS userdb; -- Thêm dòng này
 
 GRANT ALL PRIVILEGES ON productdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON orderdb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON branddb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON catalogdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON paymentdb.* TO 'appuser'@'%';
+GRANT ALL PRIVILEGES ON userdb.*    TO 'appuser'@'%'; -- Thêm dòng này
 FLUSH PRIVILEGES;
 
+-- ═══════════════════════════════════════════════════════
+-- USER DB
+-- ═══════════════════════════════════════════════════════
+USE userdb;
+
+-- 1. users: keycloak_id is the PK (String), phone + fullName added, no separate id
+CREATE TABLE IF NOT EXISTS users (
+                                     keycloak_id  VARCHAR(255) PRIMARY KEY,
+    phone        VARCHAR(20)  NOT NULL UNIQUE,
+    full_name    VARCHAR(200) NOT NULL,
+    email        VARCHAR(255) UNIQUE,
+    role         VARCHAR(20)  NOT NULL
+    );
+
+-- 2. staff_profiles: shares PK with users via @MapsId
+CREATE TABLE IF NOT EXISTS staff_profiles (
+                                              keycloak_id    VARCHAR(255) PRIMARY KEY,
+    date_of_birth  DATE,
+    id_card_number VARCHAR(50) UNIQUE,
+    avatar_url     VARCHAR(500),
+    is_female      BOOLEAN DEFAULT FALSE,
+    address        VARCHAR(500),
+    FOREIGN KEY (keycloak_id) REFERENCES users(keycloak_id) ON DELETE CASCADE
+    );
+
+-- 3. customer_profiles: shares PK with users via @MapsId
+CREATE TABLE IF NOT EXISTS customer_profiles (
+                                                 keycloak_id    VARCHAR(255) PRIMARY KEY,
+    loyalty_points INT NOT NULL DEFAULT 0,
+    FOREIGN KEY (keycloak_id) REFERENCES users(keycloak_id) ON DELETE CASCADE
+    );
+
+-- 4. claimed_promotions: FK → customer_profiles.keycloak_id
+CREATE TABLE IF NOT EXISTS claimed_promotions (
+                                                  id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                                  keycloak_id     VARCHAR(255) NOT NULL,
+    promotion_code  VARCHAR(100) NOT NULL,
+    claimed_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (keycloak_id) REFERENCES customer_profiles(keycloak_id) ON DELETE CASCADE
+    );
+
+-- ───────────────────────────────────────────────────────
+-- Seed data
+-- ───────────────────────────────────────────────────────
+INSERT INTO users (keycloak_id, phone, full_name, email, role) VALUES
+                                                                   ('admin-uuid-123',                       '0901000001', 'System Admin',    'admin@bachhoanhanh.vn', 'ADMIN'),
+                                                                   ('a1234567-89ab-cdef-0123-456789abcdef', '0901000002', 'Anh Developer',   'dev@bachhoanhanh.vn',   'STAFF'),
+                                                                   ('c9876543-21ba-4321-edcb-0987654321fe', '0901000003', 'Nguyen Van A',    'test@gmail.com',        'CUSTOMER');
+
+INSERT INTO staff_profiles (keycloak_id, is_female, address) VALUES
+                                                                 ('admin-uuid-123',                       FALSE, 'Ho Chi Minh City'),
+                                                                 ('a1234567-89ab-cdef-0123-456789abcdef', FALSE, 'Ho Chi Minh City');
+
+INSERT INTO customer_profiles (keycloak_id, loyalty_points) VALUES
+    ('c9876543-21ba-4321-edcb-0987654321fe', 100);
 -- ═══════════════════════════════════════════════════════
 -- BRAND DB
 -- ═══════════════════════════════════════════════════════

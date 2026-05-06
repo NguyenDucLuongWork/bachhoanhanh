@@ -5,3 +5,11 @@ Accept: application/json
 ### Get 1 Product
 GET http://bachhoanhanh/products/3
 Accept: application/json
+
+### Search with name
+GET http://bachhoanhanh/products/search?name=ba
+Accept: application/json
+
+### Search with barcode
+GET http://bachhoanhanh/products/barcode/893000111
+Accept: application/json

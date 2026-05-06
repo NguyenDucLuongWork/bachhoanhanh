@@ -18,7 +18,7 @@ function App() {
   const { token, username, loading, login, logout, isLoggedIn } = useAuth()
   const { catalogs: catalogList, loadCatalogTree } = useCatalogs(token)
   const { prototypes, loadPrototypes } = usePrototypes(token)
-  const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct, getProductById } = useProducts(token)
+  const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct, getProductById, searchProducts, getProductByBarcode, attributeTypes, loadAttributeTypes } = useProducts(token)
   const { orders, loading: ordersLoading, loadOrders, getOrderDetails, updateOrderStatus, cancelOrder } = useOrders(token)
   const [selectedCatalog, setSelectedCatalog] = useState(null)
   const [productDetailId, setProductDetailId] = useState(null)
@@ -28,7 +28,8 @@ function App() {
     loadCatalogTree()
     loadPrototypes()
     loadProducts()
-  }, [loadCatalogTree, loadPrototypes, loadProducts])
+    loadAttributeTypes()
+  }, [loadCatalogTree, loadPrototypes, loadProducts, loadAttributeTypes])
 
   useEffect(() => {
     if (isLoggedIn && currentPage === 'login') {
@@ -124,6 +125,9 @@ function App() {
             selectedCatalog={selectedCatalog}
             onSelectCatalog={setSelectedCatalog}
             onViewProduct={handleViewProduct}
+            searchProducts={searchProducts}
+            getProductByBarcode={getProductByBarcode}
+            attributeTypes={attributeTypes}
           />
         )}
         {currentPage === 'product-detail' && productDetailId && (

@@ -16,6 +16,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchange -> exchange
+                        // ===== USERS =====
+                        .pathMatchers(HttpMethod.POST, "/users/register").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/users/staff").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+                        .pathMatchers("/users/**").authenticated()
 
                         // ===== PRODUCTS (Mới & Cũ) =====
                         .pathMatchers(HttpMethod.GET, "/products/**").permitAll()

@@ -26,9 +26,10 @@ const collectCatalogIds = (node) => {
   return ids
 }
 
-export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct, onDeleteProduct, onRefresh, prototypes, catalogs, selectedCatalog, onSelectCatalog, onViewProduct }) {
+export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct, onDeleteProduct, onRefresh, prototypes, catalogs, selectedCatalog, onSelectCatalog, onViewProduct, searchProducts, getProductByBarcode, attributeTypes }) {
   const [filteredProducts, setFilteredProducts] = useState(products)
   const [searchQuery, setSearchQuery] = useState('')
+  const [isSearching, setIsSearching] = useState(false)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -43,22 +44,55 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
       const selectedIds = selectedEntry?.node ? collectCatalogIds(selectedEntry.node) : [selectedCatalog]
       filtered = filtered.filter((p) => selectedIds.includes(p.catalogId))
     }
-    if (searchQuery) {
-      filtered = filtered.filter(
-        (p) =>
-          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          String(p.productId).includes(searchQuery) ||
-          (p.barcode && p.barcode.includes(searchQuery))
-      )
-    }
     setFilteredProducts(filtered)
-  }, [products, searchQuery, selectedCatalog, prototypes, catalogs])
+  }, [products, selectedCatalog, catalogs])
+
+  const handleSearch = async (query) => {
+    setSearchQuery(query)
+    if (!query.trim()) {
+      setFilteredProducts(
+        selectedCatalog
+          ? products.filter((p) => {
+              const selectedEntry = findCatalogAndParent(catalogs, selectedCatalog)
+              const selectedIds = selectedEntry?.node ? collectCatalogIds(selectedEntry.node) : [selectedCatalog]
+              return selectedIds.includes(p.catalogId)
+            })
+          : products
+      )
+      return
+    }
+
+    setIsSearching(true)
+    try {
+      let result = null
+      if (/^\d+$/.test(query)) {
+        result = await getProductByBarcode(query)
+      } else {
+        result = await searchProducts(query)
+      }
+
+      if (result?.success && result.data) {
+        const searchResults = Array.isArray(result.data) ? result.data : [result.data]
+        if (selectedCatalog) {
+          const selectedEntry = findCatalogAndParent(catalogs, selectedCatalog)
+          const selectedIds = selectedEntry?.node ? collectCatalogIds(selectedEntry.node) : [selectedCatalog]
+          setFilteredProducts(searchResults.filter((p) => selectedIds.includes(p.catalogId)))
+        } else {
+          setFilteredProducts(searchResults)
+        }
+      }
+    } catch (e) {
+      console.error('Search error:', e)
+    } finally {
+      setIsSearching(false)
+    }
+  }
 
   const handleAddProduct = async (productData) => {
     setModalLoading(true)
     const result = await onAddProduct(productData)
     if (result.success) {
-      await onRefresh()
+      setFilteredProducts((prev) => [...prev, result.data])
       showToast(result.message)
       setIsAddModalOpen(false)
     } else {
@@ -76,7 +110,9 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
     setModalLoading(true)
     const result = await onUpdateProduct(selectedProduct.productId, productData)
     if (result.success) {
-      await onRefresh()
+      setFilteredProducts((prev) =>
+        prev.map((p) => (p.productId === selectedProduct.productId ? result.data : p))
+      )
       showToast(result.message)
       setIsEditModalOpen(false)
       setSelectedProduct(null)
@@ -95,7 +131,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
     setModalLoading(true)
     const result = await onDeleteProduct(deletingId)
     if (result.success) {
-      await onRefresh()
+      setFilteredProducts((prev) => prev.filter((p) => p.productId !== deletingId))
       showToast(result.message)
       setIsDeleteModalOpen(false)
       setDeletingId(null)
@@ -170,11 +206,12 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search products…"
+          placeholder="Search by name or barcode…"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => handleSearch(e.target.value)}
+          disabled={isSearching}
         />
-        <button className="btn btn-ghost" onClick={onRefresh}>
+        <button className="btn btn-ghost" onClick={onRefresh} disabled={isSearching}>
           Refresh
         </button>
       </div>
@@ -206,6 +243,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         product={null}
         prototypes={prototypes}
         catalogs={catalogs}
+        attributeTypes={attributeTypes}
       />
 
       <ProductModal
@@ -219,6 +257,7 @@ export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct,
         product={selectedProduct}
         prototypes={prototypes}
         catalogs={catalogs}
+        attributeTypes={attributeTypes}
       />
 
       <DeleteConfirmModal
