@@ -140,6 +140,9 @@ export function OrdersPage({ orders, loading, onLoadOrders, onGetOrderDetails, o
           setIsDetailsModalOpen(false)
           setSelectedOrder(null)
         }}
+        onPaymentCompleted={() => {
+          onRefresh()
+        }}
       />
 
       <DeleteConfirmModal
