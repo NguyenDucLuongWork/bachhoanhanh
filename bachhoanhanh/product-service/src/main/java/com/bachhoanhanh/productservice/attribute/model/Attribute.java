@@ -21,7 +21,7 @@ public class Attribute {
     private AttributeType attributeType;
 
     // Convenience getters
-    public String getProductId() { return id.getProductId(); }
+    public Long getProductId() { return id.getProductId(); }
     public String getTypeName() { return id.getType(); }
 
     // Không để Lombok generate equals/hashCode từ @Data

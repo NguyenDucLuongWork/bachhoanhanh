@@ -5,39 +5,97 @@ import { DeleteConfirmModal } from "../components/DeleteConfirmModal";
 import { Loader } from "../components/Loader";
 import { showToast } from "../components/Toast";
 
-export function ProductsPage({
-  products,
-  loading,
-  onAddProduct,
-  onUpdateProduct,
-  onDeleteProduct,
-  onRefresh,
-}) {
-  const [filteredProducts, setFilteredProducts] = useState(products);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [deletingId, setDeletingId] = useState(null);
-  const [modalLoading, setModalLoading] = useState(false);
+
+const findCatalogAndParent = (nodes, id, parent = null) => {
+  for (const node of nodes) {
+    if (node.id === id) return { node, parent }
+    if (node.children?.length) {
+      const found = findCatalogAndParent(node.children, id, node)
+      if (found) return found
+    }
+  }
+  return null
+}
+
+const collectCatalogIds = (node) => {
+  const ids = [node.id]
+  if (node.children?.length) {
+    node.children.forEach((child) => {
+      ids.push(...collectCatalogIds(child))
+    })
+  }
+  return ids
+}
+
+export function ProductsPage({ products, loading, onAddProduct, onUpdateProduct, onDeleteProduct, onRefresh, prototypes, catalogs, selectedCatalog, onSelectCatalog, onViewProduct, searchProducts, getProductByBarcode, attributeTypes }) {
+  const [filteredProducts, setFilteredProducts] = useState(products)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isSearching, setIsSearching] = useState(false)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [deletingId, setDeletingId] = useState(null)
+  const [modalLoading, setModalLoading] = useState(false)
 
   useEffect(() => {
-    setFilteredProducts(
-      products.filter(
-        (p) =>
-          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          String(p.id).includes(searchQuery),
-      ),
-    );
-  }, [products, searchQuery]);
+    let filtered = products
+    if (selectedCatalog) {
+      const selectedEntry = findCatalogAndParent(catalogs, selectedCatalog)
+      const selectedIds = selectedEntry?.node ? collectCatalogIds(selectedEntry.node) : [selectedCatalog]
+      filtered = filtered.filter((p) => selectedIds.includes(p.catalogId))
+    }
+    setFilteredProducts(filtered)
+  }, [products, selectedCatalog, catalogs])
 
-  const handleAddProduct = async (name, price) => {
-    setModalLoading(true);
-    const result = await onAddProduct(name, price);
+  const handleSearch = async (query) => {
+    setSearchQuery(query)
+    if (!query.trim()) {
+      setFilteredProducts(
+        selectedCatalog
+          ? products.filter((p) => {
+              const selectedEntry = findCatalogAndParent(catalogs, selectedCatalog)
+              const selectedIds = selectedEntry?.node ? collectCatalogIds(selectedEntry.node) : [selectedCatalog]
+              return selectedIds.includes(p.catalogId)
+            })
+          : products
+      )
+      return
+    }
+
+    setIsSearching(true)
+    try {
+      let result = null
+      if (/^\d+$/.test(query)) {
+        result = await getProductByBarcode(query)
+      } else {
+        result = await searchProducts(query)
+      }
+
+      if (result?.success && result.data) {
+        const searchResults = Array.isArray(result.data) ? result.data : [result.data]
+        if (selectedCatalog) {
+          const selectedEntry = findCatalogAndParent(catalogs, selectedCatalog)
+          const selectedIds = selectedEntry?.node ? collectCatalogIds(selectedEntry.node) : [selectedCatalog]
+          setFilteredProducts(searchResults.filter((p) => selectedIds.includes(p.catalogId)))
+        } else {
+          setFilteredProducts(searchResults)
+        }
+      }
+    } catch (e) {
+      console.error('Search error:', e)
+    } finally {
+      setIsSearching(false)
+    }
+  }
+
+  const handleAddProduct = async (productData) => {
+    setModalLoading(true)
+    const result = await onAddProduct(productData)
     if (result.success) {
-      showToast(result.message);
-      setIsAddModalOpen(false);
+      setFilteredProducts((prev) => [...prev, result.data])
+      showToast(result.message)
+      setIsAddModalOpen(false)
     } else {
       showToast(result.message, true);
     }
@@ -49,13 +107,16 @@ export function ProductsPage({
     setIsEditModalOpen(true);
   };
 
-  const handleSaveEdit = async (name, price) => {
-    setModalLoading(true);
-    const result = await onUpdateProduct(selectedProduct.id, name, price);
+  const handleSaveEdit = async (productData) => {
+    setModalLoading(true)
+    const result = await onUpdateProduct(selectedProduct.productId, productData)
     if (result.success) {
-      showToast(result.message);
-      setIsEditModalOpen(false);
-      setSelectedProduct(null);
+      setFilteredProducts((prev) =>
+        prev.map((p) => (p.productId === selectedProduct.productId ? result.data : p))
+      )
+      showToast(result.message)
+      setIsEditModalOpen(false)
+      setSelectedProduct(null)
     } else {
       showToast(result.message, true);
     }
@@ -71,14 +132,19 @@ export function ProductsPage({
     setModalLoading(true);
     const result = await onDeleteProduct(deletingId);
     if (result.success) {
-      showToast(result.message);
-      setIsDeleteModalOpen(false);
-      setDeletingId(null);
+      setFilteredProducts((prev) => prev.filter((p) => p.productId !== deletingId))
+      showToast(result.message)
+      setIsDeleteModalOpen(false)
+      setDeletingId(null)
     } else {
       showToast(result.message, true);
     }
     setModalLoading(false);
   };
+
+  const selectedEntry = selectedCatalog ? findCatalogAndParent(catalogs, selectedCatalog) : null
+  const activeTopId = selectedEntry ? (selectedEntry.parent?.id || selectedEntry.node.id) : null
+  const activeBranch = selectedEntry ? (selectedEntry.node.children?.length ? selectedEntry.node : selectedEntry.parent) : null
 
   if (loading) {
     return (
@@ -114,14 +180,51 @@ export function ProductsPage({
         </button>
       </div>
 
+      {/* Catalog Navigation */}
+      <div className="tabs" style={{ marginBottom: '14px' }}>
+        <button
+          className={`tab ${!selectedCatalog ? 'active' : ''}`}
+          onClick={() => onSelectCatalog(null)}
+        >
+          All
+        </button>
+        {catalogs.map((catalog) => {
+          const isTopActive = activeTopId === catalog.id
+          return (
+            <button
+              key={catalog.id}
+              className={`tab ${isTopActive ? 'active' : ''}`}
+              onClick={() => onSelectCatalog(catalog.id)}
+            >
+              {catalog.name}
+            </button>
+          )
+        })}
+      </div>
+
+      {activeBranch?.children?.length ? (
+        <div className="tabs" style={{ marginBottom: '20px', paddingLeft: '12px' }}>
+          {activeBranch.children.map((child) => (
+            <button
+              key={child.id}
+              className={`tab ${selectedCatalog === child.id ? 'active' : ''}`}
+              onClick={() => onSelectCatalog(child.id)}
+            >
+              {child.name}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search products…"
+          placeholder="Search by name or barcode…"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => handleSearch(e.target.value)}
+          disabled={isSearching}
         />
-        <button className="btn btn-ghost" onClick={onRefresh}>
+        <button className="btn btn-ghost" onClick={onRefresh} disabled={isSearching}>
           Refresh
         </button>
       </div>
@@ -135,8 +238,9 @@ export function ProductsPage({
         <div className="products-grid">
           {filteredProducts.map((product) => (
             <ProductCard
-              key={product.id}
+              key={product.productId}
               product={product}
+              onView={onViewProduct}
               onEdit={handleEditProduct}
               onDelete={handleDeleteClick}
             />
@@ -150,6 +254,9 @@ export function ProductsPage({
         onClose={() => setIsAddModalOpen(false)}
         onSave={handleAddProduct}
         product={null}
+        prototypes={prototypes}
+        catalogs={catalogs}
+        attributeTypes={attributeTypes}
       />
 
       <ProductModal
@@ -161,6 +268,9 @@ export function ProductsPage({
         }}
         onSave={handleSaveEdit}
         product={selectedProduct}
+        prototypes={prototypes}
+        catalogs={catalogs}
+        attributeTypes={attributeTypes}
       />
 
       <DeleteConfirmModal

@@ -1,0 +1,87 @@
+package com.bachhoanhanh.userservice.service;
+
+import com.bachhoanhanh.userservice.dto.*;
+import com.bachhoanhanh.userservice.model.*;
+import com.bachhoanhanh.userservice.model.Role;
+import com.bachhoanhanh.userservice.repository.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+    private final UserRepository userRepository;
+    private final StaffProfileRepository staffProfileRepository;
+    private final CustomerProfileRepository customerProfileRepository;
+    private final KeycloakAdminService keycloakAdminService;
+
+    // ADMIN tạo STAFF
+    @Transactional
+    public UserResponse createStaff(CreateStaffRequest req) {
+        String keycloakId = null;
+        try {
+            keycloakId = keycloakAdminService.createUser(
+                    req.getUsername(), req.getEmail(), req.getPassword(), Role.STAFF
+            );
+
+            User user = User.builder()
+                    .keycloakId(keycloakId)
+                    .phone(req.getPhone())
+                    .fullName(req.getFullName())
+                    .email(req.getEmail())
+                    .role(Role.STAFF)
+                    .build();
+            userRepository.save(user);
+
+            StaffProfile profile = StaffProfile.builder()
+                    .user(user)
+                    .dateOfBirth(req.getDateOfBirth())
+                    .idCardNumber(req.getIdCardNumber())
+                    .isFemale(req.isFemale())
+                    .address(req.getAddress())
+                    .build();
+            staffProfileRepository.save(profile);
+
+            return UserResponse.from(user);
+        } catch (Exception e) {
+            if (keycloakId != null) {
+                keycloakAdminService.deleteUser(keycloakId); // Rollback thủ công trên Keycloak
+            }
+            throw new RuntimeException("Lỗi khi tạo nhân viên: " + e.getMessage());
+        }
+    }
+
+    // CUSTOMER tự đăng ký
+    @Transactional
+    public UserResponse registerCustomer(RegisterCustomerRequest req) {
+        String keycloakId = keycloakAdminService.createUser(
+                req.getPhone(), req.getEmail(), req.getPassword(), Role.CUSTOMER
+        );
+
+        User user = User.builder()
+                .keycloakId(keycloakId)
+                .phone(req.getPhone())
+                .fullName(req.getFullName())
+                .email(req.getEmail())
+                .role(Role.CUSTOMER)
+                .build();
+        userRepository.save(user);
+
+        CustomerProfile profile = CustomerProfile.builder()
+                .user(user)
+                .loyaltyPoints(0)
+                .build();
+        customerProfileRepository.save(profile);
+
+        return UserResponse.from(user);
+    }
+
+    // ADMIN xóa user (staff hoặc customer)
+    @Transactional
+    public void deleteUser(String keycloakId) {
+        keycloakAdminService.deleteUser(keycloakId);
+        userRepository.deleteById(keycloakId);
+    }
+}

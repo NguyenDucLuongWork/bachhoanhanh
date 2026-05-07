@@ -12,6 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttributeId implements Serializable {
-    private String productId; //Base Product Id
+    private Long productId; //Base Product Id
     private String type; //AttibuteType name
 }

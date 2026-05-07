@@ -1,4 +1,4 @@
-docker exec -it bachhoanhanh-redis redis-clis
+docker exec -it bachhoanhanh-redis redis-cli
 
 # See all keys currently stored
 

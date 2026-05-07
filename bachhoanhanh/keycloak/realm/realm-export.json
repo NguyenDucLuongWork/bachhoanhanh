@@ -1,15 +1,22 @@
 {
   "realm": "bachhoanhanh",
   "enabled": true,
-
+  "roles": {
+    "realm": [
+      { "name": "ADMIN",    "description": "Quản trị viên" },
+      { "name": "STAFF",    "description": "Nhân viên" },
+      { "name": "CUSTOMER", "description": "Khách hàng" }
+    ]
+  },
   "users": [
     {
-      "username": "testuser",
+      "username": "admin",
       "enabled": true,
+      "firstName": "System",
+      "lastName": "Admin",
+      "email": "admin@bachhoanhanh.vn",
       "emailVerified": true,
-      "firstName": "Test",
-      "lastName": "User",
-      "email": "test@example.com",
+      "requiredActions": [],
       "credentials": [
         {
           "type": "password",
@@ -17,10 +24,43 @@
           "temporary": false
         }
       ],
-      "requiredActions": []
+      "realmRoles": ["ADMIN"]
+    },
+    {
+      "username": "teststaff",
+      "enabled": true,
+      "firstName": "Anh",
+      "lastName": "Developer",
+      "email": "dev@bachhoanhanh.vn",
+      "emailVerified": true,
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "123456",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["STAFF"]
+    },
+    {
+      "username": "testcustomer",
+      "enabled": true,
+      "firstName": "Nguyen",
+      "lastName": "Van A",
+      "email": "test@gmail.com",
+      "emailVerified": true,
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "123456",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["CUSTOMER"]
     }
   ],
-
   "clients": [
     {
       "clientId": "gateway-client",
@@ -28,6 +68,13 @@
       "publicClient": true,
       "directAccessGrantsEnabled": true,
       "standardFlowEnabled": false
+    },
+    {
+      "clientId": "user-service-client",
+      "enabled": true,
+      "publicClient": false,
+      "serviceAccountsEnabled": true,
+      "secret": "user-service-secret"
     }
   ]
 }
