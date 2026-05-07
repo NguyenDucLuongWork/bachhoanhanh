@@ -16,10 +16,23 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchange -> exchange
+                        // ===== USERS =====
+                        .pathMatchers(HttpMethod.POST, "/users/register").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/users/staff").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+                        .pathMatchers("/users/**").authenticated()
 
-                        // ===== PRODUCTS =====
+                        // ===== PRODUCTS (Mới & Cũ) =====
                         .pathMatchers(HttpMethod.GET, "/products/**").permitAll()
                         .pathMatchers("/products/**").authenticated()
+
+                        // ===== ATTRIBUTE TYPES (Mới thêm) =====
+                        .pathMatchers(HttpMethod.GET, "/attribute-types/**").permitAll()
+                        .pathMatchers("/attribute-types/**").authenticated()
+
+                        // ===== PROTOTYPES (Mới thêm) =====
+                        .pathMatchers(HttpMethod.GET, "/prototypes/**").permitAll()
+                        .pathMatchers("/prototypes/**").authenticated()
 
                         // ===== BRANDS =====
                         .pathMatchers(HttpMethod.GET, "/brands/**").permitAll()

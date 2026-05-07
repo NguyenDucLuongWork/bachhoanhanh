@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-const AUTH_URL = '/api/auth'
+const AUTH_URL = '/auth/realms/bachhoanhanh/protocol/openid-connect/token'
 
 export function useAuth() {
   const [token, setToken] = useState(null)

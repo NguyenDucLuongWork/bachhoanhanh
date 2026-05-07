@@ -18,6 +18,7 @@ public class BaseProduct {
     private String name;
     private String image;
     private String description;
+    private String catalogId;
     private double originalPrice;
     private String prototypeId;
 }

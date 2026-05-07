@@ -7,20 +7,29 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      '/api/auth': {
-        target: 'http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token',
+      '/auth': {
+        target: 'http://bachhoanhanh',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/auth/, ''),
       },
-      '/api/products': {
-        target: 'http://bachhoanhanh/products',
+      '/products': {
+        target: 'http://bachhoanhanh',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/products/, ''),
       },
-      '/api/orders': {
-        target: 'http://bachhoanhanh/orders',
+      '/prototypes': {
+        target: 'http://bachhoanhanh',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/orders/, ''),
+      },
+      '/catalogs': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/orders': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/attribute-types': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
       },
     },
   },
