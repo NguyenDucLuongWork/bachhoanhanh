@@ -1,12 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { OrderCard } from '../components/OrderCard'
 import { OrderDetailsModal } from '../components/OrderDetailsModal'
 import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
 
-export function OrdersPage({ orders, loading, onLoadOrders, onGetOrderDetails, onCancelOrder, onRefresh }) {
-  const [filteredOrders, setFilteredOrders] = useState(orders)
+export function OrdersPage({
+  orders,
+  loading,
+  onLoadOrders,
+  onGetOrderDetails,
+  onCancelOrder,
+  onRefresh,
+  onGoHome,
+  token,
+}) {
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false)
@@ -19,7 +27,7 @@ export function OrdersPage({ orders, loading, onLoadOrders, onGetOrderDetails, o
     onLoadOrders()
   }, [onLoadOrders])
 
-  useEffect(() => {
+  const filteredOrders = useMemo(() => {
     let filtered = orders
 
     // Filter by search query
@@ -32,7 +40,7 @@ export function OrdersPage({ orders, loading, onLoadOrders, onGetOrderDetails, o
       filtered = filtered.filter((o) => o.status === statusFilter)
     }
 
-    setFilteredOrders(filtered)
+    return filtered
   }, [orders, searchQuery, statusFilter])
 
   const handleViewDetails = async (id) => {
@@ -140,6 +148,12 @@ export function OrdersPage({ orders, loading, onLoadOrders, onGetOrderDetails, o
           setIsDetailsModalOpen(false)
           setSelectedOrder(null)
         }}
+        onPaymentCompleted={() => {
+          onRefresh()
+        }}
+        onGoHome={onGoHome}
+        token={token}
+        staticQrImageUrl="/qr.png"
       />
 
       <DeleteConfirmModal

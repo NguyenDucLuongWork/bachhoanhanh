@@ -145,6 +145,8 @@ function App() {
             onGetOrderDetails={getOrderDetails}
             onCancelOrder={cancelOrder}
             onRefresh={loadOrders}
+            onGoHome={() => setCurrentPage('products')}
+            token={token}
           />
         )}
       </main>
