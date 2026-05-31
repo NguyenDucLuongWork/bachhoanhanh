@@ -372,3 +372,101 @@ INSERT INTO attribute (product_id, type, value) VALUES
                                                     (10, 'INGREDIENTS', 'Sugar, Glucose Syrup, Fruit Puree, Lactic Acid, Malic Acid, Citric Acid, Flavorings, Colors'),
                                                     (10, 'ENERGY',      '45 kcal / pop'),
                                                     (10, 'WARNINGS',    'Not suitable for children under 3 years due to choking hazard');
+
+-- ═══════════════════════════════════════════════════════
+-- VOUCHER DB  (append to init.sql)
+-- Requires MariaDB 10.2+ for CHECK constraint enforcement
+-- ═══════════════════════════════════════════════════════
+
+-- Add to the top CREATE DATABASE block:
+CREATE DATABASE IF NOT EXISTS voucherdb;
+GRANT ALL PRIVILEGES ON voucherdb.* TO 'appuser'@'%';
+FLUSH PRIVILEGES;
+
+-- ───────────────────────────────────────────────────────
+-- Schema
+-- ───────────────────────────────────────────────────────
+USE voucherdb;
+
+CREATE TABLE IF NOT EXISTS voucher (
+                                       id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                       code                VARCHAR(50)  NOT NULL UNIQUE,
+    description         TEXT,
+    discount_type       VARCHAR(10)  NOT NULL COMMENT 'PERCENT | FIXED',
+    discount_value      DOUBLE       NOT NULL,
+    min_order_value     DOUBLE       NOT NULL DEFAULT 0,
+    max_discount_amount DOUBLE       NOT NULL DEFAULT 0,
+    usage_limit         INT          NOT NULL DEFAULT 0 COMMENT '0 = unlimited',
+    used_count          INT          NOT NULL DEFAULT 0,
+    start_date          DATETIME     NOT NULL,
+    end_date            DATETIME     NOT NULL,
+    active              BOOLEAN      NOT NULL DEFAULT TRUE,
+
+    -- Exactly one of the two target columns should be non-null
+    target_product_id   BIGINT       NULL COMMENT 'FK to productdb.base_product.product_id',
+    target_catalog_id   VARCHAR(255) NULL COMMENT 'FK to catalogdb.catalog.id (slug)',
+
+    CONSTRAINT chk_single_target CHECK (
+                                           target_product_id IS NULL OR target_catalog_id IS NULL
+                                       )
+    );
+
+-- ───────────────────────────────────────────────────────
+-- Seed data
+-- ───────────────────────────────────────────────────────
+
+-- Global voucher (no target restriction)
+INSERT INTO voucher (code, description, discount_type, discount_value, min_order_value,
+                     max_discount_amount, usage_limit, start_date, end_date, active,
+                     target_product_id, target_catalog_id)
+VALUES
+    (
+        'WELCOME10',
+        '10% off for all new customers',
+        'PERCENT', 10, 0, 50000, 100,
+        '2025-01-01 00:00:00', '2099-12-31 23:59:59', TRUE,
+        NULL, NULL
+    ),
+    (
+        'FLAT20K',
+        'Flat 20,000 VND off orders over 100,000 VND',
+        'FIXED', 20000, 100000, 0, 200,
+        '2025-01-01 00:00:00', '2099-12-31 23:59:59', TRUE,
+        NULL, NULL
+    ),
+
+-- Voucher tied to a specific product (Ba rọi heo VietGAP = product_id 1)
+    (
+        'PORK500',
+        '15% off on Ba roi heo VietGAP',
+        'PERCENT', 15, 50000, 30000, 50,
+        '2025-01-01 00:00:00', '2099-12-31 23:59:59', TRUE,
+        1, NULL
+    ),
+
+-- Voucher tied to a catalog (fresh vegetables)
+    (
+        'VEGGIE5K',
+        '5,000 VND off fresh vegetables',
+        'FIXED', 5000, 20000, 0, 0,
+        '2025-01-01 00:00:00', '2099-12-31 23:59:59', TRUE,
+        NULL, 'fresh-food-vegetables'
+    ),
+
+-- Voucher tied to beverages catalog
+    (
+        'DRINK20',
+        '20% off beverages (max 15,000 VND)',
+        'PERCENT', 20, 30000, 15000, 0,
+        '2025-01-01 00:00:00', '2099-12-31 23:59:59', TRUE,
+        NULL, 'beverages'
+    ),
+
+-- Expired voucher (for testing)
+    (
+        'EXPIRED',
+        'Expired test voucher',
+        'FIXED', 10000, 0, 0, 0,
+        '2020-01-01 00:00:00', '2020-12-31 23:59:59', FALSE,
+        NULL, NULL
+    );
