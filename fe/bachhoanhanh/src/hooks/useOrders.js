@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-const ORDERS_URL = '/api/orders'
+const ORDERS_URL = '/orders'
 
 export function useOrders(token) {
   const [orders, setOrders] = useState([])
@@ -35,6 +35,32 @@ export function useOrders(token) {
       }
     },
     [token]
+  )
+
+  const createOrder = useCallback(
+    async (productId, quantity) => {
+      try {
+        const headers = {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: 'Bearer ' + token } : {}),
+        }
+        const res = await fetch(ORDERS_URL, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ productId: String(productId), quantity }),
+        })
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => null)
+          throw new Error(errorData?.message || 'Create order failed')
+        }
+        const data = await res.json()
+        await loadOrders()
+        return { success: true, message: 'Order created', data }
+      } catch (e) {
+        return { success: false, message: e.message }
+      }
+    },
+    [token, loadOrders]
   )
 
   const updateOrderStatus = useCallback(
@@ -81,6 +107,7 @@ export function useOrders(token) {
     orders,
     loading,
     loadOrders,
+    createOrder,
     getOrderDetails,
     updateOrderStatus,
     cancelOrder,

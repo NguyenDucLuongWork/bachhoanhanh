@@ -56,7 +56,7 @@ export function OrderDetailsModal({
       if (!orderData || orderData.status !== 'pending') return
       setCheckoutLoading(true)
       try {
-        const res = await fetch('/api/payments/checkout', {
+        const res = await fetch('/payments/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
           body: JSON.stringify({ orderId: orderData.id, amount: orderData.total }),
@@ -101,7 +101,7 @@ export function OrderDetailsModal({
     let cancelled = false
     const interval = setInterval(async () => {
       try {
-        const res = await fetch('/api/payments/status/' + orderData.id, {
+        const res = await fetch('/payments/status/' + orderData.id, {
           headers: getAuthHeaders(),
         })
         if (!res.ok) return
@@ -272,7 +272,7 @@ export function OrderDetailsModal({
                           }
                           setConfirmingPayment(true)
                           try {
-                            const res = await fetch('/api/payments/' + paymentInfo.paymentId + '/pay', {
+                            const res = await fetch('/payments/' + paymentInfo.paymentId + '/pay', {
                               method: 'POST',
                               headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
                             })
