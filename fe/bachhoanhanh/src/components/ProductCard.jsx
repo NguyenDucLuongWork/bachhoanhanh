@@ -1,52 +1,71 @@
 import { formatPrice } from '../utils/helpers'
 
-export function ProductCard({ product, onView, onEdit, onDelete }) {
+export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, onAddToCart, onBuyNow }) {
   return (
-    <div className="product-card" onClick={() => onView(product.productId)} style={{ cursor: 'pointer' }}>
-      {product.image ? (
-        <div className="product-img" style={{ height: '180px', overflow: 'hidden', borderTopLeftRadius: '16px', borderTopRightRadius: '16px' }}>
-          <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-        </div>
-      ) : (
-        <div className="product-img" style={{ height: '180px', display: 'grid', placeItems: 'center', color: 'var(--muted)', borderTopLeftRadius: '16px', borderTopRightRadius: '16px', background: 'rgba(0,0,0,0.03)' }}>
-          No image
-        </div>
-      )}
-      <div className="product-body" style={{ padding: '20px 18px' }}>
-        <div className="product-name">{product.name}</div>
-        <div className="product-price">{formatPrice(product.originalPrice)} ₫</div>
-        <div className="product-actions" style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
-          <button
-            className="btn btn-ghost btn-sm"
-            style={{ flex: 1 }}
-            onClick={(e) => {
-              e.stopPropagation()
-              onEdit(product)
-            }}
-          >
-            Edit
-          </button>
-          <button
-            className="btn btn-sm"
-            style={{
-              flex: 1,
-              background: 'rgba(239,68,68,0.1)',
-              color: '#ef4444',
-              border: 'none',
-              cursor: 'pointer',
-              borderRadius: '8px',
-              fontSize: '12px',
-              padding: '5px 10px',
-            }}
-            onClick={(e) => {
-              e.stopPropagation()
-              onDelete(product.productId)
-            }}
-          >
-            Delete
-          </button>
-        </div>
+    <article className="store-card" onClick={() => onView(product.productId)}>
+      <div className="store-card-media">
+        {product.image ? (
+          <img src={product.image} alt={product.name} />
+        ) : (
+          <div className="image-fallback">No image</div>
+        )}
+        {product.catalogId && <span className="card-chip">{product.catalogId}</span>}
       </div>
-    </div>
+
+      <div className="store-card-body">
+        <div>
+          <h3>{product.name}</h3>
+          <p>{product.description || 'Fresh daily essentials ready for fast delivery.'}</p>
+        </div>
+        <div className="card-price-row">
+          <strong>{formatPrice(product.originalPrice)} VND</strong>
+          {product.barcode && <span>#{product.barcode}</span>}
+        </div>
+
+        {isAdminUser ? (
+          <div className="card-actions">
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={(event) => {
+                event.stopPropagation()
+                onEdit(product)
+              }}
+            >
+              Edit
+            </button>
+            <button
+              className="btn btn-danger btn-sm"
+              onClick={(event) => {
+                event.stopPropagation()
+                onDelete(product.productId)
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        ) : (
+          <div className="card-actions">
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={(event) => {
+                event.stopPropagation()
+                onAddToCart(product)
+              }}
+            >
+              Add to cart
+            </button>
+            <button
+              className="btn btn-accent btn-sm"
+              onClick={(event) => {
+                event.stopPropagation()
+                onBuyNow(product)
+              }}
+            >
+              Buy now
+            </button>
+          </div>
+        )}
+      </div>
+    </article>
   )
 }
