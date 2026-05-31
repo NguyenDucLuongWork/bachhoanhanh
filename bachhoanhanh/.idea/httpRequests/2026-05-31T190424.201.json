@@ -1,0 +1,16 @@
+{
+  "id": 7,
+  "code": "SUMMER15",
+  "description": "15% off all orders this summer",
+  "discountType": "PERCENT",
+  "discountValue": 15.0,
+  "minOrderValue": 50000.0,
+  "maxDiscountAmount": 75000.0,
+  "usageLimit": 100,
+  "usedCount": 0,
+  "startDate": "2026-06-01T00:00:00",
+  "endDate": "2026-08-31T23:59:59",
+  "active": true,
+  "targetProductId": null,
+  "targetCatalogId": null
+}

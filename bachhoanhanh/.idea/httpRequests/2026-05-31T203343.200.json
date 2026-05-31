@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "code": "WELCOME10",
+  "description": "10% off for all new customers",
+  "discountType": "PERCENT",
+  "discountValue": 10.0,
+  "minOrderValue": 0.0,
+  "maxDiscountAmount": 50000.0,
+  "usageLimit": 100,
+  "usedCount": 0,
+  "startDate": "2025-01-01T00:00:00",
+  "endDate": "2099-12-31T23:59:59",
+  "active": true,
+  "targetProductId": null,
+  "targetCatalogId": null
+}
