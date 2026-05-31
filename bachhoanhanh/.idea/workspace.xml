@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.local" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-testing/test-payment.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-testing/test-payment.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/bachhoanhanh/paymentservice/PaymentServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/bachhoanhanh/paymentservice/PaymentServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/bachhoanhanh/paymentservice/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/bachhoanhanh/paymentservice/controller/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +29,28 @@
       <entry key="chat-panel" value="GPT-5.2" />
     </selectedModels>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Dockerfile" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="HttpClientOnboardingState"><![CDATA[{
-  "isOnboardingCommentShown": true
-}]]></component>
+  <component name="HttpClientOnboardingState">{
+  &quot;isOnboardingCommentShown&quot;: true
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -51,6 +64,27 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "HTTP Request.get-products | Get 1 Product.executor": "Run",
+    "HTTP Request.get-products | Get Products.executor": "Run",
+    "HTTP Request.login | Login to get Access Token.executor": "Run",
+    "HTTP Request.test-payment | Get All Payments.executor": "Run",
+    "HTTP Request.test-product-new | Lấy danh sách loại thuộc tính.executor": "Run",
+    "HTTP Request.test-product-new | Tạo mẫu sản phẩm \"Thịt heo sạch\".executor": "Run",
+    "HTTP Request.test-product-new | Tạo mới loại thuộc tính: Hạn sử dụng (Yêu cầu Token).executor": "Run",
+    "HTTP Request.test-product-new | Tạo mới loại thuộc tính: Khối lượng (Yêu cầu Token).executor": "Run",
+    "HTTP Request.voucher | Apply Voucher - Global voucher.executor": "Run",
+    "HTTP Request.voucher | Apply Voucher - Non-existent code (expect 404).executor": "Run",
+    "HTTP Request.voucher | Confirm Usage (called after order is placed).executor": "Run",
+    "HTTP Request.voucher | Create Voucher - Global (no target).executor": "Run",
+    "HTTP Request.voucher | Create Voucher - Target a catalog (fresh vegetables).executor": "Run",
+    "HTTP Request.voucher | Create Voucher - Target a specific product (productId = 1).executor": "Run",
+    "HTTP Request.voucher | Delete Voucher.executor": "Run",
+    "HTTP Request.voucher | Get All Vouchers.executor": "Run",
+    "HTTP Request.voucher | Get Voucher By Code.executor": "Run",
+    "HTTP Request.voucher | Get Voucher By Id.executor": "Run",
+    "HTTP Request.voucher | Login to get Access Token.executor": "Run",
+    "HTTP Request.voucher | Update Voucher.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -58,19 +92,27 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "ThanhQuy",
+    "git-widget-placeholder": "luong",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Nam3/HK2/KTTKPM/Nhom/bachhoanhanh/bachhoanhanh",
+    "last_opened_file_path": "C:/_Luong/Studying/ktpm/bachhoanhanh/bachhoanhanh",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.4632184",
     "run.configurations.included.in.services": "true",
     "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\_Luong\Studying\ktpm\bachhoanhanh\bachhoanhanh\api-testing" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -80,8 +122,38 @@
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="HttpClient.HttpRequestRunConfigurationType">
+          <value>
+            <map>
+              <entry key="voucher | Apply Voucher - Global voucher" value="STOPPED" />
+              <entry key="voucher | Apply Voucher - Non-existent code (expect 404)" value="STOPPED" />
+              <entry key="voucher | Confirm Usage (called after order is placed)" value="STOPPED" />
+              <entry key="voucher | Create Voucher - Target a specific product (productId = 1)" value="STOPPED" />
+              <entry key="voucher | Login to get Access Token" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
+    <configuration name="voucher | Confirm Usage (called after order is placed)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Confirm Usage (called after order is placed)" index="17" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="voucher | Create Voucher - Global (no target)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Create Voucher - Global (no target)" index="5" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="voucher | Create Voucher - Target a specific product (productId = 1)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Create Voucher - Target a specific product (productId = 1)" index="6" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="voucher | Get Voucher By Code" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Get Voucher By Code" index="4" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="voucher | Login to get Access Token" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Login to get Access Token" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="BrandServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="brand-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.bachhoanhanh.brandservice.BrandServiceApplication" />
@@ -131,6 +203,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="user-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.bachhoanhanh.userservice.UserServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VoucherServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="voucher-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.bachhoanhanh.voucherservice.VoucherServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.voucher | Create Voucher - Target a specific product (productId = 1)" />
+        <item itemvalue="HTTP Request.voucher | Create Voucher - Global (no target)" />
+        <item itemvalue="HTTP Request.voucher | Get Voucher By Code" />
+        <item itemvalue="HTTP Request.voucher | Login to get Access Token" />
+        <item itemvalue="HTTP Request.voucher | Confirm Usage (called after order is placed)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -145,6 +248,16 @@
       <workItem from="1777996253048" duration="79000" />
       <workItem from="1777997364834" duration="3674000" />
       <workItem from="1778041542681" duration="4714000" />
+      <workItem from="1778732732126" duration="3836000" />
+      <workItem from="1778818774227" duration="38000" />
+      <workItem from="1779336208940" duration="1354000" />
+      <workItem from="1779377192220" duration="382000" />
+      <workItem from="1779402691874" duration="1072000" />
+      <workItem from="1779409541623" duration="2029000" />
+      <workItem from="1779419788983" duration="7084000" />
+      <workItem from="1780218174470" duration="1241000" />
+      <workItem from="1780219433167" duration="395000" />
+      <workItem from="1780219862699" duration="9081000" />
     </task>
     <servers />
   </component>

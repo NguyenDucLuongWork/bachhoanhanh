@@ -1,0 +1,6 @@
+{
+  "timestamp": "2026-05-31T11:34:03.935+00:00",
+  "status": 500,
+  "error": "Internal Server Error",
+  "path": "/attribute-types"
+}
