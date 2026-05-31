@@ -17,6 +17,8 @@ import java.util.UUID;
 @RequestMapping("/payments")
 public class PaymentController {
 
+    private static final String ORDER_SERVICE_URL = "http://order-service:8081/orders/";
+
     private final RestTemplate restTemplate;
     private final PaymentService paymentService;
 
@@ -27,16 +29,17 @@ public class PaymentController {
 
     @PostMapping("/process")
     public ResponseEntity<?> processPayment(@RequestBody Map<String, Object> paymentPayload) {
-        String orderId = (String) paymentPayload.get("orderId");
+        Object orderIdValue = paymentPayload.get("orderId");
+        String orderId = orderIdValue == null ? null : String.valueOf(orderIdValue);
         String paymentMethod = (String) paymentPayload.get("paymentMethod"); // Ví dụ: VNPAY, MOMO, CASH
 
-        if (orderId == null || orderId.isEmpty()) {
+        if (orderId == null || orderId.isBlank()) {
             return ResponseEntity.badRequest().body("Mã đơn hàng (orderId) là bắt buộc!");
         }
 
         try {
             // 1. Kiểm tra đơn hàng có tồn tại thông qua kết nối nội bộ đến order-service
-            String orderUrl = "http://order-service/orders/" + orderId;
+            String orderUrl = ORDER_SERVICE_URL + orderId;
             Map<?, ?> order = restTemplate.getForObject(orderUrl, Map.class);
 
             if (order == null) {
@@ -48,7 +51,7 @@ public class PaymentController {
             String finalStatus = "paid"; // mark order as paid after successful payment
 
             // 3. Gọi ngược lại order-service để cập nhật trạng thái đơn hàng
-            String updateStatusUrl = "http://order-service/orders/" + orderId;
+            String updateStatusUrl = ORDER_SERVICE_URL + orderId;
             Map<String, String> body = Map.of("status", finalStatus);
             restTemplate.put(updateStatusUrl, body);
 
@@ -65,7 +68,7 @@ public class PaymentController {
         } catch (Exception e) {
             // Nếu có lỗi hệ thống, cập nhật đơn hàng thành failed (best-effort)
             try {
-                String updateStatusUrl = "http://order-service/orders/" + orderId;
+                String updateStatusUrl = ORDER_SERVICE_URL + orderId;
                 Map<String, String> body = Map.of("status", "failed");
                 restTemplate.put(updateStatusUrl, body);
             } catch (Exception ex) {
