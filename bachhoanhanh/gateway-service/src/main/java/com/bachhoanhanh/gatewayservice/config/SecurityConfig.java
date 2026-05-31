@@ -10,6 +10,15 @@ import org.springframework.security.oauth2.server.resource.web.server.authentica
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
 import reactor.core.publisher.Mono;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -19,35 +28,22 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
                 .csrf(csrf -> csrf.disable())
-
-                // ── 1. Custom bearer converter ──────────────────────────────────
-                // Returns empty Mono (anonymous) when no token is present,
-                // instead of throwing — lets permitAll() paths through cleanly.
                 .oauth2ResourceServer(oauth -> oauth
-                        .jwt(jwt -> { /* uses auto-configured JwtDecoder from properties */ })
+                        // Use our custom converter to handle Keycloak roles
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(grantedAuthoritiesExtractor()))
                         .bearerTokenConverter(exchange -> {
                             ServerBearerTokenAuthenticationConverter delegate =
                                     new ServerBearerTokenAuthenticationConverter();
                             return delegate.convert(exchange)
                                     .onErrorResume(e -> Mono.empty()); // missing token → anonymous
                         })
-                        // ── 2. Clean 401 on auth failure (no WWW-Authenticate header noise) ──
                         .authenticationEntryPoint(
                                 new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)
                         )
                 )
-
-                // ── 3. Authorization rules ───────────────────────────────────────
                 .authorizeExchange(exchange -> exchange
-
-                        // --- Swagger / API docs (always public) ---
-                        .pathMatchers(
-                                "/swagger-ui.html",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/aggregate/**",
-                                "/webjars/**"
-                        ).permitAll()
+                        // --- Swagger / API docs ---
+                        .pathMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/aggregate/**", "/webjars/**").permitAll()
 
                         // --- Users ---
                         .pathMatchers(HttpMethod.POST, "/users/register").permitAll()
@@ -55,35 +51,36 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
                         .pathMatchers("/users/**").authenticated()
 
-                        // --- Products ---
-                        .pathMatchers(HttpMethod.GET, "/products/**").permitAll()
-                        .pathMatchers(HttpMethod.GET, "/attribute-types/**").permitAll()
-                        .pathMatchers(HttpMethod.GET, "/prototypes/**").permitAll()
-                        .pathMatchers("/products/**", "/attribute-types/**", "/prototypes/**").authenticated()
+                        // --- Products & Others ---
+                        .pathMatchers(HttpMethod.GET, "/products/**", "/attribute-types/**", "/prototypes/**", "/brands/**", "/catalogs/**").permitAll()
+                        .pathMatchers("/products/**", "/attribute-types/**", "/prototypes/**", "/brands/**", "/catalogs/**").authenticated()
 
-                        // --- Brands ---
-                        .pathMatchers(HttpMethod.GET, "/brands/**").permitAll()
-                        .pathMatchers("/brands/**").authenticated()
-
-                        // --- Catalogs ---
-                        .pathMatchers(HttpMethod.GET, "/catalogs/**").permitAll()
-                        .pathMatchers("/catalogs/**").authenticated()
-
-                        // --- Orders & Payments (always need token) ---
-                        .pathMatchers("/orders/**").authenticated()
-                        .pathMatchers("/payments/**").authenticated()
+                        // --- Orders & Payments ---
+                        .pathMatchers("/orders/**", "/payments/**").authenticated()
 
                         // --- Vouchers ---
                         .pathMatchers(HttpMethod.GET,  "/vouchers/**").permitAll()
                         .pathMatchers(HttpMethod.POST, "/vouchers/apply").permitAll()
-                        .pathMatchers(HttpMethod.POST, "/vouchers").permitAll()
-                        .pathMatchers(HttpMethod.PUT,  "/vouchers/**").permitAll()
-                        .pathMatchers(HttpMethod.DELETE, "/vouchers/**").permitAll()
-                        .pathMatchers("/vouchers/**").authenticated()
-
+                        .pathMatchers(HttpMethod.POST, "/vouchers", "/vouchers/**").hasRole("ADMIN")
                         .anyExchange().permitAll()
                 );
 
         return http.build();
+    }
+
+    private Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
+            Map<String, Object> realmAccess = jwt.getClaim("realm_access");
+            if (realmAccess == null || realmAccess.isEmpty()) {
+                return Collections.emptyList();
+            }
+            @SuppressWarnings("unchecked")
+            Collection<String> roles = (Collection<String>) realmAccess.get("roles");
+            return roles.stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                    .collect(Collectors.toList());
+        });
+        return jwt -> Mono.just(jwtAuthenticationConverter.convert(jwt));
     }
 }
