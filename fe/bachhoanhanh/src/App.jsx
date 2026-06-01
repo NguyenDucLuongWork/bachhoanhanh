@@ -222,6 +222,7 @@ function App() {
             isAdminUser={isAdminUser}
             onAddToCart={addToCart}
             onBuyNow={buyNow}
+            products={products}
           />
         )}
         {currentPage === 'orders' && isLoggedIn && (

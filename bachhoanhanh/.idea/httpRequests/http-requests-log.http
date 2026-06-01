@@ -1,3 +1,110 @@
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-01T215044.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-01T214912.502.html
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T214611.502.html
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 138
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "phone": "0912345678",
+  "lastName": "Nguyen",
+  "firstName": "Van B",
+  "email": "new_guest@gmail.com",
+  "password": "password123"
+}
+
+<> 2026-06-01T210332.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-01T210312.200.json
+
+###
+
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJaT1pfeFN0MVotRWt1Nl9YLWxRS01NWnpvLS1pUGt3WnA1WDdLTGxYZWFNIn0.eyJleHAiOjE3ODAzMjI4MjksImlhdCI6MTc4MDMyMjUyOSwianRpIjoiYjRhNmNiNjctYzAyMS00MDc3LWI4NGMtZTk5MGVkY2MwY2FmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJlM2Q3YjJiZi05NDNiLTRmMDgtOTNlYS01MTg5YWZjODUxNzIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIyZmMwNTYxNy0wZmQ2LTRiNWUtOTE3Yi02OGQ2N2VhMzA3OGMiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIyZmMwNTYxNy0wZmQ2LTRiNWUtOTE3Yi02OGQ2N2VhMzA3OGMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.a7BpO64xEGWNd173NNamko_X-kd_5NshWDaCW8H_4C-nnbhxmRsm4LAL773PnIXHjzfNgDEz2Xss9KbJLsR6k5xSOr5Bx0y96xaLPJDA8YdXKRW0fI4WSOGNSqTwfaWRm7tTXpNiyifEbEyxdJiw4DkvoOdPeU6ByOvfBUU23QOLGvf9phh3ldb45JdekvcZaJ1HAzN5mw20egfOMA-qtCDkCfGe7SwNjduHiLt7ECD_mnJfGK4Vrm4Oz_78jTMovBkzMlp_2L24c641Kp_8o_PIUGClvAWPDb-jc4Rgr2_dWErt0kheyIuVUFuaSoPDN3XD0kh8wzl2OiRPiz3G3A
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T210308.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T210209.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T210206.200.json
+
+###
+
 GET http://bachhoanhanh/users/3fa85f64-5717-4562-b3fc-2c963f66afa6
 Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLVUtuSDlsbVE4S2FOcnVndTJsOHBoNEFOUnljVjhTUWVjZWJpT1BtNGlVIn0.eyJleHAiOjE3ODAyODI3MzIsImlhdCI6MTc4MDI4MjQzMiwianRpIjoiOTRlNzk0ZjMtNTljZi00ZmE5LWExMmEtYmJmYzk0NWUyYWIxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjM0OTBhYjU4LTNiM2YtNGE3Ni1hNmVlLWY5YmFkYWE2ZTIyNCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjM0OTBhYjU4LTNiM2YtNGE3Ni1hNmVlLWY5YmFkYWE2ZTIyNCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.evXsy2JU1s3X_eA7rpoJHmU7Ht9mKLESkjMsZ3OadqEHlAKV7u4K8uNPFegOP-5jAYuEfLI6uEiTICDYYxqfixeZsNoNk86QadbZJuWPY4VNVbAjCpuoxAKm2AsXea9FQ_q6PnQbAl8oH3zdOc8wmXWGbLnFReQLFRwSHRBD1gQjJKT2PzkZd6OxNjHDZ-2NRH6yMlaP9hdjFhcLNopTWplu6HjnGwKLzMAHgbC2xKcC-hGLlvVgcQ-fRpSX4kOAA9PEW-fCpGPfWw0yB89Kseep9CJtDj6M_rZpAJI14QaoJYVDTUlRdp_SJwSaIduU6V-8_k0snD6teCVwonGahg
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
@@ -576,129 +683,6 @@ Accept: */*
 }
 
 <> 2026-06-01T075838.500.json
-
-###
-
-POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 82
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
-
-<> 2026-06-01T075834.200.json
-
-###
-
-POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 75
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-grant_type=password&client_id=gateway-client&username=admin&password=123456
-
-<> 2026-06-01T075829.200.json
-
-###
-
-POST http://bachhoanhanh/users/register
-Content-Type: application/json
-Content-Length: 144
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-{
-  "email": "new_guest@gmail.com",
-  "password": "password123",
-  "firstName": "Nguyen",
-  "lastName": "Van B",
-  "phoneNumber": "0912345678"
-}
-
-<> 2026-06-01T075817.500.json
-
-###
-
-POST http://bachhoanhanh/users/register
-Content-Type: application/json
-Content-Length: 144
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-{
-  "email": "new_guest@gmail.com",
-  "password": "password123",
-  "firstName": "Nguyen",
-  "lastName": "Van B",
-  "phoneNumber": "0912345678"
-}
-
-<> 2026-06-01T075815.500.json
-
-###
-
-POST http://bachhoanhanh/users/register
-Content-Type: application/json
-Content-Length: 144
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-{
-  "email": "new_guest@gmail.com",
-  "password": "password123",
-  "firstName": "Nguyen",
-  "lastName": "Van B",
-  "phoneNumber": "0912345678"
-}
-
-<> 2026-06-01T075814.500.json
-
-###
-
-POST http://bachhoanhanh/users/register
-Content-Type: application/json
-Content-Length: 144
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-{
-  "email": "new_guest@gmail.com",
-  "password": "password123",
-  "firstName": "Nguyen",
-  "lastName": "Van B",
-  "phoneNumber": "0912345678"
-}
-
-<> 2026-06-01T075807.500.json
-
-###
-
-GET http://bachhoanhanh/users/me
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiaEZESVNnSnZEM3N1QjN4OThSY3BnanpKWEk2S2s5blFsQ2VBRl9hUlY4In0.eyJleHAiOjE3ODAyNzU3NDgsImlhdCI6MTc4MDI3NTQ0OCwianRpIjoiN2Y0N2VmZDItNjI5OC00MTY2LWJjOGYtNTE2OGMwNzk1MTA2IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiI5MDZiMTAwOC1hYjdlLTQ1ODUtOGI1Zi1mMzlhYjg2ZWRiMDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIwMmFiYzFiYS01MjdjLTRiMjktOTVlMy0xODhlNTIxYzIwZGIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIwMmFiYzFiYS01MjdjLTRiMjktOTVlMy0xODhlNTIxYzIwZGIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.DSzppdwqBfgvtbuWwYMzVLx0DaiXBAmLnalNTDGZ8h3xBE7NHyg0vvBRmtplnmul5TintzMDIOiJL_JWGzP3z7eNLZss-EubGceLIdmq6DIZegWkZG1YoBjWbYyWnBHy8KMtYhURuHkRNVEaVQ2KboPniJbVcJyV4Ws73neeW96VAhNfpjVlX-NbZkfhDp-Inqxevrb0L0PHWdN7gATn8vE63Gd79nQ0MEjKVAhC0hXSBMNU2jII5UesnmzLx496X8EmuSzH7Zpz_1FOOdJjHBoZ9m-mnu5aADuTPOm6gmi2QM5AolkUvhPlcCy2oDYrAiCaMm8msAYXmlWyX-HkwA
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-<> 2026-06-01T075756.500.json
-
-###
-
-DELETE http://bachhoanhanh/users/3fa85f64-5717-4562-b3fc-2c963f66afa6
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiaEZESVNnSnZEM3N1QjN4OThSY3BnanpKWEk2S2s5blFsQ2VBRl9hUlY4In0.eyJleHAiOjE3ODAyNzU2MzIsImlhdCI6MTc4MDI3NTMzMiwianRpIjoiZTQ0NTQ4MzMtZDM5NS00ZWZlLWFkMzMtNjI5NDFlOTdjZjUyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIwYzNhZjk3Yy05MzljLTRkZGItOGJiZC05ODc5OGY1YjkyMTIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI0YmM5MDM2ZS00YTg2LTRlZTItYmY3Ny1iNjIxNGQxNDVmYzkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI0YmM5MDM2ZS00YTg2LTRlZTItYmY3Ny1iNjIxNGQxNDVmYzkiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.cjLdxHvCk7-GMU6ZuWJcECaZKsDvOphJzJK04xXkU14BXybBLuVHoE0-b_eAe6ZVJLBP8zq51s8uABqSMlk6HusCM4I7DI6lme6trmzo5xM2Z0YFlm-SjurxYzWhUkaz-q8sGK1WIw9bcbkAGBHVucDGXjdiOU6w2Qc4QTnjoxYxEW0EqYAiPyWyneU0dZYE4IJGgRLCoxA_qVxUTfM_R5E-n40vnjqDTyQAQUQw6NfQnskHXb1_x8i22EooYWHq5LHTPxh17yiwsCTNO3C4gNNQhhzknbwNemDw412BUAbjhuAGzj01BkeR-MPOl8j99hEBMmYd0tojGUh64GjU2A
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2026-06-01T075750.500.json
 
 ###
 

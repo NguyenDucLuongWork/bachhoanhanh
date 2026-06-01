@@ -5,57 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T181905.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182533.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182536.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182553.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182741.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182747.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182928.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183206.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183226.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183353.500.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183403.500.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183407.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183412.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190413.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190421.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190424.201.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190428.201.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190429.409.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190441.201.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190446.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190454.404.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190458.404.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190510.409.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190515.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190543.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190554.404.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190609.404.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190613.404.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T202647.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T203332.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T203343.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T203347.201.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T203353.201.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-testing/get-products.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-testing/get-products.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-testing/login.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-testing/login.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/init.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keycloak/realm/realm-export.json" beforeDir="false" afterPath="$PROJECT_DIR$/keycloak/realm/realm-export.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/CreateStaffRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/CreateStaffRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/CustomerProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/CustomerProfileResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/RegisterCustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/RegisterCustomerRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/StaffProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/StaffProfileResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UpdateCustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UpdateCustomerRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UpdateStaffRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UpdateStaffRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UserResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/KeycloakAdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/KeycloakAdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,9 +148,9 @@
         <entry key="HttpClient.HttpRequestRunConfigurationType">
           <value>
             <map>
+              <entry key="login | Login to get Access Token" value="STOPPED" />
               <entry key="user | #4" value="STOPPED" />
               <entry key="user | #5" value="STOPPED" />
-              <entry key="user | Get User by Keycloak ID" value="STOPPED" />
               <entry key="user | adminLogin" value="STOPPED" />
               <entry key="user | customerLogin" value="STOPPED" />
             </map>
@@ -208,7 +160,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
-    <configuration name="user | Get User by Keycloak ID" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="Get User by Keycloak ID" index="7" runType="Run single request">
+    <configuration name="login | Login to get Access Token" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/login.http" executionIdentifier="Login to get Access Token" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="user | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#4" index="4" runType="Run single request">
@@ -217,10 +169,10 @@
     <configuration name="user | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#5" index="5" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="user | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#6" index="6" runType="Run single request">
+    <configuration name="user | adminLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="adminLogin" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="user | adminLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="adminLogin" runType="Run single request">
+    <configuration name="user | customerLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="customerLogin" index="3" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="BrandServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -288,11 +240,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.user | Get User by Keycloak ID" />
-        <item itemvalue="HTTP Request.user | #6" />
         <item itemvalue="HTTP Request.user | adminLogin" />
+        <item itemvalue="HTTP Request.login | Login to get Access Token" />
         <item itemvalue="HTTP Request.user | #4" />
         <item itemvalue="HTTP Request.user | #5" />
+        <item itemvalue="HTTP Request.user | customerLogin" />
       </list>
     </recent_temporary>
   </component>
