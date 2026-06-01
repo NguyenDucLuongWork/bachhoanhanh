@@ -239,6 +239,7 @@ function App() {
         {currentPage === 'cart' && isLoggedIn && (
           <CartPage
             cartItems={cartItems}
+            profile={profile}
             onUpdateQuantity={updateCartQuantity}
             onRemoveItem={removeCartItem}
             onClearCart={() => setCartItems([])}
