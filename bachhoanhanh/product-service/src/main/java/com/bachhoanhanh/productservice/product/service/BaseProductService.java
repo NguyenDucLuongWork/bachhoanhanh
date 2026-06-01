@@ -21,6 +21,7 @@ public class BaseProductService {
 
     private final BaseProductRepository baseProductRepository;
     private final AttributeService attributeService;
+    private final ProductImageStorageService productImageStorageService;
 
     // ─── READ ─────────────────────────────────────────────────────────────────
 
@@ -105,13 +106,19 @@ public class BaseProductService {
     @Transactional
     public BaseProduct update(Long productId, BaseProduct updated) {
         BaseProduct existing = getById(productId);
+        String oldImage = existing.getImage();
         existing.setName(updated.getName());
         existing.setImage(updated.getImage());
         existing.setDescription(updated.getDescription());
         existing.setCatalogId(updated.getCatalogId());
         existing.setOriginalPrice(updated.getOriginalPrice());
         existing.setPrototypeId(updated.getPrototypeId());
-        return baseProductRepository.save(existing);
+        BaseProduct saved = baseProductRepository.save(existing);
+
+        if (oldImage != null && !oldImage.equals(updated.getImage())) {
+            productImageStorageService.deleteIfManaged(oldImage);
+        }
+        return saved;
     }
 
     /**
@@ -121,11 +128,10 @@ public class BaseProductService {
     @CacheEvict(allEntries = true)
     @Transactional
     public void delete(Long productId) {
-        if (!baseProductRepository.existsById(productId)) {
-            throw new EntityNotFoundException("Product not found: " + productId);
-        }
+        BaseProduct product = getById(productId);
         attributeService.removeAllByProduct(productId);
         baseProductRepository.deleteById(productId);
+        productImageStorageService.deleteIfManaged(product.getImage());
     }
 
 }

@@ -10,6 +10,7 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
   const [barcode, setBarcode] = useState('')
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
+  const [imageFile, setImageFile] = useState(null)
   const [description, setDescription] = useState('')
   const [originalPrice, setOriginalPrice] = useState('')
   const [selectedPrototypeId, setSelectedPrototypeId] = useState('')
@@ -102,6 +103,7 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
       setBarcode(product.barcode || '')
       setName(product.name || '')
       setImage(product.image || '')
+      setImageFile(null)
       setDescription(product.description || '')
       setOriginalPrice(product.originalPrice || '')
       setSelectedPrototypeId(protoId)
@@ -111,6 +113,7 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
       setBarcode('')
       setName('')
       setImage('')
+      setImageFile(null)
       setDescription('')
       setOriginalPrice('')
       setSelectedPrototypeId('')
@@ -133,6 +136,7 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
       barcode,
       name,
       image,
+      imageFile,
       description,
       originalPrice: parseFloat(originalPrice),
       catalogId: catalogId || null,
@@ -160,6 +164,11 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
       delete newAttrs[key]
       return newAttrs
     })
+  }
+
+  const handleImageFileChange = (event) => {
+    const file = event.target.files?.[0] || null
+    setImageFile(file)
   }
 
   if (!isOpen) return null
@@ -194,11 +203,29 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
           <label>Image URL</label>
           <input
             type="text"
-            placeholder="Image URL"
+            placeholder="External image URL or uploaded S3 URL"
             value={image}
             onChange={(e) => setImage(e.target.value)}
             disabled={isLoading}
           />
+          <div style={{ display: 'grid', gap: '8px', marginTop: '10px' }}>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              onChange={handleImageFileChange}
+              disabled={isLoading}
+            />
+            {imageFile && (
+              <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
+                Selected file will be uploaded to S3: {imageFile.name}
+              </div>
+            )}
+            {!imageFile && image && (
+              <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
+                Current image will be kept unless a new file is selected.
+              </div>
+            )}
+          </div>
         </div>
         <div className="field">
           <label>Description</label>
