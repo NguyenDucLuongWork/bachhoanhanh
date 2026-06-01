@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import UserManagement from './UserManagement';
+import ProductManagement from './ProductManagement';
+import CategoryManagement from './CategoryManagement';
+import BrandManagement from './BrandManagement';
 import DataManagement from './DataManagement';
 import SortManagement from './SortManagement';
 import { isAdmin, getUserInfo } from '../utils/auth';
@@ -23,6 +26,9 @@ export default function AdminDashboard({ token, onLogout }) {
 
   const tabs = [
     { id: 'users', label: 'Users', icon: '👥' },
+    { id: 'products', label: 'Products', icon: '🛍️' },
+    { id: 'categories', label: 'Categories', icon: '🏷️' },
+    { id: 'brands', label: 'Brands', icon: '🏢' },
     { id: 'data', label: 'Data', icon: '📊' },
     { id: 'sort', label: 'Sort Script', icon: '🔀' },
   ];
@@ -108,6 +114,9 @@ export default function AdminDashboard({ token, onLogout }) {
       {/* Content */}
       <main className="max-w-7xl mx-auto px-6 py-8">
         {activeTab === 'users' && <UserManagement token={token} />}
+        {activeTab === 'products' && <ProductManagement token={token} />}
+        {activeTab === 'categories' && <CategoryManagement token={token} />}
+        {activeTab === 'brands' && <BrandManagement token={token} />}
         {activeTab === 'data' && <DataManagement token={token} />}
         {activeTab === 'sort' && <SortManagement token={token} />}
       </main>
