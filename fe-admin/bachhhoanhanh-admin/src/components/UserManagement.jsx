@@ -460,33 +460,3 @@ export default function UserManagement({ token }) {
     </div>
   );
 }
-                          ? 'bg-purple-100 text-purple-800'
-                          : 'bg-blue-100 text-blue-800'
-                      }`}
-                    >
-                      {user.role}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm space-x-2">
-                    <button
-                      onClick={() => handleEdit_Click(user)}
-                      className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded transition"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(user.id)}
-                      className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded transition"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </div>
-  );
-}
