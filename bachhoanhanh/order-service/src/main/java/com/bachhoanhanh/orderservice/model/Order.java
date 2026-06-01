@@ -10,6 +10,9 @@ public class Order {
     private Integer quantity;
     private Double price;
     private Double totalPrice;
+    private Double subtotal;
+    private Double discountAmount;
+    private String voucherCode;
     private String status; // pending, paid, failed
     private Date orderDate;
     private List<OrderItem> items;
@@ -40,6 +43,12 @@ public class Order {
     public void setPrice(Double price) { this.price = price; }
     public Double getTotalPrice() { return totalPrice; }
     public void setTotalPrice(Double totalPrice) { this.totalPrice = totalPrice; }
+    public Double getSubtotal() { return subtotal; }
+    public void setSubtotal(Double subtotal) { this.subtotal = subtotal; }
+    public Double getDiscountAmount() { return discountAmount; }
+    public void setDiscountAmount(Double discountAmount) { this.discountAmount = discountAmount; }
+    public String getVoucherCode() { return voucherCode; }
+    public void setVoucherCode(String voucherCode) { this.voucherCode = voucherCode; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
     public Date getOrderDate() { return orderDate; }

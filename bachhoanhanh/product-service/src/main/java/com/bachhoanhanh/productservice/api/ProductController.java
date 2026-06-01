@@ -6,9 +6,12 @@ import com.bachhoanhanh.productservice.api.dto.ProductResponse;
 import com.bachhoanhanh.productservice.attribute.service.AttributeService;
 import com.bachhoanhanh.productservice.product.model.BaseProduct;
 import com.bachhoanhanh.productservice.product.service.BaseProductService;
+import com.bachhoanhanh.productservice.product.service.ProductImageStorageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,7 @@ public class ProductController {
 
     private final BaseProductService baseProductService;
     private final AttributeService attributeService;
+    private final ProductImageStorageService productImageStorageService;
 
     // ─── GET ──────────────────────────────────────────────────────────────────
 
@@ -66,8 +70,24 @@ public class ProductController {
 
     @PostMapping
     public ProductResponse create(@RequestBody ProductRequest request) {
-        BaseProduct product = toEntity(request);
+        return createProduct(request, null);
+    }
 
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ProductResponse createWithImage(
+            @RequestPart("product") ProductRequest request,
+            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile
+    ) {
+        return createProduct(request, imageFile);
+    }
+
+    private ProductResponse createProduct(ProductRequest request, MultipartFile imageFile) {
+        String imageUrl = productImageStorageService.upload(imageFile);
+        if (imageUrl != null) {
+            request.setImage(imageUrl);
+        }
+
+        BaseProduct product = toEntity(request);
         if (request.getAttributes() != null && !request.getAttributes().isEmpty()) {
             BaseProduct saved = baseProductService.createWithAttributes(product, request.getAttributes());
             return toResponseWithAttributes(saved);
@@ -78,6 +98,24 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ProductResponse update(@PathVariable Long id, @RequestBody ProductRequest request) {
+        return updateProduct(id, request, null);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ProductResponse updateWithImage(
+            @PathVariable Long id,
+            @RequestPart("product") ProductRequest request,
+            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile
+    ) {
+        return updateProduct(id, request, imageFile);
+    }
+
+    private ProductResponse updateProduct(Long id, ProductRequest request, MultipartFile imageFile) {
+        String imageUrl = productImageStorageService.upload(imageFile);
+        if (imageUrl != null) {
+            request.setImage(imageUrl);
+        }
+
         BaseProduct updated = baseProductService.update(id, toEntity(request));
 
         if (request.getAttributes() != null && !request.getAttributes().isEmpty()) {

@@ -31,6 +31,14 @@ export default defineConfig({
         target: 'http://bachhoanhanh',
         changeOrigin: true,
       },
+      '/users': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/vouchers': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
       '/attribute-types': {
         target: 'http://bachhoanhanh',
         changeOrigin: true,

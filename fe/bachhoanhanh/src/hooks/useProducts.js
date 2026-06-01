@@ -3,6 +3,21 @@ import { useState, useCallback } from 'react'
 const PRODUCTS_URL = '/products'
 const ATTRIBUTE_TYPES_URL = '/attribute-types'
 
+const buildProductRequest = (productData) => {
+  if (!productData.imageFile) {
+    return {
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(productData),
+    }
+  }
+
+  const { imageFile, ...payload } = productData
+  const formData = new FormData()
+  formData.append('product', new Blob([JSON.stringify(payload)], { type: 'application/json' }))
+  formData.append('imageFile', imageFile)
+  return { headers: {}, body: formData }
+}
+
 export function useProducts(token) {
   const [products, setProducts] = useState([])
   const [attributeTypes, setAttributeTypes] = useState([])
@@ -40,14 +55,15 @@ export function useProducts(token) {
   const addProduct = useCallback(
     async (productData) => {
       try {
+        const request = buildProductRequest(productData)
         const headers = {
-          'Content-Type': 'application/json',
+          ...request.headers,
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
         const res = await fetch(PRODUCTS_URL, {
           method: 'POST',
           headers,
-          body: JSON.stringify(productData),
+          body: request.body,
         })
         if (!res.ok) throw new Error('Create failed')
         const data = await res.json()
@@ -63,14 +79,15 @@ export function useProducts(token) {
   const updateProduct = useCallback(
     async (id, productData) => {
       try {
+        const request = buildProductRequest(productData)
         const headers = {
-          'Content-Type': 'application/json',
+          ...request.headers,
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
         const res = await fetch(PRODUCTS_URL + '/' + id, {
           method: 'PUT',
           headers,
-          body: JSON.stringify(productData),
+          body: request.body,
         })
         if (!res.ok) throw new Error('Update failed')
         const data = await res.json()
