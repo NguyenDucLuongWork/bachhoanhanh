@@ -6,7 +6,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-
 import org.springframework.security.oauth2.server.resource.web.server.authentication.ServerBearerTokenAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
@@ -20,10 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -34,13 +30,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .oauth2ResourceServer(oauth -> oauth
-                        // Use our custom converter to handle Keycloak roles
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(grantedAuthoritiesExtractor()))
                         .bearerTokenConverter(exchange -> {
                             ServerBearerTokenAuthenticationConverter delegate =
                                     new ServerBearerTokenAuthenticationConverter();
                             return delegate.convert(exchange)
-                                    .onErrorResume(e -> Mono.empty()); // missing token → anonymous
+                                    .onErrorResume(e -> Mono.empty());
                         })
                         .authenticationEntryPoint(
                                 new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)
@@ -48,7 +43,12 @@ public class SecurityConfig {
                 )
                 .authorizeExchange(exchange -> exchange
                         // --- Swagger / API docs ---
-                        .pathMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/aggregate/**", "/webjars/**").permitAll()
+                        .pathMatchers(
+                                "/swagger-ui.html", "/swagger-ui/**",
+                                "/v3/api-docs/**",   // ← ADDED: covers rewritten paths
+                                "/aggregate/**",
+                                "/webjars/**"
+                        ).permitAll()
 
                         // --- Users ---
                         .pathMatchers(HttpMethod.POST, "/users/register").permitAll()
