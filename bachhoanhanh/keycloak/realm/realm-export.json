@@ -43,7 +43,6 @@
       "realmRoles": ["CUSTOMER"]
     },
     {
-      // Service account cho user-service-client
       "username": "service-account-user-service-client",
       "enabled": true,
       "serviceAccountClientId": "user-service-client",

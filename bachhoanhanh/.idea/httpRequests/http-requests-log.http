@@ -1,3 +1,42 @@
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-01T215044.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-01T214912.502.html
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T214611.502.html
+
+###
+
 POST http://bachhoanhanh/users/register
 Content-Type: application/json
 Content-Length: 138
@@ -644,51 +683,6 @@ Accept: */*
 }
 
 <> 2026-06-01T075838.500.json
-
-###
-
-POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 82
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
-
-<> 2026-06-01T075834.200.json
-
-###
-
-POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 75
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-grant_type=password&client_id=gateway-client&username=admin&password=123456
-
-<> 2026-06-01T075829.200.json
-
-###
-
-POST http://bachhoanhanh/users/register
-Content-Type: application/json
-Content-Length: 144
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-{
-  "email": "new_guest@gmail.com",
-  "password": "password123",
-  "firstName": "Nguyen",
-  "lastName": "Van B",
-  "phoneNumber": "0912345678"
-}
-
-<> 2026-06-01T075817.500.json
 
 ###
 
