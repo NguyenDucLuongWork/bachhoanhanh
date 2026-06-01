@@ -1,63 +1,35 @@
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1Y0RfMjFNMmRlempBeThPUTFzbUR6WmFlcEVjTXdKTWN3NXBhQ1FMbmRFIn0.eyJleHAiOjE3ODAyMzQ3MTIsImlhdCI6MTc4MDIzNDQxMiwianRpIjoiMGViNWNlNWMtMTU3My00Yzk2LWI0MjYtODg3OTRmNDdkMjQ1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJlZWIzNmNmYy1kODQ4LTRlZjgtOTk4Ny1lMmY0YzE4MTBiNzYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI1ZThkYjc2NC1jMDZiLTRiYWYtYmY1Yi1lMWRkNDNkZGY1MjAiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI1ZThkYjc2NC1jMDZiLTRiYWYtYmY1Yi1lMWRkNDNkZGY1MjAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.BLb3qXWwtSg41p6fQQjOlgYDH3WhmpX-sAKRfjeLCSGfTglI4AyDuRAZVKUMw6BGUYz-bBUGooZrQXIUBu1oXJR4veco8X1xF0-1nI3NYjAd2_kT8YJ82cm5v7qA8MHmh4g6MTAzKKDEicYBOTdzeLx_Qzhc3HpLVfeOZBprZaHQZA0d6GR1dPl7KwYvW7k-TMM_i0Kt1V5qTF-yOTGFE3782JnJDyK-5aWnsYjUz50EdsybqcOhXnaChtEEFLBRtF6ZalduNCTSWJAKFzPg82rwsGBreWlXcbA77b3wwk9xC5bvZh4J-sBUGQoNdhIwL8t67K0t28pusUHTYxFc0g
-Content-Type: application/json
-Accept: application/json
-Content-Length: 340
+GET http://bachhoanhanh/users/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLVUtuSDlsbVE4S2FOcnVndTJsOHBoNEFOUnljVjhTUWVjZWJpT1BtNGlVIn0.eyJleHAiOjE3ODAyODI3MzIsImlhdCI6MTc4MDI4MjQzMiwianRpIjoiOTRlNzk0ZjMtNTljZi00ZmE5LWExMmEtYmJmYzk0NWUyYWIxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjM0OTBhYjU4LTNiM2YtNGE3Ni1hNmVlLWY5YmFkYWE2ZTIyNCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjM0OTBhYjU4LTNiM2YtNGE3Ni1hNmVlLWY5YmFkYWE2ZTIyNCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.evXsy2JU1s3X_eA7rpoJHmU7Ht9mKLESkjMsZ3OadqEHlAKV7u4K8uNPFegOP-5jAYuEfLI6uEiTICDYYxqfixeZsNoNk86QadbZJuWPY4VNVbAjCpuoxAKm2AsXea9FQ_q6PnQbAl8oH3zdOc8wmXWGbLnFReQLFRwSHRBD1gQjJKT2PzkZd6OxNjHDZ-2NRH6yMlaP9hdjFhcLNopTWplu6HjnGwKLzMAHgbC2xKcC-hGLlvVgcQ-fRpSX4kOAA9PEW-fCpGPfWw0yB89Kseep9CJtDj6M_rZpAJI14QaoJYVDTUlRdp_SJwSaIduU6V-8_k0snD6teCVwonGahg
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
-{
-  "code": "PORK10",
-  "description": "10% off Ba roi heo VietGAP",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 20000,
-  "usageLimit": 50,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": 1,
-  "targetCatalogId": null
-}
-
-<> 2026-05-31T203353.201.json
+<> 2026-06-01T095407.500.json
 
 ###
 
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1Y0RfMjFNMmRlempBeThPUTFzbUR6WmFlcEVjTXdKTWN3NXBhQ1FMbmRFIn0.eyJleHAiOjE3ODAyMzQ3MTIsImlhdCI6MTc4MDIzNDQxMiwianRpIjoiMGViNWNlNWMtMTU3My00Yzk2LWI0MjYtODg3OTRmNDdkMjQ1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJlZWIzNmNmYy1kODQ4LTRlZjgtOTk4Ny1lMmY0YzE4MTBiNzYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI1ZThkYjc2NC1jMDZiLTRiYWYtYmY1Yi1lMWRkNDNkZGY1MjAiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI1ZThkYjc2NC1jMDZiLTRiYWYtYmY1Yi1lMWRkNDNkZGY1MjAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.BLb3qXWwtSg41p6fQQjOlgYDH3WhmpX-sAKRfjeLCSGfTglI4AyDuRAZVKUMw6BGUYz-bBUGooZrQXIUBu1oXJR4veco8X1xF0-1nI3NYjAd2_kT8YJ82cm5v7qA8MHmh4g6MTAzKKDEicYBOTdzeLx_Qzhc3HpLVfeOZBprZaHQZA0d6GR1dPl7KwYvW7k-TMM_i0Kt1V5qTF-yOTGFE3782JnJDyK-5aWnsYjUz50EdsybqcOhXnaChtEEFLBRtF6ZalduNCTSWJAKFzPg82rwsGBreWlXcbA77b3wwk9xC5bvZh4J-sBUGQoNdhIwL8t67K0t28pusUHTYxFc0g
+POST http://bachhoanhanh/users/staff
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLVUtuSDlsbVE4S2FOcnVndTJsOHBoNEFOUnljVjhTUWVjZWJpT1BtNGlVIn0.eyJleHAiOjE3ODAyODI3MzIsImlhdCI6MTc4MDI4MjQzMiwianRpIjoiOTRlNzk0ZjMtNTljZi00ZmE5LWExMmEtYmJmYzk0NWUyYWIxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjM0OTBhYjU4LTNiM2YtNGE3Ni1hNmVlLWY5YmFkYWE2ZTIyNCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjM0OTBhYjU4LTNiM2YtNGE3Ni1hNmVlLWY5YmFkYWE2ZTIyNCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.evXsy2JU1s3X_eA7rpoJHmU7Ht9mKLESkjMsZ3OadqEHlAKV7u4K8uNPFegOP-5jAYuEfLI6uEiTICDYYxqfixeZsNoNk86QadbZJuWPY4VNVbAjCpuoxAKm2AsXea9FQ_q6PnQbAl8oH3zdOc8wmXWGbLnFReQLFRwSHRBD1gQjJKT2PzkZd6OxNjHDZ-2NRH6yMlaP9hdjFhcLNopTWplu6HjnGwKLzMAHgbC2xKcC-hGLlvVgcQ-fRpSX4kOAA9PEW-fCpGPfWw0yB89Kseep9CJtDj6M_rZpAJI14QaoJYVDTUlRdp_SJwSaIduU6V-8_k0snD6teCVwonGahg
 Content-Type: application/json
-Accept: application/json
-Content-Length: 350
+Content-Length: 287
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
+  "username": "hoaian_staff",
+  "phone": "0987654321",
+  "lastName": "An",
+  "firstName": "Hoai",
+  "email": "newstaff@bachhoanhanh.vn",
+  "password": "password123",
+  "dateOfBirth": "1995-06-15",
+  "idCardNumber": "012345678901",
+  "address": "Ho Chi Minh City",
+  "isFemale": false
 }
 
-<> 2026-05-31T203347.201.json
-
-###
-
-GET http://bachhoanhanh/vouchers/code/WELCOME10
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-05-31T203343.200.json
+<> 2026-06-01T095401.200.json
 
 ###
 
@@ -70,32 +42,100 @@ Accept: */*
 
 grant_type=password&client_id=gateway-client&username=admin&password=123456
 
-<> 2026-05-31T203332.200.json
+<> 2026-06-01T095352.200.json
 
 ###
 
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5RW00SnhkZEZqLXJfMFJmS2VsWnNPUjhtZ1AwWXppeDU0cUc5bGgtSklFIn0.eyJleHAiOjE3ODAyMzQzMDcsImlhdCI6MTc4MDIzNDAwNywianRpIjoiNmRjNGI0MTItY2ViOC00MGRiLTlmMjktNjFhMDdjODk3NjliIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIwYWIzZmRkMy1iMjgyLTQyZWYtOGZkMS1kMmNkZjg5MTVmNDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxYjRiMjFjOC02N2FiLTRiM2EtYjcxOC1kNGY3NjNiYzUwZTAiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiIxYjRiMjFjOC02N2FiLTRiM2EtYjcxOC1kNGY3NjNiYzUwZTAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.JH2SFEl6mlUo2LX62fb6Pv_FAD8zZ6Tgkl8iA0jknlhsvTKUxCS4gbLruq0wFniVJNEpg5Vfso__GuK7pScWmGJStoZXqTmaU76A67HR-ZTRO_iLXncwkQIekCI_LimZgfEG39WgdkpLCXGka--JKBI03lFEyfLazu-27er1rIdq5A5QGgKzASQ4SPOKsh3iy1-HhqbuVvRHTo-b9G0tvoEN-SpC9K4tV53yT7Z1yT0f6dMtBnwt-LtU9VVUkAygSIBivCYUKWSG0raYDcX8rh_Z3_WMNkXy7Uue7dLrRYKR1yPLlhZOV1WmT-blQdWZlb7HAG_vsrJDyeDZ2cnlgg
+POST http://bachhoanhanh/users/register
 Content-Type: application/json
-Accept: application/json
-Content-Length: 340
+Content-Length: 138
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "PORK10",
-  "description": "10% off Ba roi heo VietGAP",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 20000,
-  "usageLimit": 50,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": 1,
-  "targetCatalogId": null
+  "phone": "0912345678",
+  "lastName": "Nguyen",
+  "firstName": "Van B",
+  "email": "new_guest@gmail.com",
+  "password": "password123"
 }
+
+<> 2026-06-01T095330.200.json
+
+###
+
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLVUtuSDlsbVE4S2FOcnVndTJsOHBoNEFOUnljVjhTUWVjZWJpT1BtNGlVIn0.eyJleHAiOjE3ODAyODI2NzEsImlhdCI6MTc4MDI4MjM3MSwianRpIjoiOTVkNGFlNTQtOWY4MC00YTRlLWFjMmMtYmQzNmU5NDlhYzg1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJlM2Q3YjJiZi05NDNiLTRmMDgtOTNlYS01MTg5YWZjODUxNzIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJlODYxZDUzMC00OWI1LTRmZTUtOWIzYy04MGZiYzllYmM3OGMiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiJlODYxZDUzMC00OWI1LTRmZTUtOWIzYy04MGZiYzllYmM3OGMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.KNpfLHKGT0jErot1PNZ4PUKMI7uSa1FdODNXPrYtybgn-J2GV5MEd0OJIL7VBnKEwQEETjV3ObR1PyNOsnaTCiBoXWigQU5_KDMoylrfuO3Cf7qPozQsRTzmJom4IOZPF6xfR-ZC-XhyzaWxFqyzOHdoDJaQj0PIgEGuup5I3pmGAfALyoYOvjiTYhGBrea4Nj3aJnGn-8TiWSfmQ4yHNpXkS-nLJvhJ25N3boyCk3eb6cPx9otNjWbmsZu2YPPv4v0OIXU5JJYTLjOatOh3DLAi0YIMqECd8n7rRQS7TuV6r-z3Dr3VETrcJIHXK5BzW8-q6tclYyKyxAx3nMjj2Q
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T095301.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T095251.200.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 138
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "phone": "0912345678",
+  "lastName": "Nguyen",
+  "firstName": "Van B",
+  "email": "new_guest@gmail.com",
+  "password": "password123"
+}
+
+<> 2026-06-01T091747.500.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 138
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "phone": "0912345678",
+  "lastName": "Nguyen",
+  "firstName": "Van B",
+  "email": "new_guest@gmail.com",
+  "password": "password123"
+}
+
+<> 2026-06-01T091713.500.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T091709.200.json
 
 ###
 
@@ -108,283 +148,107 @@ Accept: */*
 
 grant_type=password&client_id=gateway-client&username=admin&password=123456
 
-<> 2026-05-31T202647.200.json
+<> 2026-06-01T091706.200.json
 
 ###
 
-POST http://bachhoanhanh/vouchers/confirm-usage/WELCOME10
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-<> 2026-05-31T190613.404.json
-
-###
-
-POST http://bachhoanhanh/vouchers/apply
+POST http://bachhoanhanh/users/register
 Content-Type: application/json
-Accept: application/json
-Content-Length: 112
+Content-Length: 120
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "DOESNOTEXIST",
-  "orderTotal": 200000,
-  "productIds": [1],
-  "catalogIds": ["meat-seafood-pork"]
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "fullName": "Nguyen Van B",
+  "phone": "0912345678"
 }
 
-<> 2026-05-31T190609.404.json
+<> 2026-06-01T091442.500.json
 
 ###
 
-POST http://bachhoanhanh/vouchers/apply
-Content-Type: application/json
-Accept: application/json
-Content-Length: 140
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ6cWdQczY5dl8xc0Q5R0ZNVF9aakxfMTJfQkpfTjJEY1N3YWJ5Vy1STkxZIn0.eyJleHAiOjE3ODAyODAzNjEsImlhdCI6MTc4MDI4MDA2MSwianRpIjoiMDU2ODE2NTItZjAxMC00MGM4LWIxNDItNDZhZjJjOGM1MzRmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJlM2Q3YjJiZi05NDNiLTRmMDgtOTNlYS01MTg5YWZjODUxNzIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkZDhjZTYwMC1kMDZhLTQ1ZDctOWUzMi1iNTMxYzE2ZmUzODIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiJkZDhjZTYwMC1kMDZhLTQ1ZDctOWUzMi1iNTMxYzE2ZmUzODIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.WBGS1A9okwheVleLu35nsXx6oHazoNnyQkN22SGElJrB3k10F3P-41ad_zvb0Q9g6OZ-PIPhxhz29YYjgUMqOU9RjW2TJUnPfit8NTDC8tRtGZMeHaTXuQEepLMCdgGDd9YxBBkRO0vmhzr9U9kBVcs9Yyoz2xoipcBFn0LRMS13CUG-L8EedDiPhld9A2NVwreB9e2C6dASVrCKoPEMSJtrfBRBMhd7ajUYargCaFPs0laxSVVcaVR3Gtrgd5zH3O1cFXXnHsl9BLFGjFHC8kk3R7rR6Hc62ytg6hQZSPUcssKgLdPFle5pcKkWoBO10zFz3B1cg_RULmN6slMM-w
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T091433.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T091421.200.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 120
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "WELCOME10",
-  "orderTotal": 200000,
-  "productIds": [1, 2, 3],
-  "catalogIds": ["fresh-food-vegetables", "meat-seafood-pork"]
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "fullName": "Nguyen Van B",
+  "phone": "0912345678"
 }
 
-<> 2026-05-31T190554.404.json
+<> 2026-06-01T090055.500.json
 
 ###
 
-GET http://bachhoanhanh/vouchers
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-05-31T190543.200.json
-
-###
-
-DELETE http://bachhoanhanh/vouchers/2
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-###
-
-GET http://bachhoanhanh/vouchers
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-05-31T190515.200.json
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
+POST http://bachhoanhanh/users/register
 Content-Type: application/json
-Accept: application/json
-Content-Length: 340
+Content-Length: 120
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "PORK10",
-  "description": "10% off Ba roi heo VietGAP",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 20000,
-  "usageLimit": 50,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": 1,
-  "targetCatalogId": null
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "fullName": "Nguyen Van B",
+  "phone": "0912345678"
 }
 
-<> 2026-05-31T190510.409.json
+<> 2026-06-01T085816.500.json
 
 ###
 
-DELETE http://bachhoanhanh/vouchers/1
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Accept: application/json
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIbHhmRjk4WWJ4YVBPRkkxajdjX0lQYkFYZXFVM082b0VnYTc1Zm8wUDVnIn0.eyJleHAiOjE3ODAyNzkzODUsImlhdCI6MTc4MDI3OTA4NSwianRpIjoiOGQxMTJjMTUtOWIzNS00NTRjLTk0NDktNzM3MzBjZGFmMjZhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJlM2Q3YjJiZi05NDNiLTRmMDgtOTNlYS01MTg5YWZjODUxNzIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJiY2RiOWNmNi03ZTg1LTQ1MDgtOGFiYy0zOWRjYzUxMzkzMjkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJiY2RiOWNmNi03ZTg1LTQ1MDgtOGFiYy0zOWRjYzUxMzkzMjkiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.BEMa9oXmZqBp27El5r-SA9shDSfc5eKRBw4jF5MfU71iRdjUBi71jFH4hkQa6uGzGE0ajiJsRIORsotnw8MMYKEhbAckgJp1JaXe5wCa4Qh2W-tCqFqzlcEdWZcDKRBGmH6hAB6gOyuczZhJqy7HtJCTc6mdE2bmfOVz60C-Cj2_PRksK0l5j0MMSHIHmgCn35rmlH-lWSmcuTvRYf-9Xow_jZfbvvr79x16_DmyFiiSaRVVhLNJ7gQ-x4sCO1BHl0qqa75KqDFVyhhvoaeN-VRWQZIEs4ySgaJRwVWwkeO0leAAeFmxzfC7ZAG6VAxjCs4EXXzlZOdnWZbozmUvkQ
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
+Accept: */*
 
-<> 2026-05-31T190458.404.json
+<> 2026-06-01T085810.200.json
 
 ###
 
-DELETE http://bachhoanhanh/vouchers/1
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Accept: application/json
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
+Accept: */*
 
-<> 2026-05-31T190454.404.json
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
 
-###
-
-DELETE http://bachhoanhanh/vouchers/1
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-###
-
-PUT http://bachhoanhanh/vouchers/1
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Content-Type: application/json
-Accept: application/json
-Content-Length: 347
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "WELCOME10",
-  "description": "10% off - updated max discount",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 0,
-  "maxDiscountAmount": 60000,
-  "usageLimit": 100,
-  "startDate": "2025-01-01T00:00:00",
-  "endDate": "2099-12-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
-
-<> 2026-05-31T190446.200.json
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Content-Type: application/json
-Accept: application/json
-Content-Length: 362
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "VEGFRESH",
-  "description": "5000 VND off fresh vegetables",
-  "discountType": "FIXED",
-  "discountValue": 5000,
-  "minOrderValue": 20000,
-  "maxDiscountAmount": 0,
-  "usageLimit": 0,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": "fresh-food-vegetables"
-}
-
-<> 2026-05-31T190441.201.json
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Content-Type: application/json
-Accept: application/json
-Content-Length: 340
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "PORK10",
-  "description": "10% off Ba roi heo VietGAP",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 20000,
-  "usageLimit": 50,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": 1,
-  "targetCatalogId": null
-}
-
-<> 2026-05-31T190429.409.json
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Content-Type: application/json
-Accept: application/json
-Content-Length: 340
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "PORK10",
-  "description": "10% off Ba roi heo VietGAP",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 20000,
-  "usageLimit": 50,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": 1,
-  "targetCatalogId": null
-}
-
-<> 2026-05-31T190428.201.json
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1bnRzYWF4TnVMc284WWN3VmIwZVFIRS1ZTEFOcXY3eXRSNW5XQmtEbjJzIn0.eyJleHAiOjE3ODAyMjkzNTIsImlhdCI6MTc4MDIyOTA1MiwianRpIjoiMjY5OTRkZDgtOTMyNS00YmE5LTg5NjMtMTc1ZjE0YzBkYTMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIxNzE2MTQ1NC0yNDk2LTQ3M2MtOTEzMy02YmVhNDRmMTg5NDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIxMWJlNmJjNC00MmUzLTRmNjctYTQyYi1mZTdiNTg5YzYyOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.EDuC0_edgJBQCWIOWBfq6kbDAxvS0MC7vjP4L7g0_YWmJbC3iXDJ5L2MKrvpp9-wNL1O96HKRKKbBPUftLADduVhRuUulckuTce3OQnovqVujZLQQWpC07FTtlL-6KPooclbYE-oa8rQqgaSr1RHgET4-5qiyzgqrWH1G--Rwj6eQQ3c6Ih4Mj0AA7sBh31tsRpVbq4aq6VS61zTdWzOm87tu_Gu_AexCwREMDTujEKyfqI3VGhD9b0EMe00w8NDHBTRtGEMvMXtoi8_qMQqLonzryWWe6qz1jmCEbajc3zDQfCjkPHNAz1yWeD98YbEOtndxK8bohc9BWeTyfos4A
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
-
-<> 2026-05-31T190424.201.json
-
-###
-
-GET http://bachhoanhanh/vouchers/code/WELCOME10
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-05-31T190421.200.json
+<> 2026-06-01T085805.200.json
 
 ###
 
@@ -397,356 +261,186 @@ Accept: */*
 
 grant_type=password&client_id=gateway-client&username=admin&password=123456
 
-<> 2026-05-31T190413.200.json
+<> 2026-06-01T085802.200.json
 
 ###
 
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjc0NDYsImlhdCI6MTc4MDIyNzE0NiwianRpIjoiNzI3NWE5YmMtMWJkYi00MTY3LTkwMGMtM2I3YmQwZDUwN2UxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.A-plxyJcgEV3_G5GV5mQrtaE8UWGwz4jmpzPMz4GPElpO40kQA-e592kaET-dLdbzwRe_dHJ7W-Exynp4iD6F6h7vxZ1N6PWHGrzkQUgqG--xVqiZk6YxB54LSrQRxV0geItftrhC5A9UbtM5Q-nUSd8AHP3yaKce6rSJbQKUGNq9lejL7aPOMECuo2h3Rx-z730NE93otT6CsujZEZNmNiTqBp7ZgS3skHveGpr6QGe1uZenFqx0fo125d9teNkopaLcG2AL6WAlZBhtSuFcj5PIS-vUnTE_HOFDGZdZzgP5eWqOMTMcwBajNvwG2zdP4B2eMCKsTQi4LUzYowsnQ
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
-
-###
-
-POST http://bachhoanhanh/prototypes
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjc0NDYsImlhdCI6MTc4MDIyNzE0NiwianRpIjoiNzI3NWE5YmMtMWJkYi00MTY3LTkwMGMtM2I3YmQwZDUwN2UxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.A-plxyJcgEV3_G5GV5mQrtaE8UWGwz4jmpzPMz4GPElpO40kQA-e592kaET-dLdbzwRe_dHJ7W-Exynp4iD6F6h7vxZ1N6PWHGrzkQUgqG--xVqiZk6YxB54LSrQRxV0geItftrhC5A9UbtM5Q-nUSd8AHP3yaKce6rSJbQKUGNq9lejL7aPOMECuo2h3Rx-z730NE93otT6CsujZEZNmNiTqBp7ZgS3skHveGpr6QGe1uZenFqx0fo125d9teNkopaLcG2AL6WAlZBhtSuFcj5PIS-vUnTE_HOFDGZdZzgP5eWqOMTMcwBajNvwG2zdP4B2eMCKsTQi4LUzYowsnQ
-Content-Type: application/json
-Content-Length: 150
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoUm50eDN0aGE1MTNPZnlRWllRNnVyQzVjT1RwMURHTDU1SjZScFlkeTA4In0.eyJleHAiOjE3ODAyNzg5MDcsImlhdCI6MTc4MDI3ODYwNywianRpIjoiZWM5ZDEyZjItODdjNC00MmZhLTkxNGMtZWM0YzMyNTIyMGY0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiI1YjExZGExNS04NmE4LTRjOWMtOWIzZS05MWY4ODY1ODUzMTYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI1NjlhM2FjNC01ZWE5LTQ3ZTEtOWEwMC05MjljMjc3M2VmMTYiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI1NjlhM2FjNC01ZWE5LTQ3ZTEtOWEwMC05MjljMjc3M2VmMTYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.qJz649cN6PTPE2O9TLKlCHmgshFIdfZP44C5RraSW8o4Cr_7qEYt5qBAcJVxFFWAuEGy0iAbcR4VSOB1jWYRO2vcwNFxcZJG_ZSdwhH0TG5xw87NxlaJceh5WsEeuc-S78jhC7-4t8f5eCLCUPF9wfWQ4fHeC6cO5uNzINBfTdQSgbqGagJ114MyjVTobJkeki3OzctkvEwqWFezFhp_xNpl2qPf4K4dIbBXsQNFH0GaJs023ynWeRc1kKQmoAaxJTDEl5Uk615L5Wm4lcRvIak0RgNMV1yoC4aR00UCh2mNQ_Cj66RX-pQPAdummm2b3hDjmxgp_r6WKsGIJa-nrw
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
 Accept: */*
 
-{
-  "productId": "PORK_CLEAN",
-  "catalogId": "meat-seafood-pork",
-  "name": "Thịt heo sạch VietGAP",
-  "packedAttributes": "EXPIRY_DATE,WEIGHT"
-}
-
-<> 2026-05-31T183412.200.json
+<> 2026-06-01T085016.500.json
 
 ###
 
-GET http://bachhoanhanh/attribute-types
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-05-31T183407.200.json
-
-###
-
-POST http://bachhoanhanh/attribute-types
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjc0NDYsImlhdCI6MTc4MDIyNzE0NiwianRpIjoiNzI3NWE5YmMtMWJkYi00MTY3LTkwMGMtM2I3YmQwZDUwN2UxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.A-plxyJcgEV3_G5GV5mQrtaE8UWGwz4jmpzPMz4GPElpO40kQA-e592kaET-dLdbzwRe_dHJ7W-Exynp4iD6F6h7vxZ1N6PWHGrzkQUgqG--xVqiZk6YxB54LSrQRxV0geItftrhC5A9UbtM5Q-nUSd8AHP3yaKce6rSJbQKUGNq9lejL7aPOMECuo2h3Rx-z730NE93otT6CsujZEZNmNiTqBp7ZgS3skHveGpr6QGe1uZenFqx0fo125d9teNkopaLcG2AL6WAlZBhtSuFcj5PIS-vUnTE_HOFDGZdZzgP5eWqOMTMcwBajNvwG2zdP4B2eMCKsTQi4LUzYowsnQ
-Content-Type: application/json
-Content-Length: 49
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoUm50eDN0aGE1MTNPZnlRWllRNnVyQzVjT1RwMURHTDU1SjZScFlkeTA4In0.eyJleHAiOjE3ODAyNzg5MDcsImlhdCI6MTc4MDI3ODYwNywianRpIjoiZWM5ZDEyZjItODdjNC00MmZhLTkxNGMtZWM0YzMyNTIyMGY0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiI1YjExZGExNS04NmE4LTRjOWMtOWIzZS05MWY4ODY1ODUzMTYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI1NjlhM2FjNC01ZWE5LTQ3ZTEtOWEwMC05MjljMjc3M2VmMTYiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI1NjlhM2FjNC01ZWE5LTQ3ZTEtOWEwMC05MjljMjc3M2VmMTYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.qJz649cN6PTPE2O9TLKlCHmgshFIdfZP44C5RraSW8o4Cr_7qEYt5qBAcJVxFFWAuEGy0iAbcR4VSOB1jWYRO2vcwNFxcZJG_ZSdwhH0TG5xw87NxlaJceh5WsEeuc-S78jhC7-4t8f5eCLCUPF9wfWQ4fHeC6cO5uNzINBfTdQSgbqGagJ114MyjVTobJkeki3OzctkvEwqWFezFhp_xNpl2qPf4K4dIbBXsQNFH0GaJs023ynWeRc1kKQmoAaxJTDEl5Uk615L5Wm4lcRvIak0RgNMV1yoC4aR00UCh2mNQ_Cj66RX-pQPAdummm2b3hDjmxgp_r6WKsGIJa-nrw
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
 Accept: */*
 
-{
-  "name": "EXPIRY_DATE",
-  "dataType": "Date"
-}
-
-<> 2026-05-31T183403.500.json
-
-###
-
-POST http://bachhoanhanh/attribute-types
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjc0NDYsImlhdCI6MTc4MDIyNzE0NiwianRpIjoiNzI3NWE5YmMtMWJkYi00MTY3LTkwMGMtM2I3YmQwZDUwN2UxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.A-plxyJcgEV3_G5GV5mQrtaE8UWGwz4jmpzPMz4GPElpO40kQA-e592kaET-dLdbzwRe_dHJ7W-Exynp4iD6F6h7vxZ1N6PWHGrzkQUgqG--xVqiZk6YxB54LSrQRxV0geItftrhC5A9UbtM5Q-nUSd8AHP3yaKce6rSJbQKUGNq9lejL7aPOMECuo2h3Rx-z730NE93otT6CsujZEZNmNiTqBp7ZgS3skHveGpr6QGe1uZenFqx0fo125d9teNkopaLcG2AL6WAlZBhtSuFcj5PIS-vUnTE_HOFDGZdZzgP5eWqOMTMcwBajNvwG2zdP4B2eMCKsTQi4LUzYowsnQ
-Content-Type: application/json
-Content-Length: 175
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-{
-  "name": "WEIGHT",
-  "dataType": "Weight"
-}
-
-
-# ==========================================
-# 3. PROTOTYPES (Mẫu sản phẩm)
-# ==========================================
-
-<> 2026-05-31T183353.500.json
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjc0NDYsImlhdCI6MTc4MDIyNzE0NiwianRpIjoiNzI3NWE5YmMtMWJkYi00MTY3LTkwMGMtM2I3YmQwZDUwN2UxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI4MGRiMDk4OS1hN2MxLTQxZTgtYmI1Ni05YjdiOGRkMWU1ZDEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.A-plxyJcgEV3_G5GV5mQrtaE8UWGwz4jmpzPMz4GPElpO40kQA-e592kaET-dLdbzwRe_dHJ7W-Exynp4iD6F6h7vxZ1N6PWHGrzkQUgqG--xVqiZk6YxB54LSrQRxV0geItftrhC5A9UbtM5Q-nUSd8AHP3yaKce6rSJbQKUGNq9lejL7aPOMECuo2h3Rx-z730NE93otT6CsujZEZNmNiTqBp7ZgS3skHveGpr6QGe1uZenFqx0fo125d9teNkopaLcG2AL6WAlZBhtSuFcj5PIS-vUnTE_HOFDGZdZzgP5eWqOMTMcwBajNvwG2zdP4B2eMCKsTQi4LUzYowsnQ
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
+<> 2026-06-01T085011.500.json
 
 ###
 
 POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 75
+Content-Length: 82
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
 Accept: */*
 
-grant_type=password&client_id=gateway-client&username=admin&password=123456
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
 
-<> 2026-05-31T183226.200.json
+<> 2026-06-01T085007.200.json
 
 ###
 
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjc0MjYsImlhdCI6MTc4MDIyNzEyNiwianRpIjoiNjE0M2ExZjYtN2ExNC00MGE2LTgzMmUtMGE3ODVkYjc4ZjcwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhNzAyMTM3Yi0wZjQ3LTQzYmMtYTE3ZS0zN2U1NjA2NmM0NGYiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhNzAyMTM3Yi0wZjQ3LTQzYmMtYTE3ZS0zN2U1NjA2NmM0NGYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.qgltKxGiIGV03UYietQOtRYoHMN-73UsYnvdLOHG4kw988DjQN2f_mWFU0vPG2Pg2NpBvtsGvMGXgpS5fmhI97sPUpEkn0qzrudYhgzeOrzqGzZEqUQtqLfkljrbqxskFfJMQlQQ_0HEycWYgNTbspPNqI6YVX4oj_4weJAPFsfsjpPOsogEjHYL5RX9Sztm0GfrtvE3nnkNrJMA0WY1JP_lheWW3eOpCuUwbnKBBxNihAiQ78lC38IV5Gj6bKfqv8KCbcStvylv1dwemN-AKdstGRrz2VSP0MQSpmFCHNS9B1-hjAk76BAPF7mJEtk3XN_uJE2N48AXsMyQOKP-CQ
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoUm50eDN0aGE1MTNPZnlRWllRNnVyQzVjT1RwMURHTDU1SjZScFlkeTA4In0.eyJleHAiOjE3ODAyNzc1MDgsImlhdCI6MTc4MDI3NzIwOCwianRpIjoiMTRjMWNlNzAtN2M0NC00MDhjLWFkNmEtMWMyYTQ3NTg1NTZkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiI1YjExZGExNS04NmE4LTRjOWMtOWIzZS05MWY4ODY1ODUzMTYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkMWNlZjMwYy05MWI5LTQxMTYtYmRiOS05OGY4YzMzMTdiMDAiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJkMWNlZjMwYy05MWI5LTQxMTYtYmRiOS05OGY4YzMzMTdiMDAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.VHdinPqORTCiC6R0TV2eYuVTvbrXo-YcRf3VuoGEYYoF1d_Ad-1xCSYzD1nBdaNPZz1uEl4Tw7mLAGQTMZT5GETjs2twB2AE3MJp8mfdxcU7Ihh7PrlgjOwO_hA9PrAd8OOnERYUT08Sjh6pTvw3HyN-y-wmUxPuQ6w9iTwrYqwyFXZAiXD-3vD93nLBQB-rpLY7N4HN2aAbJilVs3dClIB94Uw2pMQoO2fS2zpBqJ3_4_-bKOwfOg2G25BSIS1TrXkLxWyK3JHYNqm8PzDwznNT1KGH9fiRcL4crVPRwUfz5pZujW6_4EUjh2KaNFvCEgnu3iZ9fizrJ0X8YsejNQ
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
-{
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
+###
+
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoUm50eDN0aGE1MTNPZnlRWllRNnVyQzVjT1RwMURHTDU1SjZScFlkeTA4In0.eyJleHAiOjE3ODAyNzc1MDgsImlhdCI6MTc4MDI3NzIwOCwianRpIjoiMTRjMWNlNzAtN2M0NC00MDhjLWFkNmEtMWMyYTQ3NTg1NTZkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiI1YjExZGExNS04NmE4LTRjOWMtOWIzZS05MWY4ODY1ODUzMTYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkMWNlZjMwYy05MWI5LTQxMTYtYmRiOS05OGY4YzMzMTdiMDAiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJkMWNlZjMwYy05MWI5LTQxMTYtYmRiOS05OGY4YzMzMTdiMDAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.VHdinPqORTCiC6R0TV2eYuVTvbrXo-YcRf3VuoGEYYoF1d_Ad-1xCSYzD1nBdaNPZz1uEl4Tw7mLAGQTMZT5GETjs2twB2AE3MJp8mfdxcU7Ihh7PrlgjOwO_hA9PrAd8OOnERYUT08Sjh6pTvw3HyN-y-wmUxPuQ6w9iTwrYqwyFXZAiXD-3vD93nLBQB-rpLY7N4HN2aAbJilVs3dClIB94Uw2pMQoO2fS2zpBqJ3_4_-bKOwfOg2G25BSIS1TrXkLxWyK3JHYNqm8PzDwznNT1KGH9fiRcL4crVPRwUfz5pZujW6_4EUjh2KaNFvCEgnu3iZ9fizrJ0X8YsejNQ
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T082658.500.json
+
+###
+
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoUm50eDN0aGE1MTNPZnlRWllRNnVyQzVjT1RwMURHTDU1SjZScFlkeTA4In0.eyJleHAiOjE3ODAyNzc1MDgsImlhdCI6MTc4MDI3NzIwOCwianRpIjoiMTRjMWNlNzAtN2M0NC00MDhjLWFkNmEtMWMyYTQ3NTg1NTZkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiI1YjExZGExNS04NmE4LTRjOWMtOWIzZS05MWY4ODY1ODUzMTYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkMWNlZjMwYy05MWI5LTQxMTYtYmRiOS05OGY4YzMzMTdiMDAiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJkMWNlZjMwYy05MWI5LTQxMTYtYmRiOS05OGY4YzMzMTdiMDAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.VHdinPqORTCiC6R0TV2eYuVTvbrXo-YcRf3VuoGEYYoF1d_Ad-1xCSYzD1nBdaNPZz1uEl4Tw7mLAGQTMZT5GETjs2twB2AE3MJp8mfdxcU7Ihh7PrlgjOwO_hA9PrAd8OOnERYUT08Sjh6pTvw3HyN-y-wmUxPuQ6w9iTwrYqwyFXZAiXD-3vD93nLBQB-rpLY7N4HN2aAbJilVs3dClIB94Uw2pMQoO2fS2zpBqJ3_4_-bKOwfOg2G25BSIS1TrXkLxWyK3JHYNqm8PzDwznNT1KGH9fiRcL4crVPRwUfz5pZujW6_4EUjh2KaNFvCEgnu3iZ9fizrJ0X8YsejNQ
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T082654.500.json
 
 ###
 
 POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 75
+Content-Length: 82
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
 Accept: */*
 
-grant_type=password&client_id=gateway-client&username=admin&password=123456
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
 
-<> 2026-05-31T183206.200.json
+<> 2026-06-01T082648.200.json
+
+###
+
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZY0E4Uy1OTU1jTmpUSUE2eXJaUjVmOG9VVTJZT2gxYTFkMVY0ZmZEX3BzIn0.eyJleHAiOjE3ODAyNzY4NzQsImlhdCI6MTc4MDI3NjU3NCwianRpIjoiMTlkMDViZTQtZjRhNi00NDRkLTk4YTYtYzRiM2YwNzUwZDU3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJlM2Q3YjJiZi05NDNiLTRmMDgtOTNlYS01MTg5YWZjODUxNzIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI0MTg0Mzk2OS1jOTg2LTQ3NmQtOTg4Ny0xZWY4MGJlZWUyZGMiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiI0MTg0Mzk2OS1jOTg2LTQ3NmQtOTg4Ny0xZWY4MGJlZWUyZGMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.NiDBM7CxJOFGKF_5smrlIuKlUJJb7dRLKhye2s7J-GAPCyFA3oInmbqzT2f8GPzKBsbTlMuqIvtYXxgw4mny8tJ0Z0XO11Vt2NB0BqYEOgCxqTr_PhPaClQqEKDKE6mSBA09l7hZz4QHocXvH99zCaeb3yfh4ywZd6eoW_HTbx-2bO7hx2Oadc1Ybxx9ZwWc7-lGGdAiOow64L0cy2JURZrFVge09ZZxsu_HFGqx2lH00hZt2bmjoBATm7ctCx00p_b-OwchNIEAa2xmCa1dcy0acS2hJ4KHCPsX69pJwpTaLpL7d_ARuRjcb0ICx5T1nhHclGThJFuEbxdqw_8hgA
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T081719.500.json
+
+###
+
+GET http://bachhoanhanh/users/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZY0E4Uy1OTU1jTmpUSUE2eXJaUjVmOG9VVTJZT2gxYTFkMVY0ZmZEX3BzIn0.eyJleHAiOjE3ODAyNzY4MTEsImlhdCI6MTc4MDI3NjUxMSwianRpIjoiZjViYjEzZjktMTdmNS00NzA4LWIwOTMtYmViNDAyMWZmYmFhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiI1YmU2ZTM5Zi0xN2ZmLTQzYWEtYjMyZi0xMTg0YWQwYmZkODgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkYWFiZWFlYS1lZGFhLTRhODQtYWZhZS01ZjFmYjZlYjNhZmMiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiJkYWFiZWFlYS1lZGFhLTRhODQtYWZhZS01ZjFmYjZlYjNhZmMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.w11t9PgpsE673Xeh465tdJjx4WIV1mr3gB5ay69NnCtf2m1FwU5JFSmPDOYxXWeb9ukJ_T_LWi9LYl1kZVPG-kBE-MLvaLnbABb4npF_EyvcFhVhFe6TDMySQVBtCQsXXdM_3yiuLQz7W3wNXwk-FdgCUtLog4m91jtPl8k1yqEcTEjBhy4QbWAfO3aoj5CgQapK7Ah9r6uVAdcCa6k7MXIdHrChA7d_YJHcoeZNJsE3e4s73jGbW34HeIea_ELI-Gd8vt0X5Gmk39n9LaCeiBuJ1IejdiMZkUgpnSuD9KqJwc-EC2XANFPmN6BdSeSTe5pnrKs4VzureBe2bzXEqw
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T081706.500.json
 
 ###
 
 POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 75
+Content-Length: 82
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
 Accept: */*
 
-grant_type=password&client_id=gateway-client&username=admin&password=123456
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
 
-<> 2026-05-31T182928.200.json
+<> 2026-06-01T081614.200.json
 
 ###
 
-DELETE http://bachhoanhanh/vouchers/1
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcxNjEsImlhdCI6MTc4MDIyNjg2MSwianRpIjoiOTAzNjg5YWMtYzM4Mi00NDcyLTkzYTAtYTdmMTgyNzdmMDJjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJjNjg5NWJkZS03ZDkwLTRkMmMtODk0Mi02MWU4NjJkYjNhZDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlNUQUZGIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuaCBEZXZlbG9wZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0c3RhZmYiLCJnaXZlbl9uYW1lIjoiQW5oIiwiZmFtaWx5X25hbWUiOiJEZXZlbG9wZXIiLCJlbWFpbCI6ImRldkBiYWNoaG9hbmhhbmgudm4ifQ.bo5cadYbOIx3DvJBMgwVJn8LnXYoZ0D21H650M05S4FWR-297TPOE7wAAu6qbzw6JOpeP4cnXZUf6068k1sqZH4yMH5mjGsSPvASzpdRyUrM7HFEY_BKmPxSeWIGo5x3_2743ELTvhJsdc2Z1JFfZ3o11qYFy7N7xJmA9HE5o9kjhGfARCTDK1lGs6IWQoqKPS2NN8T-uVz8Ry8NxQ7jJGFd7D8-fGbAuc0DXxQXrtfZy6hA4HLUTf85hdAkh4AMf2MUt5iojDuzp6qT0Glp2mJWfU4ayriMADVW9oD3PcYdQOgcXJAjRcrASjlLuqVVb35G3NBLNkwsWZLttmRPew
-Accept: application/json
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZY0E4Uy1OTU1jTmpUSUE2eXJaUjVmOG9VVTJZT2gxYTFkMVY0ZmZEX3BzIn0.eyJleHAiOjE3ODAyNzY4NDksImlhdCI6MTc4MDI3NjU0OSwianRpIjoiMDZiYjk3Y2UtMWQ4Yi00ZDMxLWI1MDQtYTZmNDFmYWJjNzdlIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJlM2Q3YjJiZi05NDNiLTRmMDgtOTNlYS01MTg5YWZjODUxNzIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJiODI4ZTVhMi0yOWUwLTQ5ODMtYWE4YS0wN2ZmNjczZjg2ZDMiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiJiODI4ZTVhMi0yOWUwLTQ5ODMtYWE4YS0wN2ZmNjczZjg2ZDMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.lSFJ9V61W23TNGexL7je30THb-7dFyjWUXITeLMBddX_Lh9WPb8_Sj_h3hHD3hv1tyuvCkMhGFkN2ENvIFBKGIe2Y1f4M1nxocmdhXfFsf4iiBmOWNggYW1YmtVrPFJzKnyJ0vCD8SITgFnnWJB9-PMhcX4p_sF0vMHf0gcvrywZdX-lFxDRqS-H98LtfM8vtC7IZP88BibQ59bIa60egORqNXx3Rkg-ygz5tG7RliiMHJ3tOlGZAZA7pDz3JN3-ZLxgOOif90ICTCX1UX7pSMt_oyLOe9Nw8LUHxSWREaR_gR9bjowyZIMrPaIj3Sc8j8WRuuiy1rzXMXAHrRy8nw
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
+Accept: */*
+
+<> 2026-06-01T081603.500.json
 
 ###
 
-PUT http://bachhoanhanh/vouchers/1
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcxNjEsImlhdCI6MTc4MDIyNjg2MSwianRpIjoiOTAzNjg5YWMtYzM4Mi00NDcyLTkzYTAtYTdmMTgyNzdmMDJjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJjNjg5NWJkZS03ZDkwLTRkMmMtODk0Mi02MWU4NjJkYjNhZDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlNUQUZGIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuaCBEZXZlbG9wZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0c3RhZmYiLCJnaXZlbl9uYW1lIjoiQW5oIiwiZmFtaWx5X25hbWUiOiJEZXZlbG9wZXIiLCJlbWFpbCI6ImRldkBiYWNoaG9hbmhhbmgudm4ifQ.bo5cadYbOIx3DvJBMgwVJn8LnXYoZ0D21H650M05S4FWR-297TPOE7wAAu6qbzw6JOpeP4cnXZUf6068k1sqZH4yMH5mjGsSPvASzpdRyUrM7HFEY_BKmPxSeWIGo5x3_2743ELTvhJsdc2Z1JFfZ3o11qYFy7N7xJmA9HE5o9kjhGfARCTDK1lGs6IWQoqKPS2NN8T-uVz8Ry8NxQ7jJGFd7D8-fGbAuc0DXxQXrtfZy6hA4HLUTf85hdAkh4AMf2MUt5iojDuzp6qT0Glp2mJWfU4ayriMADVW9oD3PcYdQOgcXJAjRcrASjlLuqVVb35G3NBLNkwsWZLttmRPew
+POST http://bachhoanhanh/users/register
 Content-Type: application/json
-Accept: application/json
-Content-Length: 347
+Content-Length: 120
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "WELCOME10",
-  "description": "10% off - updated max discount",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 0,
-  "maxDiscountAmount": 60000,
-  "usageLimit": 100,
-  "startDate": "2025-01-01T00:00:00",
-  "endDate": "2099-12-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "fullName": "Nguyen Van B",
+  "phone": "0912345678"
 }
+
+<> 2026-06-01T081555.500.json
 
 ###
 
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcxNjEsImlhdCI6MTc4MDIyNjg2MSwianRpIjoiOTAzNjg5YWMtYzM4Mi00NDcyLTkzYTAtYTdmMTgyNzdmMDJjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJjNjg5NWJkZS03ZDkwLTRkMmMtODk0Mi02MWU4NjJkYjNhZDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlNUQUZGIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuaCBEZXZlbG9wZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0c3RhZmYiLCJnaXZlbl9uYW1lIjoiQW5oIiwiZmFtaWx5X25hbWUiOiJEZXZlbG9wZXIiLCJlbWFpbCI6ImRldkBiYWNoaG9hbmhhbmgudm4ifQ.bo5cadYbOIx3DvJBMgwVJn8LnXYoZ0D21H650M05S4FWR-297TPOE7wAAu6qbzw6JOpeP4cnXZUf6068k1sqZH4yMH5mjGsSPvASzpdRyUrM7HFEY_BKmPxSeWIGo5x3_2743ELTvhJsdc2Z1JFfZ3o11qYFy7N7xJmA9HE5o9kjhGfARCTDK1lGs6IWQoqKPS2NN8T-uVz8Ry8NxQ7jJGFd7D8-fGbAuc0DXxQXrtfZy6hA4HLUTf85hdAkh4AMf2MUt5iojDuzp6qT0Glp2mJWfU4ayriMADVW9oD3PcYdQOgcXJAjRcrASjlLuqVVb35G3NBLNkwsWZLttmRPew
-Content-Type: application/json
-Accept: application/json
-Content-Length: 362
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T081549.200.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 120
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "VEGFRESH",
-  "description": "5000 VND off fresh vegetables",
-  "discountType": "FIXED",
-  "discountValue": 5000,
-  "minOrderValue": 20000,
-  "maxDiscountAmount": 0,
-  "usageLimit": 0,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": "fresh-food-vegetables"
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "fullName": "Nguyen Van B",
+  "phone": "0912345678"
 }
+
+<> 2026-06-01T081523.503.json
 
 ###
 
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcxNjEsImlhdCI6MTc4MDIyNjg2MSwianRpIjoiOTAzNjg5YWMtYzM4Mi00NDcyLTkzYTAtYTdmMTgyNzdmMDJjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJjNjg5NWJkZS03ZDkwLTRkMmMtODk0Mi02MWU4NjJkYjNhZDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlNUQUZGIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuaCBEZXZlbG9wZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0c3RhZmYiLCJnaXZlbl9uYW1lIjoiQW5oIiwiZmFtaWx5X25hbWUiOiJEZXZlbG9wZXIiLCJlbWFpbCI6ImRldkBiYWNoaG9hbmhhbmgudm4ifQ.bo5cadYbOIx3DvJBMgwVJn8LnXYoZ0D21H650M05S4FWR-297TPOE7wAAu6qbzw6JOpeP4cnXZUf6068k1sqZH4yMH5mjGsSPvASzpdRyUrM7HFEY_BKmPxSeWIGo5x3_2743ELTvhJsdc2Z1JFfZ3o11qYFy7N7xJmA9HE5o9kjhGfARCTDK1lGs6IWQoqKPS2NN8T-uVz8Ry8NxQ7jJGFd7D8-fGbAuc0DXxQXrtfZy6hA4HLUTf85hdAkh4AMf2MUt5iojDuzp6qT0Glp2mJWfU4ayriMADVW9oD3PcYdQOgcXJAjRcrASjlLuqVVb35G3NBLNkwsWZLttmRPew
-Content-Type: application/json
-Accept: application/json
-Content-Length: 340
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
-{
-  "code": "PORK10",
-  "description": "10% off Ba roi heo VietGAP",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 20000,
-  "usageLimit": 50,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": 1,
-  "targetCatalogId": null
-}
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
 
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcxNjEsImlhdCI6MTc4MDIyNjg2MSwianRpIjoiOTAzNjg5YWMtYzM4Mi00NDcyLTkzYTAtYTdmMTgyNzdmMDJjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJjNjg5NWJkZS03ZDkwLTRkMmMtODk0Mi02MWU4NjJkYjNhZDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlNUQUZGIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuaCBEZXZlbG9wZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0c3RhZmYiLCJnaXZlbl9uYW1lIjoiQW5oIiwiZmFtaWx5X25hbWUiOiJEZXZlbG9wZXIiLCJlbWFpbCI6ImRldkBiYWNoaG9hbmhhbmgudm4ifQ.bo5cadYbOIx3DvJBMgwVJn8LnXYoZ0D21H650M05S4FWR-297TPOE7wAAu6qbzw6JOpeP4cnXZUf6068k1sqZH4yMH5mjGsSPvASzpdRyUrM7HFEY_BKmPxSeWIGo5x3_2743ELTvhJsdc2Z1JFfZ3o11qYFy7N7xJmA9HE5o9kjhGfARCTDK1lGs6IWQoqKPS2NN8T-uVz8Ry8NxQ7jJGFd7D8-fGbAuc0DXxQXrtfZy6hA4HLUTf85hdAkh4AMf2MUt5iojDuzp6qT0Glp2mJWfU4ayriMADVW9oD3PcYdQOgcXJAjRcrASjlLuqVVb35G3NBLNkwsWZLttmRPew
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcxNjEsImlhdCI6MTc4MDIyNjg2MSwianRpIjoiOTAzNjg5YWMtYzM4Mi00NDcyLTkzYTAtYTdmMTgyNzdmMDJjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJjNjg5NWJkZS03ZDkwLTRkMmMtODk0Mi02MWU4NjJkYjNhZDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlNUQUZGIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuaCBEZXZlbG9wZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0c3RhZmYiLCJnaXZlbl9uYW1lIjoiQW5oIiwiZmFtaWx5X25hbWUiOiJEZXZlbG9wZXIiLCJlbWFpbCI6ImRldkBiYWNoaG9hbmhhbmgudm4ifQ.bo5cadYbOIx3DvJBMgwVJn8LnXYoZ0D21H650M05S4FWR-297TPOE7wAAu6qbzw6JOpeP4cnXZUf6068k1sqZH4yMH5mjGsSPvASzpdRyUrM7HFEY_BKmPxSeWIGo5x3_2743ELTvhJsdc2Z1JFfZ3o11qYFy7N7xJmA9HE5o9kjhGfARCTDK1lGs6IWQoqKPS2NN8T-uVz8Ry8NxQ7jJGFd7D8-fGbAuc0DXxQXrtfZy6hA4HLUTf85hdAkh4AMf2MUt5iojDuzp6qT0Glp2mJWfU4ayriMADVW9oD3PcYdQOgcXJAjRcrASjlLuqVVb35G3NBLNkwsWZLttmRPew
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcxNjEsImlhdCI6MTc4MDIyNjg2MSwianRpIjoiOTAzNjg5YWMtYzM4Mi00NDcyLTkzYTAtYTdmMTgyNzdmMDJjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJjNjg5NWJkZS03ZDkwLTRkMmMtODk0Mi02MWU4NjJkYjNhZDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlNUQUZGIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhOTI4ZDI2OS00OGIzLTQ0ODMtOGJkMS1iMzg0NzIwYTNmZDIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuaCBEZXZlbG9wZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0c3RhZmYiLCJnaXZlbl9uYW1lIjoiQW5oIiwiZmFtaWx5X25hbWUiOiJEZXZlbG9wZXIiLCJlbWFpbCI6ImRldkBiYWNoaG9hbmhhbmgudm4ifQ.bo5cadYbOIx3DvJBMgwVJn8LnXYoZ0D21H650M05S4FWR-297TPOE7wAAu6qbzw6JOpeP4cnXZUf6068k1sqZH4yMH5mjGsSPvASzpdRyUrM7HFEY_BKmPxSeWIGo5x3_2743ELTvhJsdc2Z1JFfZ3o11qYFy7N7xJmA9HE5o9kjhGfARCTDK1lGs6IWQoqKPS2NN8T-uVz8Ry8NxQ7jJGFd7D8-fGbAuc0DXxQXrtfZy6hA4HLUTf85hdAkh4AMf2MUt5iojDuzp6qT0Glp2mJWfU4ayriMADVW9oD3PcYdQOgcXJAjRcrASjlLuqVVb35G3NBLNkwsWZLttmRPew
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
-
-###
-
-GET http://bachhoanhanh/vouchers/code/WELCOME10
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-05-31T182747.200.json
+<> 2026-06-01T081519.200.json
 
 ###
 
@@ -759,57 +453,7 @@ Accept: */*
 
 grant_type=password&client_id=gateway-client&username=teststaff&password=123456
 
-<> 2026-05-31T182741.200.json
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcwNTMsImlhdCI6MTc4MDIyNjc1MywianRpIjoiMzg5YTVkZDEtMGI0ZS00YjY1LThlMWEtN2U0ZTNlZjcwOGY1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIyZDk3OWMxOS0xMmMxLTQ3YTctOTEyMi0yODkxODYwNmFmZjUiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIyZDk3OWMxOS0xMmMxLTQ3YTctOTEyMi0yODkxODYwNmFmZjUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.UWBEfyk8xVg-eQDNvhLK_ik4mnxdbOc2VCyj1vdo64aQr1yIZolrulzUYx-3P3rH7usWQrlGY1m7Tw0NqPNJ1iN50qbGLFc-dicQxK-M7XuSUJFQ5QWpnKtkA7iAn5iDutUh5CcYz7nyuZRTOS0_wkVoIe_CAQsSYmQ5Txuua5FRLj5N2r0C3QhlOcpMDgFVZ_G2n0yiWD2TcChrfdzml-J7-Us3wrtgds4llBrvVs1swVr_Iw8u2UgvnnQyfiU0fTEy5yp9QzCpTwXGuiv59j3cSYgOmSsMJWLs6mQhEBq1AYgIwXj36ET4OYrt17rGsvGgPc7kJW-apPj_VO8e2g
-Content-Type: application/json
-Accept: application/json
-Content-Length: 340
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "PORK10",
-  "description": "10% off Ba roi heo VietGAP",
-  "discountType": "PERCENT",
-  "discountValue": 10,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 20000,
-  "usageLimit": 50,
-  "startDate": "2026-01-01T00:00:00",
-  "endDate": "2026-12-31T23:59:59",
-  "active": true,
-  "targetProductId": 1,
-  "targetCatalogId": null
-}
-
-###
-
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjcwNTMsImlhdCI6MTc4MDIyNjc1MywianRpIjoiMzg5YTVkZDEtMGI0ZS00YjY1LThlMWEtN2U0ZTNlZjcwOGY1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIyZDk3OWMxOS0xMmMxLTQ3YTctOTEyMi0yODkxODYwNmFmZjUiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIyZDk3OWMxOS0xMmMxLTQ3YTctOTEyMi0yODkxODYwNmFmZjUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.UWBEfyk8xVg-eQDNvhLK_ik4mnxdbOc2VCyj1vdo64aQr1yIZolrulzUYx-3P3rH7usWQrlGY1m7Tw0NqPNJ1iN50qbGLFc-dicQxK-M7XuSUJFQ5QWpnKtkA7iAn5iDutUh5CcYz7nyuZRTOS0_wkVoIe_CAQsSYmQ5Txuua5FRLj5N2r0C3QhlOcpMDgFVZ_G2n0yiWD2TcChrfdzml-J7-Us3wrtgds4llBrvVs1swVr_Iw8u2UgvnnQyfiU0fTEy5yp9QzCpTwXGuiv59j3cSYgOmSsMJWLs6mQhEBq1AYgIwXj36ET4OYrt17rGsvGgPc7kJW-apPj_VO8e2g
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
-}
+<> 2026-06-01T081517.200.json
 
 ###
 
@@ -822,84 +466,239 @@ Accept: */*
 
 grant_type=password&client_id=gateway-client&username=admin&password=123456
 
-<> 2026-05-31T182553.200.json
+<> 2026-06-01T081511.200.json
 
 ###
 
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjY2MTgsImlhdCI6MTc4MDIyNjMxOCwianRpIjoiMWExNjg3NWEtYzUxNy00Njc3LTkyMzUtMzI3NDhlMGNkNTVjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIwZjE2MzVlMS0yOGVhLTQwZGYtOGY1YS00NzRkZDdkMWFhNjUiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIwZjE2MzVlMS0yOGVhLTQwZGYtOGY1YS00NzRkZDdkMWFhNjUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.O59NPZRQkvzYW6cLJ7OHlG--AOAQGIVHFn1w0A6o4mI94pEO4CXXm6IQvkPFbhELCJzPyJap_to6cfII559nGwQFwe2qt9hefSyRVD6--RqqoIcwIXDuwswhXykalp70CVas0deRAdmPuX8fYIwLZ3pVfz5QD7yE-Yd4CvN0Jgl7j8iJxE5J2m4yY_XJTNYAGXvjjz-c-RGD2x1DNl49quij7B4Gc1u11HgNVM14VrYgozBDhNiQehNf3xl3CuIZ1v9uNmA3_DlRfeId88Hmb_sGyOlD-o0sJz7f_dp2nEgUS5c0wos8Lxs_weN8JLZVspXQJm3IiHasTCugamdYkA
+POST http://bachhoanhanh/users/register
 Content-Type: application/json
-Accept: application/json
-Content-Length: 350
+Content-Length: 120
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "fullName": "Nguyen Van B",
+  "phone": "0912345678"
 }
+
+<> 2026-06-01T080945.500.json
 
 ###
 
-POST http://bachhoanhanh/vouchers
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRellkaTBEWjRBSTJGeU9YNHJlV1lYLU40Wm1DQlVWaV9BNnRZdkJWUzZrIn0.eyJleHAiOjE3ODAyMjY2MTgsImlhdCI6MTc4MDIyNjMxOCwianRpIjoiMWExNjg3NWEtYzUxNy00Njc3LTkyMzUtMzI3NDhlMGNkNTVjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIyMjYyYmY3ZC02NGYxLTQxZDYtOTRhNC1hNzVmZjY0ZGMzNGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIwZjE2MzVlMS0yOGVhLTQwZGYtOGY1YS00NzRkZDdkMWFhNjUiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIwZjE2MzVlMS0yOGVhLTQwZGYtOGY1YS00NzRkZDdkMWFhNjUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.O59NPZRQkvzYW6cLJ7OHlG--AOAQGIVHFn1w0A6o4mI94pEO4CXXm6IQvkPFbhELCJzPyJap_to6cfII559nGwQFwe2qt9hefSyRVD6--RqqoIcwIXDuwswhXykalp70CVas0deRAdmPuX8fYIwLZ3pVfz5QD7yE-Yd4CvN0Jgl7j8iJxE5J2m4yY_XJTNYAGXvjjz-c-RGD2x1DNl49quij7B4Gc1u11HgNVM14VrYgozBDhNiQehNf3xl3CuIZ1v9uNmA3_DlRfeId88Hmb_sGyOlD-o0sJz7f_dp2nEgUS5c0wos8Lxs_weN8JLZVspXQJm3IiHasTCugamdYkA
-Content-Type: application/json
-Accept: application/json
-Content-Length: 350
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJqX1p3bzFyRW50TkV3UlhwZzZFQlZ5cVJUZVZRdHVKZmVHbGE1V1ZaaU13In0.eyJleHAiOjE3ODAyNzY0NjgsImlhdCI6MTc4MDI3NjE2OCwianRpIjoiZjAxZmFkODgtYzM4NS00OWU5LTg3MTItOTJiZTk4YjhmZjZmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJmMjU1MTc2MS0zMzdlLTRhM2ItYmE2ZS0wZWE2NzllNjQ5OGYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI4YzBjMGY5MS0wOTAxLTQyOTQtYjkxOS1iYjgzYzAwMjhlZjEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI4YzBjMGY5MS0wOTAxLTQyOTQtYjkxOS1iYjgzYzAwMjhlZjEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.Y1tmwgmYnzXqsnnkVV-bz7no_2yRgVlKaZE93zkQixvG-Tuuk-LWlT05UhxTFYqmA9PzkhFMopSvy1tWwU3W4OSfJ7cKnx4c8f5p3BpLAzqRdXIksmf_UmFQnJcrGrsrZd-KQGPEW5np9w-PdMgYibs0KpfT7vuhk0sGV4mqLSiNo_TKav58aRpU2Q3dVCxwjg0hbUOVz6s81Rwn2kXdHPVBMgSzx-90UGjJKUdzvKgisc316ibmMiq4gN6Gnr_Nwah0imtH09uj3y289xWinKd1LPx5KliMlnDZJU6mBcTprUJsLnGI6K_bp4zA-5WIAFVWK-l3CUeCu1R3spU1oA
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T080938.500.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 120
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
 {
-  "code": "SUMMER15",
-  "description": "15% off all orders this summer",
-  "discountType": "PERCENT",
-  "discountValue": 15,
-  "minOrderValue": 50000,
-  "maxDiscountAmount": 75000,
-  "usageLimit": 100,
-  "startDate": "2026-06-01T00:00:00",
-  "endDate": "2026-08-31T23:59:59",
-  "active": true,
-  "targetProductId": null,
-  "targetCatalogId": null
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "fullName": "Nguyen Van B",
+  "phone": "0912345678"
 }
 
-###
-
-GET http://bachhoanhanh/vouchers/code/WELCOME10
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-05-31T182536.200.json
+<> 2026-06-01T080934.500.json
 
 ###
 
-GET http://bachhoanhanh/vouchers/1
-Accept: application/json
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
-<> 2026-05-31T182533.200.json
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T080928.200.json
 
 ###
 
-GET http://bachhoanhanh/vouchers/1
-Accept: application/json
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 120
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
 
-<> 2026-05-31T181905.200.json
+{
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "fullName": "Nguyen Van B",
+  "phone": "0912345678"
+}
+
+<> 2026-06-01T080216.500.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-01T080211.200.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 144
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "firstName": "Nguyen",
+  "lastName": "Van B",
+  "phoneNumber": "0912345678"
+}
+
+<> 2026-06-01T075838.500.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-01T075834.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-01T075829.200.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 144
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "firstName": "Nguyen",
+  "lastName": "Van B",
+  "phoneNumber": "0912345678"
+}
+
+<> 2026-06-01T075817.500.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 144
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "firstName": "Nguyen",
+  "lastName": "Van B",
+  "phoneNumber": "0912345678"
+}
+
+<> 2026-06-01T075815.500.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 144
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "firstName": "Nguyen",
+  "lastName": "Van B",
+  "phoneNumber": "0912345678"
+}
+
+<> 2026-06-01T075814.500.json
+
+###
+
+POST http://bachhoanhanh/users/register
+Content-Type: application/json
+Content-Length: 144
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "email": "new_guest@gmail.com",
+  "password": "password123",
+  "firstName": "Nguyen",
+  "lastName": "Van B",
+  "phoneNumber": "0912345678"
+}
+
+<> 2026-06-01T075807.500.json
+
+###
+
+GET http://bachhoanhanh/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiaEZESVNnSnZEM3N1QjN4OThSY3BnanpKWEk2S2s5blFsQ2VBRl9hUlY4In0.eyJleHAiOjE3ODAyNzU3NDgsImlhdCI6MTc4MDI3NTQ0OCwianRpIjoiN2Y0N2VmZDItNjI5OC00MTY2LWJjOGYtNTE2OGMwNzk1MTA2IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiI5MDZiMTAwOC1hYjdlLTQ1ODUtOGI1Zi1mMzlhYjg2ZWRiMDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIwMmFiYzFiYS01MjdjLTRiMjktOTVlMy0xODhlNTIxYzIwZGIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkNVU1RPTUVSIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIwMmFiYzFiYS01MjdjLTRiMjktOTVlMy0xODhlNTIxYzIwZGIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5ndXllbiBWYW4gQSIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RjdXN0b21lciIsImdpdmVuX25hbWUiOiJOZ3V5ZW4iLCJmYW1pbHlfbmFtZSI6IlZhbiBBIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSJ9.DSzppdwqBfgvtbuWwYMzVLx0DaiXBAmLnalNTDGZ8h3xBE7NHyg0vvBRmtplnmul5TintzMDIOiJL_JWGzP3z7eNLZss-EubGceLIdmq6DIZegWkZG1YoBjWbYyWnBHy8KMtYhURuHkRNVEaVQ2KboPniJbVcJyV4Ws73neeW96VAhNfpjVlX-NbZkfhDp-Inqxevrb0L0PHWdN7gATn8vE63Gd79nQ0MEjKVAhC0hXSBMNU2jII5UesnmzLx496X8EmuSzH7Zpz_1FOOdJjHBoZ9m-mnu5aADuTPOm6gmi2QM5AolkUvhPlcCy2oDYrAiCaMm8msAYXmlWyX-HkwA
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-01T075756.500.json
+
+###
+
+DELETE http://bachhoanhanh/users/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiaEZESVNnSnZEM3N1QjN4OThSY3BnanpKWEk2S2s5blFsQ2VBRl9hUlY4In0.eyJleHAiOjE3ODAyNzU2MzIsImlhdCI6MTc4MDI3NTMzMiwianRpIjoiZTQ0NTQ4MzMtZDM5NS00ZWZlLWFkMzMtNjI5NDFlOTdjZjUyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiIwYzNhZjk3Yy05MzljLTRkZGItOGJiZC05ODc5OGY1YjkyMTIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI0YmM5MDM2ZS00YTg2LTRlZTItYmY3Ny1iNjIxNGQxNDVmYzkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI0YmM5MDM2ZS00YTg2LTRlZTItYmY3Ny1iNjIxNGQxNDVmYzkiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.cjLdxHvCk7-GMU6ZuWJcECaZKsDvOphJzJK04xXkU14BXybBLuVHoE0-b_eAe6ZVJLBP8zq51s8uABqSMlk6HusCM4I7DI6lme6trmzo5xM2Z0YFlm-SjurxYzWhUkaz-q8sGK1WIw9bcbkAGBHVucDGXjdiOU6w2Qc4QTnjoxYxEW0EqYAiPyWyneU0dZYE4IJGgRLCoxA_qVxUTfM_R5E-n40vnjqDTyQAQUQw6NfQnskHXb1_x8i22EooYWHq5LHTPxh17yiwsCTNO3C4gNNQhhzknbwNemDw412BUAbjhuAGzj01BkeR-MPOl8j99hEBMmYd0tojGUh64GjU2A
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-06-01T075750.500.json
 
 ###
 

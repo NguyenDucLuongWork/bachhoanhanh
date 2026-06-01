@@ -3,7 +3,7 @@ GET http://bachhoanhanh/products
 Accept: application/json
 
 ### Get 1 Product
-GET http://bachhoanhanh/products/3
+GET http://bachhoanhanh/products/1
 Accept: application/json
 
 ### Search with name
