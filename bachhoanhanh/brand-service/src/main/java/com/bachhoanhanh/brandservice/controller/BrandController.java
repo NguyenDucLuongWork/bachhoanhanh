@@ -48,4 +48,9 @@ public class BrandController {
     public void deleteBrand(@PathVariable Long id) {
         service.deleteBrand(id);
     }
+
+    @GetMapping(params = "name")
+    public Brand getByName(@RequestParam String name) {
+        return service.getByName(name);
+    }
 }

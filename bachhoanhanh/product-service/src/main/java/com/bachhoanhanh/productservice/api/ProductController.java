@@ -4,6 +4,8 @@ package com.bachhoanhanh.productservice.api;
 import com.bachhoanhanh.productservice.api.dto.ProductRequest;
 import com.bachhoanhanh.productservice.api.dto.ProductResponse;
 import com.bachhoanhanh.productservice.attribute.service.AttributeService;
+import com.bachhoanhanh.productservice.client.BrandClient;
+import com.bachhoanhanh.productservice.client.dto.BrandResponse;
 import com.bachhoanhanh.productservice.product.model.BaseProduct;
 import com.bachhoanhanh.productservice.product.service.BaseProductService;
 import com.bachhoanhanh.productservice.product.service.ProductImageStorageService;
@@ -24,6 +26,7 @@ public class ProductController {
     private final BaseProductService baseProductService;
     private final AttributeService attributeService;
     private final ProductImageStorageService productImageStorageService;
+    private final BrandClient brandClient;
 
     // ─── GET ──────────────────────────────────────────────────────────────────
 
@@ -131,9 +134,9 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-    // ─── MAPPER ───────────────────────────────────────────────────────────────
+// ─── MAPPER ───────────────────────────────────────────────────────────────
 
-    /** Không load attributes — dùng cho list response để tránh N+1 */
+    /** Không load attributes, không load brand — dùng cho list (tránh N+1) */
     private ProductResponse toResponse(BaseProduct p) {
         return ProductResponse.builder()
                 .productId(p.getProductId())
@@ -141,28 +144,45 @@ public class ProductController {
                 .name(p.getName())
                 .image(p.getImage())
                 .description(p.getDescription())
-                .catalogId(p.getCatalogId())       // ← thêm
+                .catalogId(p.getCatalogId())
                 .originalPrice(p.getOriginalPrice())
                 .prototypeId(p.getPrototypeId())
                 .build();
     }
 
-    /** Load attributes — dùng cho detail (GET by id, barcode) */
+    /** Load attributes + brand — dùng cho detail (GET by id / barcode) */
     private ProductResponse toResponseWithAttributes(BaseProduct p) {
-        Map<String, String> attrs = attributeService.getProductAttributeMap(
-                p.getProductId()
-        );
-        return ProductResponse.builder()
+        Map<String, String> attrs = attributeService.getProductAttributeMap(p.getProductId());
+
+        ProductResponse.ProductResponseBuilder builder = ProductResponse.builder()
                 .productId(p.getProductId())
                 .barcode(p.getBarcode())
                 .name(p.getName())
                 .image(p.getImage())
                 .description(p.getDescription())
-                .catalogId(p.getCatalogId())       // ← thêm
+                .catalogId(p.getCatalogId())
                 .originalPrice(p.getOriginalPrice())
                 .prototypeId(p.getPrototypeId())
-                .attributes(attrs)
-                .build();
+                .attributes(attrs);
+
+        // Nếu attribute BRAND tồn tại → gọi sang BrandService để lấy chi tiết
+        String brandName = attrs.get("BRAND");
+
+        if (brandName != null) {
+
+            BrandResponse brand = brandClient.findByName(brandName);
+
+            if (brand != null) {
+                builder.brandId(brand.getId())
+                        .brandName(brand.getName())
+                        .brandImage(brand.getImage())
+                        .brandDescription(brand.getDescription())
+                        .brandPhone(brand.getPhoneNumber())
+                        .brandEmail(brand.getEmail());
+            }
+        }
+
+        return builder.build();
     }
 
     private BaseProduct toEntity(ProductRequest r) {
