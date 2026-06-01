@@ -41,6 +41,21 @@
       "emailVerified": true,
       "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
       "realmRoles": ["CUSTOMER"]
+    },
+    {
+      // Service account cho user-service-client
+      "username": "service-account-user-service-client",
+      "enabled": true,
+      "serviceAccountClientId": "user-service-client",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "view-users",
+          "query-users",
+          "query-groups",
+          "view-realm"
+        ]
+      }
     }
   ],
   "clients": [
@@ -61,13 +76,5 @@
       "fullScopeAllowed": true,
       "protocol": "openid-connect"
     }
-  ],
-  "clientScopeMappings": {
-    "realm-management": [
-      {
-        "client": "user-service-client",
-        "roles": ["manage-users", "view-users", "query-users"]
-      }
-    ]
-  }
+  ]
 }
