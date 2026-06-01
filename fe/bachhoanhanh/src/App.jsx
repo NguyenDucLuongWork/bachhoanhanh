@@ -6,6 +6,7 @@ import { ProductsPage } from './pages/ProductsPage'
 import { ProductDetailPage } from './pages/ProductDetailPage'
 import { OrdersPage } from './pages/OrdersPage'
 import { CartPage } from './pages/CartPage'
+import { AccountPage } from './pages/AccountPage'
 import { ToastContainer, useToast } from './components/Toast'
 import { showToast } from './components/Toast'
 import { OrderDetailsModal } from './components/OrderDetailsModal'
@@ -18,7 +19,7 @@ import './styles/theme.css'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('products')
-  const { token, username, roles, loading, login, logout, isLoggedIn } = useAuth()
+  const { token, username, profile, roles, loading, login, registerCustomer, updateProfile, logout, isLoggedIn } = useAuth()
   const { catalogs: catalogList, loadCatalogTree } = useCatalogs(token)
   const { prototypes, loadPrototypes } = usePrototypes(token)
   const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct, getProductById, searchProducts, getProductByBarcode, attributeTypes, loadAttributeTypes } = useProducts(token)
@@ -183,7 +184,13 @@ function App() {
       />
 
       <main>
-        {currentPage === 'login' && <LoginPage onLoginSuccess={handleLogin} loading={loading} />}
+        {currentPage === 'login' && (
+          <LoginPage
+            onLoginSuccess={handleLogin}
+            onRegisterSuccess={registerCustomer}
+            loading={loading}
+          />
+        )}
         {currentPage === 'products' && (
           <ProductsPage
             products={products}
@@ -233,6 +240,7 @@ function App() {
         {currentPage === 'cart' && isLoggedIn && (
           <CartPage
             cartItems={cartItems}
+            profile={profile}
             onUpdateQuantity={updateCartQuantity}
             onRemoveItem={removeCartItem}
             onClearCart={() => setCartItems([])}
@@ -242,26 +250,11 @@ function App() {
           />
         )}
         {currentPage === 'account' && isLoggedIn && (
-          <section className="page active" style={{ maxWidth: '720px', margin: '0 auto' }}>
-            <div className="page-header">
-              <div>
-                <h2>Account</h2>
-                <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '2px' }}>
-                  Profile and access information
-                </p>
-              </div>
-            </div>
-            <div className="login-wrap" style={{ maxWidth: '520px' }}>
-              <div className="field">
-                <label>Username</label>
-                <input type="text" value={username || ''} readOnly />
-              </div>
-              <div className="field">
-                <label>Role</label>
-                <input type="text" value={roles.join(', ') || 'CUSTOMER'} readOnly />
-              </div>
-            </div>
-          </section>
+          <AccountPage
+            profile={profile}
+            username={username}
+            onUpdateProfile={updateProfile}
+          />
         )}
       </main>
 

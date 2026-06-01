@@ -1,3 +1,4 @@
+
 ## keycloak/init-roles.sh
 ##!/bin/bash
 #set -e

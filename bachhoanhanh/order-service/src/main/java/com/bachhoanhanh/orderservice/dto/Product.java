@@ -5,6 +5,7 @@ public class Product {
     private Long id;
     private Long productId;
     private String name;
+    private String catalogId;
     private double originalPrice;
 
     public Product(){}
@@ -14,6 +15,8 @@ public class Product {
     public Long getProductId() { return productId; }
 
     public String getName() { return name; }
+
+    public String getCatalogId() { return catalogId; }
 
     public double getOriginalPrice() { return originalPrice; }
 

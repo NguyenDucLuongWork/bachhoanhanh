@@ -38,16 +38,29 @@ export function useOrders(token) {
   )
 
   const createOrder = useCallback(
-    async (productId, quantity) => {
+    async (itemsOrProductId, quantity, voucherCode) => {
       try {
         const headers = {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
+        const body = Array.isArray(itemsOrProductId)
+          ? {
+              items: itemsOrProductId.map((item) => ({
+                productId: String(item.productId),
+                quantity: item.quantity,
+              })),
+              voucherCode: voucherCode || null,
+            }
+          : {
+              productId: String(itemsOrProductId),
+              quantity,
+              voucherCode: voucherCode || null,
+            }
         const res = await fetch(ORDERS_URL, {
           method: 'POST',
           headers,
-          body: JSON.stringify({ productId: String(productId), quantity }),
+          body: JSON.stringify(body),
         })
         if (!res.ok) {
           const errorData = await res.json().catch(() => null)
