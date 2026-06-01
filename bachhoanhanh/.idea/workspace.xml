@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keycloak/init-roles.sh" beforeDir="false" afterPath="$PROJECT_DIR$/keycloak/init-roles.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keycloak/realm/realm-export.json" beforeDir="false" afterPath="$PROJECT_DIR$/keycloak/realm/realm-export.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -149,11 +148,11 @@
         <entry key="HttpClient.HttpRequestRunConfigurationType">
           <value>
             <map>
+              <entry key="login | Login to get Access Token" value="STOPPED" />
               <entry key="user | #4" value="STOPPED" />
               <entry key="user | #5" value="STOPPED" />
-              <entry key="user | #6" value="STOPPED" />
-              <entry key="user | Get User by Keycloak ID" value="STOPPED" />
               <entry key="user | adminLogin" value="STOPPED" />
+              <entry key="user | customerLogin" value="STOPPED" />
             </map>
           </value>
         </entry>
@@ -161,7 +160,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
-    <configuration name="user | Get User by Keycloak ID" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="Get User by Keycloak ID" index="7" runType="Run single request">
+    <configuration name="login | Login to get Access Token" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/login.http" executionIdentifier="Login to get Access Token" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="user | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#4" index="4" runType="Run single request">
@@ -241,11 +240,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.user | #4" />
         <item itemvalue="HTTP Request.user | adminLogin" />
+        <item itemvalue="HTTP Request.login | Login to get Access Token" />
+        <item itemvalue="HTTP Request.user | #4" />
         <item itemvalue="HTTP Request.user | #5" />
         <item itemvalue="HTTP Request.user | customerLogin" />
-        <item itemvalue="HTTP Request.user | Get User by Keycloak ID" />
       </list>
     </recent_temporary>
   </component>
