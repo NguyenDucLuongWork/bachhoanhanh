@@ -1,12 +1,20 @@
 import { useState } from 'react'
 import { showToast } from '../components/Toast'
 
-export function LoginPage({ onLoginSuccess, loading }) {
+export function LoginPage({ onLoginSuccess, onRegisterSuccess, loading }) {
+  const [mode, setMode] = useState('login')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [registerPassword, setRegisterPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const busy = loading || isLoading
+
+  const handleLogin = async (e) => {
     e.preventDefault()
     setIsLoading(true)
     const result = await onLoginSuccess(username, password)
@@ -16,45 +24,137 @@ export function LoginPage({ onLoginSuccess, loading }) {
     setIsLoading(false)
   }
 
+  const handleRegister = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    const result = await onRegisterSuccess({
+      phone,
+      firstName,
+      lastName,
+      email,
+      password: registerPassword,
+    })
+    if (!result.success) {
+      showToast(result.message, true)
+    } else {
+      showToast('Account created and signed in')
+    }
+    setIsLoading(false)
+  }
+
   return (
     <div className="page active">
       <div className="login-wrap">
-        <h2>Welcome back</h2>
-        <p>Sign in to your BachHoaNhanh account</p>
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label>Username</label>
-            <input
-              type="text"
-              placeholder="your-username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              disabled={isLoading}
-            />
-          </div>
-          <div className="field">
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={isLoading}
-            />
-          </div>
-          <button
-            type="submit"
-            className="btn btn-accent"
-            style={{ width: '100%', justifyContent: 'center', padding: '10px' }}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Signing in…' : 'Sign in'}
+        <div className="auth-tabs">
+          <button type="button" className={mode === 'login' ? 'active' : ''} onClick={() => setMode('login')}>
+            Sign in
           </button>
-        </form>
+          <button type="button" className={mode === 'register' ? 'active' : ''} onClick={() => setMode('register')}>
+            Create account
+          </button>
+        </div>
+
+        {mode === 'login' ? (
+          <>
+            <h2>Welcome back</h2>
+            <p>Sign in with a seed account or a phone number registered through the store.</p>
+            <form onSubmit={handleLogin}>
+              <div className="field">
+                <label>Username or phone</label>
+                <input
+                  type="text"
+                  placeholder="testcustomer or 0912345678"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  disabled={busy}
+                />
+              </div>
+              <div className="field">
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={busy}
+                />
+              </div>
+              <button type="submit" className="btn btn-accent" style={{ width: '100%' }} disabled={busy}>
+                {busy ? 'Signing in...' : 'Sign in'}
+              </button>
+            </form>
+          </>
+        ) : (
+          <>
+            <h2>Create customer account</h2>
+            <p>New customer accounts use phone number as the login username.</p>
+            <form onSubmit={handleRegister}>
+              <div className="field">
+                <label>Phone</label>
+                <input
+                  type="tel"
+                  placeholder="0912345678"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  disabled={busy}
+                />
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="field">
+                  <label>Last name</label>
+                  <input
+                    type="text"
+                    placeholder="Nguyen"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    disabled={busy}
+                  />
+                </div>
+                <div className="field">
+                  <label>First name</label>
+                  <input
+                    type="text"
+                    placeholder="Van B"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    disabled={busy}
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="new_guest@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={busy}
+                />
+              </div>
+              <div className="field">
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="At least 6 characters"
+                  value={registerPassword}
+                  onChange={(e) => setRegisterPassword(e.target.value)}
+                  disabled={busy}
+                />
+              </div>
+              <button type="submit" className="btn btn-accent" style={{ width: '100%' }} disabled={busy}>
+                {busy ? 'Creating account...' : 'Create and sign in'}
+              </button>
+            </form>
+          </>
+        )}
+
         <hr className="divider" />
-        <p style={{ fontSize: '12px', color: 'var(--muted)', textAlign: 'center' }}>
-          Secured with Keycloak · OpenID Connect
-        </p>
+        <div className="seed-accounts">
+          <strong>Seed accounts</strong>
+          <span>admin / 123456</span>
+          <span>teststaff / 123456</span>
+          <span>testcustomer / 123456</span>
+        </div>
       </div>
     </div>
   )

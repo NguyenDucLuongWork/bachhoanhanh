@@ -45,6 +45,14 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(keycloakId));
     }
 
+    @PatchMapping("/me")
+    public ResponseEntity<UserResponse> updateMe(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody UpdateCustomerRequest req) {
+        String keycloakId = jwt.getSubject();
+        return ResponseEntity.ok(userService.updateCurrentUser(keycloakId, req));
+    }
+
     // Admin fetches any user by ID
     @GetMapping("/{keycloakId}")
     @PreAuthorize("hasRole('ADMIN')")

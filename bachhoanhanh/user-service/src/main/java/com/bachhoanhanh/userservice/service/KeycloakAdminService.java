@@ -92,6 +92,24 @@ public class KeycloakAdminService {
         restTemplate.exchange(url, HttpMethod.DELETE, new HttpEntity<>(headers), Void.class);
     }
 
+    public void updateUserInfo(String keycloakId, String firstName, String lastName, String email) {
+        String token = getAdminToken();
+        String url = serverUrl + "/admin/realms/" + realm + "/users/" + keycloakId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, Object> userRep = new HashMap<>();
+        userRep.put("firstName", firstName);
+        userRep.put("lastName", lastName);
+        userRep.put("email", email);
+        userRep.put("emailVerified", true);
+        userRep.put("enabled", true);
+
+        restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(userRep, headers), Void.class);
+    }
+
     private void assignRole(String keycloakId, Role role, String token) {
         String roleUrl = serverUrl + "/admin/realms/" + realm + "/roles/" + role.name();
         HttpHeaders headers = new HttpHeaders();

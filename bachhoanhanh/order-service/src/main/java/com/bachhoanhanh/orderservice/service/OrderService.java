@@ -1,19 +1,23 @@
 package com.bachhoanhanh.orderservice.service;
 
+import com.bachhoanhanh.orderservice.dto.CreateOrderRequest;
 import com.bachhoanhanh.orderservice.dto.Product;
 import com.bachhoanhanh.orderservice.model.Order;
 import com.bachhoanhanh.orderservice.model.OrderItem;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class OrderService {
 
     private final RestTemplate restTemplate;
-    // Map đóng vai trò giả lập cơ sở dữ liệu tạm thời
     private final Map<Long, Order> orderDatabase = new HashMap<>();
     private final AtomicLong orderSequence = new AtomicLong(1000);
 
@@ -22,29 +26,63 @@ public class OrderService {
     }
 
     public Order createOrder(String productId, Integer quantity) {
-        // Khách hàng gọi API Gateway, Gateway chuyển tiếp sang product-service
-        String productServiceUrl = "http://product-service:8080/products/" + productId;
-        Product product = restTemplate.getForObject(productServiceUrl, Product.class);
+        CreateOrderRequest request = new CreateOrderRequest();
+        request.setProductId(productId);
+        request.setQuantity(quantity);
+        return createOrder(request);
+    }
 
-        if (product == null) {
-            throw new RuntimeException("Sản phẩm không tồn tại!");
+    public Order createOrder(CreateOrderRequest request) {
+        List<CreateOrderRequest.OrderLineRequest> requestItems = normalizeItems(request);
+        List<OrderItem> orderItems = new ArrayList<>();
+        List<Long> productIds = new ArrayList<>();
+        List<String> catalogIds = new ArrayList<>();
+        double subtotal = 0;
+
+        List<Product> products = new ArrayList<>();
+        for (CreateOrderRequest.OrderLineRequest item : requestItems) {
+            Product product = getProduct(item.getProductId());
+            products.add(product);
+            subtotal += product.getPrice() * item.getQuantity();
+            orderItems.add(new OrderItem(product.getName(), item.getQuantity(), product.getPrice()));
+
+            Long resolvedProductId = product.getProductId() != null ? product.getProductId() : Long.valueOf(item.getProductId());
+            productIds.add(resolvedProductId);
+            if (product.getCatalogId() != null && !product.getCatalogId().isBlank()) {
+                catalogIds.add(product.getCatalogId());
+            }
         }
 
+        double discountAmount = 0;
+        String voucherCode = normalizeVoucherCode(request.getVoucherCode());
+        if (voucherCode != null) {
+            Map<?, ?> voucher = applyVoucher(voucherCode, subtotal, productIds, catalogIds);
+            Object discount = voucher.get("discountAmount");
+            if (discount instanceof Number number) {
+                discountAmount = number.doubleValue();
+            }
+            confirmVoucherUsage(voucherCode);
+        }
+
+        double totalPrice = Math.max(0, subtotal - discountAmount);
         Long orderId = orderSequence.incrementAndGet();
-        Double totalPrice = product.getPrice() * quantity;
+        Product firstProduct = products.get(0);
+        CreateOrderRequest.OrderLineRequest firstLine = requestItems.get(0);
 
         Order order = new Order(
                 orderId,
-                productId,
-                product.getName(),
-                quantity,
-                product.getPrice(),
+                firstLine.getProductId(),
+                firstProduct.getName(),
+                firstLine.getQuantity(),
+                firstProduct.getPrice(),
                 totalPrice,
-                "pending", // Mặc định đơn hàng tạo mới ở trạng thái chờ thanh toán
+                "pending",
                 new Date()
         );
-
-        order.setItems(List.of(new OrderItem(product.getName(), quantity, product.getPrice())));
+        order.setItems(orderItems);
+        order.setSubtotal(subtotal);
+        order.setDiscountAmount(discountAmount);
+        order.setVoucherCode(voucherCode);
 
         orderDatabase.put(orderId, order);
         return order;
@@ -65,5 +103,58 @@ public class OrderService {
 
     public List<Order> getAllOrders() {
         return new ArrayList<>(orderDatabase.values());
+    }
+
+    private Product getProduct(String productId) {
+        String productServiceUrl = "http://product-service:8080/products/" + productId;
+        Product product = restTemplate.getForObject(productServiceUrl, Product.class);
+        if (product == null) {
+            throw new RuntimeException("Product not found: " + productId);
+        }
+        return product;
+    }
+
+    private List<CreateOrderRequest.OrderLineRequest> normalizeItems(CreateOrderRequest request) {
+        if (request.getItems() != null && !request.getItems().isEmpty()) {
+            for (CreateOrderRequest.OrderLineRequest item : request.getItems()) {
+                validateItem(item.getProductId(), item.getQuantity());
+            }
+            return request.getItems();
+        }
+
+        validateItem(request.getProductId(), request.getQuantity());
+        CreateOrderRequest.OrderLineRequest line = new CreateOrderRequest.OrderLineRequest();
+        line.setProductId(request.getProductId());
+        line.setQuantity(request.getQuantity());
+        return List.of(line);
+    }
+
+    private void validateItem(String productId, Integer quantity) {
+        if (productId == null || productId.isBlank() || quantity == null || quantity <= 0) {
+            throw new RuntimeException("productId and quantity are required");
+        }
+    }
+
+    private String normalizeVoucherCode(String voucherCode) {
+        if (voucherCode == null || voucherCode.isBlank()) {
+            return null;
+        }
+        return voucherCode.trim().toUpperCase();
+    }
+
+    private Map<?, ?> applyVoucher(String voucherCode, double subtotal, List<Long> productIds, List<String> catalogIds) {
+        String url = "http://voucher-service:8087/vouchers/apply";
+        Map<String, Object> body = Map.of(
+                "code", voucherCode,
+                "orderTotal", subtotal,
+                "productIds", productIds,
+                "catalogIds", catalogIds
+        );
+        return restTemplate.postForObject(url, body, Map.class);
+    }
+
+    private void confirmVoucherUsage(String voucherCode) {
+        String url = "http://voucher-service:8087/vouchers/confirm-usage/" + voucherCode;
+        restTemplate.postForEntity(url, null, Void.class);
     }
 }

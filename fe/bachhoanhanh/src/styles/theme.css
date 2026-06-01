@@ -636,6 +636,43 @@ footer a {
   color: var(--muted);
 }
 
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 22px;
+  border-radius: 14px;
+  background: var(--surface2);
+  padding: 5px;
+}
+
+.auth-tabs button {
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 10px;
+}
+
+.auth-tabs button.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 8px 22px rgba(16, 35, 27, 0.08);
+}
+
+.seed-accounts {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.seed-accounts strong {
+  color: var(--text);
+}
+
 .field {
   margin-bottom: 16px;
 }

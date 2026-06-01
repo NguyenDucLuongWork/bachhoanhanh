@@ -96,4 +96,29 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found: " + keycloakId));
         return UserResponse.from(user);
     }
+
+    @Transactional
+    public UserResponse updateCurrentUser(String keycloakId, UpdateCustomerRequest req) {
+        User user = userRepository.findById(keycloakId)
+                .orElseThrow(() -> new RuntimeException("User not found: " + keycloakId));
+
+        if (req.getFirstName() != null && !req.getFirstName().isBlank()) {
+            user.setFirstName(req.getFirstName());
+        }
+        if (req.getLastName() != null && !req.getLastName().isBlank()) {
+            user.setLastName(req.getLastName());
+        }
+        if (req.getEmail() != null && !req.getEmail().isBlank()) {
+            user.setEmail(req.getEmail());
+        }
+
+        User saved = userRepository.saveAndFlush(user);
+        keycloakAdminService.updateUserInfo(
+                saved.getKeycloakId(),
+                saved.getFirstName(),
+                saved.getLastName(),
+                saved.getEmail()
+        );
+        return UserResponse.from(saved);
+    }
 }
