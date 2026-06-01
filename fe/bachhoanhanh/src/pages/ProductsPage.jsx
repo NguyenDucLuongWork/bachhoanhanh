@@ -38,6 +38,9 @@ export function ProductsPage({
   onBuyNow,
 }) {
   const [query, setQuery] = useState('')
+  const [sortBy, setSortBy] = useState('name') // name, price-asc, price-desc
+  const [priceMin, setPriceMin] = useState(0)
+  const [priceMax, setPriceMax] = useState(1000000)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -50,15 +53,27 @@ export function ProductsPage({
 
   const filteredProducts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
-    return products.filter((product) => {
+    let result = products.filter((product) => {
       const matchesCatalog = !selectedCatalog || selectedIds.includes(product.catalogId)
       const matchesQuery =
         !normalizedQuery ||
         product.name?.toLowerCase().includes(normalizedQuery) ||
         product.barcode?.toLowerCase().includes(normalizedQuery)
-      return matchesCatalog && matchesQuery
+      const matchesPrice = product.originalPrice >= priceMin && product.originalPrice <= priceMax
+      return matchesCatalog && matchesQuery && matchesPrice
     })
-  }, [products, query, selectedCatalog, selectedIds])
+
+    // Apply sorting
+    if (sortBy === 'name') {
+      result.sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+    } else if (sortBy === 'price-asc') {
+      result.sort((a, b) => (a.originalPrice || 0) - (b.originalPrice || 0))
+    } else if (sortBy === 'price-desc') {
+      result.sort((a, b) => (b.originalPrice || 0) - (a.originalPrice || 0))
+    }
+
+    return result
+  }, [products, query, selectedCatalog, selectedIds, priceMin, priceMax, sortBy])
 
   const handleBarcodeSearch = async () => {
     if (!query.trim() || !/^\d+$/.test(query.trim())) return
@@ -197,6 +212,57 @@ export function ProductsPage({
                 </button>
               )}
             </div>
+          </div>
+
+          {/* Filters and Sort */}
+          <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <label style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Sort by:</label>
+              <select 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value)}
+                style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid var(--border)' }}
+              >
+                <option value="name">Name (A-Z)</option>
+                <option value="price-asc">Price (Low to High)</option>
+                <option value="price-desc">Price (High to Low)</option>
+              </select>
+            </div>
+
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <label style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Price:</label>
+              <input 
+                type="number" 
+                min="0" 
+                value={priceMin}
+                onChange={(e) => setPriceMin(Math.max(0, parseInt(e.target.value) || 0))}
+                placeholder="Min"
+                style={{ width: '80px', padding: '6px 8px', borderRadius: '6px', border: '1px solid var(--border)' }}
+              />
+              <span style={{ color: 'var(--muted)' }}>-</span>
+              <input 
+                type="number" 
+                min="0" 
+                value={priceMax}
+                onChange={(e) => setPriceMax(Math.max(0, parseInt(e.target.value) || 1000000))}
+                placeholder="Max"
+                style={{ width: '80px', padding: '6px 8px', borderRadius: '6px', border: '1px solid var(--border)' }}
+              />
+            </div>
+
+            {(sortBy !== 'name' || priceMin > 0 || priceMax < 1000000) && (
+              <button 
+                className="btn btn-ghost"
+                onClick={() => {
+                  setSortBy('name')
+                  setPriceMin(0)
+                  setPriceMax(1000000)
+                }}
+                style={{ fontSize: '12px' }}
+              >
+                Clear filters
+              </button>
+            )}
           </div>
 
           {filteredProducts.length === 0 ? (
