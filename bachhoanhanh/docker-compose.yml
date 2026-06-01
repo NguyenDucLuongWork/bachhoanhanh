@@ -64,6 +64,18 @@ services:
     volumes:
       - ./keycloak/realm:/opt/keycloak/data/import
 
+  keycloak-init:
+    image: alpine:3.19
+    container_name: keycloak-init
+    restart: on-failure
+    volumes:
+      - ./keycloak/init-roles.sh:/init-roles.sh:ro
+    entrypoint: [ "sh", "-c", "apk add --no-cache curl jq -q && sh /init-roles.sh" ]
+    depends_on:
+      keycloak:
+        condition: service_started
+    # user-service should wait for this to complete
+
   user-service:
     build: ./user-service
     container_name: user-service
@@ -87,6 +99,8 @@ services:
         condition: service_started
       keycloak:
         condition: service_started
+      keycloak-init: # ← add this
+        condition: service_completed_successfully
 
   product-service:
     build: ./product-service

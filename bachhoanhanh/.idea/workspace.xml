@@ -5,12 +5,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.local" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T181905.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182533.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182536.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182553.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182741.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182747.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T182928.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183206.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183226.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183353.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183403.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183407.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T183412.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190413.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190421.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190424.201.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190428.201.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190429.409.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190441.201.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190446.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190454.404.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190458.404.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190510.409.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190515.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190543.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190554.404.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190609.404.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T190613.404.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T202647.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T203332.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T203343.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T203347.201.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-05-31T203353.201.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-testing/get-products.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-testing/get-products.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-testing/login.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-testing/login.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keycloak/realm/realm-export.json" beforeDir="false" afterPath="$PROJECT_DIR$/keycloak/realm/realm-export.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/CreateStaffRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/CreateStaffRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/CustomerProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/CustomerProfileResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/RegisterCustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/RegisterCustomerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/StaffProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/StaffProfileResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UpdateCustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UpdateCustomerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UpdateStaffRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UpdateStaffRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/dto/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/KeycloakAdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/KeycloakAdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +79,7 @@
       <list>
         <option value="Class" />
         <option value="Dockerfile" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -43,16 +89,20 @@
   <component name="HttpClientOnboardingState">{
   &quot;isOnboardingCommentShown&quot;: true
 }</component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
         <option name="jdkForImporter" value="ms-21" />
       </MavenImportingSettings>
     </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -67,10 +117,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
+    "HTTP Request.brand | #1.executor": "Run",
     "HTTP Request.get-products | Get 1 Product.executor": "Run",
     "HTTP Request.get-products | Get Products.executor": "Run",
     "HTTP Request.login | Login to get Access Token.executor": "Run",
@@ -79,6 +128,15 @@
     "HTTP Request.test-product-new | Tạo mẫu sản phẩm \"Thịt heo sạch\".executor": "Run",
     "HTTP Request.test-product-new | Tạo mới loại thuộc tính: Hạn sử dụng (Yêu cầu Token).executor": "Run",
     "HTTP Request.test-product-new | Tạo mới loại thuộc tính: Khối lượng (Yêu cầu Token).executor": "Run",
+    "HTTP Request.user | #4.executor": "Run",
+    "HTTP Request.user | #5.executor": "Run",
+    "HTTP Request.user | #6.executor": "Run",
+    "HTTP Request.user | #9.executor": "Run",
+    "HTTP Request.user | Delete User.executor": "Run",
+    "HTTP Request.user | Get User by Keycloak ID.executor": "Run",
+    "HTTP Request.user | adminLogin.executor": "Run",
+    "HTTP Request.user | customerLogin.executor": "Run",
+    "HTTP Request.user | staffLogin.executor": "Run",
     "HTTP Request.voucher | Apply Voucher - Global voucher.executor": "Run",
     "HTTP Request.voucher | Apply Voucher - Non-existent code (expect 404).executor": "Run",
     "HTTP Request.voucher | Confirm Usage (called after order is placed).executor": "Run",
@@ -91,13 +149,16 @@
     "HTTP Request.voucher | Get Voucher By Id.executor": "Run",
     "HTTP Request.voucher | Login to get Access Token.executor": "Run",
     "HTTP Request.voucher | Update Voucher.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.EurekaServerApplication.executor": "Run",
+    "Spring Boot.EurekaServerApplication.executor": "Debug",
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "luong",
@@ -135,11 +196,11 @@
         <entry key="HttpClient.HttpRequestRunConfigurationType">
           <value>
             <map>
-              <entry key="voucher | Apply Voucher - Global voucher" value="STOPPED" />
-              <entry key="voucher | Apply Voucher - Non-existent code (expect 404)" value="STOPPED" />
-              <entry key="voucher | Confirm Usage (called after order is placed)" value="STOPPED" />
-              <entry key="voucher | Create Voucher - Target a specific product (productId = 1)" value="STOPPED" />
-              <entry key="voucher | Login to get Access Token" value="STOPPED" />
+              <entry key="user | #4" value="STOPPED" />
+              <entry key="user | #5" value="STOPPED" />
+              <entry key="user | Get User by Keycloak ID" value="STOPPED" />
+              <entry key="user | adminLogin" value="STOPPED" />
+              <entry key="user | customerLogin" value="STOPPED" />
             </map>
           </value>
         </entry>
@@ -147,19 +208,19 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
-    <configuration name="voucher | Confirm Usage (called after order is placed)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Confirm Usage (called after order is placed)" index="17" runType="Run single request">
+    <configuration name="user | Get User by Keycloak ID" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="Get User by Keycloak ID" index="7" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="voucher | Create Voucher - Global (no target)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Create Voucher - Global (no target)" index="5" runType="Run single request">
+    <configuration name="user | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#4" index="4" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="voucher | Create Voucher - Target a specific product (productId = 1)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Create Voucher - Target a specific product (productId = 1)" index="6" runType="Run single request">
+    <configuration name="user | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#5" index="5" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="voucher | Get Voucher By Code" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Get Voucher By Code" index="4" runType="Run single request">
+    <configuration name="user | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#6" index="6" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="voucher | Login to get Access Token" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Login to get Access Token" runType="Run single request">
+    <configuration name="user | adminLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="adminLogin" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="BrandServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -227,21 +288,13 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.voucher | Create Voucher - Target a specific product (productId = 1)" />
-        <item itemvalue="HTTP Request.voucher | Create Voucher - Global (no target)" />
-        <item itemvalue="HTTP Request.voucher | Get Voucher By Code" />
-        <item itemvalue="HTTP Request.voucher | Login to get Access Token" />
-        <item itemvalue="HTTP Request.voucher | Confirm Usage (called after order is placed)" />
+        <item itemvalue="HTTP Request.user | Get User by Keycloak ID" />
+        <item itemvalue="HTTP Request.user | #6" />
+        <item itemvalue="HTTP Request.user | adminLogin" />
+        <item itemvalue="HTTP Request.user | #4" />
+        <item itemvalue="HTTP Request.user | #5" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

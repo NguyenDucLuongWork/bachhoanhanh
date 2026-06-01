@@ -23,17 +23,20 @@ public class UserService {
         String keycloakId = null;
         try {
             keycloakId = keycloakAdminService.createUser(
-                    req.getUsername(), req.getEmail(), req.getPassword(), Role.STAFF
+                    req.getUsername(), req.getFirstName(), req.getLastName(),
+                    req.getEmail(), req.getPassword(), Role.STAFF
             );
 
             User user = User.builder()
                     .keycloakId(keycloakId)
                     .phone(req.getPhone())
-                    .fullName(req.getFullName())
+                    .firstName(req.getFirstName())
+                    .lastName(req.getLastName())
                     .email(req.getEmail())
                     .role(Role.STAFF)
                     .build();
-            userRepository.save(user);
+
+            user = userRepository.saveAndFlush(user); // ← only this, remove the plain save()
 
             StaffProfile profile = StaffProfile.builder()
                     .user(user)
@@ -47,27 +50,30 @@ public class UserService {
             return UserResponse.from(user);
         } catch (Exception e) {
             if (keycloakId != null) {
-                keycloakAdminService.deleteUser(keycloakId); // Rollback thủ công trên Keycloak
+                keycloakAdminService.deleteUser(keycloakId);
             }
             throw new RuntimeException("Lỗi khi tạo nhân viên: " + e.getMessage());
         }
     }
 
-    // CUSTOMER tự đăng ký
     @Transactional
     public UserResponse registerCustomer(RegisterCustomerRequest req) {
         String keycloakId = keycloakAdminService.createUser(
-                req.getPhone(), req.getEmail(), req.getPassword(), Role.CUSTOMER
+                req.getPhone(), req.getFirstName(), req.getLastName(),
+                req.getEmail(), req.getPassword(), Role.CUSTOMER
         );
 
         User user = User.builder()
                 .keycloakId(keycloakId)
                 .phone(req.getPhone())
-                .fullName(req.getFullName())
+                .firstName(req.getFirstName())
+                .lastName(req.getLastName())
                 .email(req.getEmail())
                 .role(Role.CUSTOMER)
                 .build();
-        userRepository.save(user);
+
+        // Use saveAndFlush so Hibernate fully registers the entity in the session
+        user = userRepository.saveAndFlush(user);
 
         CustomerProfile profile = CustomerProfile.builder()
                 .user(user)
@@ -83,5 +89,11 @@ public class UserService {
     public void deleteUser(String keycloakId) {
         keycloakAdminService.deleteUser(keycloakId);
         userRepository.deleteById(keycloakId);
+    }
+
+    public UserResponse getUserById(String keycloakId) {
+        User user = userRepository.findById(keycloakId)
+                .orElseThrow(() -> new RuntimeException("User not found: " + keycloakId));
+        return UserResponse.from(user);
     }
 }

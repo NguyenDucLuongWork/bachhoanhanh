@@ -22,15 +22,14 @@ FLUSH PRIVILEGES;
 -- ═══════════════════════════════════════════════════════
 USE userdb;
 
--- 1. users: keycloak_id is the PK (String), phone + fullName added, no separate id
 CREATE TABLE IF NOT EXISTS users (
                                      keycloak_id  VARCHAR(255) PRIMARY KEY,
     phone        VARCHAR(20)  NOT NULL UNIQUE,
-    full_name    VARCHAR(200) NOT NULL,
+    first_name   VARCHAR(100) NOT NULL,
+    last_name    VARCHAR(100) NOT NULL,
     email        VARCHAR(255) UNIQUE,
     role         VARCHAR(20)  NOT NULL
     );
-
 -- 2. staff_profiles: shares PK with users via @MapsId
 CREATE TABLE IF NOT EXISTS staff_profiles (
                                               keycloak_id    VARCHAR(255) PRIMARY KEY,
@@ -58,20 +57,24 @@ CREATE TABLE IF NOT EXISTS claimed_promotions (
     FOREIGN KEY (keycloak_id) REFERENCES customer_profiles(keycloak_id) ON DELETE CASCADE
     );
 
--- ───────────────────────────────────────────────────────
--- Seed data
--- ───────────────────────────────────────────────────────
-INSERT INTO users (keycloak_id, phone, full_name, email, role) VALUES
-                                                                   ('admin-uuid-123',                       '0901000001', 'System Admin',    'admin@bachhoanhanh.vn', 'ADMIN'),
-                                                                   ('a1234567-89ab-cdef-0123-456789abcdef', '0901000002', 'Anh Developer',   'dev@bachhoanhanh.vn',   'STAFF'),
-                                                                   ('c9876543-21ba-4321-edcb-0987654321fe', '0901000003', 'Nguyen Van A',    'test@gmail.com',        'CUSTOMER');
+-- ═══════════════════════════════════════════════════════
+-- USER DB INITIALIZATION
+-- ═══════════════════════════════════════════════════════
+USE userdb;
 
+-- 1. Main Users Table
+INSERT INTO users (keycloak_id, phone, first_name, last_name, email, role) VALUES
+                                                                               ('admin-uuid-123',                       '0901000001', 'System', 'Admin',     'admin@bachhoanhanh.vn', 'ADMIN'),
+                                                                               ('a1234567-89ab-cdef-0123-456789abcdef', '0901000002', 'Anh',    'Developer', 'dev@bachhoanhanh.vn',   'STAFF'),
+                                                                               ('e3d7b2bf-943b-4f08-93ea-5189afc85172', '0901000003', 'Van A',  'Nguyen',    'test@gmail.com',        'CUSTOMER');
+-- 2. Staff Profiles (Linked to Admin and Staff)
 INSERT INTO staff_profiles (keycloak_id, is_female, address) VALUES
                                                                  ('admin-uuid-123',                       FALSE, 'Ho Chi Minh City'),
                                                                  ('a1234567-89ab-cdef-0123-456789abcdef', FALSE, 'Ho Chi Minh City');
 
+-- 3. Customer Profiles (Linked to Test Customer)
 INSERT INTO customer_profiles (keycloak_id, loyalty_points) VALUES
-    ('c9876543-21ba-4321-edcb-0987654321fe', 100);
+    ('e3d7b2bf-943b-4f08-93ea-5189afc85172', 100);
 -- ═══════════════════════════════════════════════════════
 -- BRAND DB
 -- ═══════════════════════════════════════════════════════

@@ -6,6 +6,8 @@ import jakarta.validation.Valid; // Cần import cái này
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,5 +35,21 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable String keycloakId) {
         userService.deleteUser(keycloakId);
         return ResponseEntity.noContent().build();
+    }
+
+    // Any authenticated user fetches their own profile
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getMe(
+            @AuthenticationPrincipal Jwt jwt) {
+        String keycloakId = jwt.getSubject();
+        return ResponseEntity.ok(userService.getUserById(keycloakId));
+    }
+
+    // Admin fetches any user by ID
+    @GetMapping("/{keycloakId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponse> getUserById(
+            @PathVariable String keycloakId) {
+        return ResponseEntity.ok(userService.getUserById(keycloakId));
     }
 }

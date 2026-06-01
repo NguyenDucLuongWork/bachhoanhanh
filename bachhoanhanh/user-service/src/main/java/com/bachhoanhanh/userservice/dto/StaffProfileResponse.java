@@ -10,7 +10,8 @@ public class StaffProfileResponse {
 
     // Thông tin User
     private String keycloakId;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String phone;
     private String email;
 
@@ -24,7 +25,8 @@ public class StaffProfileResponse {
     public static StaffProfileResponse from(User user, StaffProfile profile) {
         return StaffProfileResponse.builder()
                 .keycloakId(user.getKeycloakId())
-                .fullName(user.getFullName())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .phone(user.getPhone())
                 .email(user.getEmail())
                 .dateOfBirth(profile.getDateOfBirth())

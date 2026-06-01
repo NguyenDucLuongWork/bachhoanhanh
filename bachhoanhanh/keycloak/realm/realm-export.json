@@ -3,61 +3,43 @@
   "enabled": true,
   "roles": {
     "realm": [
-      { "name": "ADMIN",    "description": "Quản trị viên" },
-      { "name": "STAFF",    "description": "Nhân viên" },
+      { "name": "ADMIN", "description": "Quản trị viên" },
+      { "name": "STAFF", "description": "Nhân viên" },
       { "name": "CUSTOMER", "description": "Khách hàng" }
     ]
   },
   "users": [
     {
+      "id": "admin-uuid-123",
       "username": "admin",
       "enabled": true,
       "firstName": "System",
       "lastName": "Admin",
       "email": "admin@bachhoanhanh.vn",
       "emailVerified": true,
-      "requiredActions": [],
-      "credentials": [
-        {
-          "type": "password",
-          "value": "123456",
-          "temporary": false
-        }
-      ],
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
       "realmRoles": ["ADMIN"]
     },
     {
+      "id": "a1234567-89ab-cdef-0123-456789abcdef",
       "username": "teststaff",
       "enabled": true,
       "firstName": "Anh",
       "lastName": "Developer",
       "email": "dev@bachhoanhanh.vn",
       "emailVerified": true,
-      "requiredActions": [],
-      "credentials": [
-        {
-          "type": "password",
-          "value": "123456",
-          "temporary": false
-        }
-      ],
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
       "realmRoles": ["STAFF"]
     },
     {
+      "id": "e3d7b2bf-943b-4f08-93ea-5189afc85172",
       "username": "testcustomer",
       "enabled": true,
       "firstName": "Nguyen",
       "lastName": "Van A",
       "email": "test@gmail.com",
       "emailVerified": true,
-      "requiredActions": [],
-      "credentials": [
-        {
-          "type": "password",
-          "value": "123456",
-          "temporary": false
-        }
-      ],
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
       "realmRoles": ["CUSTOMER"]
     }
   ],
@@ -67,14 +49,25 @@
       "enabled": true,
       "publicClient": true,
       "directAccessGrantsEnabled": true,
-      "standardFlowEnabled": false
+      "standardFlowEnabled": true,
+      "fullScopeAllowed": true
     },
     {
       "clientId": "user-service-client",
       "enabled": true,
       "publicClient": false,
       "serviceAccountsEnabled": true,
-      "secret": "user-service-secret"
+      "secret": "user-service-secret",
+      "fullScopeAllowed": true,
+      "protocol": "openid-connect"
     }
-  ]
+  ],
+  "clientScopeMappings": {
+    "realm-management": [
+      {
+        "client": "user-service-client",
+        "roles": ["manage-users", "view-users", "query-users"]
+      }
+    ]
+  }
 }

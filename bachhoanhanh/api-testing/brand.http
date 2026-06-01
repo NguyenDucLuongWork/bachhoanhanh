@@ -1,0 +1,2 @@
+GET http://bachhoanhanh/brands
+Accept: application/json

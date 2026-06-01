@@ -8,7 +8,8 @@ import lombok.*;
 public class UserResponse {
 
     private String keycloakId;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String phone;
     private String email;
     private Role role;
@@ -16,7 +17,8 @@ public class UserResponse {
     public static UserResponse from(User user) {
         return UserResponse.builder()
                 .keycloakId(user.getKeycloakId())
-                .fullName(user.getFullName())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .phone(user.getPhone())
                 .email(user.getEmail())
                 .role(user.getRole())

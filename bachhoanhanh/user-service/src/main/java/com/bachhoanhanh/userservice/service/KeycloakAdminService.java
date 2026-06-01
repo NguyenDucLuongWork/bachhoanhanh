@@ -31,7 +31,6 @@ public class KeycloakAdminService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    // Lấy admin access token
     private String getAdminToken() {
         String url = serverUrl + "/realms/" + realm + "/protocol/openid-connect/token";
 
@@ -50,7 +49,8 @@ public class KeycloakAdminService {
     }
 
     // Tạo user trên Keycloak, trả về keycloakId
-    public String createUser(String username, String email, String password, Role role) {
+    public String createUser(String username, String firstName, String lastName,
+                             String email, String password, Role role) {
         String token = getAdminToken();
         String url = serverUrl + "/admin/realms/" + realm + "/users";
 
@@ -60,6 +60,8 @@ public class KeycloakAdminService {
 
         Map<String, Object> userRep = new HashMap<>();
         userRep.put("username", username);
+        userRep.put("firstName", firstName);
+        userRep.put("lastName", lastName);
         userRep.put("email", email);
         userRep.put("enabled", true);
         userRep.put("emailVerified", true);
@@ -71,11 +73,9 @@ public class KeycloakAdminService {
                 url, new HttpEntity<>(userRep, headers), Void.class
         );
 
-        // Lấy keycloakId từ header Location: .../users/{id}
         String location = response.getHeaders().getFirst("Location");
         String keycloakId = location.substring(location.lastIndexOf("/") + 1);
 
-        // Gán role
         assignRole(keycloakId, role, token);
 
         return keycloakId;
@@ -93,7 +93,6 @@ public class KeycloakAdminService {
     }
 
     private void assignRole(String keycloakId, Role role, String token) {
-        // 1. Lấy role representation
         String roleUrl = serverUrl + "/admin/realms/" + realm + "/roles/" + role.name();
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
@@ -102,7 +101,6 @@ public class KeycloakAdminService {
                 roleUrl, HttpMethod.GET, new HttpEntity<>(headers), Map.class
         );
 
-        // 2. Gán role cho user
         String assignUrl = serverUrl + "/admin/realms/" + realm
                 + "/users/" + keycloakId + "/role-mappings/realm";
         headers.setContentType(MediaType.APPLICATION_JSON);

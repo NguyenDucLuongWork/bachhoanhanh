@@ -10,7 +10,8 @@ public class CustomerProfileResponse {
 
     // Thông tin User
     private String keycloakId;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String phone;
     private String email;
 
@@ -22,7 +23,8 @@ public class CustomerProfileResponse {
                                                List<ClaimedPromotionResponse> promotions) {
         return CustomerProfileResponse.builder()
                 .keycloakId(user.getKeycloakId())
-                .fullName(user.getFullName())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .phone(user.getPhone())
                 .email(user.getEmail())
                 .loyaltyPoints(profile.getLoyaltyPoints())

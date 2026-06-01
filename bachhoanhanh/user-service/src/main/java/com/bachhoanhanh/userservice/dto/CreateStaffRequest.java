@@ -13,8 +13,11 @@ public class CreateStaffRequest {
     @Pattern(regexp = "^(0[3|5|7|8|9])+([0-9]{8})$", message = "Số điện thoại không hợp lệ")
     private String phone;
 
-    @NotBlank(message = "Họ tên không được để trống")
-    private String fullName;
+    @NotBlank(message = "Họ không được để trống")
+    private String lastName;
+
+    @NotBlank(message = "Tên không được để trống")
+    private String firstName;
 
     @Email(message = "Email không hợp lệ")
     private String email;
