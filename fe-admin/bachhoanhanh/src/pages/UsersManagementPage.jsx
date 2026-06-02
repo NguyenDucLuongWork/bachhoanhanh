@@ -156,7 +156,7 @@ export function UsersManagementPage({
   }
 
   return (
-    <div className="page active" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <div className="page active admin-compact-page admin-users-page" style={{ maxWidth: '1200px', margin: '0 auto' }}>
       <div className="page-header">
         <div>
           <h2>User Management</h2>

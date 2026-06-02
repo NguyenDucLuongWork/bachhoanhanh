@@ -169,7 +169,7 @@ export function StockPage({
   }
 
   return (
-    <section className="page active commerce-shell stock-page">
+    <section className="page active commerce-shell stock-page admin-compact-page">
       <header className="page-header">
         <h1>Stock management</h1>
         <div className="page-actions">

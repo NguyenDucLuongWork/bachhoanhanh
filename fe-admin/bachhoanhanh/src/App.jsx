@@ -12,6 +12,7 @@ import { CatalogsPage } from './pages/CatalogsPage'
 import { BrandDetailPage } from './pages/BrandDetailPage'
 import { StockPage } from './pages/StockPage'
 import { VouchersPage } from './pages/VouchersPage'
+import { PrototypesPage } from './pages/PrototypesPage'
 import { UsersManagementPage } from './pages/UsersManagementPage'
 import { CustomerDetailPage } from './pages/CustomerDetailPage'
 import { ToastContainer, useToast } from './components/Toast'
@@ -32,7 +33,17 @@ function App() {
   const [currentPage, setCurrentPage] = useState('products')
   const { token, username, profile, roles, loading, login, registerCustomer, updateProfile, logout, isLoggedIn } = useAuth()
   const { catalogs: catalogList, loadCatalogTree, loadCatalogs, addCatalog, updateCatalog, deleteCatalog, loading: catalogsLoading } = useCatalogs(token)
-  const { prototypes, loadPrototypes } = usePrototypes(token)
+  const {
+    prototypes,
+    loading: prototypesLoading,
+    loadPrototypes,
+    createPrototype,
+    updatePrototypeInfo,
+    updatePrototypeAttributes,
+    addAttributeToPrototype,
+    removeAttributeFromPrototype,
+    deletePrototype,
+  } = usePrototypes(token)
   const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct, getProductById, searchProducts, getProductByBarcode, attributeTypes, loadAttributeTypes } = useProducts(token)
   const { brands, loading: brandsLoading, loadBrands, searchBrands, getBrandByName, createBrand, updateBrand, deleteBrand } = useBrand(token)
   const { orders, loading: ordersLoading, loadOrders, createOrder, getOrderDetails, updateOrderStatus, cancelOrder } = useOrders(token)
@@ -87,7 +98,10 @@ function App() {
     if (currentPage === 'vouchers' && isAdminUser) {
       loadVouchers()
     }
-  }, [currentPage, loadStocks, loadVouchers, isAdminUser])
+    if (currentPage === 'prototypes' && isAdminUser) {
+      loadPrototypes()
+    }
+  }, [currentPage, loadStocks, loadVouchers, loadPrototypes, isAdminUser])
 
   useEffect(() => {
     const hash = window.location.hash || '#/'
@@ -122,6 +136,11 @@ function App() {
     if (route[0] === 'catalogs') {
       setCurrentPage('catalogs')
       window.history.replaceState({ page: 'catalogs' }, '', `${window.location.pathname}#/catalogs`)
+      return
+    }
+    if (route[0] === 'prototypes') {
+      setCurrentPage('prototypes')
+      window.history.replaceState({ page: 'prototypes' }, '', `${window.location.pathname}#/prototypes`)
       return
     }
     if (route[0] === 'vouchers') {
@@ -186,6 +205,13 @@ function App() {
         setCurrentPage('vouchers')
         setProductDetailId(null)
         setBrandDetailName(null)
+        return
+      }
+      if (route[0] === 'prototypes') {
+        setCurrentPage('prototypes')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        setCustomerDetailId(null)
         return
       }
       if (route[0] === 'cart') {
@@ -278,6 +304,10 @@ function App() {
       setProductDetailId(null)
       setBrandDetailName(null)
       window.history.pushState({ page: 'vouchers' }, '', `${basePath}#/vouchers`)
+    } else if (page === 'prototypes') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'prototypes' }, '', `${basePath}#/prototypes`)
     } else if (page === 'catalogs') {
       setProductDetailId(null)
       setBrandDetailName(null)
@@ -330,6 +360,12 @@ function App() {
       navigateTo('catalogs')
     } else if (page === 'users') {
       navigateTo('users')
+    } else if (page === 'orders') {
+      navigateTo('orders')
+    } else if (page === 'vouchers') {
+      navigateTo('vouchers')
+    } else if (page === 'prototypes') {
+      navigateTo('prototypes')
     } else {
       setCurrentPage(page)
     }
@@ -514,15 +550,32 @@ function App() {
             onSearchVoucherByCode={getVoucherByCode}
           />
         )}
+        {currentPage === 'prototypes' && isAdminUser && (
+          <PrototypesPage
+            prototypes={prototypes}
+            loading={prototypesLoading}
+            catalogs={catalogList}
+            attributeTypes={attributeTypes}
+            onRefresh={loadPrototypes}
+            onCreatePrototype={createPrototype}
+            onUpdatePrototypeInfo={updatePrototypeInfo}
+            onUpdatePrototypeAttributes={updatePrototypeAttributes}
+            onAddAttribute={addAttributeToPrototype}
+            onRemoveAttribute={removeAttributeFromPrototype}
+            onDeletePrototype={deletePrototype}
+          />
+        )}
         {currentPage === 'orders' && isLoggedIn && (
           <OrdersPage
             orders={orders}
             loading={ordersLoading}
             onLoadOrders={loadOrders}
             onGetOrderDetails={getOrderDetails}
+            onUpdateStatus={updateOrderStatus}
             onCancelOrder={cancelOrder}
             onRefresh={loadOrders}
             onGoHome={() => setCurrentPage('products')}
+            isAdminUser={isAdminUser}
             token={token}
           />
         )}

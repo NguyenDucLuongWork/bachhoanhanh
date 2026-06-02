@@ -89,7 +89,7 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
   }
 
   return (
-    <div className="page active commerce-shell">
+    <div className="page active commerce-shell admin-compact-page admin-brands-page">
       <section className="store-hero">
         <div>
           <span className="eyebrow">Brand management</span>
