@@ -227,7 +227,7 @@ services:
     container_name: stock-service
     restart: always
     ports:
-      - "8088:8088"
+      - "8089:8089"
     environment:
       DB_URL: ${STOCK_DB_URL}
       DB_USERNAME: ${DB_USERNAME}
@@ -269,6 +269,6 @@ services:
       voucher-service:
         condition: service_started
       cart-service:
-
+        condition: service_started
       stock-service:
         condition: service_started

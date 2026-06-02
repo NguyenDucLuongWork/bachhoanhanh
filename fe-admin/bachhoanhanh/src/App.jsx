@@ -10,6 +10,7 @@ import { AccountPage } from './pages/AccountPage'
 import { BrandPage } from './pages/BrandPage'
 import { BrandDetailPage } from './pages/BrandDetailPage'
 import { StockPage } from './pages/StockPage'
+import { VouchersPage } from './pages/VouchersPage'
 import { ToastContainer, useToast } from './components/Toast'
 import { showToast } from './components/Toast'
 import { OrderDetailsModal } from './components/OrderDetailsModal'
@@ -20,6 +21,7 @@ import { useProducts } from './hooks/useProducts'
 import { useBrand } from './hooks/useBrand'
 import { useOrders } from './hooks/useOrders'
 import { useStocks } from './hooks/useStocks'
+import { useVouchers } from './hooks/useVouchers'
 import './styles/theme.css'
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
   const { brands, loading: brandsLoading, loadBrands, searchBrands, getBrandByName, createBrand, updateBrand, deleteBrand } = useBrand(token)
   const { orders, loading: ordersLoading, loadOrders, createOrder, getOrderDetails, updateOrderStatus, cancelOrder } = useOrders(token)
   const { stocks, loading: stocksLoading, loadStocks, createStock, updateStock, deleteStock } = useStocks(token)
+  const { vouchers, loading: vouchersLoading, loadVouchers, getVoucherById, getVoucherByCode, createVoucher, updateVoucher, deleteVoucher } = useVouchers(token)
   const [selectedCatalog, setSelectedCatalog] = useState(null)
   const [productDetailId, setProductDetailId] = useState(null)
   const [brandDetailName, setBrandDetailName] = useState(null)
@@ -71,7 +74,10 @@ function App() {
     if (currentPage === 'stocks') {
       loadStocks()
     }
-  }, [currentPage, loadStocks])
+    if (currentPage === 'vouchers' && isAdminUser) {
+      loadVouchers()
+    }
+  }, [currentPage, loadStocks, loadVouchers, isAdminUser])
 
   useEffect(() => {
     const hash = window.location.hash || '#/'
@@ -103,6 +109,26 @@ function App() {
       window.history.replaceState({ page: 'stocks' }, '', `${window.location.pathname}#/stocks`)
       return
     }
+    if (route[0] === 'vouchers') {
+      setCurrentPage('vouchers')
+      window.history.replaceState({ page: 'vouchers' }, '', `${window.location.pathname}#/vouchers`)
+      return
+    }
+    if (route[0] === 'cart') {
+      setCurrentPage('cart')
+      window.history.replaceState({ page: 'cart' }, '', `${window.location.pathname}#/cart`)
+      return
+    }
+    if (route[0] === 'orders') {
+      setCurrentPage('orders')
+      window.history.replaceState({ page: 'orders' }, '', `${window.location.pathname}#/orders`)
+      return
+    }
+    if (route[0] === 'account') {
+      setCurrentPage('account')
+      window.history.replaceState({ page: 'account' }, '', `${window.location.pathname}#/account`)
+      return
+    }
 
     window.history.replaceState({ page: 'products' }, '', `${window.location.pathname}#/`)
   }, [])
@@ -125,6 +151,30 @@ function App() {
       }
       if (route[0] === 'brands') {
         setCurrentPage('brands')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        return
+      }
+      if (route[0] === 'vouchers') {
+        setCurrentPage('vouchers')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        return
+      }
+      if (route[0] === 'cart') {
+        setCurrentPage('cart')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        return
+      }
+      if (route[0] === 'orders') {
+        setCurrentPage('orders')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        return
+      }
+      if (route[0] === 'account') {
+        setCurrentPage('account')
         setProductDetailId(null)
         setBrandDetailName(null)
         return
@@ -181,6 +231,22 @@ function App() {
       setProductDetailId(null)
       setBrandDetailName(null)
       window.history.pushState({ page: 'stocks' }, '', `${basePath}#/stocks`)
+    } else if (page === 'vouchers') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'vouchers' }, '', `${basePath}#/vouchers`)
+    } else if (page === 'cart') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'cart' }, '', `${basePath}#/cart`)
+    } else if (page === 'orders') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'orders' }, '', `${basePath}#/orders`)
+    } else if (page === 'account') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'account' }, '', `${basePath}#/account`)
     } else {
       window.history.pushState({ page }, '', `${basePath}#/`)
     }
@@ -352,6 +418,20 @@ function App() {
             onDeleteBrand={deleteBrand}
             onViewBrand={handleViewBrand}
             isAdminUser={isAdminUser}
+          />
+        )}
+        {currentPage === 'vouchers' && isAdminUser && (
+          <VouchersPage
+            vouchers={vouchers}
+            loading={vouchersLoading}
+            products={products}
+            catalogs={catalogList}
+            onRefresh={loadVouchers}
+            onCreateVoucher={createVoucher}
+            onUpdateVoucher={updateVoucher}
+            onDeleteVoucher={deleteVoucher}
+            onSearchVoucherById={getVoucherById}
+            onSearchVoucherByCode={getVoucherByCode}
           />
         )}
         {currentPage === 'orders' && isLoggedIn && (
