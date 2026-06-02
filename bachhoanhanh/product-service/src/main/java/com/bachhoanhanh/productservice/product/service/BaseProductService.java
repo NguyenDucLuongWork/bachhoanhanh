@@ -75,8 +75,15 @@ public class BaseProductService {
         if (baseProductRepository.existsByBarcode(product.getBarcode())) {
             throw new IllegalArgumentException("Barcode already exists: " + product.getBarcode());
         }
+
+        if (product.getPrototypeId() != null && product.getPrototypeId().isBlank()) {
+            product.setPrototypeId(null);
+        }
+
         return baseProductRepository.save(product);
     }
+
+
 
     /**
      * Tạo product kèm attributes cùng lúc — dùng khi tạo từ Prototype.
@@ -88,6 +95,12 @@ public class BaseProductService {
         if (baseProductRepository.existsByBarcode(product.getBarcode())) {
             throw new IllegalArgumentException("Barcode already exists: " + product.getBarcode());
         }
+
+        // Nếu prototypeId rỗng → null hóa, không ép FK
+        if (product.getPrototypeId() != null && product.getPrototypeId().isBlank()) {
+            product.setPrototypeId(null);
+        }
+
         BaseProduct saved = baseProductRepository.save(product);
 
         if (attributeMap != null && !attributeMap.isEmpty()) {
@@ -112,7 +125,11 @@ public class BaseProductService {
         existing.setDescription(updated.getDescription());
         existing.setCatalogId(updated.getCatalogId());
         existing.setOriginalPrice(updated.getOriginalPrice());
-        existing.setPrototypeId(updated.getPrototypeId());
+
+        // Nếu rỗng → giữ null, nếu có giá trị → set bình thường
+        String pid = updated.getPrototypeId();
+        existing.setPrototypeId((pid != null && pid.isBlank()) ? null : pid);
+
         BaseProduct saved = baseProductRepository.save(existing);
 
         if (oldImage != null && !oldImage.equals(updated.getImage())) {
