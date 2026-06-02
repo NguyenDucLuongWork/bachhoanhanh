@@ -1,17 +1,20 @@
 package com.bachhoanhanh.catalogservice.service;
 
+import com.bachhoanhanh.catalogservice.client.ProductClient;
+import com.bachhoanhanh.catalogservice.client.dto.ProductSummary;
 import com.bachhoanhanh.catalogservice.dto.CatalogTreeDto;
 import com.bachhoanhanh.catalogservice.model.Catalog;
 import com.bachhoanhanh.catalogservice.repository.CatalogRepository;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.text.Normalizer;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -21,9 +24,11 @@ import java.util.stream.Collectors;
 public class CatalogService {
 
     private final CatalogRepository repository;
+    private final ProductClient productClient;
 
-    public CatalogService(CatalogRepository repository) {
+    public CatalogService(CatalogRepository repository, ProductClient productClient) {
         this.repository = repository;
+        this.productClient = productClient;
     }
 
     // GET ALL
@@ -36,42 +41,32 @@ public class CatalogService {
     @Cacheable(key = "#id")
     public Catalog getCatalogById(String id) {
         Catalog catalog = repository.findById(id).orElse(null);
-
         if (catalog != null && catalog.getParentCatalogId() != null) {
             repository.findById(catalog.getParentCatalogId())
-                    .ifPresent(parent -> {
-                        // attach parent as a shallow object
-                        catalog.setParentCatalogId(parent.getId()); // keep id
-                    });
+                    .ifPresent(parent -> catalog.setParentCatalogId(parent.getId()));
         }
-
         return catalog;
     }
 
     // CREATE
-    @CacheEvict(allEntries = true)  // clears all catalog cache entries on create
+    @CacheEvict(allEntries = true)
     public Catalog createCatalog(Catalog catalog) {
-        String resolvedId = resolveId(catalog.getId(), catalog);
-        catalog.setId(resolvedId);
-
+        catalog.setId(resolveId(catalog.getId(), catalog));
         sanitizeParent(catalog);
-
         return repository.save(catalog);
     }
 
     // UPDATE
-    @CacheEvict(allEntries = true)  // clears all on update
+    @CacheEvict(allEntries = true)
     public Catalog updateCatalog(String id, Catalog newCatalog) {
         return repository.findById(id).map(catalog -> {
             catalog.setName(newCatalog.getName());
             catalog.setImage(newCatalog.getImage());
 
             if (newCatalog.getParentCatalogId() != null
-                    && !newCatalog.getParentCatalogId().equals(id)) {
-
-                if (repository.existsById(newCatalog.getParentCatalogId())) {
-                    catalog.setParentCatalogId(newCatalog.getParentCatalogId());
-                }
+                    && !newCatalog.getParentCatalogId().equals(id)
+                    && repository.existsById(newCatalog.getParentCatalogId())) {
+                catalog.setParentCatalogId(newCatalog.getParentCatalogId());
             } else {
                 catalog.setParentCatalogId(null);
             }
@@ -81,79 +76,66 @@ public class CatalogService {
     }
 
     // DELETE
-    @CacheEvict(allEntries = true)  // clears all on delete
+    @CacheEvict(allEntries = true)
     public void deleteCatalog(String id) {
+        try {
+            List<ProductSummary> products = productClient.getProductsByCatalog(id);
+            if (products != null && !products.isEmpty()) {
+                throw new ResponseStatusException(
+                        HttpStatus.CONFLICT,
+                        "Cannot delete catalog '" + id + "': it still has " + products.size() + " product(s) assigned."
+                );
+            }
+        } catch (ResponseStatusException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.SERVICE_UNAVAILABLE,
+                    "Cannot verify products for catalog '" + id + "': product service unavailable."
+            );
+        }
+
         repository.deleteById(id);
     }
 
     // ----------------------------------------------------------------
-    // ID RESOLUTION LOGIC
+    // ID RESOLUTION
     // ----------------------------------------------------------------
 
-    /**
-     * Nếu người dùng truyền id vào và không trùng → dùng luôn.
-     * Nếu trống → tự sinh: parentId + slug(name) + random suffix.
-     * Nếu trùng → tái sinh với random mới cho đến khi unique.
-     */
     private String resolveId(String inputId, Catalog catalog) {
-        if (inputId != null && !inputId.isBlank()) {
-            // Người dùng nhập vào — kiểm tra trùng
-            if (!repository.existsById(inputId)) {
-                return inputId;
-            }
-            // Trùng → fallthrough để sinh lại có suffix random
+        if (inputId != null && !inputId.isBlank() && !repository.existsById(inputId)) {
+            return inputId;
         }
-
-        // Sinh id tự động
         return generateUniqueId(catalog);
     }
 
     private String generateUniqueId(Catalog catalog) {
         String base = buildBaseId(catalog);
         String candidate = base + "-" + shortRandom();
-
-        // Thử lại cho đến khi unique (thực tế rất hiếm cần vòng 2+)
         while (repository.existsById(candidate)) {
             candidate = base + "-" + shortRandom();
         }
-
         return candidate;
     }
 
-    /**
-     * Cấu trúc: [parentId-]slug(name)
-     * Ví dụ: "electronics-dien-thoai"
-     *        "dien-thoai" (nếu không có parent)
-     */
     private String buildBaseId(Catalog catalog) {
         String namePart = slugify(catalog.getName());
-
-        if (catalog.getParentCatalogId() != null
-                && !catalog.getParentCatalogId().isBlank()) {
+        if (catalog.getParentCatalogId() != null && !catalog.getParentCatalogId().isBlank()) {
             return catalog.getParentCatalogId() + "-" + namePart;
         }
-
         return namePart.isBlank() ? "catalog" : namePart;
     }
 
-    /**
-     * Chuyển tên thành slug an toàn cho id:
-     *   "Điện Thoại" → "dien-thoai"
-     *   "Hello World!" → "hello-world"
-     */
     private String slugify(String input) {
         if (input == null || input.isBlank()) return "unnamed";
-
         String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
         String ascii = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
-                .matcher(normalized)
-                .replaceAll("");
+                .matcher(normalized).replaceAll("");
         return ascii.toLowerCase()
-                .replaceAll("[^a-z0-9]+", "-")   // ký tự đặc biệt → dấu -
-                .replaceAll("^-|-$", "");          // bỏ dấu - đầu/cuối
+                .replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("^-|-$", "");
     }
 
-    /** 6 ký tự hex ngẫu nhiên, đủ ngắn và dễ đọc */
     private String shortRandom() {
         return UUID.randomUUID().toString().replace("-", "").substring(0, 6);
     }
@@ -170,10 +152,10 @@ public class CatalogService {
         }
     }
 
+    // TREE
     @Cacheable(key = "'tree'")
     public List<CatalogTreeDto> getAsTree() {
         List<Catalog> all = repository.findAll();
-
         Map<String, List<Catalog>> byParent = all.stream()
                 .filter(c -> c.getParentCatalogId() != null)
                 .collect(Collectors.groupingBy(Catalog::getParentCatalogId));
@@ -190,7 +172,6 @@ public class CatalogService {
                 .stream()
                 .map(child -> buildTree(child, byParent))
                 .collect(Collectors.toList());
-
         return CatalogTreeDto.from(node, children);
     }
 }

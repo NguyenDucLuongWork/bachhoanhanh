@@ -8,6 +8,7 @@ import { OrdersPage } from './pages/OrdersPage'
 import { CartPage } from './pages/CartPage'
 import { AccountPage } from './pages/AccountPage'
 import { BrandPage } from './pages/BrandPage'
+import { CatalogsPage } from './pages/CatalogsPage'
 import { BrandDetailPage } from './pages/BrandDetailPage'
 import { StockPage } from './pages/StockPage'
 import { VouchersPage } from './pages/VouchersPage'
@@ -27,7 +28,7 @@ import './styles/theme.css'
 function App() {
   const [currentPage, setCurrentPage] = useState('products')
   const { token, username, profile, roles, loading, login, registerCustomer, updateProfile, logout, isLoggedIn } = useAuth()
-  const { catalogs: catalogList, loadCatalogTree } = useCatalogs(token)
+  const { catalogs: catalogList, loadCatalogTree, loadCatalogs, addCatalog, updateCatalog, deleteCatalog, loading: catalogsLoading } = useCatalogs(token)
   const { prototypes, loadPrototypes } = usePrototypes(token)
   const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct, getProductById, searchProducts, getProductByBarcode, attributeTypes, loadAttributeTypes } = useProducts(token)
   const { brands, loading: brandsLoading, loadBrands, searchBrands, getBrandByName, createBrand, updateBrand, deleteBrand } = useBrand(token)
@@ -107,6 +108,11 @@ function App() {
     if (route[0] === 'stocks') {
       setCurrentPage('stocks')
       window.history.replaceState({ page: 'stocks' }, '', `${window.location.pathname}#/stocks`)
+      return
+    }
+    if (route[0] === 'catalogs') {
+      setCurrentPage('catalogs')
+      window.history.replaceState({ page: 'catalogs' }, '', `${window.location.pathname}#/catalogs`)
       return
     }
     if (route[0] === 'vouchers') {
@@ -235,6 +241,10 @@ function App() {
       setProductDetailId(null)
       setBrandDetailName(null)
       window.history.pushState({ page: 'vouchers' }, '', `${basePath}#/vouchers`)
+    } else if (page === 'catalogs') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'catalogs' }, '', `${basePath}#/catalogs`)
     } else if (page === 'cart') {
       setProductDetailId(null)
       setBrandDetailName(null)
@@ -247,8 +257,14 @@ function App() {
       setProductDetailId(null)
       setBrandDetailName(null)
       window.history.pushState({ page: 'account' }, '', `${basePath}#/account`)
+    } else if (page === 'login') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'login' }, '', `${basePath}#/login`)
     } else {
-      window.history.pushState({ page }, '', `${basePath}#/`)
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'products' }, '', `${basePath}#/`)
     }
     setCurrentPage(page)
   }
@@ -260,6 +276,8 @@ function App() {
       navigateTo('brands')
     } else if (page === 'stocks') {
       navigateTo('stocks')
+    } else if (page === 'catalogs') {
+      navigateTo('catalogs')
     } else {
       setCurrentPage(page)
     }
@@ -394,6 +412,16 @@ function App() {
             brandName={brandDetailName}
             getBrandByName={getBrandByName}
             onBack={() => navigateTo('brands')}
+          />
+        )}
+        {currentPage === 'catalogs' && isAdminUser && (
+          <CatalogsPage
+            catalogs={catalogList}
+            loading={catalogsLoading}
+            onAddCatalog={addCatalog}
+            onUpdateCatalog={updateCatalog}
+            onDeleteCatalog={deleteCatalog}
+            onRefresh={loadCatalogTree}
           />
         )}
         {currentPage === 'stocks' && (

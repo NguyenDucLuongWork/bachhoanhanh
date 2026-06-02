@@ -20,29 +20,30 @@ public class CatalogController {
 
     @GetMapping
     public ResponseEntity<?> getAllCatalogs(@RequestParam(defaultValue = "false") boolean tree) {
-        if (tree) {
-            return ResponseEntity.ok(service.getAsTree());
-        }
+        if (tree) return ResponseEntity.ok(service.getAsTree());
         return ResponseEntity.ok(service.getAllCatalogs());
     }
 
     @GetMapping("/{id}")
-    public Catalog getCatalogById(@PathVariable String id) {
-        return service.getCatalogById(id);
+    public ResponseEntity<Catalog> getCatalogById(@PathVariable String id) {
+        Catalog catalog = service.getCatalogById(id);
+        return catalog != null ? ResponseEntity.ok(catalog) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public Catalog createCatalog(@RequestBody Catalog catalog) {
-        return service.createCatalog(catalog);
+    public ResponseEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
+        return ResponseEntity.ok(service.createCatalog(catalog));
     }
 
     @PutMapping("/{id}")
-    public Catalog updateCatalog(@PathVariable String id, @RequestBody Catalog newCatalog) {
-        return service.updateCatalog(id, newCatalog);
+    public ResponseEntity<Catalog> updateCatalog(@PathVariable String id, @RequestBody Catalog newCatalog) {
+        Catalog updated = service.updateCatalog(id, newCatalog);
+        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCatalog(@PathVariable String id) {
-        service.deleteCatalog(id);
+    public ResponseEntity<Void> deleteCatalog(@PathVariable String id) {
+        service.deleteCatalog(id); // throws ResponseStatusException on conflict or unavailable
+        return ResponseEntity.noContent().build();
     }
 }
