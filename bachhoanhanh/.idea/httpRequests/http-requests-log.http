@@ -1,3 +1,104 @@
+POST http://bachhoanhanh/catalogs
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Điện Thoại",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/phones.png",
+  "parentCatalogId": "electronics"
+}
+
+<> 2026-06-02T121335.200.json
+
+###
+
+POST http://bachhoanhanh/catalogs
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+Content-Type: application/json
+Content-Length: 118
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Thời Trang",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/fashion.png",
+  "parentCatalogId": null
+}
+
+<> 2026-06-02T121329.200.json
+
+###
+
+POST http://bachhoanhanh/catalogs
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+Content-Type: application/json
+Content-Length: 144
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "id": "electronics",
+  "name": "Electronics",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/electronics.png",
+  "parentCatalogId": null
+}
+
+<> 2026-06-02T121324.200.json
+
+###
+
+GET http://bachhoanhanh/catalogs?tree=true
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T121319.200.json
+
+###
+
+GET http://bachhoanhanh/catalogs
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T121314.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T121310.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T121307.200.json
+
+###
+
 GET http://bachhoanhanh/products
 Accept: application/json
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
@@ -386,80 +487,6 @@ User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
 Accept-Encoding: br, deflate, gzip, x-gzip
 
 <> 2026-06-02T084316.503.json
-
-###
-
-GET http://bachhoanhanh/products
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-06-02T084315.503.json
-
-###
-
-GET http://bachhoanhanh/products
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-06-02T084313.503.json
-
-###
-
-GET http://bachhoanhanh/products
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-06-02T084310.503.json
-
-###
-
-GET http://bachhoanhanh/products
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-06-02T084305.502.html
-
-###
-
-GET http://bachhoanhanh/stocks/available?productId=893000444
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-06-02T083217.200.json
-
-###
-
-GET http://bachhoanhanh/stocks/available?productId=893000555
-Accept: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-<> 2026-06-02T083207.200.json
-
-###
-
-POST http://bachhoanhanh/stocks
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ6SGV0Q3NuVk42WWVKdFNUdE1oV215VkdRbG93Y0xnYjdTYkUyaThKVHRNIn0.eyJleHAiOjE3ODAzNjM2MjAsImlhdCI6MTc4MDM2MzMyMCwianRpIjoiZjNlNzgyMWQtMzYyZi00MzM1LTllN2UtYTYwNWY3ZmQzZGNkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjJiYmMzY2RkLTI1ZTYtNDE3Mi04NjIxLWVjZDMzYzcyYzllNSIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjJiYmMzY2RkLTI1ZTYtNDE3Mi04NjIxLWVjZDMzYzcyYzllNSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.GWOKBoks1rbl3Z6ZKpVZR2nSP6VhFuBd-cssXYKeHEZDonI5qOABYtu74_N6JRgP6et7KgzAwZUBLv7TMsZsrqETt_4m8VEZd00Ze8bmam9y_sE7i8szRjM7P5qzk8KJc24roUqv9AEhclr7jjiGOOB8JZLWl49LPXP4KPHxjas5a__Fy7-D6FV41XLfAtLCfxTx5bMHI-EzYLZW2ovCrDKF7u-o4lnoFpIRFeWULJYSn8woL7asj5Wem9kIOMQKjPU3YpsKdZjXhv2ON-gUGYd45vBGo1lWX7lZl_z-ZKyG4VOTEw3jci53ASEUAIXjh5XmrGQ9eB1Chzjku4Va0g
-Content-Type: application/json
-Content-Length: 142
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-{
-  "productId": "893000111",
-  "amount": 100,
-  "importDate": "2026-05-01",
-  "manufactureDate": "2026-04-20",
-  "expiryDate": "2026-07-20"
-}
-
-<> 2026-06-02T082206.200.json
 
 ###
 

@@ -1,0 +1,319 @@
+### Bach Hoa Nhanh - Catalog Service API Testing
+@baseUrl = http://bachhoanhanh/catalogs
+@authUrl = http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+@clientId = gateway-client
+
+############################################################
+# 1. AUTHENTICATION SECTION
+############################################################
+
+### Login as ADMIN
+# @name adminLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=admin&
+password=123456
+
+> {%
+    client.global.set("admin_token", response.body.access_token);
+%}
+
+### Login as STAFF
+# @name staffLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=teststaff&
+password=123456
+
+> {%
+    client.global.set("staff_token", response.body.access_token);
+%}
+
+### Login as CUSTOMER
+# @name customerLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=testcustomer&
+password=123456
+
+> {%
+    client.global.set("customer_token", response.body.access_token);
+%}
+
+
+############################################################
+# 2. READ — GET ALL & TREE
+############################################################
+
+### Get All Catalogs (flat list)
+GET {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+
+### Get All Catalogs as Tree
+GET {{baseUrl}}?tree=true
+Authorization: Bearer {{admin_token}}
+
+
+############################################################
+# 3. CREATE — Root Catalogs
+############################################################
+
+### Create Root Catalog — Electronics (custom id)
+# @name createElectronics
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "id": "electronics",
+  "name": "Electronics",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/electronics.png",
+  "parentCatalogId": null
+}
+
+> {%
+    client.global.set("root_catalog_id", response.body.id);
+%}
+
+### Create Root Catalog — Fashion (auto-generated id, no id provided)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Thời Trang",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/fashion.png",
+  "parentCatalogId": null
+}
+
+### Create Root Catalog — Food & Grocery
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Thực Phẩm & Đồ Uống",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/food.png",
+  "parentCatalogId": null
+}
+
+
+############################################################
+# 4. CREATE — Child Catalogs
+############################################################
+
+### Create Child Catalog — Phones (under Electronics)
+# @name createPhones
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Điện Thoại",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/phones.png",
+  "parentCatalogId": "electronics"
+}
+
+> {%
+    client.global.set("child_catalog_id", response.body.id);
+%}
+
+### Create Child Catalog — Laptops (under Electronics)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Laptop & Máy Tính",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/laptops.png",
+  "parentCatalogId": "electronics"
+}
+
+### Create Grandchild Catalog — Samsung Phones (under Điện Thoại)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Samsung",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/samsung.png",
+  "parentCatalogId": "{{child_catalog_id}}"
+}
+
+
+############################################################
+# 5. READ — GET BY ID
+############################################################
+
+### Get Root Catalog by ID
+GET {{baseUrl}}/electronics
+Authorization: Bearer {{admin_token}}
+
+### Get Child Catalog by ID
+GET {{baseUrl}}/{{child_catalog_id}}
+Authorization: Bearer {{admin_token}}
+
+### Get Non-existent Catalog (Expect null / 404)
+GET {{baseUrl}}/does-not-exist
+Authorization: Bearer {{admin_token}}
+
+
+############################################################
+# 6. UPDATE
+############################################################
+
+### Update Root Catalog — rename Electronics, change image
+PUT {{baseUrl}}/electronics
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Electronics & Gadgets",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/electronics-v2.png",
+  "parentCatalogId": null
+}
+
+### Update Child Catalog — move Phones under a different parent
+PUT {{baseUrl}}/{{child_catalog_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Điện Thoại Di Động",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/phones-v2.png",
+  "parentCatalogId": "electronics"
+}
+
+### Update — attempt to set parent to self (Expect parentCatalogId = null)
+PUT {{baseUrl}}/electronics
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Electronics & Gadgets",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/electronics-v2.png",
+  "parentCatalogId": "electronics"
+}
+
+### Update Non-existent Catalog (Expect null / 404)
+PUT {{baseUrl}}/ghost-catalog
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Ghost",
+  "image": null,
+  "parentCatalogId": null
+}
+
+
+############################################################
+# 7. DELETE
+############################################################
+
+### Delete Child Catalog
+DELETE {{baseUrl}}/{{child_catalog_id}}
+Authorization: Bearer {{admin_token}}
+
+### Delete Root Catalog
+DELETE {{baseUrl}}/electronics
+Authorization: Bearer {{admin_token}}
+
+### Verify deletion — should return null / 404
+GET {{baseUrl}}/electronics
+Authorization: Bearer {{admin_token}}
+
+
+############################################################
+# 8. EDGE CASES & ID RESOLUTION
+############################################################
+
+### Create with duplicate custom ID (Expect auto-generated fallback id)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "id": "electronics",
+  "name": "Electronics Duplicate Test",
+  "image": null,
+  "parentCatalogId": null
+}
+
+### Create with blank name (Expect id containing "unnamed")
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "",
+  "image": null,
+  "parentCatalogId": null
+}
+
+### Create with Vietnamese name (Expect slugified id)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Đồ Gia Dụng",
+  "image": null,
+  "parentCatalogId": null
+}
+
+### Create with non-existent parentCatalogId (parent silently ignored or saved as-is)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Orphan Catalog",
+  "image": null,
+  "parentCatalogId": "parent-that-does-not-exist"
+}
+
+
+############################################################
+# 9. CACHE VERIFICATION
+############################################################
+
+### Fetch all (populates cache)
+GET {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+
+### Create a new catalog (should evict all cache)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Cache Buster Test",
+  "image": null,
+  "parentCatalogId": null
+}
+
+### Fetch all again (should reflect new entry — cache was evicted)
+GET {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+
+### Fetch tree (populates tree cache)
+GET {{baseUrl}}?tree=true
+Authorization: Bearer {{admin_token}}
+
+### Delete one entry (evicts tree cache too)
+DELETE {{baseUrl}}/cache-buster-test
+Authorization: Bearer {{admin_token}}
+
+### Fetch tree again (should no longer include deleted entry)
+GET {{baseUrl}}?tree=true
+Authorization: Bearer {{admin_token}}

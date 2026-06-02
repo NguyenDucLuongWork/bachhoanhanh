@@ -1,81 +1,58 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useMemo } from 'react'
 import { showToast } from '../components/Toast'
 import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { Loader } from '../components/Loader'
 
-export function CatalogsPage({ catalogs, loading, onAddCatalog, onUpdateCatalog, onDeleteCatalog, onRefresh }) {
-  const [filteredCatalogs, setFilteredCatalogs] = useState(catalogs)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-  const [selectedCatalog, setSelectedCatalog] = useState(null)
-  const [deletingId, setDeletingId] = useState(null)
-  const [modalLoading, setModalLoading] = useState(false)
-  const [newCatalogName, setNewCatalogName] = useState('')
-  const [editCatalogName, setEditCatalogName] = useState('')
+function flattenTree(nodes, out = []) {
+  if (!nodes) return out
+  nodes.forEach((node) => {
+    out.push(node)
+    if (node.children && node.children.length) flattenTree(node.children, out)
+  })
+  return out
+}
 
-  useEffect(() => {
-    setFilteredCatalogs(
-      catalogs.filter(
-        (c) =>
-          c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          String(c.id).includes(searchQuery)
-      )
-    )
-  }, [catalogs, searchQuery])
+export function CatalogsPage({ catalogs = [], loading, onAddCatalog, onDeleteCatalog, onRefresh }) {
+  const [newName, setNewName] = useState('')
+  const [newParentId, setNewParentId] = useState('')
+
+  const flatCatalogs = useMemo(() => {
+    const result = []
+    const walk = (items, prefix = '') => {
+      if (!items) return
+      items.forEach((item) => {
+        const label = prefix ? prefix + ' / ' + item.name : item.name
+        result.push({ ...item, label })
+        if (item.children) walk(item.children, label)
+      })
+    }
+    walk(catalogs)
+    return result
+  }, [catalogs])
 
   const handleAddCatalog = async () => {
-    if (!newCatalogName.trim()) return
-    setModalLoading(true)
-    const result = await onAddCatalog({ name: newCatalogName.trim() })
-    if (result.success) {
-      showToast(result.message)
-      setIsAddModalOpen(false)
-      setNewCatalogName('')
-    } else {
-      showToast(result.message, true)
+    if (!newName.trim()) return
+    const payload = {
+      name: newName.trim(),
+      parentCatalogId: newParentId || null,
     }
-    setModalLoading(false)
-  }
-
-  const handleEditCatalog = (catalog) => {
-    setSelectedCatalog(catalog)
-    setEditCatalogName(catalog.name)
-    setIsEditModalOpen(true)
-  }
-
-  const handleSaveEdit = async () => {
-    if (!editCatalogName.trim()) return
-    setModalLoading(true)
-    const result = await onUpdateCatalog(selectedCatalog.id, { name: editCatalogName.trim() })
-    if (result.success) {
+    const result = await onAddCatalog(payload)
+    if (result && result.success) {
       showToast(result.message)
-      setIsEditModalOpen(false)
-      setSelectedCatalog(null)
-      setEditCatalogName('')
+      setNewName('')
+      setNewParentId('')
     } else {
-      showToast(result.message, true)
+      showToast((result && result.message) || 'Unable to add catalog', true)
     }
-    setModalLoading(false)
   }
 
-  const handleDeleteClick = (id) => {
-    setDeletingId(id)
-    setIsDeleteModalOpen(true)
-  }
-
-  const handleConfirmDelete = async () => {
-    setModalLoading(true)
-    const result = await onDeleteCatalog(deletingId)
-    if (result.success) {
+  const handleDelete = async (id) => {
+    const result = await onDeleteCatalog(id)
+    if (result && result.success) {
       showToast(result.message)
-      setIsDeleteModalOpen(false)
-      setDeletingId(null)
     } else {
-      showToast(result.message, true)
+      showToast((result && result.message) || 'Unable to delete catalog', true)
     }
-    setModalLoading(false)
   }
 
   if (loading) {
@@ -91,125 +68,59 @@ export function CatalogsPage({ catalogs, loading, onAddCatalog, onUpdateCatalog,
       <div className="page-header">
         <div>
           <h2>Catalogs</h2>
-          <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '2px' }}>
-            Manage your catalog structure
+          <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '4px' }}>
+            Manage catalog tree
           </p>
         </div>
-        <button className="btn btn-accent" onClick={() => setIsAddModalOpen(true)}>
-          + Add catalog
-        </button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button className="btn btn-ghost" onClick={onRefresh}>Refresh</button>
+        </div>
       </div>
 
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search catalogs…"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <button className="btn btn-ghost" onClick={onRefresh}>
-          Refresh
-        </button>
+      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 18 }}>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
+          <h3>Add catalog</h3>
+          <input
+            type="text"
+            placeholder="Catalog name"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            style={{ width: '100%', marginBottom: 8 }}
+          />
+          <select
+            value={newParentId}
+            onChange={(e) => setNewParentId(e.target.value)}
+            style={{ width: '100%', marginBottom: 8 }}
+          >
+            <option value="">No parent</option>
+            {flatCatalogs.map((item) => (
+              <option key={item.id} value={item.id}>{item.label}</option>
+            ))}
+          </select>
+          <button className="btn btn-accent" onClick={handleAddCatalog}>Add catalog</button>
+        </div>
+
+        <div>
+          {flatCatalogs.length === 0 ? (
+            <div className="empty">
+              <div className="icon">📁</div>
+              <p>No catalogs found</p>
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {flatCatalogs.map((item) => (
+                <div key={item.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontSize: 15, fontWeight: 600 }}>{item.name}</div>
+                    <div style={{ fontSize: 12, color: 'var(--muted)' }}>{item.label}</div>
+                  </div>
+                  <button className="btn btn-sm btn-ghost" onClick={() => handleDelete(item.id)}>Delete</button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-
-      {filteredCatalogs.length === 0 ? (
-        <div className="empty">
-          <div className="icon">📁</div>
-          <p style={{ fontSize: '14px' }}>No catalogs found</p>
-        </div>
-      ) : (
-        <div className="catalogs-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '14px' }}>
-          {filteredCatalogs.map((catalog) => (
-            <div key={catalog.id} className="catalog-card" style={{ background: 'var(--surface)', border: '0.5px solid var(--border)', borderRadius: '12px', padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <div style={{ fontSize: '16px', fontWeight: '500' }}>{catalog.name}</div>
-                <div style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '4px' }}>ID: {catalog.id}</div>
-              </div>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button className="btn btn-ghost btn-sm" onClick={() => handleEditCatalog(catalog)}>
-                  Edit
-                </button>
-                <button
-                  className="btn btn-sm"
-                  style={{
-                    background: 'rgba(239,68,68,0.1)',
-                    color: '#ef4444',
-                    border: 'none',
-                    cursor: 'pointer',
-                    borderRadius: '8px',
-                    fontSize: '12px',
-                    padding: '5px 10px',
-                  }}
-                  onClick={() => handleDeleteClick(catalog.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Add Catalog Modal */}
-      {isAddModalOpen && (
-        <div className="modal-bg open">
-          <div className="modal">
-            <h3>Add catalog</h3>
-            <div className="field">
-              <label>Name</label>
-              <input
-                type="text"
-                placeholder="Catalog name"
-                value={newCatalogName}
-                onChange={(e) => setNewCatalogName(e.target.value)}
-                disabled={modalLoading}
-              />
-            </div>
-            <div className="modal-footer">
-              <button className="btn btn-ghost" onClick={() => setIsAddModalOpen(false)} disabled={modalLoading}>
-                Cancel
-              </button>
-              <button className="btn btn-accent" onClick={handleAddCatalog} disabled={modalLoading}>
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Edit Catalog Modal */}
-      {isEditModalOpen && (
-        <div className="modal-bg open">
-          <div className="modal">
-            <h3>Edit catalog</h3>
-            <div className="field">
-              <label>Name</label>
-              <input
-                type="text"
-                placeholder="Catalog name"
-                value={editCatalogName}
-                onChange={(e) => setEditCatalogName(e.target.value)}
-                disabled={modalLoading}
-              />
-            </div>
-            <div className="modal-footer">
-              <button className="btn btn-ghost" onClick={() => { setIsEditModalOpen(false); setSelectedCatalog(null); setEditCatalogName(''); }} disabled={modalLoading}>
-                Cancel
-              </button>
-              <button className="btn btn-accent" onClick={handleSaveEdit} disabled={modalLoading}>
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <DeleteConfirmModal
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleConfirmDelete}
-        isLoading={modalLoading}
-      />
     </div>
   )
 }

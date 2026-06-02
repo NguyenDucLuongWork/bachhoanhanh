@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { Loader } from '../components/Loader'
 import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { showToast } from '../components/Toast'
@@ -33,6 +33,8 @@ export function StockPage({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [stockForm, setStockForm] = useState(emptyStockForm)
+  const [productQuery, setProductQuery] = useState('')
+  const [selectedProduct, setSelectedProduct] = useState(null)
   const [editingStock, setEditingStock] = useState(null)
   const [isSaving, setIsSaving] = useState(false)
   const [deletingStockId, setDeletingStockId] = useState(null)
@@ -50,6 +52,8 @@ export function StockPage({
   const openAddStock = () => {
     setEditingStock(null)
     setStockForm(emptyStockForm)
+    setProductQuery('')
+    setSelectedProduct(null)
     setIsModalOpen(true)
   }
 
@@ -63,6 +67,9 @@ export function StockPage({
       manufactureDate: stock.manufactureDate || '',
       expiryDate: stock.expiryDate || '',
     })
+    const prod = products.find((p) => p.barcode === (stock.productId || '')) || null
+    setSelectedProduct(prod)
+    setProductQuery(prod ? `${prod.name} (${prod.barcode})` : '')
     setIsModalOpen(true)
   }
 
@@ -120,6 +127,38 @@ export function StockPage({
   }
 
   const getProductName = (barcode) => products.find((product) => product.barcode === barcode)?.name || 'Unknown'
+
+  useEffect(() => {
+    if (!stockForm.productId) return
+    const prod = products.find((p) => p.barcode === stockForm.productId) || null
+    setSelectedProduct(prod)
+    if (prod) setProductQuery(`${prod.name} (${prod.barcode})`)
+  }, [stockForm.productId, products])
+
+  const matchedProducts = useMemo(() => {
+    const q = (productQuery || '').trim().toLowerCase()
+    if (!q) return []
+    return products.filter((p) => {
+      const name = (p.name || '').toLowerCase()
+      const barcode = String(p.barcode || '').toLowerCase()
+      return name.includes(q) || barcode.includes(q)
+    }).slice(0, 10)
+  }, [productQuery, products])
+
+  const selectProduct = (p) => {
+    if (!p) return
+    setSelectedProduct(p)
+    setStockForm({ ...stockForm, productId: p.barcode })
+    setProductQuery(`${p.name} (${p.barcode})`)
+  }
+
+  useEffect(() => {
+    const q = (productQuery || '').trim()
+    if (!q) return
+    // if user types exact barcode, auto-select
+    const byBarcode = products.find((p) => String(p.barcode) === q)
+    if (byBarcode) selectProduct(byBarcode)
+  }, [productQuery, products])
 
   if (loading) {
     return (
@@ -235,15 +274,46 @@ export function StockPage({
         <div className="modal-bg open" onClick={closeModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px' }}>
             <h2>{editingStock ? 'Edit stock' : 'Add stock'}</h2>
-            <div className="modal-body" style={{ display: 'grid', gap: '12px' }}>
-              <label>
-                Barcode
-                <input
-                  type="text"
-                  value={stockForm.productId}
-                  onChange={(event) => setStockForm({ ...stockForm, productId: event.target.value })}
-                />
-              </label>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+              <div className="modal-body" style={{ display: 'grid', gap: '12px', flex: 1 }}>
+              <div style={{ display: 'grid', gap: '8px' }}>
+                <label>
+                  Search product by name or barcode
+                  <input
+                    type="text"
+                    value={productQuery}
+                    onChange={(event) => {
+                      setProductQuery(event.target.value)
+                      setSelectedProduct(null)
+                      // keep productId empty until user selects or confirms barcode
+                      setStockForm({ ...stockForm, productId: '' })
+                    }}
+                    placeholder="Type name or barcode"
+                  />
+                </label>
+                {matchedProducts.length > 0 && (
+                  <div style={{ border: '1px solid var(--border)', borderRadius: 8, maxHeight: 180, overflowY: 'auto', background: 'var(--surface)' }}>
+                    {matchedProducts.map((p) => (
+                      <button
+                        key={p.barcode || p.id}
+                        type="button"
+                        onClick={() => selectProduct(p)}
+                        style={{
+                          width: '100%',
+                          textAlign: 'left',
+                          padding: '8px 12px',
+                          border: 'none',
+                          background: 'transparent',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <div style={{ fontWeight: 600 }}>{p.name}</div>
+                        <div style={{ fontSize: 12, color: 'var(--muted)' }}>{p.barcode}</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
               <label>
                 Amount
                 <input
@@ -287,6 +357,23 @@ export function StockPage({
                   onChange={(event) => setStockForm({ ...stockForm, expiryDate: event.target.value })}
                 />
               </label>
+              </div>
+              {selectedProduct && (
+                <div style={{ minWidth: 260, borderLeft: '1px solid var(--border)', paddingLeft: 12 }}>
+                  <div style={{ display: 'grid', gap: 8 }}>
+                    <div style={{ fontWeight: 700 }}>{selectedProduct.name}</div>
+                    <div style={{ color: 'var(--muted)' }}>{selectedProduct.barcode}</div>
+                    {selectedProduct.image && (
+                      <img src={selectedProduct.image} alt={selectedProduct.name} style={{ width: '100%', borderRadius: 6 }} />
+                    )}
+                    <div style={{ fontSize: 13 }}>
+                      <div><strong>Price:</strong> {selectedProduct.originalPrice ?? '-'} VND</div>
+                      <div><strong>Catalog:</strong> {selectedProduct.catalogName || selectedProduct.catalogId || '-'}</div>
+                      <div style={{ marginTop: 6, fontSize: 13 }}>{selectedProduct.description ? (selectedProduct.description.length > 200 ? `${selectedProduct.description.slice(0, 200)}...` : selectedProduct.description) : 'No description'}</div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="modal-footer">
               <button className="btn btn-ghost" onClick={closeModal} disabled={isSaving}>
