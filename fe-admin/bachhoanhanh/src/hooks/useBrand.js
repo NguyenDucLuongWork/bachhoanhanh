@@ -8,6 +8,21 @@ const buildHeaders = (token, extra = {}) => ({
   ...extra,
 })
 
+const buildBrandRequest = (brandData) => {
+  if (!brandData.imageFile) {
+    return {
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(brandData),
+    }
+  }
+
+  const { imageFile, ...payload } = brandData
+  const formData = new FormData()
+  formData.append('brand', new Blob([JSON.stringify(payload)], { type: 'application/json' }))
+  formData.append('imageFile', imageFile)
+  return { headers: {}, body: formData }
+}
+
 const debugLog = (label, payload) => {
   if (!DEBUG) return
   console.groupCollapsed(`useBrand ${label}`)
@@ -54,7 +69,7 @@ export function useBrand(token) {
     async (name = '') => {
       setLoading(true)
       try {
-        const query = typeof name === 'string' && name.trim() ? `?name=${encodeURIComponent(name.trim())}` : ''
+        const query = typeof name === 'string' && name.trim() ? `?search=${encodeURIComponent(name.trim())}` : ''
         const { res, data } = await executeBrandRequest(query, {
           headers: buildHeaders(token),
         })
@@ -145,10 +160,11 @@ export function useBrand(token) {
   const createBrand = useCallback(
     async (brandData) => {
       try {
+        const request = buildBrandRequest(brandData)
         const { res, data } = await executeBrandRequest('', {
           method: 'POST',
-          headers: buildHeaders(token, { 'Content-Type': 'application/json' }),
-          body: JSON.stringify(brandData),
+          headers: buildHeaders(token, request.headers),
+          body: request.body,
         })
 
         if (!res.ok) {
@@ -167,10 +183,11 @@ export function useBrand(token) {
   const updateBrand = useCallback(
     async (id, brandData) => {
       try {
+        const request = buildBrandRequest(brandData)
         const { res, data } = await executeBrandRequest(`/${id}`, {
           method: 'PUT',
-          headers: buildHeaders(token, { 'Content-Type': 'application/json' }),
-          body: JSON.stringify(brandData),
+          headers: buildHeaders(token, request.headers),
+          body: request.body,
         })
 
         if (!res.ok) {
