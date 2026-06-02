@@ -6,13 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/bachhoanhanh/orderservice/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/bachhoanhanh/orderservice/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/api/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/api/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useProducts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/ProductDetailPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/ProductDetailPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-testing/brand.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-testing/brand.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +34,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Dockerfile" />
         <option value="HTTP Request" />
         <option value="Class" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -78,6 +77,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "Downloaded.Files.Path.Enabled": "false",
     "HTTP Request.brand | #1.executor": "Run",
+    "HTTP Request.brand | #2.executor": "Run",
     "HTTP Request.brand | #9.executor": "Run",
     "HTTP Request.brand | GET ALL BRANDS.executor": "Run",
     "HTTP Request.catalog | #4.executor": "Run",
@@ -189,10 +189,10 @@
         <entry key="HttpClient.HttpRequestRunConfigurationType">
           <value>
             <map>
+              <entry key="brand | #2" value="STOPPED" />
               <entry key="brand | GET ALL BRANDS" value="STOPPED" />
               <entry key="products | #5" value="STOPPED" />
               <entry key="user | #11" value="STOPPED" />
-              <entry key="user | Get All Customers (Admin) - Expect 200" value="STOPPED" />
               <entry key="user | adminLogin" value="STOPPED" />
             </map>
           </value>
@@ -204,10 +204,10 @@
     <configuration name="brand | GET ALL BRANDS" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/brand.http" executionIdentifier="GET ALL BRANDS" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="products | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/products.http" executionIdentifier="#5" index="5" runType="Run single request">
+    <configuration name="brand | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/brand.http" executionIdentifier="#2" index="2" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="user | Get All Customers (Admin) - Expect 200" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="Get All Customers (Admin) - Expect 200" index="15" runType="Run single request">
+    <configuration name="products | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/products.http" executionIdentifier="#5" index="5" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="user | #11" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#11" index="11" runType="Run single request">
@@ -215,6 +215,13 @@
     </configuration>
     <configuration name="user | adminLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="adminLogin" runType="Run single request">
       <method v="2" />
+    </configuration>
+    <configuration name="AiServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ai-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.bachhoanhanh.aiservice.AiServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="BrandServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="brand-service" />
@@ -288,11 +295,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.brand | #2" />
+        <item itemvalue="HTTP Request.brand | GET ALL BRANDS" />
+        <item itemvalue="HTTP Request.products | #5" />
         <item itemvalue="HTTP Request.user | #11" />
         <item itemvalue="HTTP Request.user | adminLogin" />
-        <item itemvalue="HTTP Request.products | #5" />
-        <item itemvalue="HTTP Request.user | Get All Customers (Admin) - Expect 200" />
-        <item itemvalue="HTTP Request.brand | GET ALL BRANDS" />
       </list>
     </recent_temporary>
   </component>
@@ -328,7 +335,7 @@
       <workItem from="1780219433167" duration="395000" />
       <workItem from="1780219862699" duration="9081000" />
       <workItem from="1780354033651" duration="17027000" />
-      <workItem from="1780376192062" duration="14141000" />
+      <workItem from="1780376192062" duration="19907000" />
     </task>
     <servers />
   </component>
