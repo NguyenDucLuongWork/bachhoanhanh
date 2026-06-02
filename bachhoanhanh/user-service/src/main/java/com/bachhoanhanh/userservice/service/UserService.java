@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -120,5 +122,34 @@ public class UserService {
                 saved.getEmail()
         );
         return UserResponse.from(saved);
+    }
+
+    public List<StaffProfileResponse> getStaffs() {
+        return userRepository.findAllByRole(Role.STAFF).stream()
+                .map(user -> {
+                    StaffProfile profile = staffProfileRepository.findById(user.getKeycloakId())
+                            .orElseThrow(() -> new RuntimeException("Staff profile not found: " + user.getKeycloakId()));
+                    return StaffProfileResponse.from(user, profile);
+                })
+                .toList();
+    }
+
+    public List<CustomerProfileResponse> getCustomers() {
+        return userRepository.findAllByRole(Role.CUSTOMER).stream()
+                .map(user -> {
+                    CustomerProfile profile = customerProfileRepository.findById(user.getKeycloakId())
+                            .orElseThrow(() -> new RuntimeException("Customer profile not found: " + user.getKeycloakId()));
+                    return CustomerProfileResponse.from(user, profile, List.of());
+                })
+                .toList();
+    }
+
+    public CustomerProfileResponse getCustomerByPhone(String phone) {
+        User user = userRepository.findByPhone(phone)
+                .filter(u -> u.getRole() == Role.CUSTOMER)
+                .orElseThrow(() -> new RuntimeException("Customer not found with phone: " + phone));
+        CustomerProfile profile = customerProfileRepository.findById(user.getKeycloakId())
+                .orElseThrow(() -> new RuntimeException("Customer profile not found: " + user.getKeycloakId()));
+        return CustomerProfileResponse.from(user, profile, List.of());
     }
 }

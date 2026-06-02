@@ -12,6 +12,8 @@ import { CatalogsPage } from './pages/CatalogsPage'
 import { BrandDetailPage } from './pages/BrandDetailPage'
 import { StockPage } from './pages/StockPage'
 import { VouchersPage } from './pages/VouchersPage'
+import { UsersManagementPage } from './pages/UsersManagementPage'
+import { CustomerDetailPage } from './pages/CustomerDetailPage'
 import { ToastContainer, useToast } from './components/Toast'
 import { showToast } from './components/Toast'
 import { OrderDetailsModal } from './components/OrderDetailsModal'
@@ -23,6 +25,7 @@ import { useBrand } from './hooks/useBrand'
 import { useOrders } from './hooks/useOrders'
 import { useStocks } from './hooks/useStocks'
 import { useVouchers } from './hooks/useVouchers'
+import { useUsers } from './hooks/useUsers'
 import './styles/theme.css'
 
 function App() {
@@ -35,9 +38,11 @@ function App() {
   const { orders, loading: ordersLoading, loadOrders, createOrder, getOrderDetails, updateOrderStatus, cancelOrder } = useOrders(token)
   const { stocks, loading: stocksLoading, loadStocks, createStock, updateStock, deleteStock } = useStocks(token)
   const { vouchers, loading: vouchersLoading, loadVouchers, getVoucherById, getVoucherByCode, createVoucher, updateVoucher, deleteVoucher } = useVouchers(token)
+  const { customers, staff, customerDetail, loading: usersLoading, loadCustomers, loadStaff, getCustomerDetail, searchCustomerByPhone, createStaff, updateStaff, updateCustomer, deleteUser } = useUsers(token)
   const [selectedCatalog, setSelectedCatalog] = useState(null)
   const [productDetailId, setProductDetailId] = useState(null)
   const [brandDetailName, setBrandDetailName] = useState(null)
+  const [customerDetailId, setCustomerDetailId] = useState(null)
   const [cartItems, setCartItems] = useState([])
   const [pendingAction, setPendingAction] = useState(null)
   const [checkoutOrder, setCheckoutOrder] = useState(null)
@@ -51,7 +56,11 @@ function App() {
     loadBrands()
     loadAttributeTypes()
     loadStocks()
-  }, [loadCatalogTree, loadPrototypes, loadProducts, loadBrands, loadAttributeTypes, loadStocks])
+    if (isAdminUser) {
+      loadCustomers()
+      loadStaff()
+    }
+  }, [loadCatalogTree, loadPrototypes, loadProducts, loadBrands, loadAttributeTypes, loadStocks, loadCustomers, loadStaff, isAdminUser])
 
   useEffect(() => {
     if (isLoggedIn && currentPage === 'login') {
@@ -136,6 +145,18 @@ function App() {
       return
     }
 
+    if (route[0] === 'users') {
+      if (route[1] === 'detail' && route[2]) {
+        setCustomerDetailId(route[2])
+        setCurrentPage('customer-detail')
+        window.history.replaceState({ page: 'customer-detail', customerId: route[2] }, '', `${window.location.pathname}#/${route.join('/')}`)
+        return
+      }
+      setCurrentPage('users')
+      window.history.replaceState({ page: 'users' }, '', `${window.location.pathname}#/users`)
+      return
+    }
+
     window.history.replaceState({ page: 'products' }, '', `${window.location.pathname}#/`)
   }, [])
 
@@ -189,11 +210,27 @@ function App() {
         setCurrentPage('stocks')
         setProductDetailId(null)
         setBrandDetailName(null)
+        setCustomerDetailId(null)
+        return
+      }
+      if (route[0] === 'users') {
+        if (route[1] === 'detail' && route[2]) {
+          setCurrentPage('customer-detail')
+          setCustomerDetailId(route[2])
+          setProductDetailId(null)
+          setBrandDetailName(null)
+          return
+        }
+        setCurrentPage('users')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        setCustomerDetailId(null)
         return
       }
       setCurrentPage('products')
       setProductDetailId(null)
       setBrandDetailName(null)
+      setCustomerDetailId(null)
     }
 
     window.addEventListener('hashchange', handleHashChange)
@@ -256,14 +293,27 @@ function App() {
     } else if (page === 'account') {
       setProductDetailId(null)
       setBrandDetailName(null)
+      setCustomerDetailId(null)
       window.history.pushState({ page: 'account' }, '', `${basePath}#/account`)
+    } else if (page === 'users') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      setCustomerDetailId(null)
+      window.history.pushState({ page: 'users' }, '', `${basePath}#/users`)
+    } else if (page === 'customer-detail' && id) {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      setCustomerDetailId(id)
+      window.history.pushState({ page: 'customer-detail', customerId: id }, '', `${basePath}#/users/detail/${id}`)
     } else if (page === 'login') {
       setProductDetailId(null)
       setBrandDetailName(null)
+      setCustomerDetailId(null)
       window.history.pushState({ page: 'login' }, '', `${basePath}#/login`)
     } else {
       setProductDetailId(null)
       setBrandDetailName(null)
+      setCustomerDetailId(null)
       window.history.pushState({ page: 'products' }, '', `${basePath}#/`)
     }
     setCurrentPage(page)
@@ -278,6 +328,8 @@ function App() {
       navigateTo('stocks')
     } else if (page === 'catalogs') {
       navigateTo('catalogs')
+    } else if (page === 'users') {
+      navigateTo('users')
     } else {
       setCurrentPage(page)
     }
@@ -491,6 +543,31 @@ function App() {
             profile={profile}
             username={username}
             onUpdateProfile={updateProfile}
+          />
+        )}
+        {currentPage === 'users' && isAdminUser && (
+          <UsersManagementPage
+            customers={customers}
+            staff={staff}
+            loading={usersLoading}
+            isAdminUser={isAdminUser}
+            onLoadCustomers={loadCustomers}
+            onLoadStaff={loadStaff}
+            onSearchByPhone={searchCustomerByPhone}
+            onGetCustomerDetail={getCustomerDetail}
+            onCreateStaff={createStaff}
+            onUpdateStaff={updateStaff}
+            onUpdateCustomer={updateCustomer}
+            onDeleteUser={deleteUser}
+            onViewCustomerDetail={(customerId) => navigateTo('customer-detail', customerId)}
+          />
+        )}
+        {currentPage === 'customer-detail' && customerDetailId && isAdminUser && (
+          <CustomerDetailPage
+            customerId={customerDetailId}
+            onBack={() => navigateTo('users')}
+            getCustomerDetail={getCustomerDetail}
+            onUpdateCustomer={updateCustomer}
           />
         )}
       </main>

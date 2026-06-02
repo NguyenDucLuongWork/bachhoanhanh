@@ -1,0 +1,38 @@
+name: Deploy Microservices
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Prepare environment
+        shell: powershell
+        run: |
+          Write-Host "Dang chuan bi moi truong..."
+
+          if (Test-Path ".env.prod") {
+            Copy-Item .env.prod .env -Force
+            Write-Host "Da ap dung cau hinh tu .env.prod"
+          }
+          else {
+            Write-Host "Khong tim thay .env.prod"
+          }
+
+      - name: Deploy all services
+        shell: powershell
+        run: |
+          Write-Host "Bat dau Build va Deploy..."
+          docker compose up -d --build --remove-orphans
+
+      - name: Check containers
+        shell: powershell
+        run: |
+          docker ps

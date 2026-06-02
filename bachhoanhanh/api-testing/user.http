@@ -133,3 +133,56 @@ Content-Type: application/json
 ### Test CUSTOMER attempting to delete user (Expect 403)
 DELETE {{baseUrl}}/{{targetKeycloakId}}
 Authorization: Bearer {{customer_token}}
+
+############################################################
+# 6. GET STAFF & CUSTOMERS (ADMIN) + SEARCH BY PHONE
+############################################################
+
+### Get All Staff (Admin) - Expect 200
+GET {{baseUrl}}/staff
+Authorization: Bearer {{admin_token}}
+
+### Get All Staff as STAFF (Expect 403)
+GET {{baseUrl}}/staff
+Authorization: Bearer {{staff_token}}
+
+### Get All Staff as CUSTOMER (Expect 403)
+GET {{baseUrl}}/staff
+Authorization: Bearer {{customer_token}}
+
+### Get All Staff without token (Expect 401)
+GET {{baseUrl}}/staff
+
+### Get All Customers (Admin) - Expect 200
+GET {{baseUrl}}/customers
+Authorization: Bearer {{admin_token}}
+
+### Get All Customers as STAFF (Expect 403)
+GET {{baseUrl}}/customers
+Authorization: Bearer {{staff_token}}
+
+### Get All Customers as CUSTOMER (Expect 403)
+GET {{baseUrl}}/customers
+Authorization: Bearer {{customer_token}}
+
+### Get All Customers without token (Expect 401)
+GET {{baseUrl}}/customers
+
+### Search Customer by Phone as ADMIN (Expect 200)
+GET {{baseUrl}}/customers/search?phone=0912345678
+Authorization: Bearer {{admin_token}}
+
+### Search Customer by Phone as STAFF (Expect 200)
+GET {{baseUrl}}/customers/search?phone=0912345678
+Authorization: Bearer {{staff_token}}
+
+### Search Customer by Phone as CUSTOMER (Expect 403)
+GET {{baseUrl}}/customers/search?phone=0912345678
+Authorization: Bearer {{customer_token}}
+
+### Search Customer by Phone without token (Expect 401)
+GET {{baseUrl}}/customers/search?phone=0912345678
+
+### Search Customer with non-existent phone (Expect 404/500)
+GET {{baseUrl}}/customers/search?phone=0000000000
+Authorization: Bearer {{admin_token}}
