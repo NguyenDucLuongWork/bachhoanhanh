@@ -2,7 +2,68 @@ import { useEffect, useState } from 'react'
 import { Loader } from '../components/Loader'
 import { formatPrice } from '../utils/helpers'
 
-export function ProductDetailPage({ productId, getProductById, onBack, isAdminUser, onAddToCart, onBuyNow, products = [] }) {
+const ATTRIBUTE_LABELS = {
+  BRAND: 'Brand',
+  BRAND_DESCRIPTION: 'Brand description',
+  ORIGIN: 'Origin',
+  WEIGHT: 'Weight',
+  VOLUME: 'Volume',
+  EXPIRY_DATE: 'Expiry date',
+  IMPORT_DATE: 'Import date',
+  EXPORT_DATE: 'Export date',
+  STORAGE_INSTRUCTIONS: 'Storage',
+  INGREDIENTS: 'Ingredients',
+  WARNINGS: 'Warnings',
+  BENEFITS: 'Benefits',
+  USAGE_INSTRUCTIONS: 'Usage',
+  SUITABLE_FOR: 'Suitable for',
+  ENERGY: 'Energy',
+}
+
+const ATTRIBUTE_ORDER = [
+  'BRAND',
+  'BRAND_DESCRIPTION',
+  'ORIGIN',
+  'WEIGHT',
+  'VOLUME',
+  'EXPIRY_DATE',
+  'STORAGE_INSTRUCTIONS',
+  'INGREDIENTS',
+  'BENEFITS',
+  'USAGE_INSTRUCTIONS',
+  'SUITABLE_FOR',
+  'ENERGY',
+  'WARNINGS',
+]
+
+function formatDate(value) {
+  if (!value) return '-'
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('vi-VN')
+}
+
+function getAvailableAmount(product) {
+  if (!product) return 0
+  if (product.totalAvailableAmount != null) return Number(product.totalAvailableAmount) || 0
+  if (Array.isArray(product.availableStocks)) {
+    return product.availableStocks.reduce((sum, stock) => sum + Number(stock.amount || 0), 0)
+  }
+  return Number(product.stock || 0)
+}
+
+function getOrderedAttributes(attributes = {}) {
+  const entries = Object.entries(attributes).filter(([, value]) => value != null && String(value).trim() !== '')
+  return entries.sort(([a], [b]) => {
+    const ai = ATTRIBUTE_ORDER.indexOf(a)
+    const bi = ATTRIBUTE_ORDER.indexOf(b)
+    if (ai === -1 && bi === -1) return a.localeCompare(b)
+    if (ai === -1) return 1
+    if (bi === -1) return -1
+    return ai - bi
+  })
+}
+
+export function ProductDetailPage({ productId, getProductById, onBack, isAdminUser, onAddToCart, onBuyNow, onViewProduct, products = [] }) {
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -17,7 +78,7 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
       const result = await getProductById(productId)
       if (result.success) {
         setProduct(result.data)
-        setQuantity(1)
+        setQuantity(getAvailableAmount(result.data) > 0 ? 1 : 0)
       } else {
         setError(result.message)
       }
@@ -35,15 +96,17 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
   }
 
   const handleAddToCartWithQuantity = () => {
+    if (quantity <= 0) return
     const productWithQuantity = { ...product, requestedQuantity: quantity }
     onAddToCart(productWithQuantity)
-    setQuantity(1)
+    setQuantity(getAvailableAmount(product) > 0 ? 1 : 0)
   }
 
   const handleBuyNowWithQuantity = () => {
+    if (quantity <= 0) return
     const productWithQuantity = { ...product, requestedQuantity: quantity }
     onBuyNow(productWithQuantity)
-    setQuantity(1)
+    setQuantity(getAvailableAmount(product) > 0 ? 1 : 0)
   }
 
   if (loading) {
@@ -76,8 +139,18 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
   if (!product) return null
 
   const relatedProducts = getRelatedProducts()
-  const stockStatus = product.stock > 0 ? 'In Stock' : 'Out of Stock'
-  const stockColor = product.stock > 0 ? '#10b981' : '#ef4444'
+  const availableAmount = getAvailableAmount(product)
+  const availableStocks = Array.isArray(product.availableStocks) ? product.availableStocks : []
+  const attributeSource = {
+    ...(product.attributes || {}),
+    ...(product.brandDescription ? { BRAND_DESCRIPTION: product.brandDescription } : {}),
+  }
+  const orderedAttributes = getOrderedAttributes(attributeSource)
+  const stockStatus = availableAmount > 0 ? 'In stock' : 'Out of stock'
+  const stockColor = availableAmount > 0 ? '#10b981' : '#ef4444'
+  const nearestExpiry = availableStocks
+    .filter((stock) => Number(stock.amount || 0) > 0)
+    .sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate))[0]?.expiryDate
 
   return (
     <div className="page active commerce-shell">
@@ -105,120 +178,96 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
 
           <div className="detail-price">{formatPrice(product.originalPrice)} VND</div>
 
-          {/* Stock Status */}
-          <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Stock:</span>
-            <span style={{ color: stockColor, fontWeight: '600' }}>
-              {stockStatus} ({product.stock || 0} units)
-            </span>
+          <div className="detail-stock">
+            <div className="detail-stock-head">
+              <span>Availability</span>
+              <strong style={{ color: stockColor }}>{stockStatus}</strong>
+            </div>
+            <div className="detail-stock-main">
+              {availableAmount} <span>units available</span>
+            </div>
+            {nearestExpiry && (
+              <div className="detail-stock-expiry">
+                Nearest expiry: {formatDate(nearestExpiry)}
+              </div>
+            )}
+            {availableStocks.length > 0 && (
+              <div className="detail-stock-list">
+                {availableStocks.slice(0, 3).map((stock) => (
+                  <span key={stock.id || `${stock.amount}-${stock.expiryDate}`}>
+                    {stock.amount} units until {formatDate(stock.expiryDate)}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {!isAdminUser && (
             <>
-              {/* Quantity Selector */}
-              <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <label style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Quantity:</label>
-                <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border)', borderRadius: '6px', width: 'fit-content' }}>
+              <div className="detail-quantity">
+                <label>Quantity</label>
+                <div className="quantity-stepper">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    disabled={quantity <= 1}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      padding: '8px 12px',
-                      cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
-                      opacity: quantity <= 1 ? 0.5 : 1,
-                    }}
+                    disabled={quantity <= 1 || availableAmount <= 0}
                   >
-                    −
+                    -
                   </button>
                   <input
                     type="number"
                     value={quantity}
                     onChange={(e) => {
-                      const val = Math.max(1, Math.min(product.stock, parseInt(e.target.value) || 1))
+                      const parsed = parseInt(e.target.value, 10)
+                      const val = availableAmount > 0 ? Math.max(1, Math.min(availableAmount, parsed || 1)) : 0
                       setQuantity(val)
                     }}
-                    style={{
-                      width: '60px',
-                      border: 'none',
-                      borderLeft: '1px solid var(--border)',
-                      borderRight: '1px solid var(--border)',
-                      textAlign: 'center',
-                      padding: '6px 0',
-                    }}
+                    min={availableAmount > 0 ? 1 : 0}
+                    max={availableAmount}
                   />
                   <button
-                    onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                    disabled={quantity >= product.stock}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      padding: '8px 12px',
-                      cursor: quantity >= product.stock ? 'not-allowed' : 'pointer',
-                      opacity: quantity >= product.stock ? 0.5 : 1,
-                    }}
+                    onClick={() => setQuantity(Math.min(availableAmount, quantity + 1))}
+                    disabled={quantity >= availableAmount || availableAmount <= 0}
                   >
                     +
                   </button>
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="detail-actions">
                 <button 
                   className="btn btn-ghost" 
                   onClick={handleAddToCartWithQuantity}
-                  disabled={product.stock <= 0}
+                  disabled={availableAmount <= 0 || quantity <= 0}
                 >
                   Add to cart ({quantity})
                 </button>
                 <button 
                   className="btn btn-accent" 
                   onClick={handleBuyNowWithQuantity}
-                  disabled={product.stock <= 0}
+                  disabled={availableAmount <= 0 || quantity <= 0}
                 >
                   Buy now
                 </button>
               </div>
             </>
           )}
-
-          <div className="detail-meta">
-            <div>
-              <span>Barcode</span>
-              <strong>{product.barcode || 'N/A'}</strong>
-            </div>
-            <div>
-              <span>Prototype</span>
-              <strong>{product.prototypeId || 'N/A'}</strong>
-            </div>
-            <div>
-              <span>Product ID</span>
-              <strong>{product.productId}</strong>
-            </div>
-          </div>
         </div>
       </section>
 
-      <section className="detail-attributes">
-        <div className="page-header" style={{ marginBottom: '14px' }}>
-          <div>
-            <h2>Product attributes</h2>
-            <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '2px' }}>
-              Specifications and storage information
-            </p>
-          </div>
+      <section className="detail-section">
+        <div className="detail-section-head">
+          <h2>Product attributes</h2>
+          <p>Specifications and storage information</p>
         </div>
-        {!product.attributes || Object.keys(product.attributes).length === 0 ? (
+        {orderedAttributes.length === 0 ? (
           <div className="empty">
             <p>No attributes available</p>
           </div>
         ) : (
           <div className="attribute-grid">
-            {Object.entries(product.attributes).map(([key, value]) => (
+            {orderedAttributes.map(([key, value]) => (
               <div key={key} className="attribute-tile">
-                <span>{key}</span>
+                <span>{ATTRIBUTE_LABELS[key] || key.replaceAll('_', ' ').toLowerCase()}</span>
                 <strong>{value}</strong>
               </div>
             ))}
@@ -277,11 +326,11 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
                   display: 'inline-block',
                   fontSize: '11px',
                   padding: '4px 8px',
-                  background: relProduct.stock > 0 ? '#d1fae5' : '#fee2e2',
-                  color: relProduct.stock > 0 ? '#065f46' : '#7f1d1d',
+                  background: getAvailableAmount(relProduct) > 0 ? '#d1fae5' : '#fee2e2',
+                  color: getAvailableAmount(relProduct) > 0 ? '#065f46' : '#7f1d1d',
                   borderRadius: '4px'
                 }}>
-                  {relProduct.stock > 0 ? `${relProduct.stock} in stock` : 'Out of stock'}
+                  {getAvailableAmount(relProduct) > 0 ? `${getAvailableAmount(relProduct)} in stock` : 'Out of stock'}
                 </span>
               </div>
             ))}

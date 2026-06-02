@@ -59,7 +59,7 @@ export function useCart(token) {
             catalogId: product.catalogId,
             prototypeId: product.prototypeId,
             originalPrice: product.originalPrice,
-            quantity: 1,
+            quantity: product.requestedQuantity || product.quantity || 1,
           }),
         })
         if (!res.ok) throw new Error('Failed to add item to cart')

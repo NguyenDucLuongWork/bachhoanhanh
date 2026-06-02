@@ -200,6 +200,7 @@ function App() {
             isAdminUser={isAdminUser}
             onAddToCart={addToCart}
             onBuyNow={buyNow}
+            onViewProduct={handleViewProduct}
             products={products}
           />
         )}

@@ -16,6 +16,8 @@ public class Order {
     private String status; // pending, paid, failed
     private Date orderDate;
     private List<OrderItem> items;
+    private List<FinishedOrderItem> finishedItems;
+    private Boolean stockFinished = false;
 
     public Order() {}
 
@@ -56,6 +58,10 @@ public class Order {
 
     public List<OrderItem> getItems() { return items; }
     public void setItems(List<OrderItem> items) { this.items = items; }
+    public List<FinishedOrderItem> getFinishedItems() { return finishedItems; }
+    public void setFinishedItems(List<FinishedOrderItem> finishedItems) { this.finishedItems = finishedItems; }
+    public Boolean getStockFinished() { return stockFinished; }
+    public void setStockFinished(Boolean stockFinished) { this.stockFinished = stockFinished; }
 
     // FE expects createdAt/total fields
     public Date getCreatedAt() { return orderDate; }
