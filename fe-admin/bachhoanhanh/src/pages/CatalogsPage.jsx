@@ -1,16 +1,6 @@
-﻿import { useState, useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { showToast } from '../components/Toast'
-import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { Loader } from '../components/Loader'
-
-function flattenTree(nodes, out = []) {
-  if (!nodes) return out
-  nodes.forEach((node) => {
-    out.push(node)
-    if (node.children && node.children.length) flattenTree(node.children, out)
-  })
-  return out
-}
 
 function CatalogTreeNode({ item, depth = 0, onDelete }) {
   const children = item.children || []
@@ -51,7 +41,7 @@ export function CatalogsPage({ catalogs = [], loading, onAddCatalog, onDeleteCat
       items.forEach((item) => {
         const label = prefix ? prefix + ' / ' + item.name : item.name
         result.push({ ...item, label })
-        if (item.children) walk(item.children, label)
+        if (item.children?.length) walk(item.children, label)
       })
     }
     walk(catalogs)
@@ -59,27 +49,31 @@ export function CatalogsPage({ catalogs = [], loading, onAddCatalog, onDeleteCat
   }, [catalogs])
 
   const handleAddCatalog = async () => {
-    if (!newName.trim()) return
-    const payload = {
+    if (!newName.trim()) {
+      showToast('Catalog name is required', true)
+      return
+    }
+
+    const result = await onAddCatalog({
       name: newName.trim(),
       parentCatalogId: newParentId || null,
-    }
-    const result = await onAddCatalog(payload)
-    if (result && result.success) {
+    })
+
+    if (result?.success) {
       showToast(result.message)
       setNewName('')
       setNewParentId('')
     } else {
-      showToast((result && result.message) || 'Unable to add catalog', true)
+      showToast(result?.message || 'Unable to add catalog', true)
     }
   }
 
   const handleDelete = async (id) => {
     const result = await onDeleteCatalog(id)
-    if (result && result.success) {
+    if (result?.success) {
       showToast(result.message)
     } else {
-      showToast((result && result.message) || 'Unable to delete catalog', true)
+      showToast(result?.message || 'Unable to delete catalog', true)
     }
   }
 
@@ -92,43 +86,56 @@ export function CatalogsPage({ catalogs = [], loading, onAddCatalog, onDeleteCat
   }
 
   return (
-    <div className="page active admin-compact-page admin-catalogs-page" style={{ maxWidth: '1100px', margin: '0 auto' }}>
+    <div className="page active admin-compact-page admin-catalogs-page">
       <div className="page-header">
         <div>
           <h2>Catalogs</h2>
-          <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '4px' }}>
-            Manage catalog tree
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn btn-ghost" onClick={onRefresh}>Refresh</button>
+          <p>Manage catalog tree</p>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 18 }}>
-        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
-          <h3>Add catalog</h3>
-          <input
-            type="text"
-            placeholder="Catalog name"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            style={{ width: '100%', marginBottom: 8 }}
-          />
-          <select
-            value={newParentId}
-            onChange={(e) => setNewParentId(e.target.value)}
-            style={{ width: '100%', marginBottom: 8 }}
-          >
-            <option value="">No parent</option>
-            {flatCatalogs.map((item) => (
-              <option key={item.id} value={item.id}>{item.label}</option>
-            ))}
-          </select>
-          <button className="btn btn-accent" onClick={handleAddCatalog}>Add catalog</button>
+      <div className="catalog-admin-layout">
+        <div className="catalog-form-card">
+          <div>
+            <h3>Add catalog</h3>
+            <p>Create a root catalog or attach it under an existing parent.</p>
+          </div>
+          <label>
+            Catalog name
+            <input
+              type="text"
+              placeholder="Example: Fresh food"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleAddCatalog()}
+            />
+          </label>
+          <label>
+            Parent catalog
+            <select value={newParentId} onChange={(e) => setNewParentId(e.target.value)}>
+              <option value="">No parent - root catalog</option>
+              {flatCatalogs.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button className="btn btn-accent" onClick={handleAddCatalog}>
+            Add catalog
+          </button>
         </div>
 
-        <div>
+        <div className="catalog-tree-panel">
+          <div className="catalog-tree-header">
+            <div>
+              <strong>Catalog tree</strong>
+              <span>{flatCatalogs.length} catalogs</span>
+            </div>
+            <button className="btn btn-ghost btn-sm" onClick={onRefresh}>
+              Reload tree
+            </button>
+          </div>
           {catalogs.length === 0 ? (
             <div className="empty">
               <p>No catalogs found</p>

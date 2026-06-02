@@ -2,7 +2,9 @@ package com.bachhoanhanh.brandservice.controller;
 
 import com.bachhoanhanh.brandservice.model.Brand;
 import com.bachhoanhanh.brandservice.service.BrandService;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,18 +31,35 @@ public class BrandController {
     }
 
     // CREATE
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Brand createBrand(@RequestBody Brand brand) {
         return service.createBrand(brand);
     }
 
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Brand createBrandWithImage(
+            @RequestPart("brand") Brand brand,
+            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) {
+
+        return service.createBrand(brand, imageFile);
+    }
+
     // UPDATE
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Brand updateBrand(
             @PathVariable Long id,
             @RequestBody Brand brand) {
 
         return service.updateBrand(id, brand);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Brand updateBrandWithImage(
+            @PathVariable Long id,
+            @RequestPart("brand") Brand brand,
+            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) {
+
+        return service.updateBrand(id, brand, imageFile);
     }
 
     // DELETE
