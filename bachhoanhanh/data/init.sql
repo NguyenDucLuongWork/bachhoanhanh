@@ -7,8 +7,11 @@ CREATE DATABASE IF NOT EXISTS orderdb;
 CREATE DATABASE IF NOT EXISTS branddb;
 CREATE DATABASE IF NOT EXISTS catalogdb;
 CREATE DATABASE IF NOT EXISTS paymentdb;
+CREATE DATABASE IF NOT EXISTS userdb; -- Thêm dòng này
+CREATE DATABASE IF NOT EXISTS cartdb;
 CREATE DATABASE IF NOT EXISTS userdb;
 CREATE DATABASE IF NOT EXISTS stockdb;
+
 
 
 GRANT ALL PRIVILEGES ON productdb.* TO 'appuser'@'%';
@@ -16,6 +19,8 @@ GRANT ALL PRIVILEGES ON orderdb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON branddb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON catalogdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON paymentdb.* TO 'appuser'@'%';
+GRANT ALL PRIVILEGES ON userdb.*    TO 'appuser'@'%'; -- Thêm dòng này
+GRANT ALL PRIVILEGES ON cartdb.*    TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON userdb.*    TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON stockdb.* TO 'appuser'@'%';
 
@@ -477,6 +482,7 @@ VALUES
         '2020-01-01 00:00:00', '2020-12-31 23:59:59', FALSE,
         NULL, NULL
     );
+
 
 -- Thêm vào cuối file
 -- ═══════════════════════════════════════════════════════

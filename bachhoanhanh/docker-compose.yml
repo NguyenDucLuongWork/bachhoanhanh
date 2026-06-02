@@ -148,6 +148,25 @@ services:
       eureka-server:
         condition: service_started
 
+  cart-service:
+    build: ./cart-service
+    container_name: cart-service
+    restart: always
+    ports:
+      - "8088:8088"
+    environment:
+      DB_URL: ${CART_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+      JWT_ISSUER: ${JWT_ISSUER}
+      JWT_JWK: ${JWT_JWK}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
   catalog-service:
     build: ./catalog-service
     container_name: catalog-service
@@ -249,5 +268,7 @@ services:
         condition: service_started
       voucher-service:
         condition: service_started
+      cart-service:
+
       stock-service:
         condition: service_started
