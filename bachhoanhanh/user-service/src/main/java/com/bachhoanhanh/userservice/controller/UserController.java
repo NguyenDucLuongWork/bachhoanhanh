@@ -10,6 +10,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -59,5 +61,24 @@ public class UserController {
     public ResponseEntity<UserResponse> getUserById(
             @PathVariable String keycloakId) {
         return ResponseEntity.ok(userService.getUserById(keycloakId));
+    }
+
+    @GetMapping("/staff")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<StaffProfileResponse>> getStaffs() {
+        return ResponseEntity.ok(userService.getStaffs());
+    }
+
+    @GetMapping("/customers")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<CustomerProfileResponse>> getCustomers() {
+        return ResponseEntity.ok(userService.getCustomers());
+    }
+
+    @GetMapping("/customers/search")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<CustomerProfileResponse> getCustomerByPhone(
+            @RequestParam String phone) {
+        return ResponseEntity.ok(userService.getCustomerByPhone(phone));
     }
 }

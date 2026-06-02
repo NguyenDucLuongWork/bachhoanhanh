@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/bachhoanhanh/catalogservice/CatalogServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/bachhoanhanh/catalogservice/CatalogServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/bachhoanhanh/catalogservice/controller/CatalogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/bachhoanhanh/catalogservice/controller/CatalogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/bachhoanhanh/catalogservice/service/CatalogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/bachhoanhanh/catalogservice/service/CatalogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-testing/user.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-testing/user.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/bachhoanhanh/userservice/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/Header.jsx" afterDir="false" />
     </list>
@@ -110,11 +108,16 @@
     "HTTP Request.test-product-new | Tạo mẫu sản phẩm \"Thịt heo sạch\".executor": "Run",
     "HTTP Request.test-product-new | Tạo mới loại thuộc tính: Hạn sử dụng (Yêu cầu Token).executor": "Run",
     "HTTP Request.test-product-new | Tạo mới loại thuộc tính: Khối lượng (Yêu cầu Token).executor": "Run",
+    "HTTP Request.user | #11.executor": "Run",
     "HTTP Request.user | #4.executor": "Run",
     "HTTP Request.user | #5.executor": "Run",
     "HTTP Request.user | #6.executor": "Run",
     "HTTP Request.user | #9.executor": "Run",
     "HTTP Request.user | Delete User.executor": "Run",
+    "HTTP Request.user | Get All Customers (Admin) - Expect 200.executor": "Run",
+    "HTTP Request.user | Get All Customers as CUSTOMER (Expect 403).executor": "Run",
+    "HTTP Request.user | Get All Customers as STAFF (Expect 403).executor": "Run",
+    "HTTP Request.user | Get All Staff as CUSTOMER (Expect 403).executor": "Run",
     "HTTP Request.user | Get User by Keycloak ID.executor": "Run",
     "HTTP Request.user | adminLogin.executor": "Run",
     "HTTP Request.user | customerLogin.executor": "Run",
@@ -183,11 +186,11 @@
         <entry key="HttpClient.HttpRequestRunConfigurationType">
           <value>
             <map>
-              <entry key="catalog | #4" value="STOPPED" />
-              <entry key="catalog | Create Root Catalog — Fashion (auto-generated id, no id provided)" value="STOPPED" />
-              <entry key="catalog | Get All Catalogs as Tree" value="STOPPED" />
-              <entry key="catalog | createElectronics" value="STOPPED" />
-              <entry key="catalog | createPhones" value="STOPPED" />
+              <entry key="user | #11" value="STOPPED" />
+              <entry key="user | Get All Customers (Admin) - Expect 200" value="STOPPED" />
+              <entry key="user | Get All Customers as STAFF (Expect 403)" value="STOPPED" />
+              <entry key="user | Get All Staff as CUSTOMER (Expect 403)" value="STOPPED" />
+              <entry key="user | adminLogin" value="STOPPED" />
             </map>
           </value>
         </entry>
@@ -195,19 +198,19 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
-    <configuration name="catalog | Create Root Catalog — Fashion (auto-generated id, no id provided)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/catalog.http" executionIdentifier="Create Root Catalog — Fashion (auto-generated id, no id provided)" index="7" runType="Run single request">
+    <configuration name="user | Get All Customers (Admin) - Expect 200" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="Get All Customers (Admin) - Expect 200" index="15" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="catalog | Get All Catalogs as Tree" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/catalog.http" executionIdentifier="Get All Catalogs as Tree" index="5" runType="Run single request">
+    <configuration name="user | Get All Customers as STAFF (Expect 403)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="Get All Customers as STAFF (Expect 403)" index="12" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="catalog | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/catalog.http" executionIdentifier="#4" index="4" runType="Run single request">
+    <configuration name="user | Get All Staff as CUSTOMER (Expect 403)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="Get All Staff as CUSTOMER (Expect 403)" index="13" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="catalog | createElectronics" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/catalog.http" executionIdentifier="createElectronics" index="6" runType="Run single request">
+    <configuration name="user | #11" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#11" index="11" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="catalog | createPhones" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/catalog.http" executionIdentifier="createPhones" index="9" runType="Run single request">
+    <configuration name="user | adminLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="adminLogin" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="BrandServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -282,11 +285,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.catalog | createPhones" />
-        <item itemvalue="HTTP Request.catalog | Create Root Catalog — Fashion (auto-generated id, no id provided)" />
-        <item itemvalue="HTTP Request.catalog | createElectronics" />
-        <item itemvalue="HTTP Request.catalog | Get All Catalogs as Tree" />
-        <item itemvalue="HTTP Request.catalog | #4" />
+        <item itemvalue="HTTP Request.user | Get All Customers (Admin) - Expect 200" />
+        <item itemvalue="HTTP Request.user | Get All Staff as CUSTOMER (Expect 403)" />
+        <item itemvalue="HTTP Request.user | #11" />
+        <item itemvalue="HTTP Request.user | adminLogin" />
+        <item itemvalue="HTTP Request.user | Get All Customers as STAFF (Expect 403)" />
       </list>
     </recent_temporary>
   </component>
@@ -322,7 +325,7 @@
       <workItem from="1780219433167" duration="395000" />
       <workItem from="1780219862699" duration="9081000" />
       <workItem from="1780354033651" duration="17027000" />
-      <workItem from="1780376192062" duration="3901000" />
+      <workItem from="1780376192062" duration="6473000" />
     </task>
     <servers />
   </component>
