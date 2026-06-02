@@ -1,13 +1,17 @@
 package com.bachhoanhanh.orderservice.service;
 
 import com.bachhoanhanh.orderservice.dto.CreateOrderRequest;
+import com.bachhoanhanh.orderservice.dto.FinishStockOrderItemRequest;
+import com.bachhoanhanh.orderservice.dto.FinishStockOrderRequest;
 import com.bachhoanhanh.orderservice.dto.Product;
+import com.bachhoanhanh.orderservice.model.FinishedOrderItem;
 import com.bachhoanhanh.orderservice.model.Order;
 import com.bachhoanhanh.orderservice.model.OrderItem;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +50,16 @@ public class OrderService {
             subtotal += product.getPrice() * item.getQuantity();
 
             Long resolvedProductId = product.getProductId() != null ? product.getProductId() : Long.valueOf(item.getProductId());
-            orderItems.add(new OrderItem(String.valueOf(resolvedProductId), product.getName(), item.getQuantity(), product.getPrice()));
+            String stockProductId = product.getBarcode() != null && !product.getBarcode().isBlank()
+                    ? product.getBarcode()
+                    : String.valueOf(resolvedProductId);
+            orderItems.add(new OrderItem(
+                    String.valueOf(resolvedProductId),
+                    stockProductId,
+                    product.getName(),
+                    item.getQuantity(),
+                    product.getPrice()
+            ));
             productIds.add(resolvedProductId);
             if (product.getCatalogId() != null && !product.getCatalogId().isBlank()) {
                 catalogIds.add(product.getCatalogId());
@@ -95,7 +108,11 @@ public class OrderService {
     public Order updateOrderStatus(Long orderId, String status) {
         Order order = orderDatabase.get(orderId);
         if (order != null) {
-            order.setStatus(status == null ? null : status.toLowerCase());
+            String normalizedStatus = status == null ? null : status.toLowerCase();
+            if (shouldFinishStock(normalizedStatus, order)) {
+                finishStock(order);
+            }
+            order.setStatus(normalizedStatus);
             orderDatabase.put(orderId, order);
         }
         return order;
@@ -156,5 +173,39 @@ public class OrderService {
     private void confirmVoucherUsage(String voucherCode) {
         String url = "http://voucher-service:8087/vouchers/confirm-usage/" + voucherCode;
         restTemplate.postForEntity(url, null, Void.class);
+    }
+
+    private boolean shouldFinishStock(String status, Order order) {
+        if (status == null || Boolean.TRUE.equals(order.getStockFinished())) {
+            return false;
+        }
+        return status.equals("paid") || status.equals("delivered") || status.equals("finished");
+    }
+
+    private void finishStock(Order order) {
+        if (order.getItems() == null || order.getItems().isEmpty()) {
+            throw new RuntimeException("Cannot finish order without items");
+        }
+
+        List<FinishStockOrderItemRequest> items = order.getItems().stream()
+                .map(item -> new FinishStockOrderItemRequest(
+                        item.getStockProductId() != null && !item.getStockProductId().isBlank()
+                                ? item.getStockProductId()
+                                : item.getProductId(),
+                        item.getName(),
+                        item.getQuantity(),
+                        item.getPrice()
+                ))
+                .toList();
+
+        FinishStockOrderRequest request = new FinishStockOrderRequest(order.getId(), items);
+        String url = "http://stock-service:8089/stocks/finish-order";
+        FinishedOrderItem[] finishedItems = restTemplate.postForObject(url, request, FinishedOrderItem[].class);
+        if (finishedItems == null) {
+            throw new RuntimeException("Stock service did not return finished items");
+        }
+
+        order.setFinishedItems(Arrays.asList(finishedItems));
+        order.setStockFinished(true);
     }
 }

@@ -1,5 +1,7 @@
 package com.bachhoanhanh.stockservice.controller;
 
+import com.bachhoanhanh.stockservice.dto.FinishOrderRequest;
+import com.bachhoanhanh.stockservice.dto.FinishedStockItemResponse;
 import com.bachhoanhanh.stockservice.model.Stock;
 import com.bachhoanhanh.stockservice.service.StockService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -69,5 +71,9 @@ public class StockController {
         return service.getAvailableStockByProductId(productId);
     }
 
+    @PostMapping("/finish-order")
+    public List<FinishedStockItemResponse> finishOrder(@RequestBody FinishOrderRequest request) {
+        return service.finishOrder(request);
+    }
 
 }

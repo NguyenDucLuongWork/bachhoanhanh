@@ -2,6 +2,7 @@ package com.bachhoanhanh.orderservice.model;
 
 public class OrderItem {
     private String productId;
+    private String stockProductId;
     private String name;
     private Integer quantity;
     private Double price;
@@ -21,12 +22,28 @@ public class OrderItem {
         this.price = price;
     }
 
+    public OrderItem(String productId, String stockProductId, String name, Integer quantity, Double price) {
+        this.productId = productId;
+        this.stockProductId = stockProductId;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public String getProductId() {
         return productId;
     }
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public String getStockProductId() {
+        return stockProductId;
+    }
+
+    public void setStockProductId(String stockProductId) {
+        this.stockProductId = stockProductId;
     }
 
     public String getName() {

@@ -4,6 +4,7 @@ public class Product {
 
     private Long id;
     private Long productId;
+    private String barcode;
     private String name;
     private String catalogId;
     private double originalPrice;
@@ -13,6 +14,8 @@ public class Product {
     public Long getId() { return id; }
 
     public Long getProductId() { return productId; }
+
+    public String getBarcode() { return barcode; }
 
     public String getName() { return name; }
 
