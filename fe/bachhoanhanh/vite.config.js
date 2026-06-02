@@ -27,6 +27,10 @@ export default defineConfig({
         target: 'http://bachhoanhanh',
         changeOrigin: true,
       },
+      '/cart': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
       '/payments': {
         target: 'http://bachhoanhanh',
         changeOrigin: true,

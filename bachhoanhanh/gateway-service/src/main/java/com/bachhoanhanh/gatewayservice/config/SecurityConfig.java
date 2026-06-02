@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.List;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -62,6 +61,9 @@ public class SecurityConfig {
 
                         // --- Orders & Payments ---
                         .pathMatchers("/orders/**", "/payments/**").authenticated()
+
+                        // --- Cart ---
+                        .pathMatchers("/cart/**").authenticated()
 
                         // --- Vouchers ---
                         .pathMatchers(HttpMethod.GET,  "/vouchers/**").permitAll()

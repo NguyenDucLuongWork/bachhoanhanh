@@ -8,6 +8,7 @@ CREATE DATABASE IF NOT EXISTS branddb;
 CREATE DATABASE IF NOT EXISTS catalogdb;
 CREATE DATABASE IF NOT EXISTS paymentdb;
 CREATE DATABASE IF NOT EXISTS userdb; -- Thêm dòng này
+CREATE DATABASE IF NOT EXISTS cartdb;
 
 GRANT ALL PRIVILEGES ON productdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON orderdb.*   TO 'appuser'@'%';
@@ -15,6 +16,7 @@ GRANT ALL PRIVILEGES ON branddb.*   TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON catalogdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON paymentdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON userdb.*    TO 'appuser'@'%'; -- Thêm dòng này
+GRANT ALL PRIVILEGES ON cartdb.*    TO 'appuser'@'%';
 FLUSH PRIVILEGES;
 
 -- ═══════════════════════════════════════════════════════

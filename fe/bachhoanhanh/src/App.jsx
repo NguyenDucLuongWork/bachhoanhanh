@@ -8,13 +8,13 @@ import { OrdersPage } from './pages/OrdersPage'
 import { CartPage } from './pages/CartPage'
 import { AccountPage } from './pages/AccountPage'
 import { ToastContainer, useToast } from './components/Toast'
-import { showToast } from './components/Toast'
 import { OrderDetailsModal } from './components/OrderDetailsModal'
 import { useAuth } from './hooks/useAuth'
 import { useCatalogs } from './hooks/useCatalogs'
 import { usePrototypes } from './hooks/usePrototypes'
 import { useProducts } from './hooks/useProducts'
 import { useOrders } from './hooks/useOrders'
+import { useCart } from './hooks/useCart'
 import './styles/theme.css'
 
 function App() {
@@ -24,9 +24,9 @@ function App() {
   const { prototypes, loadPrototypes } = usePrototypes(token)
   const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct, getProductById, searchProducts, getProductByBarcode, attributeTypes, loadAttributeTypes } = useProducts(token)
   const { orders, loading: ordersLoading, loadOrders, createOrder, getOrderDetails, updateOrderStatus, cancelOrder } = useOrders(token)
+  const { cartItems, cartCount, addToCart: storeCartItem, updateCartQuantity, removeCartItem, clearCart } = useCart(token)
   const [selectedCatalog, setSelectedCatalog] = useState(null)
   const [productDetailId, setProductDetailId] = useState(null)
-  const [cartItems, setCartItems] = useState([])
   const [pendingAction, setPendingAction] = useState(null)
   const [checkoutOrder, setCheckoutOrder] = useState(null)
   const { toasts } = useToast()
@@ -130,38 +130,16 @@ function App() {
       requireLogin({ type: 'add-to-cart', product })
       return
     }
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.productId === product.productId)
-      if (existing) {
-        return prev.map((item) =>
-          item.productId === product.productId ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      }
-      return [...prev, { ...product, quantity: 1 }]
-    })
-    showToast('Added to cart')
+    storeCartItem(product)
   }
 
-  const buyNow = (product) => {
+  const buyNow = async (product) => {
     if (!isLoggedIn) {
       requireLogin({ type: 'buy-now', product })
       return
     }
-    addToCart(product)
+    await addToCart(product)
     navigateTo('cart')
-  }
-
-  const updateCartQuantity = (productId, quantity) => {
-    setCartItems((prev) => {
-      if (quantity <= 0) {
-        return prev.filter((item) => item.productId !== productId)
-      }
-      return prev.map((item) => (item.productId === productId ? { ...item, quantity } : item))
-    })
-  }
-
-  const removeCartItem = (productId) => {
-    setCartItems((prev) => prev.filter((item) => item.productId !== productId))
   }
 
   const handleViewProduct = (id) => {
@@ -177,7 +155,7 @@ function App() {
       <Header
         username={username}
         roles={roles}
-        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+        cartCount={cartCount}
         currentPage={currentPage}
         onNavigate={handleNavigate}
         onLogout={handleLogout}
@@ -243,7 +221,7 @@ function App() {
             profile={profile}
             onUpdateQuantity={updateCartQuantity}
             onRemoveItem={removeCartItem}
-            onClearCart={() => setCartItems([])}
+            onClearCart={clearCart}
             onCreateOrder={createOrder}
             onCheckoutCreated={setCheckoutOrder}
             onNavigate={handleNavigate}
