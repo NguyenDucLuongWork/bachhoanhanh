@@ -203,6 +203,23 @@ services:
       eureka-server:
         condition: service_started
 
+  stock-service:
+    build: ./stock-service
+    container_name: stock-service
+    restart: always
+    ports:
+      - "8088:8088"
+    environment:
+      DB_URL: ${STOCK_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
@@ -231,4 +248,6 @@ services:
       payment-service:
         condition: service_started
       voucher-service:
+        condition: service_started
+      stock-service:
         condition: service_started

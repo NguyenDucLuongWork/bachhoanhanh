@@ -56,9 +56,9 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
                         .pathMatchers("/users/**").authenticated()
 
-                        // --- Products & Others ---
-                        .pathMatchers(HttpMethod.GET, "/products/**", "/attribute-types/**", "/prototypes/**", "/brands/**", "/catalogs/**").permitAll()
-                        .pathMatchers("/products/**", "/attribute-types/**", "/prototypes/**", "/brands/**", "/catalogs/**").authenticated()
+                        // --- Others ---
+                        .pathMatchers(HttpMethod.GET, "/products/**", "/attribute-types/**", "/prototypes/**", "/brands/**", "/catalogs/**", "/stocks/**").permitAll()
+                        .pathMatchers("/products/**", "/attribute-types/**", "/prototypes/**", "/brands/**", "/catalogs/**", "/stocks/**").authenticated()
 
                         // --- Orders & Payments ---
                         .pathMatchers("/orders/**", "/payments/**").authenticated()

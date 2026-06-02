@@ -1,0 +1,484 @@
+### ═══════════════════════════════════════════════════════
+### PRODUCT API TESTER - Full Coverage + Authentication
+### Base: http://bachhoanhanh/products
+### ═══════════════════════════════════════════════════════
+
+@baseUrl = http://bachhoanhanh/products
+@authUrl = http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+@clientId = gateway-client
+
+############################################################
+# 1. AUTHENTICATION
+############################################################
+
+### Login as ADMIN
+# @name adminLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=admin&
+password=123456
+
+> {%
+    client.global.set("admin_token", response.body.access_token);
+%}
+
+### Login as STAFF
+# @name staffLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=teststaff&
+password=123456
+
+> {%
+    client.global.set("staff_token", response.body.access_token);
+%}
+
+### Login as CUSTOMER
+# @name customerLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=testcustomer&
+password=123456
+
+> {%
+    client.global.set("customer_token", response.body.access_token);
+%}
+
+############################################################
+# 2. GET - PUBLIC (no token required)
+############################################################
+
+### GET ALL PRODUCTS - returns ProductResponse list with totalAvailableAmount
+GET {{baseUrl}}
+Accept: application/json
+
+###
+
+### GET PRODUCT BY ID - returns ProductDetailResponse (brand + stock batches)
+GET {{baseUrl}}/1
+Accept: application/json
+
+###
+
+### GET PRODUCT BY ID - not found
+GET {{baseUrl}}/9999
+Accept: application/json
+
+###
+
+### GET PRODUCT BY BARCODE - returns ProductDetailResponse
+GET {{baseUrl}}/barcode/893000111
+Accept: application/json
+
+###
+
+### GET PRODUCT BY BARCODE - another product
+GET {{baseUrl}}/barcode/893000444
+Accept: application/json
+
+###
+
+### GET PRODUCT BY BARCODE - not found
+GET {{baseUrl}}/barcode/KHONGCO000
+Accept: application/json
+
+###
+
+### SEARCH BY NAME - results found
+GET {{baseUrl}}/search?name=ba
+Accept: application/json
+
+###
+
+### SEARCH BY NAME - partial match
+GET {{baseUrl}}/search?name=sua
+Accept: application/json
+
+###
+
+### SEARCH BY NAME - no results
+GET {{baseUrl}}/search?name=xyzkhongco
+Accept: application/json
+
+###
+
+### GET BY PROTOTYPE ID - results found
+GET {{baseUrl}}/by-prototype/PROTO001
+Accept: application/json
+
+###
+
+### GET BY PROTOTYPE ID - no results
+GET {{baseUrl}}/by-prototype/PROTO999
+Accept: application/json
+
+###
+
+### GET BY CATALOG ID - results found
+GET {{baseUrl}}/by-catalog/CAT001
+Accept: application/json
+
+###
+
+### GET BY CATALOG ID - no results
+GET {{baseUrl}}/by-catalog/CAT999
+Accept: application/json
+
+###
+
+############################################################
+# 3. CREATE - ADMIN / STAFF only
+############################################################
+
+### CREATE PRODUCT - JSON only, no image (ADMIN)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893099001",
+  "name": "Sữa Vinamilk 500ml",
+  "description": "Sữa tươi tiệt trùng nguyên chất",
+  "catalogId": "CAT001",
+  "originalPrice": 15000,
+  "prototypeId": "PROTO001",
+  "attributes": {
+    "BRAND": "Vinamilk",
+    "UNIT": "Hộp",
+    "WEIGHT": "500ml"
+  }
+}
+
+###
+
+### CREATE PRODUCT - JSON only, no image (STAFF)
+POST {{baseUrl}}
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893099002",
+  "name": "Nước Suối Lavie 500ml",
+  "description": "Nước khoáng thiên nhiên",
+  "catalogId": "CAT002",
+  "originalPrice": 6000,
+  "prototypeId": "PROTO002",
+  "attributes": {
+    "BRAND": "Lavie",
+    "UNIT": "Chai",
+    "WEIGHT": "500ml"
+  }
+}
+
+###
+
+### CREATE PRODUCT - no attributes (bare product)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893099003",
+  "name": "Bánh Kinh Đô",
+  "description": "Bánh trung thu kinh đô",
+  "catalogId": "CAT003",
+  "originalPrice": 45000,
+  "prototypeId": "PROTO003"
+}
+
+###
+
+### CREATE PRODUCT - missing barcode (edge case)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Sản phẩm không barcode",
+  "description": "Test missing barcode",
+  "catalogId": "CAT001",
+  "originalPrice": 10000,
+  "prototypeId": "PROTO001"
+}
+
+###
+
+### CREATE PRODUCT - price = 0 (edge case)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893099004",
+  "name": "Sản phẩm miễn phí",
+  "description": "Test zero price",
+  "catalogId": "CAT001",
+  "originalPrice": 0,
+  "prototypeId": "PROTO001"
+}
+
+###
+
+### CREATE PRODUCT - with image (multipart, ADMIN)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: multipart/form-data; boundary=boundary123
+
+--boundary123
+Content-Disposition: form-data; name="product"
+Content-Type: application/json
+
+{
+  "barcode": "893099005",
+  "name": "Dầu Ăn Neptune 1L",
+  "description": "Dầu thực vật cao cấp",
+  "catalogId": "CAT004",
+  "originalPrice": 55000,
+  "prototypeId": "PROTO004",
+  "attributes": {
+    "BRAND": "Neptune",
+    "UNIT": "Chai",
+    "WEIGHT": "1L"
+  }
+}
+--boundary123--
+
+###
+
+############################################################
+# 4. UPDATE - ADMIN / STAFF only
+############################################################
+
+### UPDATE PRODUCT - JSON only (ADMIN)
+PUT {{baseUrl}}/1
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893000111",
+  "name": "Sữa Vinamilk 500ml (Cập nhật)",
+  "description": "Cập nhật mô tả sản phẩm",
+  "catalogId": "CAT001",
+  "originalPrice": 16000,
+  "prototypeId": "PROTO001",
+  "attributes": {
+    "BRAND": "Vinamilk",
+    "UNIT": "Hộp",
+    "WEIGHT": "500ml",
+    "FLAVOR": "Nguyên chất"
+  }
+}
+
+###
+
+### UPDATE PRODUCT - JSON only (STAFF)
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893000222",
+  "name": "Nước Suối Lavie 1L",
+  "description": "Phiên bản 1L",
+  "catalogId": "CAT002",
+  "originalPrice": 10000,
+  "prototypeId": "PROTO002",
+  "attributes": {
+    "BRAND": "Lavie",
+    "UNIT": "Chai",
+    "WEIGHT": "1L"
+  }
+}
+
+###
+
+### UPDATE PRODUCT - same data (idempotent)
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893000222",
+  "name": "Nước Suối Lavie 1L",
+  "description": "Phiên bản 1L",
+  "catalogId": "CAT002",
+  "originalPrice": 10000,
+  "prototypeId": "PROTO002",
+  "attributes": {
+    "BRAND": "Lavie",
+    "UNIT": "Chai",
+    "WEIGHT": "1L"
+  }
+}
+
+###
+
+### UPDATE PRODUCT - clear attributes (empty map)
+PUT {{baseUrl}}/3
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893099003",
+  "name": "Bánh Kinh Đô Updated",
+  "description": "Không có thuộc tính",
+  "catalogId": "CAT003",
+  "originalPrice": 48000,
+  "prototypeId": "PROTO003",
+  "attributes": {}
+}
+
+###
+
+### UPDATE PRODUCT - not found
+PUT {{baseUrl}}/9999
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "barcode": "000000000",
+  "name": "Ghost Product",
+  "description": "This does not exist",
+  "catalogId": "CAT001",
+  "originalPrice": 0,
+  "prototypeId": "PROTO001"
+}
+
+###
+
+### UPDATE PRODUCT - with image (multipart, ADMIN)
+PUT {{baseUrl}}/1
+Authorization: Bearer {{admin_token}}
+Content-Type: multipart/form-data; boundary=boundary456
+
+--boundary456
+Content-Disposition: form-data; name="product"
+Content-Type: application/json
+
+{
+  "barcode": "893000111",
+  "name": "Sữa Vinamilk có ảnh mới",
+  "description": "Cập nhật ảnh sản phẩm",
+  "catalogId": "CAT001",
+  "originalPrice": 16000,
+  "prototypeId": "PROTO001"
+}
+--boundary456--
+
+###
+
+############################################################
+# 5. DELETE - ADMIN / STAFF only
+############################################################
+
+### DELETE PRODUCT - success (ADMIN)
+DELETE {{baseUrl}}/10
+Authorization: Bearer {{admin_token}}
+
+###
+
+### DELETE PRODUCT - success (STAFF)
+DELETE {{baseUrl}}/11
+Authorization: Bearer {{staff_token}}
+
+###
+
+### DELETE PRODUCT - not found (expect 404 or 204 depending on impl)
+DELETE {{baseUrl}}/9999
+Authorization: Bearer {{admin_token}}
+
+###
+
+############################################################
+# 6. SECURITY & ROLE VALIDATION
+############################################################
+
+### GET without token - should pass (public)
+GET {{baseUrl}}
+Accept: application/json
+
+###
+
+### GET BY ID without token - should pass (public)
+GET {{baseUrl}}/1
+Accept: application/json
+
+###
+
+### CREATE without token - Expect 401
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "barcode": "893099999",
+  "name": "Unauthorized Product",
+  "catalogId": "CAT001",
+  "originalPrice": 10000,
+  "prototypeId": "PROTO001"
+}
+
+###
+
+### CREATE as CUSTOMER - Expect 403
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893099999",
+  "name": "Customer Hack Product",
+  "catalogId": "CAT001",
+  "originalPrice": 10000,
+  "prototypeId": "PROTO001"
+}
+
+###
+
+### UPDATE without token - Expect 401
+PUT {{baseUrl}}/1
+Content-Type: application/json
+
+{
+  "barcode": "893000111",
+  "name": "Unauthorized Update",
+  "catalogId": "CAT001",
+  "originalPrice": 10000,
+  "prototypeId": "PROTO001"
+}
+
+###
+
+### UPDATE as CUSTOMER - Expect 403
+PUT {{baseUrl}}/1
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893000111",
+  "name": "Customer Hack Update",
+  "catalogId": "CAT001",
+  "originalPrice": 10000,
+  "prototypeId": "PROTO001"
+}
+
+###
+
+### DELETE without token - Expect 401
+DELETE {{baseUrl}}/1
+
+###
+
+### DELETE as CUSTOMER - Expect 403
+DELETE {{baseUrl}}/1
+Authorization: Bearer {{customer_token}}
+
+###

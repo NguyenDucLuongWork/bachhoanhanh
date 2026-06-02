@@ -21,6 +21,9 @@ public class ProductResponse {
     private String prototypeId;
     private Map<String, String> attributes;
 
+    // Stock summary — total available amount across all batches
+    private Integer totalAvailableAmount;
+
     // Brand info (nullable — chỉ có khi attribute BRAND tồn tại)
     private Long brandId;
     private String brandName;

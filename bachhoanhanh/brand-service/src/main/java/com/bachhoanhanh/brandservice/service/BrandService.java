@@ -77,4 +77,10 @@ public class BrandService {
         return repository.findByNameIgnoreCase(name)
                 .orElse(null);
     }
+
+
+    // BrandService.java
+    public List<Brand> searchByName(String keyword) {
+        return repository.findByNameContainingIgnoreCase(keyword);
+    }
 }

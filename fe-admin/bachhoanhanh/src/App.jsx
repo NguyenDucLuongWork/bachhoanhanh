@@ -1,0 +1,412 @@
+import { useState, useEffect } from 'react'
+import { Header } from './components/Header'
+import { Footer } from './components/Footer'
+import { LoginPage } from './pages/LoginPage'
+import { ProductsPage } from './pages/ProductsPage'
+import { ProductDetailPage } from './pages/ProductDetailPage'
+import { OrdersPage } from './pages/OrdersPage'
+import { CartPage } from './pages/CartPage'
+import { AccountPage } from './pages/AccountPage'
+import { BrandPage } from './pages/BrandPage'
+import { BrandDetailPage } from './pages/BrandDetailPage'
+import { StockPage } from './pages/StockPage'
+import { ToastContainer, useToast } from './components/Toast'
+import { showToast } from './components/Toast'
+import { OrderDetailsModal } from './components/OrderDetailsModal'
+import { useAuth } from './hooks/useAuth'
+import { useCatalogs } from './hooks/useCatalogs'
+import { usePrototypes } from './hooks/usePrototypes'
+import { useProducts } from './hooks/useProducts'
+import { useBrand } from './hooks/useBrand'
+import { useOrders } from './hooks/useOrders'
+import { useStocks } from './hooks/useStocks'
+import './styles/theme.css'
+
+function App() {
+  const [currentPage, setCurrentPage] = useState('products')
+  const { token, username, profile, roles, loading, login, registerCustomer, updateProfile, logout, isLoggedIn } = useAuth()
+  const { catalogs: catalogList, loadCatalogTree } = useCatalogs(token)
+  const { prototypes, loadPrototypes } = usePrototypes(token)
+  const { products, loading: productsLoading, loadProducts, addProduct, updateProduct, deleteProduct, getProductById, searchProducts, getProductByBarcode, attributeTypes, loadAttributeTypes } = useProducts(token)
+  const { brands, loading: brandsLoading, loadBrands, searchBrands, getBrandByName, createBrand, updateBrand, deleteBrand } = useBrand(token)
+  const { orders, loading: ordersLoading, loadOrders, createOrder, getOrderDetails, updateOrderStatus, cancelOrder } = useOrders(token)
+  const { stocks, loading: stocksLoading, loadStocks, createStock, updateStock, deleteStock } = useStocks(token)
+  const [selectedCatalog, setSelectedCatalog] = useState(null)
+  const [productDetailId, setProductDetailId] = useState(null)
+  const [brandDetailName, setBrandDetailName] = useState(null)
+  const [cartItems, setCartItems] = useState([])
+  const [pendingAction, setPendingAction] = useState(null)
+  const [checkoutOrder, setCheckoutOrder] = useState(null)
+  const { toasts } = useToast()
+  const isAdminUser = roles.includes('ADMIN') || roles.includes('STAFF')
+
+  useEffect(() => {
+    loadCatalogTree()
+    loadPrototypes()
+    loadProducts()
+    loadBrands()
+    loadAttributeTypes()
+    loadStocks()
+  }, [loadCatalogTree, loadPrototypes, loadProducts, loadBrands, loadAttributeTypes, loadStocks])
+
+  useEffect(() => {
+    if (isLoggedIn && currentPage === 'login') {
+      if (pendingAction?.type === 'add-to-cart') {
+        addToCart(pendingAction.product, true)
+        setPendingAction(null)
+        navigateTo('products')
+        return
+      }
+      if (pendingAction?.type === 'buy-now') {
+        addToCart(pendingAction.product, true)
+        setPendingAction(null)
+        navigateTo('cart')
+        return
+      }
+      setCurrentPage('products')
+    }
+  }, [isLoggedIn, currentPage, pendingAction])
+
+  useEffect(() => {
+    if (currentPage === 'stocks') {
+      loadStocks()
+    }
+  }, [currentPage, loadStocks])
+
+  useEffect(() => {
+    const hash = window.location.hash || '#/'
+    const route = hash.replace(/^#/, '').split('/').filter(Boolean)
+
+    if (route[0] === 'products' && route[1]) {
+      setProductDetailId(route[1])
+      setCurrentPage('product-detail')
+      window.history.replaceState({ page: 'product-detail', productId: route[1] }, '', `${window.location.pathname}#/${route.join('/')}`)
+      return
+    }
+
+    if (route[0] === 'brands' && route[1] === 'detail' && route[2]) {
+      const brandName = decodeURIComponent(route[2])
+      setBrandDetailName(brandName)
+      setCurrentPage('brand-detail')
+      window.history.replaceState({ page: 'brand-detail', brandName }, '', `${window.location.pathname}#/${route.join('/')}`)
+      return
+    }
+
+    if (route[0] === 'brands') {
+      setCurrentPage('brands')
+      window.history.replaceState({ page: 'brands' }, '', `${window.location.pathname}#/brands`)
+      return
+    }
+
+    if (route[0] === 'stocks') {
+      setCurrentPage('stocks')
+      window.history.replaceState({ page: 'stocks' }, '', `${window.location.pathname}#/stocks`)
+      return
+    }
+
+    window.history.replaceState({ page: 'products' }, '', `${window.location.pathname}#/`)
+  }, [])
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash || '#/'
+      const route = hash.replace(/^#/, '').split('/').filter(Boolean)
+      if (route[0] === 'products' && route[1]) {
+        setCurrentPage('product-detail')
+        setProductDetailId(route[1])
+        setBrandDetailName(null)
+        return
+      }
+      if (route[0] === 'brands' && route[1] === 'detail' && route[2]) {
+        setCurrentPage('brand-detail')
+        setBrandDetailName(decodeURIComponent(route[2]))
+        setProductDetailId(null)
+        return
+      }
+      if (route[0] === 'brands') {
+        setCurrentPage('brands')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        return
+      }
+      if (route[0] === 'stocks') {
+        setCurrentPage('stocks')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        return
+      }
+      setCurrentPage('products')
+      setProductDetailId(null)
+      setBrandDetailName(null)
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
+  const handleLogin = async (user, pass) => {
+    const result = await login(user, pass)
+    if (result.success) {
+      return { success: true }
+    }
+    return result
+  }
+
+  const handleLogout = () => {
+    logout()
+    setProductDetailId(null)
+    setCurrentPage('products')
+    navigateTo('products')
+  }
+
+  const navigateTo = (page, id) => {
+    const basePath = window.location.pathname
+    if (page === 'products') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'products' }, '', `${basePath}#/`)
+    } else if (page === 'product-detail' && id) {
+      setProductDetailId(id)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'product-detail', productId: id }, '', `${basePath}#/products/${id}`)
+    } else if (page === 'brands') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'brands' }, '', `${basePath}#/brands`)
+    } else if (page === 'brand-detail' && id) {
+      setProductDetailId(null)
+      setBrandDetailName(id)
+      window.history.pushState({ page: 'brand-detail', brandName: id }, '', `${basePath}#/brands/detail/${encodeURIComponent(id)}`)
+    } else if (page === 'stocks') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      window.history.pushState({ page: 'stocks' }, '', `${basePath}#/stocks`)
+    } else {
+      window.history.pushState({ page }, '', `${basePath}#/`)
+    }
+    setCurrentPage(page)
+  }
+
+  const handleNavigate = (page) => {
+    if (page === 'products') {
+      navigateTo('products')
+    } else if (page === 'brands') {
+      navigateTo('brands')
+    } else if (page === 'stocks') {
+      navigateTo('stocks')
+    } else {
+      setCurrentPage(page)
+    }
+  }
+
+  const handleViewBrand = (brandName) => {
+    if (!brandName) return
+    navigateTo('brand-detail', brandName)
+  }
+
+  const requireLogin = (action = null) => {
+    if (action) {
+      setPendingAction(action)
+    }
+    navigateTo('login')
+  }
+
+  const addToCart = (product, skipAuthCheck = false) => {
+    if (!skipAuthCheck && !isLoggedIn) {
+      requireLogin({ type: 'add-to-cart', product })
+      return
+    }
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.productId === product.productId)
+      if (existing) {
+        return prev.map((item) =>
+          item.productId === product.productId ? { ...item, quantity: item.quantity + 1 } : item
+        )
+      }
+      return [...prev, { ...product, quantity: 1 }]
+    })
+    showToast('Added to cart')
+  }
+
+  const buyNow = (product) => {
+    if (!isLoggedIn) {
+      requireLogin({ type: 'buy-now', product })
+      return
+    }
+    addToCart(product)
+    navigateTo('cart')
+  }
+
+  const updateCartQuantity = (productId, quantity) => {
+    setCartItems((prev) => {
+      if (quantity <= 0) {
+        return prev.filter((item) => item.productId !== productId)
+      }
+      return prev.map((item) => (item.productId === productId ? { ...item, quantity } : item))
+    })
+  }
+
+  const removeCartItem = (productId) => {
+    setCartItems((prev) => prev.filter((item) => item.productId !== productId))
+  }
+
+  const handleViewProduct = (id) => {
+    navigateTo('product-detail', id)
+  }
+
+  const handleViewProductByBarcode = (barcode) => {
+    const product = products.find((item) => item.barcode === barcode)
+    if (product) {
+      navigateTo('product-detail', product.productId)
+      return
+    }
+    showToast('Unable to find product for this barcode', true)
+  }
+
+  const handleBackToProducts = () => {
+    navigateTo('products')
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Header
+        username={username}
+        roles={roles}
+        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+        currentPage={currentPage}
+        onNavigate={handleNavigate}
+        onLogout={handleLogout}
+      />
+
+      <main>
+        {currentPage === 'login' && (
+          <LoginPage
+            onLoginSuccess={handleLogin}
+            onRegisterSuccess={registerCustomer}
+            loading={loading}
+          />
+        )}
+        {currentPage === 'products' && (
+          <ProductsPage
+            products={products}
+            loading={productsLoading}
+            onAddProduct={addProduct}
+            onUpdateProduct={updateProduct}
+            onDeleteProduct={deleteProduct}
+            onRefresh={loadProducts}
+            prototypes={prototypes}
+            catalogs={catalogList}
+            selectedCatalog={selectedCatalog}
+            onSelectCatalog={setSelectedCatalog}
+            onViewProduct={handleViewProduct}
+            onViewBrand={handleViewBrand}
+            searchProducts={searchProducts}
+            getProductByBarcode={getProductByBarcode}
+            onSearchBrands={searchBrands}
+            attributeTypes={attributeTypes}
+            isAdminUser={isAdminUser}
+            isLoggedIn={isLoggedIn}
+            onAddToCart={addToCart}
+            onBuyNow={buyNow}
+            onRequireLogin={requireLogin}
+          />
+        )}
+        {currentPage === 'product-detail' && productDetailId && (
+          <ProductDetailPage
+            productId={productDetailId}
+            onBack={handleBackToProducts}
+            getProductById={getProductById}
+            isAdminUser={isAdminUser}
+            onAddToCart={addToCart}
+            onBuyNow={buyNow}
+            onViewBrand={handleViewBrand}
+            products={products}
+          />
+        )}
+        {currentPage === 'brand-detail' && brandDetailName && (
+          <BrandDetailPage
+            brandName={brandDetailName}
+            getBrandByName={getBrandByName}
+            onBack={() => navigateTo('brands')}
+          />
+        )}
+        {currentPage === 'stocks' && (
+          <StockPage
+            stocks={stocks}
+            loading={stocksLoading}
+            onRefresh={loadStocks}
+            onCreateStock={createStock}
+            onUpdateStock={updateStock}
+            onDeleteStock={deleteStock}
+            products={products}
+            onViewProductByBarcode={handleViewProductByBarcode}
+          />
+        )}
+        {currentPage === 'brands' && (
+          <BrandPage
+            brands={brands}
+            loading={brandsLoading}
+            onRefresh={loadBrands}
+            onCreateBrand={createBrand}
+            onUpdateBrand={updateBrand}
+            onDeleteBrand={deleteBrand}
+            onViewBrand={handleViewBrand}
+            isAdminUser={isAdminUser}
+          />
+        )}
+        {currentPage === 'orders' && isLoggedIn && (
+          <OrdersPage
+            orders={orders}
+            loading={ordersLoading}
+            onLoadOrders={loadOrders}
+            onGetOrderDetails={getOrderDetails}
+            onCancelOrder={cancelOrder}
+            onRefresh={loadOrders}
+            onGoHome={() => setCurrentPage('products')}
+            token={token}
+          />
+        )}
+        {currentPage === 'cart' && isLoggedIn && (
+          <CartPage
+            cartItems={cartItems}
+            profile={profile}
+            onUpdateQuantity={updateCartQuantity}
+            onRemoveItem={removeCartItem}
+            onClearCart={() => setCartItems([])}
+            onCreateOrder={createOrder}
+            onCheckoutCreated={setCheckoutOrder}
+            onNavigate={handleNavigate}
+          />
+        )}
+        {currentPage === 'account' && isLoggedIn && (
+          <AccountPage
+            profile={profile}
+            username={username}
+            onUpdateProfile={updateProfile}
+          />
+        )}
+      </main>
+
+      <Footer />
+
+      <OrderDetailsModal
+        isOpen={!!checkoutOrder}
+        orderData={checkoutOrder}
+        onClose={() => setCheckoutOrder(null)}
+        onPaymentCompleted={() => {
+          loadOrders()
+        }}
+        onGoHome={() => {
+          setCheckoutOrder(null)
+          handleNavigate('orders')
+        }}
+        token={token}
+        staticQrImageUrl="/qr.png"
+      />
+
+      <ToastContainer toasts={toasts} />
+    </div>
+  )
+}
+
+export default App
