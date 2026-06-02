@@ -278,4 +278,9 @@ services:
       stock-service:
         condition: service_started
 
+networks:
+  default:
+    external:
+      name: cicd-network
+
 
