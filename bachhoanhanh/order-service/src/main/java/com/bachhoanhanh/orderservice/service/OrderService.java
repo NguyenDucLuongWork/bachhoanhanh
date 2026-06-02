@@ -44,9 +44,9 @@ public class OrderService {
             Product product = getProduct(item.getProductId());
             products.add(product);
             subtotal += product.getPrice() * item.getQuantity();
-            orderItems.add(new OrderItem(product.getName(), item.getQuantity(), product.getPrice()));
 
             Long resolvedProductId = product.getProductId() != null ? product.getProductId() : Long.valueOf(item.getProductId());
+            orderItems.add(new OrderItem(String.valueOf(resolvedProductId), product.getName(), item.getQuantity(), product.getPrice()));
             productIds.add(resolvedProductId);
             if (product.getCatalogId() != null && !product.getCatalogId().isBlank()) {
                 catalogIds.add(product.getCatalogId());
