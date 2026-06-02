@@ -2,3 +2,4 @@ ngrok http --domain=fox-happy-normally.ngrok-free.app 8100
 
 jockstrap-region-paper.ngrok-free.dev
 
+cloudflared tunnel --url http://localhost:9000

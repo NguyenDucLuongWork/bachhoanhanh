@@ -1,52 +1,21 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  server: {
-    proxy: {
-      '/auth': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/products': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/prototypes': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/catalogs': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/orders': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/cart': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/payments': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/users': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/vouchers': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/attribute-types': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  const API_TARGET = env.VITE_API_URL || "https://underground-complimentary-registry-efforts.trycloudflare.com";
+
+  return {
+    plugins: [react(), tailwindcss()],
+    server: {
+      proxy: {
+        '^/(auth|products|prototypes|catalogs|orders|cart|payments|users|vouchers|attribute-types)(.*)$': {
+          target: API_TARGET,
+          changeOrigin: true,
+        },
       },
     },
-  },
+  };
 });
