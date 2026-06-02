@@ -51,13 +51,13 @@ export function useCatalogs(token) {
           body: JSON.stringify(catalogData),
         })
         if (!res.ok) throw new Error('Create failed')
-        await loadCatalogs()
+        await loadCatalogTree()
         return { success: true, message: 'Catalog added' }
       } catch (e) {
         return { success: false, message: e.message }
       }
     },
-    [token, loadCatalogs]
+    [token, loadCatalogTree]
   )
 
   const updateCatalog = useCallback(
@@ -73,13 +73,13 @@ export function useCatalogs(token) {
           body: JSON.stringify(catalogData),
         })
         if (!res.ok) throw new Error('Update failed')
-        await loadCatalogs()
+        await loadCatalogTree()
         return { success: true, message: 'Catalog updated' }
       } catch (e) {
         return { success: false, message: e.message }
       }
     },
-    [token, loadCatalogs]
+    [token, loadCatalogTree]
   )
 
   const deleteCatalog = useCallback(
@@ -91,13 +91,13 @@ export function useCatalogs(token) {
           headers,
         })
         if (!res.ok) throw new Error('Delete failed')
-        await loadCatalogs()
+        await loadCatalogTree()
         return { success: true, message: 'Catalog deleted' }
       } catch (e) {
         return { success: false, message: e.message }
       }
     },
-    [token, loadCatalogs]
+    [token, loadCatalogTree]
   )
 
   return {

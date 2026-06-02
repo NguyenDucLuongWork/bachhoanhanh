@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
 
 const emptyBrand = {
   name: '',
   image: '',
+  imageFile: null,
   description: '',
   phoneNumber: '',
   email: '',
@@ -16,6 +17,18 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [saving, setSaving] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const [previewUrl, setPreviewUrl] = useState('')
+
+  useEffect(() => {
+    if (!brandForm.imageFile) {
+      setPreviewUrl('')
+      return
+    }
+
+    const url = URL.createObjectURL(brandForm.imageFile)
+    setPreviewUrl(url)
+    return () => URL.revokeObjectURL(url)
+  }, [brandForm.imageFile])
 
   const openAddBrand = () => {
     setEditingBrand(null)
@@ -37,6 +50,7 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
     setBrandForm({
       name: brand.name || '',
       image: brand.image || '',
+      imageFile: null,
       description: brand.description || '',
       phoneNumber: brand.phoneNumber || '',
       email: brand.email || '',
@@ -55,11 +69,23 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
       showToast('Brand name is required', true)
       return
     }
+    if (!editingBrand && !brandForm.imageFile) {
+      showToast('Brand image file is required', true)
+      return
+    }
 
     setSaving(true)
+    const payload = {
+      ...brandForm,
+      name: brandForm.name.trim(),
+      image: editingBrand ? brandForm.image.trim() : '',
+      description: brandForm.description.trim(),
+      phoneNumber: brandForm.phoneNumber.trim(),
+      email: brandForm.email.trim(),
+    }
     const result = editingBrand
-      ? await onUpdateBrand(editingBrand.id, brandForm)
-      : await onCreateBrand(brandForm)
+      ? await onUpdateBrand(editingBrand.id, payload)
+      : await onCreateBrand(payload)
 
     if (result.success) {
       showToast(result.message)
@@ -79,6 +105,8 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
       showToast(result.message, true)
     }
   }
+
+  const imagePreview = previewUrl || brandForm.image
 
   if (loading) {
     return (
@@ -113,82 +141,83 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
       </section>
 
       <section className="store-layout">
-        <div className="store-toolbar" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}>
-    <div>{isAdminUser ? 'Brand operations workspace' : 'Brand directory'}</div>
-    
-    {/* Hàng 1: Search */}
-    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-        placeholder="Search by brand name"
-        style={{ padding: '8px 10px', minWidth: '220px' }}
-      />
-      <button className="btn btn-ghost" onClick={handleSearch}>Search</button>
-      <button className="btn btn-ghost" onClick={handleSearchReset}>Reset</button>
-    </div>
+        <div className="brand-admin-toolbar">
+          <div className="brand-admin-title">
+            <strong>{isAdminUser ? 'Brand operations workspace' : 'Brand directory'}</strong>
+            <span>Search and maintain supplier information.</span>
+          </div>
+          <div className="brand-admin-actions">
+            <div className="brand-search">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                placeholder="Search by brand name"
+              />
+              <button className="btn btn-ghost" onClick={handleSearch}>Search</button>
+              {searchTerm && <button className="btn btn-ghost" onClick={handleSearchReset}>Reset</button>}
+            </div>
+            {isAdminUser && (
+              <button className="btn btn-accent" onClick={openAddBrand}>Add brand</button>
+            )}
+          </div>
+        </div>
 
-    {/* Hàng 2: Refresh + Add */}
-    <div style={{ display: 'flex', gap: '8px' }}>
-      <button className="btn btn-ghost" onClick={() => onRefresh(searchTerm)}>Refresh</button>
-      {isAdminUser && (
-        <button className="btn btn-accent" onClick={() => openAddBrand()}>Add brand</button>
-      )}
-    </div>
-  </div>
-
-        <div style={{ width: '100%', overflowX: 'auto' }}>
-          <table className="data-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div className="table-scroll">
+          <table className="data-table brand-table">
             <thead>
               <tr>
-                <th style={{ borderBottom: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>ID</th>
-                <th style={{ borderBottom: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Name</th>
-                <th style={{ borderBottom: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Description</th>
-                <th style={{ borderBottom: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Image</th>
-                <th style={{ borderBottom: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Phone</th>
-                <th style={{ borderBottom: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Email</th>
-                <th style={{ borderBottom: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Actions</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {brands.length === 0 ? (
                 <tr>
-                  <td colSpan={7} style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+                  <td colSpan={7} className="empty-table-cell">
                     No brands available.
                   </td>
                 </tr>
               ) : (
                 brands.map((brand) => (
-                  <tr key={brand.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                    <td style={{ padding: '12px' }}>{brand.id}</td>
-                    <td style={{ padding: '12px' }}>{brand.name || 'Untitled'}</td>
-                    <td style={{ padding: '12px', maxWidth: '320px', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                      {brand.description || 'No description'}
+                  <tr key={brand.id}>
+                    <td>{brand.id}</td>
+                    <td><strong>{brand.name || 'Untitled'}</strong></td>
+                    <td className="brand-description-cell">{brand.description || 'No description'}</td>
+                    <td>
+                      {brand.image ? (
+                        <div className="brand-image-cell">
+                          <img src={brand.image} alt={brand.name || 'Brand'} />
+                        </div>
+                      ) : (
+                        'n/a'
+                      )}
                     </td>
-                    <td style={{ padding: '12px' }}>{brand.image || 'n/a'}</td>
-                    <td style={{ padding: '12px' }}>{brand.phoneNumber || 'n/a'}</td>
-                    <td style={{ padding: '12px' }}>{brand.email || 'n/a'}</td>
-                    {isAdminUser ? (
-                      <td style={{ padding: '12px', display: 'flex', gap: '8px' }}>
-                        <button className="btn btn-ghost" onClick={() => openEditBrand(brand)}>
-                          Edit
-                        </button>
+                    <td>{brand.phoneNumber || 'n/a'}</td>
+                    <td>{brand.email || 'n/a'}</td>
+                    <td>
+                      <div className="table-actions">
+                        {isAdminUser && (
+                          <button className="btn btn-ghost" onClick={() => openEditBrand(brand)}>
+                            Edit
+                          </button>
+                        )}
                         <button className="btn btn-ghost" onClick={() => onViewBrand?.(brand.name)}>
                           View
                         </button>
-                        <button className="btn btn-danger" onClick={() => handleDelete(brand)}>
-                          Delete
-                        </button>
-                      </td>
-                    ) : (
-                      <td style={{ padding: '12px', display: 'flex', gap: '8px' }}>
-                        <button className="btn btn-ghost" onClick={() => onViewBrand?.(brand.name)}>
-                          View
-                        </button>
-                      </td>
-                    )}
+                        {isAdminUser && (
+                          <button className="btn btn-danger" onClick={() => handleDelete(brand)}>
+                            Delete
+                          </button>
+                        )}
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}
@@ -198,11 +227,20 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
       </section>
 
       {isModalOpen && (
-        <div className={"modal-bg open"} onClick={closeModal}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h2>{editingBrand ? 'Edit brand' : 'Add brand'}</h2>
-            <div className="modal-body">
-              <label>
+        <div className="modal-bg open" onClick={closeModal}>
+          <div className="modal brand-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="brand-modal-head">
+              <div>
+                <h2>{editingBrand ? 'Edit brand' : 'Add brand'}</h2>
+                <p>{editingBrand ? 'Update brand profile and replace the S3 image if needed.' : 'Create a brand with a required S3 image upload.'}</p>
+              </div>
+              <button className="btn btn-ghost btn-sm" onClick={closeModal} disabled={saving}>
+                Close
+              </button>
+            </div>
+
+            <div className="modal-body brand-modal-body">
+              <label className="brand-field brand-field-wide">
                 Name
                 <input
                   type="text"
@@ -210,22 +248,47 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
                   onChange={(e) => setBrandForm({ ...brandForm, name: e.target.value })}
                 />
               </label>
-              <label>
+
+              <label className="brand-field brand-field-wide">
                 Description
                 <textarea
                   value={brandForm.description}
                   onChange={(e) => setBrandForm({ ...brandForm, description: e.target.value })}
                 />
               </label>
-              <label>
-                Image URL
-                <input
-                  type="text"
-                  value={brandForm.image}
-                  onChange={(e) => setBrandForm({ ...brandForm, image: e.target.value })}
-                />
-              </label>
-              <label>
+
+              <div className="brand-image-upload brand-field-wide">
+                <div className="brand-preview">
+                  {imagePreview ? <img src={imagePreview} alt={brandForm.name || 'Brand'} /> : <span>No image</span>}
+                </div>
+                <div className="brand-image-controls">
+                  <label className="brand-field">
+                    Upload image to S3
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      onChange={(e) => setBrandForm({ ...brandForm, imageFile: e.target.files?.[0] || null })}
+                    />
+                  </label>
+                  {editingBrand && !brandForm.imageFile && brandForm.image && (
+                    <p className="brand-upload-note">Current S3 image will be kept unless a new file is selected.</p>
+                  )}
+                  {!editingBrand && !brandForm.imageFile && (
+                    <p className="brand-upload-note">Select an image file to upload to S3.</p>
+                  )}
+                  {brandForm.imageFile && (
+                    <button
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => setBrandForm({ ...brandForm, imageFile: null })}
+                      type="button"
+                    >
+                      Clear selected file
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <label className="brand-field">
                 Phone number
                 <input
                   type="text"
@@ -233,7 +296,8 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
                   onChange={(e) => setBrandForm({ ...brandForm, phoneNumber: e.target.value })}
                 />
               </label>
-              <label>
+
+              <label className="brand-field">
                 Email
                 <input
                   type="email"
@@ -242,6 +306,7 @@ export function BrandPage({ brands, loading, onRefresh, onCreateBrand, onUpdateB
                 />
               </label>
             </div>
+
             <div className="modal-footer">
               <button className="btn btn-ghost" onClick={closeModal} disabled={saving}>
                 Cancel

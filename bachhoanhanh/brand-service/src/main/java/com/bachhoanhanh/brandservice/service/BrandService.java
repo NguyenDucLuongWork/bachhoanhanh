@@ -3,6 +3,7 @@ package com.bachhoanhanh.brandservice.service;
 import com.bachhoanhanh.brandservice.model.Brand;
 import com.bachhoanhanh.brandservice.repository.BrandRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +12,11 @@ import java.util.Optional;
 public class BrandService {
 
     private final BrandRepository repository;
+    private final BrandImageStorageService imageStorageService;
 
-    public BrandService(BrandRepository repository) {
+    public BrandService(BrandRepository repository, BrandImageStorageService imageStorageService) {
         this.repository = repository;
+        this.imageStorageService = imageStorageService;
     }
 
     // GET ALL
@@ -37,6 +40,14 @@ public class BrandService {
         }
 
         return repository.save(brand);
+    }
+
+    public Brand createBrand(Brand brand, MultipartFile imageFile) {
+        String imageUrl = imageStorageService.upload(imageFile);
+        if (imageUrl != null) {
+            brand.setImage(imageUrl);
+        }
+        return createBrand(brand);
     }
 
     // UPDATE
@@ -66,6 +77,21 @@ public class BrandService {
         brand.setEmail(newBrand.getEmail());
 
         return repository.save(brand);
+    }
+
+    public Brand updateBrand(Long id, Brand newBrand, MultipartFile imageFile) {
+        Brand currentBrand = repository.findById(id).orElse(null);
+        String oldImage = currentBrand != null ? currentBrand.getImage() : null;
+        String imageUrl = imageStorageService.upload(imageFile);
+        if (imageUrl != null) {
+            newBrand.setImage(imageUrl);
+        }
+
+        Brand updated = updateBrand(id, newBrand);
+        if (updated != null && imageUrl != null) {
+            imageStorageService.deleteIfManaged(oldImage);
+        }
+        return updated;
     }
 
     // DELETE
