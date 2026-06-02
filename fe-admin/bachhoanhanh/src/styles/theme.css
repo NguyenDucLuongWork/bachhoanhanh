@@ -106,6 +106,11 @@ nav a {
   transition: background 0.16s, color 0.16s;
 }
 
+.shop-nav button {
+  font-size: 13px;
+  padding: 8px 10px;
+}
+
 .shop-nav button:hover,
 .shop-nav button.active,
 nav button:hover,
@@ -217,6 +222,234 @@ footer a {
 
 .page.active {
   display: block;
+}
+
+.admin-compact-page {
+  font-size: 13px;
+}
+
+.admin-compact-page .page-header {
+  margin-bottom: 16px;
+}
+
+.admin-compact-page .page-header h1,
+.admin-compact-page .page-header h2 {
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.admin-compact-page .page-header p {
+  font-size: 12px !important;
+}
+
+.admin-compact-page .btn {
+  min-height: 34px;
+  border-radius: 8px;
+  font-size: 12px;
+  padding: 7px 10px;
+}
+
+.admin-compact-page input,
+.admin-compact-page select,
+.admin-compact-page textarea {
+  min-height: 36px;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.admin-compact-page .store-hero {
+  min-height: 168px;
+  border-radius: 18px;
+  padding: 22px;
+}
+
+.admin-compact-page .store-hero h1 {
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.admin-compact-page .store-hero p {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.admin-compact-page .eyebrow {
+  margin-bottom: 10px;
+  font-size: 11px;
+  padding: 5px 9px;
+}
+
+.admin-compact-page .hero-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: center;
+}
+
+.admin-compact-page .hero-metrics div {
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.admin-compact-page .hero-metrics strong {
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.admin-compact-page .hero-metrics span {
+  font-size: 12px;
+}
+
+.admin-compact-page .store-layout {
+  display: block;
+  margin-top: 16px;
+}
+
+.admin-compact-page .store-toolbar {
+  margin-bottom: 14px;
+}
+
+.admin-compact-page .data-table,
+.admin-users-page table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  font-size: 13px;
+}
+
+.admin-compact-page .data-table th,
+.admin-compact-page .data-table td,
+.admin-users-page table th,
+.admin-users-page table td {
+  border-bottom: 1px solid var(--border);
+  padding: 9px 10px !important;
+  line-height: 1.35;
+  vertical-align: middle;
+}
+
+.admin-compact-page .data-table th,
+.admin-users-page table th {
+  color: var(--muted) !important;
+  font-size: 11px;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.admin-compact-page .data-table td,
+.admin-users-page table td {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.admin-compact-page .data-table td {
+  max-width: 260px;
+  overflow-wrap: anywhere;
+}
+
+.admin-brands-page .data-table,
+.admin-vouchers-page .data-table,
+.stock-page .data-table {
+  min-width: 920px;
+}
+
+.admin-users-page table {
+  min-width: 760px;
+}
+
+.admin-compact-page .modal {
+  max-width: 560px;
+  max-height: calc(100vh - 42px);
+  overflow: auto;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.admin-compact-page .modal h2,
+.admin-compact-page .modal h3 {
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.admin-compact-page .modal-body {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-compact-page .modal-body label {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.admin-catalogs-page > div:last-child,
+.admin-users-page > div {
+  min-width: 0;
+}
+
+.catalog-tree {
+  display: grid;
+  gap: 6px;
+}
+
+.catalog-tree-node {
+  min-width: 0;
+}
+
+.catalog-tree-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  padding: 9px 10px 9px calc(10px + var(--depth, 0) * 22px);
+}
+
+.catalog-tree-main {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.catalog-tree-toggle {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  border-radius: 4px;
+  border: 1px solid var(--border2);
+  background: var(--bg);
+}
+
+.catalog-tree-toggle.has-children {
+  background: var(--surface3);
+  border-color: var(--surface3);
+}
+
+.catalog-tree-main strong {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.catalog-tree-main span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.catalog-tree-children {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
 }
 
 .commerce-shell {
@@ -1278,7 +1511,7 @@ footer a {
 
 .prototype-layout {
   display: grid;
-  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 310px) minmax(0, 1fr);
   gap: 18px;
   align-items: start;
 }
@@ -1294,18 +1527,35 @@ footer a {
 .prototype-form {
   position: sticky;
   top: 88px;
-  padding: 20px;
+  padding: 14px;
 }
 
 .prototype-form h3 {
-  margin-bottom: 16px;
-  font-size: 18px;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.prototype-form .field {
+  margin-bottom: 10px;
+}
+
+.prototype-form .field label {
+  margin-bottom: 5px;
+  font-size: 11px;
+}
+
+.prototype-form input,
+.prototype-form select {
+  min-height: 33px;
+  border-radius: 9px;
+  font-size: 12px;
+  padding: 8px 9px;
 }
 
 .prototype-form-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .prototype-table-panel {
@@ -1315,26 +1565,27 @@ footer a {
 
 .prototype-attribute-picker {
   display: grid;
-  max-height: 220px;
+  max-height: 168px;
   overflow: auto;
-  gap: 6px;
+  gap: 4px;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   background: var(--bg);
-  padding: 10px;
+  padding: 8px;
 }
 
 .prototype-attribute-picker label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: var(--text);
-  font-size: 13px;
+  font-size: 11px;
+  line-height: 1.25;
 }
 
 .prototype-attribute-picker input {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   accent-color: var(--accent);
 }
 
@@ -1425,6 +1676,18 @@ footer a {
     position: static;
   }
 
+  .admin-catalogs-page > div[style*='grid-template-columns'] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-compact-page .store-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-compact-page .hero-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .detail-media {
     min-height: 360px;
   }
@@ -1472,6 +1735,19 @@ footer a {
   }
 
   .voucher-box > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-compact-page .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-compact-page .store-hero h1 {
+    font-size: 24px;
+  }
+
+  .admin-compact-page .hero-metrics {
     grid-template-columns: 1fr;
   }
 }

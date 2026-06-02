@@ -12,6 +12,34 @@ function flattenTree(nodes, out = []) {
   return out
 }
 
+function CatalogTreeNode({ item, depth = 0, onDelete }) {
+  const children = item.children || []
+
+  return (
+    <div className="catalog-tree-node">
+      <div className="catalog-tree-row" style={{ '--depth': depth }}>
+        <div className="catalog-tree-main">
+          <span className={children.length ? 'catalog-tree-toggle has-children' : 'catalog-tree-toggle'} />
+          <div>
+            <strong>{item.name}</strong>
+            <span>{item.id}</span>
+          </div>
+        </div>
+        <button className="btn btn-sm btn-ghost" onClick={() => onDelete(item.id)}>
+          Delete
+        </button>
+      </div>
+      {children.length > 0 && (
+        <div className="catalog-tree-children">
+          {children.map((child) => (
+            <CatalogTreeNode key={child.id} item={child} depth={depth + 1} onDelete={onDelete} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function CatalogsPage({ catalogs = [], loading, onAddCatalog, onDeleteCatalog, onRefresh }) {
   const [newName, setNewName] = useState('')
   const [newParentId, setNewParentId] = useState('')
@@ -64,7 +92,7 @@ export function CatalogsPage({ catalogs = [], loading, onAddCatalog, onDeleteCat
   }
 
   return (
-    <div className="page active" style={{ maxWidth: '1100px', margin: '0 auto' }}>
+    <div className="page active admin-compact-page admin-catalogs-page" style={{ maxWidth: '1100px', margin: '0 auto' }}>
       <div className="page-header">
         <div>
           <h2>Catalogs</h2>
@@ -101,21 +129,14 @@ export function CatalogsPage({ catalogs = [], loading, onAddCatalog, onDeleteCat
         </div>
 
         <div>
-          {flatCatalogs.length === 0 ? (
+          {catalogs.length === 0 ? (
             <div className="empty">
-              <div className="icon">📁</div>
               <p>No catalogs found</p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gap: 12 }}>
-              {flatCatalogs.map((item) => (
-                <div key={item.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    <div style={{ fontSize: 15, fontWeight: 600 }}>{item.name}</div>
-                    <div style={{ fontSize: 12, color: 'var(--muted)' }}>{item.label}</div>
-                  </div>
-                  <button className="btn btn-sm btn-ghost" onClick={() => handleDelete(item.id)}>Delete</button>
-                </div>
+            <div className="catalog-tree">
+              {catalogs.map((item) => (
+                <CatalogTreeNode key={item.id} item={item} onDelete={handleDelete} />
               ))}
             </div>
           )}

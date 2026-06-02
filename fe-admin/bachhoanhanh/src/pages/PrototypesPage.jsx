@@ -147,7 +147,7 @@ export function PrototypesPage({
   }
 
   return (
-    <div className="page active admin-prototypes-page">
+    <div className="page active admin-compact-page admin-prototypes-page">
       <div className="page-header">
         <div>
           <h2>Prototype management</h2>
