@@ -19,6 +19,13 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
   useEffect(() => {
     if (!productId) return
 
+    const productFromList = products.find((item) => String(item.productId) === String(productId))
+    if (productFromList) {
+      setProduct(productFromList)
+      setQuantity(1)
+      return
+    }
+
     const loadProduct = async () => {
       setLoading(true)
       setError(null)
@@ -33,7 +40,7 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
     }
 
     loadProduct()
-  }, [productId, getProductById])
+  }, [productId, getProductById, products])
 
   useEffect(() => {
     if (!product || !product.barcode) return
