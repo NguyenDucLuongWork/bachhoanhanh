@@ -330,6 +330,10 @@ function App() {
       navigateTo('catalogs')
     } else if (page === 'users') {
       navigateTo('users')
+    } else if (page === 'orders') {
+      navigateTo('orders')
+    } else if (page === 'vouchers') {
+      navigateTo('vouchers')
     } else {
       setCurrentPage(page)
     }
@@ -520,9 +524,11 @@ function App() {
             loading={ordersLoading}
             onLoadOrders={loadOrders}
             onGetOrderDetails={getOrderDetails}
+            onUpdateStatus={updateOrderStatus}
             onCancelOrder={cancelOrder}
             onRefresh={loadOrders}
             onGoHome={() => setCurrentPage('products')}
+            isAdminUser={isAdminUser}
             token={token}
           />
         )}

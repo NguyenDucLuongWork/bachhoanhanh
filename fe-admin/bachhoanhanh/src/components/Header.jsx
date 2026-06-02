@@ -33,6 +33,9 @@ export function Header({ username, roles = [], cartCount = 0, currentPage, onNav
             <button onClick={() => onNavigate('vouchers')} className={currentPage === 'vouchers' ? 'active' : ''}>
               Vouchers
             </button>
+            <button onClick={() => onNavigate('orders')} className={currentPage === 'orders' ? 'active' : ''}>
+              Orders
+            </button>
             <button onClick={() => onNavigate('users')} className={currentPage === 'users' || currentPage === 'customer-detail' ? 'active' : ''}>
               Users
             </button>
