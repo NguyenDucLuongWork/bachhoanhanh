@@ -1,22 +1,30 @@
-stages:
-  - deploy
+name: Deploy
 
-deploy-all-services:
-  stage: deploy
-  tags:
-    - may cua luong
-  script:
-    - echo "Dang chuan bi moi truong..."
-    - |
-      if [ -f .env.prod ]; then
-        cp .env.prod .env
-        echo "Da ap dung cau hinh tu .env.prod"
-      else
-        echo "Khong tim thay .env.prod, su dung cau hinh mac dinh."
-      fi
-    - echo "Bat dau Build va Deploy toan bo Microservices..."
-    - docker-compose up -d --build --remove-orphans
-    - echo "Kiem tra trang thai cac service:"
-    - docker ps
-  environment:
-    name: development
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy
+        shell: powershell
+        run: |
+          cd bachhoanhanh
+
+          if (Test-Path ".env.prod") {
+            Copy-Item .env.prod .env -Force
+          }
+
+          docker compose up -d --build --remove-orphans
+
+      - name: Check
+        shell: powershell
+        run: |
+          cd bachhoanhanh
+          docker ps
