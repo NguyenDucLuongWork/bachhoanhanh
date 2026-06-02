@@ -5,111 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api-testing/products.http" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-testing/stock.http" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/api/dto/ProductDetailResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/client/StockClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/client/dto/StockDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/src/main/java/com/bachhoanhanh/stockservice/StockServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/src/main/java/com/bachhoanhanh/stockservice/controller/StockController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/src/main/java/com/bachhoanhanh/stockservice/model/Stock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/src/main/java/com/bachhoanhanh/stockservice/repository/StockRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/src/main/java/com/bachhoanhanh/stockservice/service/StockService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock-service/src/test/java/com/bachhoanhanh/stockservice/StockServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/COMPONENT_STRUCTURE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/public/qr.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/public/vite.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/DeleteConfirmModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/Footer.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/Header.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/Loader.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/OrderCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/OrderDetailsModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/ProductCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/ProductModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/Toast.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useAuth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useBrand.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useCatalogs.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useOrders.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useProducts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/usePrototypes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useStocks.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/AccountPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/BrandDetailPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/BrandPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/CartPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/CatalogsPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/CheckoutPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/LoginPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/OrdersPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/ProductDetailPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/ProductsPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/StockPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/styles/theme.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/utils/helpers.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/vite.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.local" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-testing/brand.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-testing/brand.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-testing/get-products.http" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand-service/src/main/java/com/bachhoanhanh/brandservice/controller/BrandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/bachhoanhanh/brandservice/controller/BrandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand-service/src/main/java/com/bachhoanhanh/brandservice/repository/BrandRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/bachhoanhanh/brandservice/repository/BrandRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand-service/src/main/java/com/bachhoanhanh/brandservice/service/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/bachhoanhanh/brandservice/service/BrandService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/init.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/api/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/api/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/api/dto/ProductResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/api/dto/ProductResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/product/model/BaseProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/product/model/BaseProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/product/service/BaseProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/product/service/BaseProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/API_INTEGRATION.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/TROUBLESHOOTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/eslint.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/eslint.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/public/favicon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/public/icons.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/App.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/assets/hero.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/assets/react.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/assets/react.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/assets/vite.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/components/AdminDashboard.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/components/BrandManagement.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/components/CategoryManagement.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/components/DataManagement.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/components/Login.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/components/ProductManagement.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/components/SortManagement.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/components/UserManagement.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/utils/api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/utils/auth.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/src/utils/connection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhhoanhanh-admin/vite.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/stock-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/stock-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/components/Header.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +312,7 @@
       <workItem from="1780218174470" duration="1241000" />
       <workItem from="1780219433167" duration="395000" />
       <workItem from="1780219862699" duration="9081000" />
-      <workItem from="1780354033651" duration="14393000" />
+      <workItem from="1780354033651" duration="16163000" />
     </task>
     <servers />
   </component>
