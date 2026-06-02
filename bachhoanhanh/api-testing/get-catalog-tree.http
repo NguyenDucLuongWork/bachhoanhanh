@@ -1,0 +1,8 @@
+GET http://bachhoanhanh/catalogs?tree=true
+#Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+### Lấy brand
+GET http://bachhoanhanh/brands
+#Authorization: Bearer {{auth_token}}
+Accept: application/json

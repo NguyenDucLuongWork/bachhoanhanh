@@ -1,0 +1,199 @@
+### GET ALL BRANDS
+GET http://bachhoanhanh/brands
+Accept: application/json
+
+###
+
+GET https://mental-details-disciplinary-blue.trycloudflare.com/brands
+Accept: application/json
+
+### GET BRAND BY ID - found
+GET http://bachhoanhanh/brands/1
+Accept: application/json
+
+###
+
+### GET BRAND BY ID - not found
+GET http://bachhoanhanh/brands/9999
+Accept: application/json
+
+###
+
+### GET BRAND BY NAME - exact match (case-insensitive)
+GET http://bachhoanhanh/brands?name=Nike
+Accept: application/json
+
+###
+
+### GET BRAND BY NAME - exact match lowercase
+GET http://bachhoanhanh/brands?name=nike
+Accept: application/json
+
+###
+
+### GET BRAND BY NAME - not found
+GET http://bachhoanhanh/brands?name=BrandKhongTonTai
+Accept: application/json
+
+###
+
+### SEARCH BRANDS BY NAME - partial match
+GET http://bachhoanhanh/brands?search=nik
+Accept: application/json
+
+###
+
+### SEARCH BRANDS BY NAME - partial match uppercase
+GET http://bachhoanhanh/brands?search=NIK
+Accept: application/json
+
+###
+
+### SEARCH BRANDS BY NAME - single char
+GET http://bachhoanhanh/brands?search=Fresh
+Accept: application/json
+
+###
+
+### SEARCH BRANDS BY NAME - no result
+GET http://bachhoanhanh/brands?search=xyzkhongco
+Accept: application/json
+
+###
+
+### CREATE BRAND - success
+POST http://bachhoanhanh/brands
+Content-Type: application/json
+
+{
+  "name": "Nike",
+  "image": "https://example.com/nike.png",
+  "description": "Just Do It",
+  "phoneNumber": "0123456789",
+  "email": "nike@example.com"
+}
+
+###
+
+### CREATE BRAND - duplicate name
+POST http://bachhoanhanh/brands
+Content-Type: application/json
+
+{
+  "name": "Nike",
+  "image": "https://example.com/nike2.png",
+  "description": "Duplicate brand",
+  "phoneNumber": "0999999999",
+  "email": "nike2@example.com"
+}
+
+###
+
+### CREATE BRAND - duplicate name case-insensitive
+POST http://bachhoanhanh/brands
+Content-Type: application/json
+
+{
+  "name": "nike",
+  "image": "https://example.com/nike3.png",
+  "description": "Duplicate lowercase",
+  "phoneNumber": "0888888888",
+  "email": "nike3@example.com"
+}
+
+###
+
+### CREATE BRAND - another brand
+POST http://bachhoanhanh/brands
+Content-Type: application/json
+
+{
+  "name": "Adidas",
+  "image": "https://example.com/adidas.png",
+  "description": "Impossible is Nothing",
+  "phoneNumber": "0111111111",
+  "email": "adidas@example.com"
+}
+
+###
+
+### CREATE BRAND - missing name (nullable = false)
+POST http://bachhoanhanh/brands
+Content-Type: application/json
+
+{
+  "image": "https://example.com/noname.png",
+  "description": "No name brand",
+  "phoneNumber": "0222222222",
+  "email": "noname@example.com"
+}
+
+###
+
+### UPDATE BRAND - success
+PUT http://bachhoanhanh/brands/1
+Content-Type: application/json
+
+{
+  "name": "Nike Updated",
+  "image": "https://example.com/nike-updated.png",
+  "description": "Updated description",
+  "phoneNumber": "0123000000",
+  "email": "nike-updated@example.com"
+}
+
+###
+
+### UPDATE BRAND - same name as itself (allowed)
+PUT http://bachhoanhanh/brands/1
+Content-Type: application/json
+
+{
+  "name": "Nike Updated",
+  "image": "https://example.com/nike-updated.png",
+  "description": "Same name, should pass",
+  "phoneNumber": "0123000000",
+  "email": "nike-updated@example.com"
+}
+
+###
+
+### UPDATE BRAND - name conflict with another brand
+PUT http://bachhoanhanh/brands/1
+Content-Type: application/json
+
+{
+  "name": "Adidas",
+  "image": "https://example.com/conflict.png",
+  "description": "Name already taken by brand 2",
+  "phoneNumber": "0000000000",
+  "email": "conflict@example.com"
+}
+
+###
+
+### UPDATE BRAND - not found
+PUT http://bachhoanhanh/brands/9999
+Content-Type: application/json
+
+{
+  "name": "Ghost Brand",
+  "image": "https://example.com/ghost.png",
+  "description": "ID does not exist",
+  "phoneNumber": "0000000000",
+  "email": "ghost@example.com"
+}
+
+###
+
+### DELETE BRAND - success
+DELETE http://bachhoanhanh/brands/1
+Accept: application/json
+
+###
+
+### DELETE BRAND - not found (no error vì deleteById không throw)
+DELETE http://bachhoanhanh/brands/9999
+Accept: application/json
+
+###cls

@@ -1,0 +1,188 @@
+### Bach Hoa Nhanh - User Service API Testing
+@baseUrl = http://bachhoanhanh/users
+@authUrl = http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+@clientId = gateway-client
+
+############################################################
+# 1. AUTHENTICATION SECTION
+############################################################
+
+### Login as ADMIN
+# @name adminLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=admin&
+password=123456
+
+> {%
+    client.global.set("admin_token", response.body.access_token);
+%}
+
+### Login as STAFF
+# @name staffLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=teststaff&
+password=123456
+
+> {%
+    client.global.set("staff_token", response.body.access_token);
+%}
+
+### Login as CUSTOMER
+# @name customerLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=testcustomer&
+password=123456
+
+> {%
+    client.global.set("customer_token", response.body.access_token);
+%}
+
+
+############################################################
+# 2. PUBLIC ENDPOINTS
+############################################################
+
+### Register a new Customer (Public)
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "phone": "0912345678",
+  "lastName": "Nguyen",
+  "firstName": "Van B",
+  "email": "new_guest@gmail.com",
+  "password": "password123"
+}
+
+
+############################################################
+# 3. AUTHENTICATED USER ENDPOINTS
+############################################################
+
+### Get My Own Profile (Self)
+GET {{baseUrl}}/me
+Authorization: Bearer {{customer_token}}
+
+
+############################################################
+# 4. ADMIN ONLY ENDPOINTS
+############################################################
+
+### Create a new Staff Member
+POST {{baseUrl}}/staff
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "username": "hoaian_staff",
+  "phone": "0987654321",
+  "lastName": "An",
+  "firstName": "Hoai",
+  "email": "newstaff@bachhoanhanh.vn",
+  "password": "password123",
+  "dateOfBirth": "1995-06-15",
+  "idCardNumber": "012345678901",
+  "address": "Ho Chi Minh City",
+  "isFemale": false
+}
+
+### Get User by Keycloak ID
+@targetKeycloakId = 3fa85f64-5717-4562-b3fc-2c963f66afa6
+
+GET {{baseUrl}}/{{targetKeycloakId}}
+Authorization: Bearer {{admin_token}}
+
+### Delete User
+DELETE {{baseUrl}}/{{targetKeycloakId}}
+Authorization: Bearer {{admin_token}}
+
+
+############################################################
+# 5. SECURITY & ROLE VALIDATION
+############################################################
+
+### Test STAFF attempting to create staff (Expect 403)
+POST {{baseUrl}}/staff
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "username": "hack_staff",
+  "phone": "0911111111",
+  "lastName": "User",
+  "firstName": "Hack",
+  "email": "hack_staff@bachhoanhanh.vn",
+  "password": "password123",
+  "dateOfBirth": "1990-01-01",
+  "idCardNumber": "000000000000",
+  "isFemale": false
+}
+
+### Test CUSTOMER attempting to delete user (Expect 403)
+DELETE {{baseUrl}}/{{targetKeycloakId}}
+Authorization: Bearer {{customer_token}}
+
+############################################################
+# 6. GET STAFF & CUSTOMERS (ADMIN) + SEARCH BY PHONE
+############################################################
+
+### Get All Staff (Admin) - Expect 200
+GET {{baseUrl}}/staff
+Authorization: Bearer {{admin_token}}
+
+### Get All Staff as STAFF (Expect 403)
+GET {{baseUrl}}/staff
+Authorization: Bearer {{staff_token}}
+
+### Get All Staff as CUSTOMER (Expect 403)
+GET {{baseUrl}}/staff
+Authorization: Bearer {{customer_token}}
+
+### Get All Staff without token (Expect 401)
+GET {{baseUrl}}/staff
+
+### Get All Customers (Admin) - Expect 200
+GET {{baseUrl}}/customers
+Authorization: Bearer {{admin_token}}
+
+### Get All Customers as STAFF (Expect 403)
+GET {{baseUrl}}/customers
+Authorization: Bearer {{staff_token}}
+
+### Get All Customers as CUSTOMER (Expect 403)
+GET {{baseUrl}}/customers
+Authorization: Bearer {{customer_token}}
+
+### Get All Customers without token (Expect 401)
+GET {{baseUrl}}/customers
+
+### Search Customer by Phone as ADMIN (Expect 200)
+GET {{baseUrl}}/customers/search?phone=0912345678
+Authorization: Bearer {{admin_token}}
+
+### Search Customer by Phone as STAFF (Expect 200)
+GET {{baseUrl}}/customers/search?phone=0912345678
+Authorization: Bearer {{staff_token}}
+
+### Search Customer by Phone as CUSTOMER (Expect 403)
+GET {{baseUrl}}/customers/search?phone=0912345678
+Authorization: Bearer {{customer_token}}
+
+### Search Customer by Phone without token (Expect 401)
+GET {{baseUrl}}/customers/search?phone=0912345678
+
+### Search Customer with non-existent phone (Expect 404/500)
+GET {{baseUrl}}/customers/search?phone=0000000000
+Authorization: Bearer {{admin_token}}

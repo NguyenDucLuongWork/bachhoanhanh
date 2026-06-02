@@ -6,24 +6,89 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: appdb
+      MYSQL_DATABASE: productdb
       MYSQL_USER: appuser
       MYSQL_PASSWORD: apppassword
     ports:
       - "3306:3306"
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
       interval: 5s
       timeout: 5s
       retries: 10
 
+  redis:
+    image: redis:7-alpine
+    container_name: bachhoanhanh-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/${NGINX_CONF}:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - gateway-service
+      - keycloak
 
   eureka-server:
     build: ./eureka-server
     container_name: eureka-server
+    restart: always
     ports:
       - "8761:8761"
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.2
+    container_name: keycloak
+    command: start-dev --import-realm
+    restart: always
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY: edge
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./keycloak/realm:/opt/keycloak/data/import
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    restart: always
+    ports:
+      - "8086:8086"
+    environment:
+      DB_URL: ${USER_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+      KEYCLOAK_SERVER_URL: http://keycloak:8080
+      KEYCLOAK_REALM: bachhoanhanh
+      KEYCLOAK_ADMIN_CLIENT_ID: user-service-client
+      KEYCLOAK_ADMIN_CLIENT_SECRET: user-service-secret
+      KEYCLOAK_JWK_URI: ${JWT_JWK}        # ← this was missing entirely
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+      keycloak:
+        condition: service_started
+#      keycloak-init: # ← add this
+#        condition: service_completed_successfully
 
   product-service:
     build: ./product-service
@@ -31,12 +96,102 @@ services:
     restart: always
     ports:
       - "8080:8080"
+    environment:
+      DB_URL: ${PRODUCT_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+      REDIS_HOST: ${REDIS_HOST}       # add this
+      REDIS_PORT: ${REDIS_PORT}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+      AWS_S3_PUBLIC_BASE_URL: ${AWS_S3_PUBLIC_BASE_URL}
     depends_on:
       mariadb:
         condition: service_healthy
       eureka-server:
         condition: service_started
 
+  brand-service:
+    build: ./brand-service
+    container_name: brand-service
+    restart: always
+    ports:
+      - "8083:8083"
+    environment:
+      DB_URL: ${BRAND_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+      AWS_S3_PUBLIC_BASE_URL: ${AWS_S3_PUBLIC_BASE_URL}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  voucher-service:
+    build: ./voucher-service
+    container_name: voucher-service
+    restart: always
+    ports:
+      - "8087:8087"
+    environment:
+      DB_URL: ${VOUCHER_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  cart-service:
+    build: ./cart-service
+    container_name: cart-service
+    restart: always
+    ports:
+      - "8088:8088"
+    environment:
+      DB_URL: ${CART_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+      JWT_ISSUER: ${JWT_ISSUER}
+      JWT_JWK: ${JWT_JWK}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  catalog-service:
+    build: ./catalog-service
+    container_name: catalog-service
+    restart: always
+    ports:
+      - "8084:8084"
+    environment:
+      DB_URL: ${CATALOG_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+      REDIS_HOST: ${REDIS_HOST}       # add this
+      REDIS_PORT: ${REDIS_PORT}       # add this
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+      redis: # add this
+        condition: service_healthy    # add this
 
   order-service:
     build: ./order-service
@@ -44,17 +199,88 @@ services:
     restart: always
     ports:
       - "8081:8081"
+    environment:
+      DB_URL: ${ORDER_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
     depends_on:
-      - product-service
-      - eureka-server
+      product-service:
+        condition: service_started
+      eureka-server:
+        condition: service_started
 
+  payment-service:
+    build: ./payment-service
+    container_name: payment-service
+    restart: always
+    ports:
+      - "8085:8085"
+    environment:
+      DB_URL: ${PAYMENT_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  stock-service:
+    build: ./stock-service
+    container_name: stock-service
+    restart: always
+    ports:
+      - "8089:8089"
+    environment:
+      DB_URL: ${STOCK_DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: ${EUREKA_URL}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
 
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
+    restart: always
     ports:
       - "9000:9000"
+    environment:
+      EUREKA_URL: ${EUREKA_URL}
+      JWT_ISSUER: ${JWT_ISSUER}
+      JWT_JWK: ${JWT_JWK}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
     depends_on:
-      - eureka-server
-      - product-service
-      - order-service
+      eureka-server:
+        condition: service_started
+      product-service:
+        condition: service_started
+      order-service:
+        condition: service_started
+      catalog-service:
+        condition: service_started
+      user-service: # Thêm dòng này
+        condition: service_started
+      redis:
+        condition: service_healthy
+      payment-service:
+        condition: service_started
+      voucher-service:
+        condition: service_started
+      cart-service:
+        condition: service_started
+      stock-service:
+        condition: service_started
+
+networks:
+  default:
+    external:
+      name: cicd-network
+
+

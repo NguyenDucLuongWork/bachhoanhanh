@@ -1,9 +1,52 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(),],
-  
-})
+  plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      '/auth': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/products': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/prototypes': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/catalogs': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/orders': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/cart': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/payments': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/users': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/vouchers': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+      '/attribute-types': {
+        target: 'http://bachhoanhanh',
+        changeOrigin: true,
+      },
+    },
+  },
+});

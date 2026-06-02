@@ -1,0 +1,110 @@
+### Cấu hình biến môi trường
+@host = http://bachhoanhanh
+
+# ==========================================
+# 0. AUTHENTICATION (Login để lấy Token)
+# ==========================================
+
+# @name login
+POST {{host}}/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id=gateway-client&
+username=testuser&
+password=123456
+
+> {%
+    // Tự động lưu access_token vào biến toàn cục auth_token
+    client.global.set("auth_token", response.body.access_token);
+%}
+
+# ==========================================
+# 1. CATALOGS (Kiểm tra hệ thống cũ)
+# ==========================================
+
+### Lấy cây danh mục (Public)
+GET {{host}}/catalogs?tree=true
+Accept: application/json
+
+
+# ==========================================
+# 2. ATTRIBUTE TYPES (Loại thuộc tính)
+# ==========================================
+
+### Lấy danh sách loại thuộc tính
+GET {{host}}/attribute-types
+Accept: application/json
+
+### Tạo mới loại thuộc tính: Hạn sử dụng (Yêu cầu Token)
+POST {{host}}/attribute-types
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "EXPIRY_DATE",
+  "dataType": "Date"
+}
+
+### Tạo mới loại thuộc tính: Khối lượng (Yêu cầu Token)
+POST {{host}}/attribute-types
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "WEIGHT",
+  "dataType": "Weight"
+}
+
+
+# ==========================================
+# 3. PROTOTYPES (Mẫu sản phẩm)
+# ==========================================
+
+### Tạo mẫu sản phẩm "Thịt heo sạch"
+# packedAttributes là danh sách các loại thuộc tính cách nhau bởi dấu phẩy
+POST {{host}}/prototypes
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "productId": "PORK_CLEAN",
+  "catalogId": "meat-seafood-pork",
+  "name": "Thịt heo sạch VietGAP",
+  "packedAttributes": "EXPIRY_DATE,WEIGHT"
+}
+
+### Lấy thông tin mẫu vừa tạo
+GET {{host}}/prototypes/PORK_CLEAN
+
+
+# ==========================================
+# 4. PRODUCTS (Sản phẩm thực tế)
+# ==========================================
+
+### Tạo sản phẩm: Ba rọi heo (Dựa trên mẫu PORK_CLEAN)
+POST {{host}}/products
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "barcode": "893123456789",
+  "name": "Ba rọi heo 500g",
+  "image": "ba-roi.png",
+  "description": "Ba rọi heo tươi ngon mỗi ngày",
+  "originalPrice": 125000,
+  "prototypeId": "PORK_CLEAN"
+}
+
+### Lấy danh sách sản phẩm mới (Public)
+GET {{host}}/products
+Accept: application/json
+
+
+# ==========================================
+# 5. MIGRATION TEST (API Cũ)
+# ==========================================
+
+### Kiểm tra Controller cũ vẫn hoạt động
+GET {{host}}/products-old
+Accept: application/json

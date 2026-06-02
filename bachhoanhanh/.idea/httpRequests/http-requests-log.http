@@ -1,0 +1,521 @@
+GET https://mental-details-disciplinary-blue.trycloudflare.com/brands
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T171428.200.json
+
+###
+
+GET https://mental-details-disciplinary-blue.trycloudflare.com/brands
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T171417.200.json
+
+###
+
+GET http://bachhoanhanh/brands
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T171350.200.json
+
+###
+
+GET http://bachhoanhanh/products/1
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T164222.200.json
+
+###
+
+GET http://bachhoanhanh/users/staff
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJaTzctMFU1bndhNVJQLV80R2hsZkdZeWFLQVdMSXBVclhTY2hETFB4azRBIn0.eyJleHAiOjE3ODAzOTA0NTYsImlhdCI6MTc4MDM5MDE1NiwianRpIjoiYzI1YmY5YmYtMDU2Yy00NDk2LTlhZGUtZmM5OGI3ZDJjMmI5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjljODQ3YWQ4LTk0NzYtNDQ5Mi05ZDJkLTg0ODNkMGFkMTU1NyIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjljODQ3YWQ4LTk0NzYtNDQ5Mi05ZDJkLTg0ODNkMGFkMTU1NyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.A2fw65XaWepjGiyAxo5wjbthHWffPTGkAj0mdyTER_Qerk7Sv9mvo_K1ZpvEepz3bDpNzEwj-iTI1sBB7o6HARswPirkx0GUTIzKZTcUVrt2Ep6keJNhl7rm7fMsG_bppL1-xSkislNWneCG-3l569gJqoWRyAbXu-V1afUEGDp0RIFrRO_3_joJWI9pu6rAg3QuR6y16UiqvdBGgMy2A2-ivmfnTRv_kkKFV3KGlFHFiEnRfO3dDjasPqlHddcXu4426XkhO8D1CKT0tVXbY5KLoDaY9YgkN5NuMveYA4lp_ypP2jtxSoYQQiL-1z-ulnyq59Wzwho56blucjy7Ew
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T154940.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T154916.200.json
+
+###
+
+GET http://bachhoanhanh/products/1
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T145245.200.json
+
+###
+
+GET http://bachhoanhanh/users/staff
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZVGlGRl9iMzU3OC1Lek1NcTJmcTNVR2djQ2R1cUpmRm1xWnN1QXBid1YwIn0.eyJleHAiOjE3ODAzODY2NTcsImlhdCI6MTc4MDM4NjM1NywianRpIjoiODczMTNiMjgtMDc0Yi00MTE4LWI0NGUtYjNmOThhNTdkN2Y4IiwiaXNzIjoiaHR0cDovL2JhY2hob2FuaGFuaC9yZWFsbXMvYmFjaGhvYW5oYW5oIiwic3ViIjoiYWRtaW4tdXVpZC0xMjMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJjY2FiMWU3ZS01OWMwLTQ4YzUtOTUwZS02ZTNmMjA4NGEwODgiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJjY2FiMWU3ZS01OWMwLTQ4YzUtOTUwZS02ZTNmMjA4NGEwODgiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.G_sEXiCKTlR1g6QYGxetgie2qzQV18rCR9LFlAPoU1XhUj1_2q7V5N_h_2tyNlaxR1b9zBZ2Oxixszym2_dnuugQVgiKBg8_UMIm4EDPVWqxPcnGHdTt3510UULNOlM3eKBroGtOBCgfb3WlSESO0dHmuXbWSQhbj9pPicsgPddSq5B65ECAyq0-AIYxA7J7kdwu7OpeZbeFysJvkfuRIk82pl_5WXVIesdvr6Kh08aOkWfvva-LhK5TBymi8bYtJY8Cobgl7V63kqLrujUc-UGiENngxlxycI6qsL0JVg1vzS9Oh8SsRm32SwAMDOrM0CaqSn1J_ApgvXtxr8bmIA
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T144557.200.json
+
+###
+
+GET http://bachhoanhanh/users/customers
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZVGlGRl9iMzU3OC1Lek1NcTJmcTNVR2djQ2R1cUpmRm1xWnN1QXBid1YwIn0.eyJleHAiOjE3ODAzODY2MjksImlhdCI6MTc4MDM4NjMyOSwianRpIjoiNTczODgzYTItYTg1My00MDE1LTk3ODgtM2QwNzJiZmI2MzcwIiwiaXNzIjoiaHR0cDovL2JhY2hob2FuaGFuaC9yZWFsbXMvYmFjaGhvYW5oYW5oIiwic3ViIjoiYWRtaW4tdXVpZC0xMjMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJmZDRkYjY5NC02MmY4LTQ2ZmYtYWJiYy1iZmZiYzQxZTU4ZmEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJmZDRkYjY5NC02MmY4LTQ2ZmYtYWJiYy1iZmZiYzQxZTU4ZmEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.J0CiCKKXIqoRlqZr7PMHuSPUmstI1CLSoAZWfC8pO3PMUN376-TPfzgJLNNIV07KLqAJA7VjCStJP-bchLyg-oMt8l-ljCQo7sUqVDUwUR9nd8NR2eb3ppmyB7WxU5eDDqY541P05QA9xIB-bZJyczsjS_aZ2O4ZOP5IzFhw9TQ4gAMndan9tvwxxSGOn8c4KGchNmD3ip12ASqlMVF6AyCK3jt5QFanYnTtm8gCFqzhfEMRjf1ZUh9ezHcun9pduOcoI3Ks0LtVsgcHAT3Cdz39F3vgzsqGfkHDv-H7V__TmUAJWGzwJuJbLTWzr7SyLLVfpPzeKNWlulyHoTj6rw
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+###
+
+GET http://bachhoanhanh/users/customers
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZVGlGRl9iMzU3OC1Lek1NcTJmcTNVR2djQ2R1cUpmRm1xWnN1QXBid1YwIn0.eyJleHAiOjE3ODAzODY2MjksImlhdCI6MTc4MDM4NjMyOSwianRpIjoiNTczODgzYTItYTg1My00MDE1LTk3ODgtM2QwNzJiZmI2MzcwIiwiaXNzIjoiaHR0cDovL2JhY2hob2FuaGFuaC9yZWFsbXMvYmFjaGhvYW5oYW5oIiwic3ViIjoiYWRtaW4tdXVpZC0xMjMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJnYXRld2F5LWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJmZDRkYjY5NC02MmY4LTQ2ZmYtYWJiYy1iZmZiYzQxZTU4ZmEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOIl19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJmZDRkYjY5NC02MmY4LTQ2ZmYtYWJiYy1iZmZiYzQxZTU4ZmEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlN5c3RlbSBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGJhY2hob2FuaGFuaC52biJ9.J0CiCKKXIqoRlqZr7PMHuSPUmstI1CLSoAZWfC8pO3PMUN376-TPfzgJLNNIV07KLqAJA7VjCStJP-bchLyg-oMt8l-ljCQo7sUqVDUwUR9nd8NR2eb3ppmyB7WxU5eDDqY541P05QA9xIB-bZJyczsjS_aZ2O4ZOP5IzFhw9TQ4gAMndan9tvwxxSGOn8c4KGchNmD3ip12ASqlMVF6AyCK3jt5QFanYnTtm8gCFqzhfEMRjf1ZUh9ezHcun9pduOcoI3Ks0LtVsgcHAT3Cdz39F3vgzsqGfkHDv-H7V__TmUAJWGzwJuJbLTWzr7SyLLVfpPzeKNWlulyHoTj6rw
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T144529.200.json
+
+###
+
+GET http://bachhoanhanh/brands
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T144036.200.json
+
+###
+
+GET http://bachhoanhanh/products/1
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T142744.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 82
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=testcustomer&password=123456
+
+<> 2026-06-02T142741.200.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T142733.200.json
+
+###
+
+GET http://bachhoanhanh/products/1
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T142547.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T142541.200.json
+
+###
+
+GET http://bachhoanhanh/users/customers
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3a194bUVvNS12WGlCY0pLLWFUYk5ybXVzWENSYmN6N2tybVdjamFPRUo4In0.eyJleHAiOjE3ODAzODE3OTEsImlhdCI6MTc4MDM4MTQ5MSwianRpIjoiM2IzNzYzNWEtNTQ2Ni00MWM2LWFkMWQtZjNmY2ZkZTI5ZTlkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6Ijc5ZGIxMTI1LWE2NmYtNDIwZi1iOGY2LWYxYzI4NTI0MDYyOCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6Ijc5ZGIxMTI1LWE2NmYtNDIwZi1iOGY2LWYxYzI4NTI0MDYyOCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.DQXqZNe0jvHsUbQ9izPuEKxUGm_W8DE9IreRuWmLKS_jSfgewnp7kQCXPUHU5PpLqPNi6eZBkMPls6ElDV1mWmq2XlzlXF4JCk0u58lE9ecdvIrlhWtcjLV8QWbkXR85VP6DRX63A-I1yJcAy6qtJ2NVlRoVfrHAtCiDte8GqwHZ94RQlZbIOxYLn0zHhfa23MRuEAa4Bfv4Flxgol06eYc2xh8gtNZSbsXxtgrqNMQi4zMRSRaR2fLXlV8eIaLonYi03FMFcf82tgoA9KZUaMCfixZpkL2de1HseubATgboy1jW27x8sUOl9ESXgs41BqqrDgJ2lGE_tTZoguZgWA
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T132514.200.json
+
+###
+
+GET http://bachhoanhanh/users/staff
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3a194bUVvNS12WGlCY0pLLWFUYk5ybXVzWENSYmN6N2tybVdjamFPRUo4In0.eyJleHAiOjE3ODAzODE3OTEsImlhdCI6MTc4MDM4MTQ5MSwianRpIjoiM2IzNzYzNWEtNTQ2Ni00MWM2LWFkMWQtZjNmY2ZkZTI5ZTlkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6Ijc5ZGIxMTI1LWE2NmYtNDIwZi1iOGY2LWYxYzI4NTI0MDYyOCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6Ijc5ZGIxMTI1LWE2NmYtNDIwZi1iOGY2LWYxYzI4NTI0MDYyOCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.DQXqZNe0jvHsUbQ9izPuEKxUGm_W8DE9IreRuWmLKS_jSfgewnp7kQCXPUHU5PpLqPNi6eZBkMPls6ElDV1mWmq2XlzlXF4JCk0u58lE9ecdvIrlhWtcjLV8QWbkXR85VP6DRX63A-I1yJcAy6qtJ2NVlRoVfrHAtCiDte8GqwHZ94RQlZbIOxYLn0zHhfa23MRuEAa4Bfv4Flxgol06eYc2xh8gtNZSbsXxtgrqNMQi4zMRSRaR2fLXlV8eIaLonYi03FMFcf82tgoA9KZUaMCfixZpkL2de1HseubATgboy1jW27x8sUOl9ESXgs41BqqrDgJ2lGE_tTZoguZgWA
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T132500.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T132451.200.json
+
+###
+
+GET http://bachhoanhanh/users/customers
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJROFl0eDFuTnpIVXdIUERZTmo4TmJ0ZU5qbTgzd3EtWGZvbnNoeWw2ak0wIn0.eyJleHAiOjE3ODAzODEzNzcsImlhdCI6MTc4MDM4MTA3NywianRpIjoiMDhhZWQ3NWQtMjA4NS00Njc0LTlmZWMtNzc2Y2E4OWJmNjU2IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjEyM2NiYTExLTRlMjEtNGE5OC1iOGMwLTE5MTFkOWU5ZDNiMCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6IjEyM2NiYTExLTRlMjEtNGE5OC1iOGMwLTE5MTFkOWU5ZDNiMCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.h8PEvTLTZ3lE-n2in5bHQWBEHK9mxwQZCyFddLtKVrI0cszFFjx3tkf5bOzBlWi9x9eGesyvb8Kl4dJ7lVD_pmhU3EW-6BQep8__FolmVETlq8vRIKYEH6m8LBcyNVPKESFHIk44ZDu39uQh-LrucNQkxxDP3c7CSlTJQ-sjcqLOK37HXJCX3J0mCYrWAkNel0QjSspYLQmABZSUEBkIluyGOIzMPwFMoizyMj3oB3cMlicltROJ342dVWnKm2-qeolDt2yoa02EH-CTjN34vxP_fj8s5DZ1twfygzL3mq8OM7RxWINAgzQMrWTUBJlVxi71qkA_QdJ8D0pQR9njFg
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T131809.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T131757.200.json
+
+###
+
+GET http://bachhoanhanh/users/customers
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJROFl0eDFuTnpIVXdIUERZTmo4TmJ0ZU5qbTgzd3EtWGZvbnNoeWw2ak0wIn0.eyJleHAiOjE3ODAzODEzMzgsImlhdCI6MTc4MDM4MTAzOCwianRpIjoiNDc2ODhkZWYtMDhmZC00NTFkLWJkM2MtOWQyY2EzYWM4MWVlIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjYxM2UwNjdjLWRlYzgtNGFlYS04NDQ2LTcyNDBhYjVhMTQ4OCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6IjYxM2UwNjdjLWRlYzgtNGFlYS04NDQ2LTcyNDBhYjVhMTQ4OCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.HpIWMFXXZbWEagukpll9iK2Rh1fZLWK6JsV8Ykt0sDqypLguTsFNwlgdvAoos0HpBLKHdsGXtrE4mtT5kZC5BKJykPPmP362i7Et3ZqUcgVgIAy-n4X-Y5Rwg7GhkkDcD9H11t9rw6xdbfm0uodGqOhoUQNYmywG6aYvTIj3PTsPcq5LFHX9MPkTNaDTwsYMxi8Z1zESaljjXQLEhu8BLfoCZSxD8KepHSP0MMy-4AfOd9e88yCwChwLtVDZTLUzQGSBPvgcKollIYzdKUcIeYA4b5Up7wiq-QRQzUQQxUu2oLf3nwQGdIzL8pp52JF3WVS_ISMwOWT0_D5LL99qzA
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T131724.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T131718.200.json
+
+###
+
+GET http://bachhoanhanh/users/customers
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+###
+
+POST http://bachhoanhanh/catalogs
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Điện Thoại",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/phones.png",
+  "parentCatalogId": "electronics"
+}
+
+<> 2026-06-02T121335.200.json
+
+###
+
+POST http://bachhoanhanh/catalogs
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+Content-Type: application/json
+Content-Length: 118
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Thời Trang",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/fashion.png",
+  "parentCatalogId": null
+}
+
+<> 2026-06-02T121329.200.json
+
+###
+
+POST http://bachhoanhanh/catalogs
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+Content-Type: application/json
+Content-Length: 144
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "id": "electronics",
+  "name": "Electronics",
+  "image": "https://cdn.bachhoanhanh.vn/catalogs/electronics.png",
+  "parentCatalogId": null
+}
+
+<> 2026-06-02T121324.200.json
+
+###
+
+GET http://bachhoanhanh/catalogs?tree=true
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T121319.200.json
+
+###
+
+GET http://bachhoanhanh/catalogs
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpdzJiUm53R3VHVUN6YktVZkhhTkk4RGRTMmJKdV90Y01fd0pCSVhHVmQ0In0.eyJleHAiOjE3ODAzNzc0OTAsImlhdCI6MTc4MDM3NzE5MCwianRpIjoiMTU4MjBlMTEtOWZjZC00ZTI3LTk2NTMtY2QzZGMxMDk1NDcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgyL3JlYWxtcy9iYWNoaG9hbmhhbmgiLCJzdWIiOiJhZG1pbi11dWlkLTEyMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiQURNSU4iXX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImZjMGY5YjNlLWY1NjktNDJmYi1hMzFjLWFiYTM5ZDc3Yjk3NiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoiU3lzdGVtIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYmFjaGhvYW5oYW5oLnZuIn0.cudlbZmvdsYJ5gXLB8fRNeiMweWAUE2_L_HsiP2_pzAr23RkcJwMuFlAZ4oodb2DY2ECTPol6s78CQrDNM96D1zW_ePAN3YwlRyLAej0PZkUxeoovQWkO-xsA8PpUZR4YS-je1c6b925VR57pCcVZQFFPJUpMD0sVGFKjEtkyc1c8D3oPLgTNhqbA0MVOPNs6Rwu7UumijoHQH1_wDaNUTUtd4SS9xlYqO_Ipi-FdntDyifeoyXC4nZ98nVIHKSMYemKJxhMvqa9I8F7GthrBwPqNBoWB-KgrEkQXGhZGhPv13V6-kw69bhAmUYAHyOytXtXs95lN90TE_0t58ePAg
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2026-06-02T121314.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T121310.200.json
+
+###
+
+POST http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 75
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+grant_type=password&client_id=gateway-client&username=admin&password=123456
+
+<> 2026-06-02T121307.200.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T095640.200.json
+
+###
+
+GET http://bachhoanhanh/products/1
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T095636.200.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T095235.502.html
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T094132.200.json
+
+###
+
+GET http://bachhoanhanh/stocks
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T094105.200.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T094055.200.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T094053.503.json
+
+###
+
+GET http://bachhoanhanh/products/1
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T094049.503.json
+
+###
+
+GET http://bachhoanhanh/products/1
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085223.200.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085156.200.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085154.503.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085152.503.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085151.503.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085150.503.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085148.503.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085145.503.json
+
+###
+
+GET http://bachhoanhanh/products
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.3.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+<> 2026-06-02T085144.503.json
+
+###
+

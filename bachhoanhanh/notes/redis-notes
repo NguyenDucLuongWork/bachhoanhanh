@@ -1,0 +1,23 @@
+docker exec -it bachhoanhanh-redis redis-cli
+
+# See all keys currently stored
+
+KEYS *
+
+# See keys matching a pattern (e.g. all catalog cache)
+KEYS catalogs*
+
+# Check how long a key has left to live (TTL in seconds)
+TTL "catalogs::all"
+
+# Read the value of a key
+GET "catalogs::all"
+
+# Count total keys
+DBSIZE
+
+# Delete a specific key (force cache miss on next request)
+DEL "catalogs::all"
+
+# Delete ALL keys (nuke the whole cache)
+FLUSHALL

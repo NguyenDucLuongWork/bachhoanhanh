@@ -1,0 +1,200 @@
+### Bach Hoa Nhanh - Prototype API Testing
+@baseUrl = http://bachhoanhanh/prototypes
+@attributeTypesUrl = http://bachhoanhanh/attribute-types
+@authUrl = http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+@clientId = gateway-client
+@prototypeId = API_TEST_PROTO
+@catalogId = fresh-food-vegetables
+
+############################################################
+# 1. AUTHENTICATION SECTION
+############################################################
+
+### Login as ADMIN
+# @name adminLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=admin&
+password=123456
+
+> {%
+    client.global.set("admin_token", response.body.access_token);
+%}
+
+### Login as STAFF
+# @name staffLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=teststaff&
+password=123456
+
+> {%
+    client.global.set("staff_token", response.body.access_token);
+%}
+
+### Login as CUSTOMER
+# @name customerLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=testcustomer&
+password=123456
+
+> {%
+    client.global.set("customer_token", response.body.access_token);
+%}
+
+
+############################################################
+# 2. PUBLIC READ ENDPOINTS
+############################################################
+
+### Get all prototypes
+GET {{baseUrl}}
+
+### Get prototype by ID
+GET {{baseUrl}}/MEAT_FRESH
+
+### Get prototypes by catalog
+GET {{baseUrl}}/by-catalog/{{catalogId}}
+
+### Get all attribute types
+GET {{attributeTypesUrl}}
+
+
+############################################################
+# 3. ADMIN CRUD
+############################################################
+
+### Create prototype as ADMIN
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "{{prototypeId}}",
+  "name": "API Test Prototype",
+  "catalogId": "{{catalogId}}",
+  "attributeTypeNames": [
+    "EXPIRY_DATE",
+    "WEIGHT",
+    "ORIGIN"
+  ]
+}
+
+### Get created prototype
+GET {{baseUrl}}/{{prototypeId}}
+Authorization: Bearer {{admin_token}}
+
+### Update prototype info as ADMIN
+PATCH {{baseUrl}}/{{prototypeId}}/info
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "API Test Prototype Updated",
+  "catalogId": "fresh-food-fruits"
+}
+
+### Replace prototype attributes as ADMIN
+PATCH {{baseUrl}}/{{prototypeId}}/attributes
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "attributeTypeNames": [
+    "EXPIRY_DATE",
+    "WEIGHT",
+    "STORAGE_INSTRUCTIONS"
+  ]
+}
+
+### Add one attribute to prototype as ADMIN
+PATCH {{baseUrl}}/{{prototypeId}}/attributes/add?typeName=ORIGIN
+Authorization: Bearer {{admin_token}}
+
+### Remove one attribute from prototype as ADMIN
+PATCH {{baseUrl}}/{{prototypeId}}/attributes/remove?typeName=ORIGIN
+Authorization: Bearer {{admin_token}}
+
+### Delete prototype as ADMIN
+DELETE {{baseUrl}}/{{prototypeId}}
+Authorization: Bearer {{admin_token}}
+
+
+############################################################
+# 4. STAFF CRUD
+############################################################
+
+### Create prototype as STAFF
+POST {{baseUrl}}
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "productId": "API_TEST_STAFF_PROTO",
+  "name": "Staff Test Prototype",
+  "catalogId": "{{catalogId}}",
+  "attributeTypeNames": [
+    "EXPIRY_DATE",
+    "WEIGHT"
+  ]
+}
+
+### Update prototype info as STAFF
+PATCH {{baseUrl}}/API_TEST_STAFF_PROTO/info
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "name": "Staff Test Prototype Updated",
+  "catalogId": "{{catalogId}}"
+}
+
+### Delete prototype as STAFF
+DELETE {{baseUrl}}/API_TEST_STAFF_PROTO
+Authorization: Bearer {{staff_token}}
+
+
+############################################################
+# 5. SECURITY VALIDATION
+############################################################
+
+### Create prototype without token - Expect 401
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "productId": "API_TEST_NO_TOKEN",
+  "name": "No Token Prototype",
+  "catalogId": "{{catalogId}}",
+  "attributeTypeNames": [
+    "EXPIRY_DATE"
+  ]
+}
+
+### Create prototype as CUSTOMER - Current gateway allows authenticated users
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "API_TEST_CUSTOMER_PROTO",
+  "name": "Customer Test Prototype",
+  "catalogId": "{{catalogId}}",
+  "attributeTypeNames": [
+    "EXPIRY_DATE"
+  ]
+}
+
+### Delete customer-created prototype as CUSTOMER - Current gateway allows authenticated users
+DELETE {{baseUrl}}/API_TEST_CUSTOMER_PROTO
+Authorization: Bearer {{customer_token}}

@@ -1,0 +1,164 @@
+### Bach Hoa Nhanh - Order Service Admin API Testing
+@baseUrl = http://bachhoanhanh/orders
+@authUrl = http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+@clientId = gateway-client
+
+############################################################
+# 1. AUTHENTICATION SECTION
+############################################################
+
+### Login as ADMIN
+# @name adminLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=admin&
+password=123456
+
+> {%
+    client.global.set("admin_token", response.body.access_token);
+%}
+
+### Login as STAFF
+# @name staffLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=teststaff&
+password=123456
+
+> {%
+    client.global.set("staff_token", response.body.access_token);
+%}
+
+### Login as CUSTOMER
+# @name customerLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=testcustomer&
+password=123456
+
+> {%
+    client.global.set("customer_token", response.body.access_token);
+%}
+
+
+############################################################
+# 2. CREATE SAMPLE ORDERS
+############################################################
+
+### Create single-product order as CUSTOMER
+# @name createSingleOrder
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "1",
+  "quantity": 2
+}
+
+> {%
+    client.global.set("order_id", response.body.id);
+%}
+
+### Create multi-product order with voucher as CUSTOMER
+# @name createMultiOrder
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "productId": "1",
+      "quantity": 1
+    },
+    {
+      "productId": "2",
+      "quantity": 2
+    }
+  ],
+  "voucherCode": "WELCOME10"
+}
+
+
+############################################################
+# 3. ADMIN ORDER MANAGEMENT
+############################################################
+
+### Get all orders as ADMIN
+GET {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+
+### Get order detail as ADMIN
+GET {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{admin_token}}
+
+### Update order status to processing as ADMIN
+PUT {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "status": "processing"
+}
+
+### Update order status to shipped as ADMIN
+PUT {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "status": "shipped"
+}
+
+### Cancel order as ADMIN
+DELETE {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{admin_token}}
+
+
+############################################################
+# 4. STAFF ORDER MANAGEMENT
+############################################################
+
+### Get all orders as STAFF
+GET {{baseUrl}}
+Authorization: Bearer {{staff_token}}
+
+### Update order status as STAFF
+PUT {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+
+############################################################
+# 5. SECURITY VALIDATION
+############################################################
+
+### Get all orders without token - Expect 401
+GET {{baseUrl}}
+
+### Get all orders as CUSTOMER - Current gateway allows authenticated users
+GET {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+
+### Update order as CUSTOMER - Current gateway allows authenticated users
+PUT {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "status": "cancelled"
+}

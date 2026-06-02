@@ -1,0 +1,312 @@
+import { useState, useEffect } from 'react'
+
+const flattenCatalogs = (catalogs, prefix = '') =>
+  catalogs.flatMap((catalog) => [
+    { id: catalog.id, name: `${prefix}${catalog.name}` },
+    ...(catalog.children?.length ? flattenCatalogs(catalog.children, `${prefix}  `) : []),
+  ])
+
+export function ProductModal({ isOpen, title, onClose, onSave, product, prototypes, catalogs, attributeTypes }) {
+  const [barcode, setBarcode] = useState('')
+  const [name, setName] = useState('')
+  const [image, setImage] = useState('')
+  const [imageFile, setImageFile] = useState(null)
+  const [description, setDescription] = useState('')
+  const [originalPrice, setOriginalPrice] = useState('')
+  const [selectedPrototypeId, setSelectedPrototypeId] = useState('')
+  const [catalogId, setCatalogId] = useState('')
+  const [attributes, setAttributes] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getPrototypeById = (id) => prototypes.find((proto) => proto.productId === id || proto.id === id)
+
+  const getAttributeDataType = (key) => {
+    const type = attributeTypes?.find((t) => t.name === key)
+    return type?.dataType || 'String'
+  }
+
+  const getAttributeKeys = (proto) => {
+    if (!proto) return []
+    if (Array.isArray(proto.unpackedAttributes) && proto.unpackedAttributes.length) {
+      return proto.unpackedAttributes
+    }
+    if (typeof proto.packedAttributes === 'string') {
+      return proto.packedAttributes.split(',').map((item) => item.trim()).filter(Boolean)
+    }
+    return []
+  }
+
+  const buildAttributes = (proto, existing = {}) => {
+    const keys = getAttributeKeys(proto)
+    return keys.reduce((acc, key) => {
+      acc[key] = existing[key] ?? ''
+      return acc
+    }, {})
+  }
+
+  const renderAttributeInput = (key, value, onChange) => {
+    const dataType = getAttributeDataType(key)
+
+    switch (dataType) {
+      case 'Date':
+        return (
+          <input
+            type="date"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isLoading}
+            style={{ flex: 2 }}
+          />
+        )
+      case 'Number':
+      case 'Weight':
+        return (
+          <input
+            type="number"
+            placeholder="Value"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isLoading}
+            style={{ flex: 2 }}
+          />
+        )
+      case 'Unit':
+        return (
+          <input
+            type="number"
+            placeholder="Value"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isLoading}
+            style={{ flex: 2 }}
+          />
+        )
+      case 'String':
+      default:
+        return (
+          <input
+            type="text"
+            placeholder="Value"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isLoading}
+            style={{ flex: 2 }}
+          />
+        )
+    }
+  }
+
+  useEffect(() => {
+    if (product) {
+      const protoId = product.prototypeId || ''
+      const proto = getPrototypeById(protoId)
+      setBarcode(product.barcode || '')
+      setName(product.name || '')
+      setImage(product.image || '')
+      setImageFile(null)
+      setDescription(product.description || '')
+      setOriginalPrice(product.originalPrice || '')
+      setSelectedPrototypeId(protoId)
+      setCatalogId(product.catalogId || '')
+      setAttributes(buildAttributes(proto, product.attributes || {}))
+    } else {
+      setBarcode('')
+      setName('')
+      setImage('')
+      setImageFile(null)
+      setDescription('')
+      setOriginalPrice('')
+      setSelectedPrototypeId('')
+      setCatalogId('')
+      setAttributes({})
+    }
+  }, [product, isOpen, prototypes])
+
+  useEffect(() => {
+    if (!selectedPrototypeId) return
+    const proto = getPrototypeById(selectedPrototypeId)
+    if (!proto) return
+    setAttributes((prev) => buildAttributes(proto, prev))
+  }, [selectedPrototypeId, prototypes])
+
+  const handleSave = async () => {
+    if (!name || !originalPrice) return
+    setIsLoading(true)
+    const productData = {
+      barcode,
+      name,
+      image,
+      imageFile,
+      description,
+      originalPrice: parseFloat(originalPrice),
+      catalogId: catalogId || null,
+      prototypeId: selectedPrototypeId,
+      attributes,
+    }
+    await onSave(productData)
+    setIsLoading(false)
+  }
+
+  const handleAttributeChange = (key, value) => {
+    setAttributes(prev => ({ ...prev, [key]: value }))
+  }
+
+  const addAttribute = () => {
+    const key = prompt('Attribute key:')
+    if (key) {
+      setAttributes(prev => ({ ...prev, [key]: '' }))
+    }
+  }
+
+  const removeAttribute = (key) => {
+    setAttributes(prev => {
+      const newAttrs = { ...prev }
+      delete newAttrs[key]
+      return newAttrs
+    })
+  }
+
+  const handleImageFileChange = (event) => {
+    const file = event.target.files?.[0] || null
+    setImageFile(file)
+  }
+
+  if (!isOpen) return null
+
+  return (
+    <div className="modal-bg open">
+      <div className="modal" style={{ maxHeight: '90vh', overflowY: 'auto', overflowX: 'hidden' }}>
+        <div style={{ position: 'sticky', top: 0, background: 'var(--surface)', paddingBottom: '12px', marginBottom: '12px', borderBottom: '0.5px solid var(--border)', zIndex: 10 }}>
+          <h3 style={{ marginTop: 0 }}>{title}</h3>
+        </div>
+        <div className="field">
+          <label>Barcode</label>
+          <input
+            type="text"
+            placeholder="Product barcode"
+            value={barcode}
+            onChange={(e) => setBarcode(e.target.value)}
+            disabled={isLoading}
+          />
+        </div>
+        <div className="field">
+          <label>Name *</label>
+          <input
+            type="text"
+            placeholder="Product name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={isLoading}
+          />
+        </div>
+        <div className="field">
+          <label>Image URL</label>
+          <input
+            type="text"
+            placeholder="External image URL or uploaded S3 URL"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            disabled={isLoading}
+          />
+          <div style={{ display: 'grid', gap: '8px', marginTop: '10px' }}>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              onChange={handleImageFileChange}
+              disabled={isLoading}
+            />
+            {imageFile && (
+              <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
+                Selected file will be uploaded to S3: {imageFile.name}
+              </div>
+            )}
+            {!imageFile && image && (
+              <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
+                Current image will be kept unless a new file is selected.
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="field">
+          <label>Description</label>
+          <textarea
+            placeholder="Product description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={isLoading}
+            rows={3}
+          />
+        </div>
+        <div className="field">
+          <label>Original Price (VND) *</label>
+          <input
+            type="number"
+            placeholder="0"
+            min="0"
+            step="1000"
+            value={originalPrice}
+            onChange={(e) => setOriginalPrice(e.target.value)}
+            disabled={isLoading}
+          />
+        </div>
+        <div className="field">
+          <label>Catalog</label>
+          <select
+            value={catalogId}
+            onChange={(e) => setCatalogId(e.target.value)}
+            disabled={isLoading}
+          >
+            <option value="">Select catalog</option>
+            {flattenCatalogs(catalogs || []).map((catalog) => (
+              <option key={catalog.id} value={catalog.id}>
+                {catalog.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Prototype</label>
+          <select
+            value={selectedPrototypeId}
+            onChange={(e) => setSelectedPrototypeId(e.target.value)}
+            disabled={isLoading}
+          >
+            <option value="">Select prototype</option>
+            {prototypes.map(proto => (
+              <option key={proto.productId} value={proto.productId}>{proto.name}</option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Attributes</label>
+          {Object.entries(attributes).map(([key, value]) => {
+            const dataType = getAttributeDataType(key)
+            return (
+              <div key={key} style={{ display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '4px' }}>{key}</div>
+                  <div style={{ fontSize: '11px', color: 'var(--muted)' }}>({dataType})</div>
+                </div>
+                {renderAttributeInput(key, value, (newVal) => handleAttributeChange(key, newVal))}
+                <button type="button" onClick={() => removeAttribute(key)} disabled={isLoading} style={{ padding: '6px 12px' }}>
+                  Remove
+                </button>
+              </div>
+            )
+          })}
+          <button type="button" onClick={addAttribute} disabled={isLoading}>
+            Add Attribute
+          </button>
+        </div>
+        <div className="modal-footer">
+          <button className="btn btn-ghost" onClick={onClose} disabled={isLoading}>
+            Cancel
+          </button>
+          <button className="btn btn-accent" onClick={handleSave} disabled={isLoading}>
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}

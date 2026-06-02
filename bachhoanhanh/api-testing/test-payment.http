@@ -1,0 +1,80 @@
+### Health Check
+GET http://bachhoanhanh/payments/test
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+### Create Payment
+POST http://bachhoanhanh/payments
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "orderId": 1,
+  "orderCode": "ORD-EXAMPLE",
+  "amount": 100000,
+  "status": "PENDING"
+}
+
+### Mock Update Status
+POST http://bachhoanhanh/payments/mock/status
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "orderId": 1,
+  "status": "PAID"
+}
+
+### Get All Payments
+GET http://bachhoanhanh/payments
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+### Get Payment By Id
+GET http://bachhoanhanh/payments/1
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+### Get Payment Status By Order Id
+GET http://bachhoanhanh/payments/status/1
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+### Get Payment Status By Order Code
+GET http://bachhoanhanh/payments/status/code/{{order_code}}
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+### Create Checkout (SePay QR)
+POST http://bachhoanhanh/payments/checkout
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "orderId": 1,
+  "amount": 100000
+}
+
+### SePay Webhook
+POST http://bachhoanhanh/payments/sepay/webhook
+Authorization: Apikey {{sepay_api_key}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": 92704,
+  "gateway": "Vietcombank",
+  "transactionDate": "2024-07-25 14:02:37",
+  "accountNumber": "0123499999",
+  "code": null,
+  "content": "DH1",
+  "transferType": "in",
+  "transferAmount": 100000,
+  "accumulated": 19077000,
+  "subAccount": null,
+  "referenceCode": "MBVCB.3278907687",
+  "description": ""
+}
