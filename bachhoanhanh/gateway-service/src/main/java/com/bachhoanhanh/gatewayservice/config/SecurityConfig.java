@@ -69,7 +69,13 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.GET,  "/vouchers/**").permitAll()
                         .pathMatchers(HttpMethod.POST, "/vouchers/apply").permitAll()
                         .pathMatchers(HttpMethod.POST, "/vouchers", "/vouchers/**").hasRole("ADMIN")
+
+                        // Thêm vào khối authorizeExchange, sau phần vouchers:
+                        .pathMatchers(HttpMethod.POST, "/api/ocr/**").authenticated()
+
                         .anyExchange().permitAll()
+
+
                 );
 
         return http.build();

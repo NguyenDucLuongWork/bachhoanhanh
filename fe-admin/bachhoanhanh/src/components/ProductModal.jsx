@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import useOcr from '../hooks/useOcr'
 
 const flattenCatalogs = (catalogs, prefix = '') =>
   catalogs.flatMap((catalog) => [
@@ -11,6 +12,9 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
   const [imageFile, setImageFile] = useState(null)
+  const [activeTab, setActiveTab] = useState('details') // 'details' | 'photo'
+  const [ocrSelectedFile, setOcrSelectedFile] = useState(null)
+  const ocr = useOcr()
   const [description, setDescription] = useState('')
   const [originalPrice, setOriginalPrice] = useState('')
   const [selectedPrototypeId, setSelectedPrototypeId] = useState('')
@@ -315,34 +319,133 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
             disabled={isLoading}
           />
         </div>
-        <div className="field">
-          <label>Image URL</label>
-          <input
-            type="text"
-            placeholder="External image URL or uploaded S3 URL"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+          <button
+            type="button"
+            className={activeTab === 'details' ? 'btn btn-ghost active' : 'btn btn-ghost'}
+            onClick={() => setActiveTab('details')}
             disabled={isLoading}
-          />
-          <div style={{ display: 'grid', gap: '8px', marginTop: '10px' }}>
+          >
+            Details
+          </button>
+          <button
+            type="button"
+            className={activeTab === 'photo' ? 'btn btn-ghost active' : 'btn btn-ghost'}
+            onClick={() => setActiveTab('photo')}
+            disabled={isLoading}
+          >
+            Photo / OCR
+          </button>
+        </div>
+
+        {activeTab === 'details' && (
+          <div className="field">
+            <label>Image URL</label>
             <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif"
-              onChange={handleImageFileChange}
+              type="text"
+              placeholder="External image URL or uploaded S3 URL"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
               disabled={isLoading}
             />
-            {imageFile && (
-              <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
-                Selected file will be uploaded to S3: {imageFile.name}
-              </div>
-            )}
-            {!imageFile && image && (
-              <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
-                Current image will be kept unless a new file is selected.
-              </div>
-            )}
+            <div style={{ display: 'grid', gap: '8px', marginTop: '10px' }}>
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                onChange={handleImageFileChange}
+                disabled={isLoading}
+              />
+              {imageFile && (
+                <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
+                  Selected file will be uploaded to S3: {imageFile.name}
+                </div>
+              )}
+              {!imageFile && image && (
+                <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
+                  Current image will be kept unless a new file is selected.
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
+
+        {activeTab === 'photo' && (
+          <div className="field">
+            <label>Capture / Upload for OCR</label>
+            <div style={{ display: 'grid', gap: '8px' }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setOcrSelectedFile(e.target.files?.[0] || null)}
+                disabled={isLoading || ocr.loading}
+              />
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={async () => {
+                    if (!ocrSelectedFile) return
+                    await ocr.extract(ocrSelectedFile)
+                  }}
+                  disabled={isLoading || ocr.loading || !ocrSelectedFile}
+                >
+                  {ocr.loading ? 'Running OCR...' : 'Run OCR'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => {
+                    setOcrSelectedFile(null)
+                    ocr.clear()
+                  }}
+                  disabled={isLoading || ocr.loading}
+                >
+                  Clear
+                </button>
+              </div>
+
+              {ocr.error && <div style={{ color: 'var(--error)', fontSize: '13px' }}>{ocr.error}</div>}
+
+              {ocr.result && (
+                <div style={{ border: '1px solid var(--border)', padding: '8px', borderRadius: '8px', background: 'var(--surface)' }}>
+                  <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '6px' }}>OCR Raw Text</div>
+                  <div style={{ fontSize: '13px', whiteSpace: 'pre-wrap', maxHeight: '160px', overflowY: 'auto' }}>{ocr.result.raw_text}</div>
+                  <div style={{ marginTop: '8px', fontSize: '12px', color: 'var(--muted)' }}>Parsed fields</div>
+                  <pre style={{ fontSize: '13px', margin: '6px 0', whiteSpace: 'pre-wrap' }}>{JSON.stringify(ocr.result.fields || {}, null, 2)}</pre>
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                    <button
+                      type="button"
+                      className="btn btn-accent"
+                      onClick={() => {
+                        const fields = ocr.result.fields || {}
+                        if (fields.name) setName(fields.name)
+                        if (fields.sku && !barcode) setBarcode(fields.sku)
+                        if (fields.price) setOriginalPrice(String(Number(fields.price) || fields.price))
+                        // attach the selected file as the imageFile to be uploaded with product
+                        if (ocrSelectedFile) {
+                          setImageFile(ocrSelectedFile)
+                        }
+                        // close the OCR tab and return to details
+                        setActiveTab('details')
+                      }}
+                    >
+                      Apply to form
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-ghost"
+                      onClick={() => {
+                        setActiveTab('details')
+                      }}
+                    >
+                      Back to details
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
         <div className="field">
           <label>Description</label>
           <textarea

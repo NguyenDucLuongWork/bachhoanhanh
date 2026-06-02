@@ -244,6 +244,22 @@ services:
       eureka-server:
         condition: service_started
 
+  ocr-service:
+    build: ./ocr-service
+    container_name: ocr-service
+    restart: always
+    ports:
+      - "8090:8090"
+    environment:
+      - PORT=8090
+      - LOG_LEVEL=DEBUG
+      - TESSERACT_LANG=vie+eng
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
@@ -277,6 +293,8 @@ services:
         condition: service_started
       stock-service:
         condition: service_started
+      ocr-service:
+        condition: service_healthy
 
 networks:
   default:

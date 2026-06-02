@@ -7,6 +7,18 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
+      // Proxy OCR requests to gateway or OCR service. Configure with VITE_OCR_GATEWAY
+      // Example .env: VITE_OCR_GATEWAY=http://127.0.0.1:8090
+      '/api/ocr': {
+        target: process.env.VITE_OCR_GATEWAY || process.env.OCR_GATEWAY || 'http://bachhoanhanh',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/api/ocr/': {
+        target: process.env.VITE_OCR_GATEWAY || process.env.OCR_GATEWAY || 'http://bachhoanhanh',
+        changeOrigin: true,
+        secure: false,
+      },
       '/auth': {
         target: 'http://bachhoanhanh',
         changeOrigin: true,
