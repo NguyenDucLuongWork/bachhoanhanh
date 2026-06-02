@@ -20,5 +20,6 @@ public class BaseProduct {
     private String description;
     private String catalogId;
     private double originalPrice;
+    @Column(name = "prototype_id", nullable = true)
     private String prototypeId;
 }

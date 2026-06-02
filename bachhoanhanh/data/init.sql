@@ -9,6 +9,10 @@ CREATE DATABASE IF NOT EXISTS catalogdb;
 CREATE DATABASE IF NOT EXISTS paymentdb;
 CREATE DATABASE IF NOT EXISTS userdb; -- Thêm dòng này
 CREATE DATABASE IF NOT EXISTS cartdb;
+CREATE DATABASE IF NOT EXISTS userdb;
+CREATE DATABASE IF NOT EXISTS stockdb;
+
+
 
 GRANT ALL PRIVILEGES ON productdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON orderdb.*   TO 'appuser'@'%';
@@ -17,6 +21,9 @@ GRANT ALL PRIVILEGES ON catalogdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON paymentdb.* TO 'appuser'@'%';
 GRANT ALL PRIVILEGES ON userdb.*    TO 'appuser'@'%'; -- Thêm dòng này
 GRANT ALL PRIVILEGES ON cartdb.*    TO 'appuser'@'%';
+GRANT ALL PRIVILEGES ON userdb.*    TO 'appuser'@'%';
+GRANT ALL PRIVILEGES ON stockdb.* TO 'appuser'@'%';
+
 FLUSH PRIVILEGES;
 
 -- ═══════════════════════════════════════════════════════
@@ -245,7 +252,7 @@ INSERT INTO prototype (product_id, catalog_id, name, packed_attributes) VALUES
 -- Base Products
 -- ───────────────────────────────────────────────────────
 INSERT INTO base_product (barcode, name, image, description, catalog_id, original_price, prototype_id) VALUES
-                                                                                                           ('893000111', 'Ba rọi heo VietGAP',
+                                                                                                           ('893000111', 'Ba rọi heo VietXanh',
                                                                                                             'https://www.vissan.com.vn/images/2024/ba_roi_heo_3.jpg',
                                                                                                             'Clean, high-quality pork belly.',
                                                                                                             'meat-seafood-pork', 120000, 'MEAT_FRESH'),
@@ -475,3 +482,35 @@ VALUES
         '2020-01-01 00:00:00', '2020-12-31 23:59:59', FALSE,
         NULL, NULL
     );
+
+
+-- Thêm vào cuối file
+-- ═══════════════════════════════════════════════════════
+-- STOCK DB
+-- ═══════════════════════════════════════════════════════
+USE stockdb;
+
+CREATE TABLE IF NOT EXISTS stock (
+                                     id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                     product_id       VARCHAR(100) NOT NULL,
+    amount           INT          NOT NULL DEFAULT 0,
+    import_date      DATE         NOT NULL,
+    manufacture_date DATE         NOT NULL,
+    expiry_date      DATE         NOT NULL,
+    available        BOOLEAN      NOT NULL DEFAULT TRUE,
+    CONSTRAINT chk_dates CHECK (expiry_date > manufacture_date)
+    );
+
+-- Seed data
+-- Note: rows 1 & 2 are already expired (expiry_date < 2026-06-02), so available = FALSE
+INSERT INTO stock (product_id, amount, import_date, manufacture_date, expiry_date, available) VALUES
+                                                                                                  ('893000111', 50,  '2026-05-01', '2026-04-28', '2026-05-10', FALSE),
+                                                                                                  ('893000222', 120, '2026-05-01', '2026-05-01', '2026-05-09', FALSE),
+                                                                                                  ('893000333', 80,  '2026-05-01', '2026-04-25', '2026-06-01', FALSE),
+                                                                                                  ('893000444', 200, '2026-05-01', '2026-03-01', '2026-11-06', TRUE),
+                                                                                                  ('893000555', 300, '2026-05-01', '2026-01-01', '2027-05-01', TRUE),
+                                                                                                  ('893000555', 60,  '2026-05-01', '2025-12-01', '2027-12-01', TRUE),
+                                                                                                  ('893000777', 90,  '2026-05-01', '2025-11-01', '2027-11-01', TRUE),
+                                                                                                  ('893000888', 150, '2026-05-01', '2026-01-01', '2027-02-01', TRUE),
+                                                                                                  ('893000999', 40,  '2026-05-01', '2025-10-01', '2027-10-01', TRUE),
+                                                                                                  ('893001000', 75,  '2026-05-01', '2025-06-01', '2027-12-31', TRUE);

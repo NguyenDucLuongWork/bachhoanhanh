@@ -1,0 +1,500 @@
+### ═══════════════════════════════════════════════════════
+### STOCK API TESTER - Full Coverage + Authentication
+### Base: http://bachhoanhanh/stocks
+### ═══════════════════════════════════════════════════════
+
+@baseUrl = http://bachhoanhanh/stocks
+@authUrl = http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+@clientId = gateway-client
+
+############################################################
+# 1. AUTHENTICATION
+############################################################
+
+### Login as ADMIN
+# @name adminLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=admin&
+password=123456
+
+> {%
+    client.global.set("admin_token", response.body.access_token);
+%}
+
+### Login as STAFF
+# @name staffLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=teststaff&
+password=123456
+
+> {%
+    client.global.set("staff_token", response.body.access_token);
+%}
+
+### Login as CUSTOMER
+# @name customerLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id={{clientId}}&
+username=testcustomer&
+password=123456
+
+> {%
+    client.global.set("customer_token", response.body.access_token);
+%}
+
+############################################################
+# 2. GET - PUBLIC (no token required)
+############################################################
+
+### GET ALL STOCKS
+GET {{baseUrl}}
+Accept: application/json
+
+###
+
+### GET STOCK BY ID - found
+GET {{baseUrl}}/1
+Accept: application/json
+
+###
+
+### GET STOCK BY ID - not found
+GET {{baseUrl}}/9999
+Accept: application/json
+
+###
+
+### GET STOCKS BY PRODUCT ID - found
+GET {{baseUrl}}?productId=893000111
+Accept: application/json
+
+###
+
+### GET STOCKS BY PRODUCT ID - another product
+GET {{baseUrl}}?productId=893000333
+Accept: application/json
+
+###
+
+### GET STOCKS BY PRODUCT ID - no result
+GET {{baseUrl}}?productId=KHONGCO999
+Accept: application/json
+
+###
+
+### GET STOCKS EXPIRING BEFORE DATE - some results
+GET {{baseUrl}}?expiresBefore=2026-06-01
+Accept: application/json
+
+###
+
+### GET STOCKS EXPIRING BEFORE DATE - broad range
+GET {{baseUrl}}?expiresBefore=2027-01-01
+Accept: application/json
+
+###
+
+### GET STOCKS EXPIRING BEFORE DATE - no results
+GET {{baseUrl}}?expiresBefore=2025-01-01
+Accept: application/json
+
+###
+
+############################################################
+# 2b. GET AVAILABLE STOCK BY PRODUCT ID - PUBLIC
+############################################################
+
+### GET AVAILABLE STOCK - product with mixed expired/valid rows
+GET {{baseUrl}}/available?productId=893000444
+Accept: application/json
+
+###
+
+### GET AVAILABLE STOCK - product with all expired rows (expect empty list)
+GET {{baseUrl}}/available?productId=893000111
+Accept: application/json
+
+###
+
+### GET AVAILABLE STOCK - product with all valid rows
+GET {{baseUrl}}/available?productId=893000555
+Accept: application/json
+
+###
+
+### GET AVAILABLE STOCK - non-existent product (expect empty list)
+GET {{baseUrl}}/available?productId=KHONGCO999
+Accept: application/json
+
+###
+
+############################################################
+# 3. CREATE - ADMIN / STAFF only
+############################################################
+
+### CREATE STOCK - success (ADMIN)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 100,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-04-20",
+  "expiryDate": "2026-07-20"
+}
+
+###
+
+### CREATE STOCK - success (STAFF)
+POST {{baseUrl}}
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000444",
+  "amount": 50,
+  "importDate": "2026-05-10",
+  "manufactureDate": "2026-03-01",
+  "expiryDate": "2026-12-01"
+}
+
+###
+
+### CREATE STOCK - already expired at creation (available auto = false)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 10,
+  "importDate": "2026-04-01",
+  "manufactureDate": "2026-03-01",
+  "expiryDate": "2026-05-01"
+}
+
+###
+
+### CREATE STOCK - expiryDate trước manufactureDate (invalid)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000222",
+  "amount": 30,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-06-01",
+  "expiryDate": "2026-05-01"
+}
+
+###
+
+### CREATE STOCK - expiryDate bằng manufactureDate (invalid)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000222",
+  "amount": 30,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-05-01",
+  "expiryDate": "2026-05-01"
+}
+
+###
+
+### CREATE STOCK - amount = 0 (edge case)
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000555",
+  "amount": 0,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-01-01",
+  "expiryDate": "2027-01-01"
+}
+
+###
+
+### CREATE STOCK - missing productId
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "amount": 10,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-01-01",
+  "expiryDate": "2027-01-01"
+}
+
+###
+
+### CREATE STOCK - missing amount
+POST {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-01-01",
+  "expiryDate": "2027-01-01"
+}
+
+###
+
+############################################################
+# 4. UPDATE - ADMIN / STAFF only
+############################################################
+
+### UPDATE STOCK - success (ADMIN)
+PUT {{baseUrl}}/1
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 200,
+  "importDate": "2026-05-15",
+  "manufactureDate": "2026-04-28",
+  "expiryDate": "2026-08-28",
+  "available": true
+}
+
+###
+
+### UPDATE STOCK - success (STAFF)
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000999",
+  "amount": 75,
+  "importDate": "2026-05-15",
+  "manufactureDate": "2026-03-01",
+  "expiryDate": "2027-03-01",
+  "available": true
+}
+
+###
+
+### UPDATE STOCK - same data (idempotent)
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000999",
+  "amount": 75,
+  "importDate": "2026-05-15",
+  "manufactureDate": "2026-03-01",
+  "expiryDate": "2027-03-01",
+  "available": true
+}
+
+###
+
+### UPDATE STOCK - expiryDate trước manufactureDate (invalid)
+PUT {{baseUrl}}/1
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 50,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-06-01",
+  "expiryDate": "2026-05-01",
+  "available": true
+}
+
+###
+
+### UPDATE STOCK - not found
+PUT {{baseUrl}}/9999
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 50,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-01-01",
+  "expiryDate": "2027-01-01",
+  "available": true
+}
+
+###
+
+############################################################
+# 5. SET AVAILABILITY - ADMIN / STAFF only
+############################################################
+
+### SET AVAILABILITY - disable stock (ADMIN)
+PATCH {{baseUrl}}/4/availability?available=false
+Authorization: Bearer {{admin_token}}
+
+###
+
+### SET AVAILABILITY - re-enable stock (ADMIN)
+PATCH {{baseUrl}}/4/availability?available=true
+Authorization: Bearer {{admin_token}}
+
+###
+
+### SET AVAILABILITY - disable stock (STAFF)
+PATCH {{baseUrl}}/5/availability?available=false
+Authorization: Bearer {{staff_token}}
+
+###
+
+### SET AVAILABILITY - not found
+PATCH {{baseUrl}}/9999/availability?available=false
+Authorization: Bearer {{admin_token}}
+
+###
+
+### SET AVAILABILITY - missing param (expect 400)
+PATCH {{baseUrl}}/4/availability
+Authorization: Bearer {{admin_token}}
+
+###
+
+############################################################
+# 6. DELETE - ADMIN / STAFF only
+############################################################
+
+### DELETE STOCK - success (ADMIN)
+DELETE {{baseUrl}}/1
+Authorization: Bearer {{admin_token}}
+
+###
+
+### DELETE STOCK - success (STAFF)
+DELETE {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+
+###
+
+### DELETE STOCK - not found (không throw exception)
+DELETE {{baseUrl}}/9999
+Authorization: Bearer {{admin_token}}
+
+###
+
+############################################################
+# 7. SECURITY & ROLE VALIDATION
+############################################################
+
+### GET without token - should pass (public)
+GET {{baseUrl}}
+Accept: application/json
+
+###
+
+### GET AVAILABLE without token - should pass (public)
+GET {{baseUrl}}/available?productId=893000444
+Accept: application/json
+
+###
+
+### CREATE without token - Expect 401
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 10,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-01-01",
+  "expiryDate": "2027-01-01"
+}
+
+###
+
+### CREATE as CUSTOMER - Expect 403
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 10,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-01-01",
+  "expiryDate": "2027-01-01"
+}
+
+###
+
+### UPDATE without token - Expect 401
+PUT {{baseUrl}}/3
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 50,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-01-01",
+  "expiryDate": "2027-01-01",
+  "available": true
+}
+
+###
+
+### UPDATE as CUSTOMER - Expect 403
+PUT {{baseUrl}}/3
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "893000111",
+  "amount": 50,
+  "importDate": "2026-05-01",
+  "manufactureDate": "2026-01-01",
+  "expiryDate": "2027-01-01",
+  "available": true
+}
+
+###
+
+### SET AVAILABILITY without token - Expect 401
+PATCH {{baseUrl}}/3/availability?available=false
+
+###
+
+### SET AVAILABILITY as CUSTOMER - Expect 403
+PATCH {{baseUrl}}/3/availability?available=false
+Authorization: Bearer {{customer_token}}
+
+###
+
+### DELETE without token - Expect 401
+DELETE {{baseUrl}}/3
+
+###
+
+### DELETE as CUSTOMER - Expect 403
+DELETE {{baseUrl}}/3
+Authorization: Bearer {{customer_token}}
+
+###

@@ -29,23 +29,58 @@ public class BrandService {
 
     // CREATE
     public Brand createBrand(Brand brand) {
+
+        if (repository.findByNameIgnoreCase(brand.getName()).isPresent()) {
+            throw new IllegalArgumentException(
+                    "Brand name already exists"
+            );
+        }
+
         return repository.save(brand);
     }
 
     // UPDATE
     public Brand updateBrand(Long id, Brand newBrand) {
-        return repository.findById(id).map(brand -> {
-            brand.setName(newBrand.getName());
-            brand.setImage(newBrand.getImage());
-            brand.setDescription(newBrand.getDescription());
-            brand.setPhoneNumber(newBrand.getPhoneNumber());
-            brand.setEmail(newBrand.getEmail());
-            return repository.save(brand);
-        }).orElse(null);
+
+        Brand brand = repository.findById(id)
+                .orElse(null);
+
+        if (brand == null) {
+            return null;
+        }
+
+        Brand existing = repository
+                .findByNameIgnoreCase(newBrand.getName())
+                .orElse(null);
+
+        if (existing != null && !existing.getId().equals(id)) {
+            throw new IllegalArgumentException(
+                    "Brand name already exists"
+            );
+        }
+
+        brand.setName(newBrand.getName());
+        brand.setImage(newBrand.getImage());
+        brand.setDescription(newBrand.getDescription());
+        brand.setPhoneNumber(newBrand.getPhoneNumber());
+        brand.setEmail(newBrand.getEmail());
+
+        return repository.save(brand);
     }
 
     // DELETE
     public void deleteBrand(Long id) {
         repository.deleteById(id);
+    }
+
+    public Brand getByName(String name) {
+        return repository.findByNameIgnoreCase(name)
+                .orElse(null);
+    }
+
+
+    // BrandService.java
+    public List<Brand> searchByName(String keyword) {
+        return repository.findByNameContainingIgnoreCase(keyword);
     }
 }

@@ -48,4 +48,16 @@ public class BrandController {
     public void deleteBrand(@PathVariable Long id) {
         service.deleteBrand(id);
     }
+
+    // Giữ nguyên endpoint cũ - tìm chính xác
+    @GetMapping(params = "name")
+    public Brand getByName(@RequestParam String name) {
+        return service.getByName(name);
+    }
+
+    // Thêm endpoint mới - tìm kiếm gần đúng
+    @GetMapping(params = "search")
+    public List<Brand> searchByName(@RequestParam String search) {
+        return service.searchByName(search);
+    }
 }
