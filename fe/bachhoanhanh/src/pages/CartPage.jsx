@@ -24,6 +24,9 @@ export function CartPage({
   const [voucherCode, setVoucherCode] = useState('')
   const [voucherPreview, setVoucherPreview] = useState(null)
   const [voucherLoading, setVoucherLoading] = useState(false)
+  const [voucherModalOpen, setVoucherModalOpen] = useState(false)
+  const [vouchers, setVouchers] = useState([])
+  const [vouchersLoading, setVouchersLoading] = useState(false)
   const [recipient, setRecipient] = useState({
     fullName: '',
     phone: '',
@@ -89,8 +92,24 @@ export function CartPage({
     return true
   }
 
-  const applyVoucher = async () => {
-    const code = voucherCode.trim().toUpperCase()
+  const loadVouchers = async () => {
+    setVoucherModalOpen(true)
+    if (vouchers.length > 0) return
+    setVouchersLoading(true)
+    try {
+      const res = await fetch('/vouchers')
+      if (!res.ok) throw new Error('Failed to load vouchers')
+      const data = await res.json()
+      setVouchers(data)
+    } catch (e) {
+      showToast(e.message, true)
+    } finally {
+      setVouchersLoading(false)
+    }
+  }
+
+  const applyVoucher = async (selectedCode = voucherCode) => {
+    const code = selectedCode.trim().toUpperCase()
     if (!code) return
     setVoucherLoading(true)
     setVoucherPreview(null)
@@ -112,6 +131,7 @@ export function CartPage({
       const data = await res.json()
       setVoucherPreview(data)
       setVoucherCode(data.code)
+      setVoucherModalOpen(false)
       showToast('Voucher applied')
     } catch (e) {
       showToast(e.message, true)
@@ -131,7 +151,7 @@ export function CartPage({
       return
     }
 
-    onClearCart()
+    await onClearCart()
     setVoucherPreview(null)
     setVoucherCode('')
     showToast(paymentMethod === 'cod' ? 'Order created' : 'Order created. Payment is ready')
@@ -269,16 +289,9 @@ export function CartPage({
           <div className="voucher-box checkout-block">
             <label>Promo code</label>
             <div>
-              <input
-                value={voucherCode}
-                onChange={(e) => {
-                  setVoucherCode(e.target.value)
-                  setVoucherPreview(null)
-                }}
-                placeholder="Enter code"
-              />
-              <button className="btn btn-accent" onClick={applyVoucher} disabled={voucherLoading}>
-                {voucherLoading ? '...' : 'Apply'}
+              <input value={voucherCode || 'No voucher selected'} readOnly />
+              <button className="btn btn-accent" onClick={loadVouchers} disabled={voucherLoading}>
+                Choose
               </button>
             </div>
             {voucherPreview && <p>Applied {voucherPreview.code}: -{formatPrice(discountAmount)} VND</p>}
@@ -314,15 +327,77 @@ export function CartPage({
             <span>I agree to the delivery policy and order confirmation terms.</span>
           </label>
 
-          {subtotal < 100000 && (
-            <div className="minimum-warning">Orders from 100,000 VND are recommended for checkout.</div>
-          )}
-
           <button className="btn btn-accent checkout-submit" onClick={handleCheckout} disabled={submitting}>
             {submitting ? 'Placing order...' : 'Place order'}
           </button>
         </aside>
       </div>
+
+      {voucherModalOpen && (
+        <div className="modal-bg open">
+          <div className="modal voucher-modal">
+            <div className="voucher-modal-head">
+              <div>
+                <h3>Choose voucher</h3>
+                <p>Review available promotions and apply one to this cart.</p>
+              </div>
+              <button className="btn btn-ghost" onClick={() => setVoucherModalOpen(false)}>
+                Close
+              </button>
+            </div>
+
+            <div className="voucher-manual">
+              <input
+                value={voucherCode}
+                onChange={(e) => {
+                  setVoucherCode(e.target.value)
+                  setVoucherPreview(null)
+                }}
+                placeholder="Enter voucher code"
+              />
+              <button className="btn btn-accent" onClick={() => applyVoucher()} disabled={voucherLoading}>
+                {voucherLoading ? 'Applying...' : 'Apply code'}
+              </button>
+            </div>
+
+            {vouchersLoading ? (
+              <div className="empty" style={{ padding: '26px' }}>Loading vouchers...</div>
+            ) : vouchers.length === 0 ? (
+              <div className="empty" style={{ padding: '26px' }}>No vouchers available.</div>
+            ) : (
+              <div className="voucher-list">
+                {vouchers.map((voucher) => (
+                  <div className="voucher-card" key={voucher.id}>
+                    <div>
+                      <div className="voucher-code">{voucher.code}</div>
+                      <p>{voucher.description || 'Promotion for selected products or catalogs.'}</p>
+                      <div className="voucher-meta">
+                        <span>
+                          {voucher.discountType === 'PERCENT'
+                            ? `${formatPrice(voucher.discountValue)}% off`
+                            : `${formatPrice(voucher.discountValue)} VND off`}
+                        </span>
+                        <span>Min order: {formatPrice(voucher.minOrderValue || 0)} VND</span>
+                        {voucher.maxDiscountAmount > 0 && (
+                          <span>Max discount: {formatPrice(voucher.maxDiscountAmount)} VND</span>
+                        )}
+                        <span>Valid until: {voucher.endDate ? new Date(voucher.endDate).toLocaleDateString() : 'N/A'}</span>
+                      </div>
+                    </div>
+                    <button
+                      className="btn btn-accent"
+                      onClick={() => applyVoucher(voucher.code)}
+                      disabled={voucherLoading || !voucher.active}
+                    >
+                      {voucher.active ? 'Apply' : 'Inactive'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
