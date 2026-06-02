@@ -103,22 +103,17 @@ public class PaymentService {
         }
 
         Payment payment = existing.get();
+
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        Map<String, String> body = Map.of("status", "paid");
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
+        String url = "http://order-service:8081/orders/" + payment.getOrderId();
+        rest.exchange(url, HttpMethod.PUT, entity, Void.class);
+
         payment.setStatus("paid");
         payment = repository.save(payment);
-
-        // Notify Order Service to update order status (service-to-service call)
-        try {
-            RestTemplate rest = new RestTemplate();
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            Map<String, String> body = Map.of("status", "paid");
-            HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
-            String url = "http://order-service:8081/orders/" + payment.getOrderId();
-            rest.exchange(url, HttpMethod.PUT, entity, Void.class);
-        } catch (Exception ex) {
-            // best-effort notify; ignore failures for now
-            ex.printStackTrace();
-        }
 
         return payment;
     }

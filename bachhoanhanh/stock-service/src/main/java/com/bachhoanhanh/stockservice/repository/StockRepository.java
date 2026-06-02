@@ -1,7 +1,9 @@
 package com.bachhoanhanh.stockservice.repository;
 
 import com.bachhoanhanh.stockservice.model.Stock;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,6 +28,18 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
         """)
     List<Stock> findAvailableAndNotExpired(@Param("productId") String productId,
                                            @Param("today") LocalDate today);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+        SELECT s FROM Stock s
+        WHERE s.productId = :productId
+          AND s.available = true
+          AND s.amount > 0
+          AND s.expiryDate >= :today
+        ORDER BY s.expiryDate ASC, s.importDate ASC, s.id ASC
+        """)
+    List<Stock> findConsumableStockForProduct(@Param("productId") String productId,
+                                              @Param("today") LocalDate today);
 
     // Bulk-expire: mark available=false for all expired rows of a product
     // Runs as a single UPDATE — no Java loop needed

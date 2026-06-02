@@ -200,7 +200,7 @@ export function VouchersPage({ vouchers, loading, products, catalogs, onRefresh,
   }
 
   return (
-    <div className="page active commerce-shell">
+    <div className="page active commerce-shell admin-compact-page admin-vouchers-page">
       <section className="store-hero">
         <div>
           <span className="eyebrow">Voucher management</span>
