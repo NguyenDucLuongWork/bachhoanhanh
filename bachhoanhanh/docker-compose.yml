@@ -239,38 +239,6 @@ services:
       eureka-server:
         condition: service_started
 
-  ai-agent-service:
-    build: ./ai-agent-service
-    container_name: ai-agent-service
-    restart: always
-    ports:
-      - "8090:8090"
-    environment:
-      EUREKA_URL: ${EUREKA_URL}
-
-      OLLAMA_BASE_URL: http://ollama:11434
-
-      GATEWAY_URL: http://gateway-service:9000
-
-      OPENAPI_URL: http://gateway-service:9000/aggregate/product-service/v3/api-docs
-
-    depends_on:
-      gateway-service:
-        condition: service_started
-      eureka-server:
-        condition: service_started
-      ollama:
-        condition: service_started
-
-  ollama:
-    image: ollama/ollama
-    container_name: ollama
-    restart: always
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama-data:/root/.ollama
-
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
@@ -304,5 +272,10 @@ services:
         condition: service_started
       stock-service:
         condition: service_started
+
+networks:
+  default:
+    external:
+      name: cicd-network
 
 

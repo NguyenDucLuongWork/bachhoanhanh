@@ -1,0 +1,107 @@
+pipeline {
+    agent any
+
+    environment {
+        COMPOSE_FILE = "docker-compose.yml"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/NguyenDucLuongWork/bachhoanhanh.git',
+                    credentialsId: 'github-credentials'
+            }
+        }
+
+        stage('Detect Changes') {
+            steps {
+                script {
+                    def changed = sh(
+                        script: "git diff --name-only HEAD~1 HEAD || git diff --name-only HEAD",
+                        returnStdout: true
+                    ).trim()
+
+                    echo "Changed files:\n${changed}"
+
+                    env.BUILD_USER      = changed.contains('user-service')      ? 'true' : 'false'
+                    env.BUILD_PRODUCT   = changed.contains('product-service')   ? 'true' : 'false'
+                    env.BUILD_ORDER     = changed.contains('order-service')     ? 'true' : 'false'
+                    env.BUILD_BRAND     = changed.contains('brand-service')     ? 'true' : 'false'
+                    env.BUILD_VOUCHER   = changed.contains('voucher-service')   ? 'true' : 'false'
+                    env.BUILD_CART      = changed.contains('cart-service')      ? 'true' : 'false'
+                    env.BUILD_CATALOG   = changed.contains('catalog-service')   ? 'true' : 'false'
+                    env.BUILD_PAYMENT   = changed.contains('payment-service')   ? 'true' : 'false'
+                    env.BUILD_STOCK     = changed.contains('stock-service')     ? 'true' : 'false'
+                    env.BUILD_GATEWAY   = changed.contains('gateway-service')   ? 'true' : 'false'
+                    env.BUILD_EUREKA    = changed.contains('eureka-server')     ? 'true' : 'false'
+                }
+            }
+        }
+
+        stage('Build Changed Services') {
+            parallel {
+                stage('user-service') {
+                    when { environment name: 'BUILD_USER', value: 'true' }
+                    steps { sh "docker-compose build user-service" }
+                }
+                stage('product-service') {
+                    when { environment name: 'BUILD_PRODUCT', value: 'true' }
+                    steps { sh "docker-compose build product-service" }
+                }
+                stage('order-service') {
+                    when { environment name: 'BUILD_ORDER', value: 'true' }
+                    steps { sh "docker-compose build order-service" }
+                }
+                stage('brand-service') {
+                    when { environment name: 'BUILD_BRAND', value: 'true' }
+                    steps { sh "docker-compose build brand-service" }
+                }
+                stage('voucher-service') {
+                    when { environment name: 'BUILD_VOUCHER', value: 'true' }
+                    steps { sh "docker-compose build voucher-service" }
+                }
+                stage('cart-service') {
+                    when { environment name: 'BUILD_CART', value: 'true' }
+                    steps { sh "docker-compose build cart-service" }
+                }
+                stage('catalog-service') {
+                    when { environment name: 'BUILD_CATALOG', value: 'true' }
+                    steps { sh "docker-compose build catalog-service" }
+                }
+                stage('payment-service') {
+                    when { environment name: 'BUILD_PAYMENT', value: 'true' }
+                    steps { sh "docker-compose build payment-service" }
+                }
+                stage('stock-service') {
+                    when { environment name: 'BUILD_STOCK', value: 'true' }
+                    steps { sh "docker-compose build stock-service" }
+                }
+                stage('gateway-service') {
+                    when { environment name: 'BUILD_GATEWAY', value: 'true' }
+                    steps { sh "docker-compose build gateway-service" }
+                }
+                stage('eureka-server') {
+                    when { environment name: 'BUILD_EUREKA', value: 'true' }
+                    steps { sh "docker-compose build eureka-server" }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh "docker-compose up -d --no-deps"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Deploy thành công!"
+        }
+        failure {
+            echo "❌ Pipeline thất bại!"
+        }
+    }
+}
