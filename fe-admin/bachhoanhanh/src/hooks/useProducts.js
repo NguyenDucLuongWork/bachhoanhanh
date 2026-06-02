@@ -167,7 +167,11 @@ export function useProducts(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PRODUCTS_URL + '/' + id, { headers })
+        let res = await fetch(PRODUCTS_URL + '/' + id, { headers })
+        if (res.status === 401 && token) {
+          // Some product endpoints are public and reject invalid or mismatched auth tokens.
+          res = await fetch(PRODUCTS_URL + '/' + id)
+        }
         if (!res.ok) throw new Error('Failed to load product details')
         const data = await res.json()
         return { success: true, data }

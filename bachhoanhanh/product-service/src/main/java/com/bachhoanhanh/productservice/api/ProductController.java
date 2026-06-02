@@ -3,6 +3,7 @@ package com.bachhoanhanh.productservice.api;
 import com.bachhoanhanh.productservice.api.dto.ProductDetailResponse;
 import com.bachhoanhanh.productservice.api.dto.ProductRequest;
 import com.bachhoanhanh.productservice.api.dto.ProductResponse;
+import com.bachhoanhanh.productservice.api.dto.order.OrderToFinishRequest;
 import com.bachhoanhanh.productservice.attribute.service.AttributeService;
 import com.bachhoanhanh.productservice.client.BrandClient;
 import com.bachhoanhanh.productservice.client.StockClient;
@@ -240,5 +241,30 @@ public class ProductController {
             log.warn("Could not fetch stocks for product '{}': {}", barcode, e.getMessage());
             return Collections.emptyList();
         }
+    }
+
+    @PostMapping("/finish-order")
+    public ResponseEntity<Void> finishOrder(
+            @RequestBody OrderToFinishRequest request
+    ) {
+
+        log.info("========== FINISH ORDER ==========");
+        log.info("OrderId: {}", request.getOrderId());
+
+        if (request.getItems() != null) {
+            request.getItems().forEach(item ->
+                    log.info(
+                            "Product={} Name={} Qty={} Price={}",
+                            item.getProductId(),
+                            item.getProductName(),
+                            item.getQuantity(),
+                            item.getPrice()
+                    )
+            );
+        }
+
+        log.info("==================================");
+
+        return ResponseEntity.ok().build();
     }
 }
