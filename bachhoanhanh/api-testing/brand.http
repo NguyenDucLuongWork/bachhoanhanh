@@ -4,6 +4,9 @@ Accept: application/json
 
 ###
 
+GET https://mental-details-disciplinary-blue.trycloudflare.com/brands
+Accept: application/json
+
 ### GET BRAND BY ID - found
 GET http://bachhoanhanh/brands/1
 Accept: application/json
