@@ -28,7 +28,7 @@ export function LoginPage({ onLoginSuccess, loading }) {
             <label>Username</label>
             <input
               type="text"
-              placeholder="admin or teststaff"
+              placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               disabled={busy}
@@ -48,13 +48,6 @@ export function LoginPage({ onLoginSuccess, loading }) {
             {busy ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
-
-        <hr className="divider" />
-        <div className="seed-accounts">
-          <strong>Manager seed accounts</strong>
-          <span>admin / 123456</span>
-          <span>teststaff / 123456</span>
-        </div>
       </div>
     </div>
   )
