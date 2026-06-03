@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx/nginx.local.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx/nginx.prod.conf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,99 +71,99 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Downloaded.Files.Path.Enabled": "false",
-    "HTTP Request.brand | #1.executor": "Run",
-    "HTTP Request.brand | #2.executor": "Run",
-    "HTTP Request.brand | #9.executor": "Run",
-    "HTTP Request.brand | GET ALL BRANDS.executor": "Run",
-    "HTTP Request.catalog | #4.executor": "Run",
-    "HTTP Request.catalog | Create Root Catalog — Fashion (auto-generated id, no id provided).executor": "Run",
-    "HTTP Request.catalog | Get All Catalogs as Tree.executor": "Run",
-    "HTTP Request.catalog | adminLogin.executor": "Run",
-    "HTTP Request.catalog | createElectronics.executor": "Run",
-    "HTTP Request.catalog | createPhones.executor": "Run",
-    "HTTP Request.get-products | Get 1 Product.executor": "Run",
-    "HTTP Request.get-products | Get Products.executor": "Run",
-    "HTTP Request.login | Login to get Access Token.executor": "Run",
-    "HTTP Request.products | #4.executor": "Run",
-    "HTTP Request.products | #5.executor": "Run",
-    "HTTP Request.products | #7.executor": "Run",
-    "HTTP Request.products | #8.executor": "Run",
-    "HTTP Request.products | adminLogin.executor": "Run",
-    "HTTP Request.products | customerLogin.executor": "Run",
-    "HTTP Request.stock | #10.executor": "Run",
-    "HTTP Request.stock | #13.executor": "Run",
-    "HTTP Request.stock | #14.executor": "Run",
-    "HTTP Request.stock | #15.executor": "Run",
-    "HTTP Request.stock | #2.executor": "Run",
-    "HTTP Request.stock | #4.executor": "Run",
-    "HTTP Request.stock | #5.executor": "Run",
-    "HTTP Request.stock | #7.executor": "Run",
-    "HTTP Request.stock | adminLogin.executor": "Run",
-    "HTTP Request.stock | staffLogin.executor": "Run",
-    "HTTP Request.stock | ═══════════════════════════════════════════════════════.executor": "Run",
-    "HTTP Request.test-payment | Get All Payments.executor": "Run",
-    "HTTP Request.test-product-new | Lấy danh sách loại thuộc tính.executor": "Run",
-    "HTTP Request.test-product-new | Tạo mẫu sản phẩm \"Thịt heo sạch\".executor": "Run",
-    "HTTP Request.test-product-new | Tạo mới loại thuộc tính: Hạn sử dụng (Yêu cầu Token).executor": "Run",
-    "HTTP Request.test-product-new | Tạo mới loại thuộc tính: Khối lượng (Yêu cầu Token).executor": "Run",
-    "HTTP Request.user | #11.executor": "Run",
-    "HTTP Request.user | #4.executor": "Run",
-    "HTTP Request.user | #5.executor": "Run",
-    "HTTP Request.user | #6.executor": "Run",
-    "HTTP Request.user | #9.executor": "Run",
-    "HTTP Request.user | Delete User.executor": "Run",
-    "HTTP Request.user | Get All Customers (Admin) - Expect 200.executor": "Run",
-    "HTTP Request.user | Get All Customers as CUSTOMER (Expect 403).executor": "Run",
-    "HTTP Request.user | Get All Customers as STAFF (Expect 403).executor": "Run",
-    "HTTP Request.user | Get All Staff as CUSTOMER (Expect 403).executor": "Run",
-    "HTTP Request.user | Get User by Keycloak ID.executor": "Run",
-    "HTTP Request.user | adminLogin.executor": "Run",
-    "HTTP Request.user | customerLogin.executor": "Run",
-    "HTTP Request.user | staffLogin.executor": "Run",
-    "HTTP Request.voucher | Apply Voucher - Global voucher.executor": "Run",
-    "HTTP Request.voucher | Apply Voucher - Non-existent code (expect 404).executor": "Run",
-    "HTTP Request.voucher | Confirm Usage (called after order is placed).executor": "Run",
-    "HTTP Request.voucher | Create Voucher - Global (no target).executor": "Run",
-    "HTTP Request.voucher | Create Voucher - Target a catalog (fresh vegetables).executor": "Run",
-    "HTTP Request.voucher | Create Voucher - Target a specific product (productId = 1).executor": "Run",
-    "HTTP Request.voucher | Delete Voucher.executor": "Run",
-    "HTTP Request.voucher | Get All Vouchers.executor": "Run",
-    "HTTP Request.voucher | Get Voucher By Code.executor": "Run",
-    "HTTP Request.voucher | Get Voucher By Id.executor": "Run",
-    "HTTP Request.voucher | Login to get Access Token.executor": "Run",
-    "HTTP Request.voucher | Update Voucher.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.EurekaServerApplication.executor": "Debug",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "luong",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/_Luong/Studying/ktpm/bachhoanhanh/bachhoanhanh",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "kotlinNotebook",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;HTTP Request.brand | #1.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.brand | #2.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.brand | #9.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.brand | GET ALL BRANDS.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.catalog | #4.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.catalog | Create Root Catalog — Fashion (auto-generated id, no id provided).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.catalog | Get All Catalogs as Tree.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.catalog | adminLogin.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.catalog | createElectronics.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.catalog | createPhones.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.get-products | Get 1 Product.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.get-products | Get Products.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.login | Login to get Access Token.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.products | #4.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.products | #5.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.products | #7.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.products | #8.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.products | adminLogin.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.products | customerLogin.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | #10.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | #13.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | #14.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | #15.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | #2.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | #4.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | #5.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | #7.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | adminLogin.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | staffLogin.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.stock | ═══════════════════════════════════════════════════════.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.test-payment | Get All Payments.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.test-product-new | Lấy danh sách loại thuộc tính.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.test-product-new | Tạo mẫu sản phẩm \&quot;Thịt heo sạch\&quot;.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.test-product-new | Tạo mới loại thuộc tính: Hạn sử dụng (Yêu cầu Token).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.test-product-new | Tạo mới loại thuộc tính: Khối lượng (Yêu cầu Token).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | #11.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | #4.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | #5.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | #6.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | #9.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | Delete User.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | Get All Customers (Admin) - Expect 200.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | Get All Customers as CUSTOMER (Expect 403).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | Get All Customers as STAFF (Expect 403).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | Get All Staff as CUSTOMER (Expect 403).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | Get User by Keycloak ID.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | adminLogin.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | customerLogin.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.user | staffLogin.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Apply Voucher - Global voucher.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Apply Voucher - Non-existent code (expect 404).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Confirm Usage (called after order is placed).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Create Voucher - Global (no target).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Create Voucher - Target a catalog (fresh vegetables).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Create Voucher - Target a specific product (productId = 1).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Delete Voucher.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Get All Vouchers.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Get Voucher By Code.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Get Voucher By Id.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Login to get Access Token.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.voucher | Update Voucher.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.EurekaServerApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;luong&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/_Luong/Studying/ktpm/bachhoanhanh/bachhoanhanh&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;kotlinNotebook&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\_Luong\Studying\ktpm\bachhoanhanh\bachhoanhanh" />
@@ -182,21 +184,6 @@
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
-    <option name="configurationStatuses">
-      <map>
-        <entry key="HttpClient.HttpRequestRunConfigurationType">
-          <value>
-            <map>
-              <entry key="brand | #2" value="STOPPED" />
-              <entry key="brand | GET ALL BRANDS" value="STOPPED" />
-              <entry key="products | #5" value="STOPPED" />
-              <entry key="user | #11" value="STOPPED" />
-              <entry key="user | adminLogin" value="STOPPED" />
-            </map>
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
     <configuration name="brand | GET ALL BRANDS" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/brand.http" executionIdentifier="GET ALL BRANDS" runType="Run single request">
@@ -205,13 +192,13 @@
     <configuration name="brand | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/brand.http" executionIdentifier="#2" index="2" runType="Run single request">
       <method v="2" />
     </configuration>
+    <configuration name="products | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/products.http" executionIdentifier="#4" index="4" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="products | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/products.http" executionIdentifier="#5" index="5" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="user | #11" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="#11" index="11" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="user | adminLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/user.http" executionIdentifier="adminLogin" runType="Run single request">
+    <configuration name="voucher | Get All Vouchers" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/voucher.http" executionIdentifier="Get All Vouchers" index="2" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="AiServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -293,11 +280,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.voucher | Get All Vouchers" />
+        <item itemvalue="HTTP Request.products | #4" />
         <item itemvalue="HTTP Request.brand | #2" />
         <item itemvalue="HTTP Request.brand | GET ALL BRANDS" />
         <item itemvalue="HTTP Request.products | #5" />
-        <item itemvalue="HTTP Request.user | #11" />
-        <item itemvalue="HTTP Request.user | adminLogin" />
       </list>
     </recent_temporary>
   </component>
@@ -334,6 +321,7 @@
       <workItem from="1780219862699" duration="9081000" />
       <workItem from="1780354033651" duration="17027000" />
       <workItem from="1780376192062" duration="25028000" />
+      <workItem from="1780468677310" duration="1599000" />
     </task>
     <servers />
   </component>
@@ -350,6 +338,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ocr-service/app.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
