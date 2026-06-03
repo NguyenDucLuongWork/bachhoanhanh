@@ -1,16 +1,25 @@
 import { useCallback, useState } from 'react'
 
 const VOUCHERS_URL = '/vouchers'
+const TOKEN_STORAGE_KEY = 'bhn_access_token'
 
 export function useVouchers(token) {
   const [vouchers, setVouchers] = useState([])
   const [loading, setLoading] = useState(false)
 
+  const getCurrentToken = () => token || localStorage.getItem(TOKEN_STORAGE_KEY)
+
+  const buildHeaders = (useAuth = false) => {
+    const currentToken = getCurrentToken()
+    return useAuth && currentToken ? { Authorization: 'Bearer ' + currentToken } : {}
+  }
+
   const loadVouchers = useCallback(async () => {
     setLoading(true)
     try {
-      const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(VOUCHERS_URL, { headers })
+      // GET vouchers is public in the API contract. Only auth-required write operations
+      // should include the bearer token.
+      const res = await fetch(VOUCHERS_URL, { headers: buildHeaders(false) })
       if (!res.ok) throw new Error('Failed to load vouchers')
       const data = await res.json()
       setVouchers(data)
@@ -25,8 +34,7 @@ export function useVouchers(token) {
   const getVoucherById = useCallback(
     async (id) => {
       try {
-        const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(`${VOUCHERS_URL}/${id}`, { headers })
+        const res = await fetch(`${VOUCHERS_URL}/${id}`, { headers: buildHeaders(false) })
         if (!res.ok) {
           const errorData = await res.json().catch(() => null)
           throw new Error(errorData?.message || 'Voucher not found')
@@ -43,8 +51,7 @@ export function useVouchers(token) {
   const getVoucherByCode = useCallback(
     async (code) => {
       try {
-        const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(`${VOUCHERS_URL}/code/${encodeURIComponent(code)}`, { headers })
+        const res = await fetch(`${VOUCHERS_URL}/code/${encodeURIComponent(code)}`, { headers: buildHeaders(false) })
         if (!res.ok) {
           const errorData = await res.json().catch(() => null)
           throw new Error(errorData?.message || 'Voucher not found')
@@ -60,13 +67,14 @@ export function useVouchers(token) {
 
   const createVoucher = useCallback(
     async (voucherData) => {
-      if (!token) return { success: false, message: 'Not authenticated' }
+      const currentToken = getCurrentToken()
+      if (!currentToken) return { success: false, message: 'Not authenticated' }
       try {
         const res = await fetch(VOUCHERS_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token,
+            ...buildHeaders(true),
           },
           body: JSON.stringify(voucherData),
         })
@@ -85,13 +93,14 @@ export function useVouchers(token) {
 
   const updateVoucher = useCallback(
     async (id, voucherData) => {
-      if (!token) return { success: false, message: 'Not authenticated' }
+      const currentToken = getCurrentToken()
+      if (!currentToken) return { success: false, message: 'Not authenticated' }
       try {
         const res = await fetch(`${VOUCHERS_URL}/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token,
+            ...buildHeaders(true),
           },
           body: JSON.stringify(voucherData),
         })
@@ -110,11 +119,12 @@ export function useVouchers(token) {
 
   const deleteVoucher = useCallback(
     async (id) => {
-      if (!token) return { success: false, message: 'Not authenticated' }
+      const currentToken = getCurrentToken()
+      if (!currentToken) return { success: false, message: 'Not authenticated' }
       try {
         const res = await fetch(`${VOUCHERS_URL}/${id}`, {
           method: 'DELETE',
-          headers: { Authorization: 'Bearer ' + token },
+          headers: buildHeaders(true),
         })
         if (!res.ok) {
           const errorData = await res.json().catch(() => null)
