@@ -24,8 +24,27 @@ function decodeJwtPayload(token) {
 
 function getRolesFromToken(token) {
   const payload = decodeJwtPayload(token)
-  const roles = payload?.realm_access?.roles
-  return Array.isArray(roles) ? roles.filter((role) => typeof role === 'string') : []
+  if (!payload) return []
+
+  const candidateRoles = []
+
+  if (Array.isArray(payload.roles)) {
+    candidateRoles.push(...payload.roles)
+  }
+
+  if (Array.isArray(payload?.realm_access?.roles)) {
+    candidateRoles.push(...payload.realm_access.roles)
+  }
+
+  if (payload?.resource_access && typeof payload.resource_access === 'object') {
+    Object.values(payload.resource_access).forEach((resource) => {
+      if (Array.isArray(resource?.roles)) {
+        candidateRoles.push(...resource.roles)
+      }
+    })
+  }
+
+  return Array.from(new Set(candidateRoles.filter((role) => typeof role === 'string')))
 }
 
 function hasAllowedRole(token) {

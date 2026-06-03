@@ -57,7 +57,7 @@ public class PrototypeService {
             throw new IllegalArgumentException("Prototype already exists: " + productId);
         }
 
-        validateAttributeTypes(attributeTypeNames);
+        ensureAttributeTypesExist(attributeTypeNames); // ← đổi ở đây
 
         Prototype prototype = new Prototype();
         prototype.setProductId(productId);
@@ -79,7 +79,7 @@ public class PrototypeService {
     public Prototype updateAttributes(String productId, String[] attributeTypeNames) {
         Prototype prototype = getById(productId);
 
-        validateAttributeTypes(attributeTypeNames);
+        ensureAttributeTypesExist(attributeTypeNames); // ← đổi ở đây
         prototype.packAttributes(attributeTypeNames);
 
         return prototypeRepository.save(prototype);
@@ -103,9 +103,7 @@ public class PrototypeService {
      */
     @Transactional
     public Prototype addAttributeType(String productId, String typeName) {
-        if (!attributeTypeService.exists(typeName)) {
-            throw new EntityNotFoundException("AttributeType not found: " + typeName);
-        }
+        attributeTypeService.findOrCreate(typeName);
 
         Prototype prototype = getById(productId);
         String[] current = prototype.getUnpackedAttributes();
@@ -148,15 +146,8 @@ public class PrototypeService {
      * Validate tất cả type name đều tồn tại trong AttributeType table.
      * Ném lỗi với danh sách đầy đủ các type không hợp lệ thay vì fail tại type đầu tiên.
      */
-    private void validateAttributeTypes(String[] typeNames) {
+    private void ensureAttributeTypesExist(String[] typeNames) {
         if (typeNames == null || typeNames.length == 0) return;
-
-        List<String> invalid = Arrays.stream(typeNames)
-                .filter(name -> !attributeTypeService.exists(name))
-                .toList();
-
-        if (!invalid.isEmpty()) {
-            throw new EntityNotFoundException("AttributeType(s) not found: " + String.join(", ", invalid));
-        }
+        Arrays.stream(typeNames).forEach(attributeTypeService::findOrCreate);
     }
 }

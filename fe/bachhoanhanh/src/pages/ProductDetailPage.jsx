@@ -162,6 +162,40 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
           <span className="card-chip" style={{ position: 'static', width: 'fit-content' }}>
             {product.catalogId || 'General'}
           </span>
+          {product.brandName && (
+            <div className="brand-preview" style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '16px 0' }}>
+              <div
+                style={{
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  background: 'var(--bg-alt)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {product.brandImage ? (
+                  <img
+                    src={product.brandImage}
+                    alt={product.brandName}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <span style={{ color: 'var(--muted)', fontSize: '12px', textAlign: 'center', padding: '4px' }}>
+                    Brand
+                  </span>
+                )}
+              </div>
+              <div>
+                <div style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--muted)' }}>
+                  Brand
+                </div>
+                <strong style={{ display: 'block', fontSize: '18px', marginTop: '4px' }}>{product.brandName}</strong>
+              </div>
+            </div>
+          )}
           <h1>{product.name}</h1>
           <p className="detail-description">
             {product.description || 'Daily essential product available through BachHoaNhanh storefront.'}
