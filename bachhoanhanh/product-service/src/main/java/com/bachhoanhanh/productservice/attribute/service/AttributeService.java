@@ -1,6 +1,7 @@
 package com.bachhoanhanh.productservice.attribute.service;
 
 import com.bachhoanhanh.productservice.attribute.model.Attribute;
+import com.bachhoanhanh.productservice.attribute.model.AttributeDataType;
 import com.bachhoanhanh.productservice.attribute.model.AttributeId;
 import com.bachhoanhanh.productservice.attribute.repository.AttributeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -83,10 +84,15 @@ public class AttributeService {
     public List<Attribute> setAll(Long productId, Map<String, String> attributeMap) {
         List<Attribute> toSave = attributeMap.entrySet().stream()
                 .map(entry -> {
+                    // Tự tạo AttributeType nếu chưa có
                     if (!attributeTypeService.exists(entry.getKey())) {
-                        throw new EntityNotFoundException("AttributeType not found: " + entry.getKey());
+                        attributeTypeService.create(entry.getKey(), AttributeDataType.String); // ← auto-create
                     }
-                    return new Attribute(new AttributeId(productId, entry.getKey()), entry.getValue(), null);
+                    return new Attribute(
+                            new AttributeId(productId, entry.getKey()),
+                            entry.getValue(),
+                            null
+                    );
                 })
                 .toList();
         return attributeRepository.saveAll(toSave);

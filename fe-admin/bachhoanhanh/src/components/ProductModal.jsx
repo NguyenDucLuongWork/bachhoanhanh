@@ -418,9 +418,29 @@ export function ProductModal({ isOpen, title, onClose, onSave, product, prototyp
                       className="btn btn-accent"
                       onClick={() => {
                         const fields = ocr.result.fields || {}
+                        
+                        // Fill in top-level fields
                         if (fields.name) setName(fields.name)
-                        if (fields.sku && !barcode) setBarcode(fields.sku)
-                        if (fields.price) setOriginalPrice(String(Number(fields.price) || fields.price))
+                        if (fields.barcode && !barcode) setBarcode(fields.barcode)
+                        if (fields.description) setDescription(fields.description)
+                        if (fields.originalPrice) setOriginalPrice(String(Number(fields.originalPrice) || fields.originalPrice))
+                        if (fields.catalogId) setCatalogId(fields.catalogId)
+                        if (fields.prototypeId) setSelectedPrototypeId(fields.prototypeId)
+                        
+                        // Fill in all attributes from OCR result
+                        if (fields.attributes && typeof fields.attributes === 'object') {
+                          setAttributes(prev => {
+                            const updated = { ...prev }
+                            // Merge OCR attributes, skipping null/undefined values
+                            Object.entries(fields.attributes).forEach(([key, value]) => {
+                              if (value !== null && value !== undefined && value !== '') {
+                                updated[key] = String(value)
+                              }
+                            })
+                            return updated
+                          })
+                        }
+                        
                         // attach the selected file as the imageFile to be uploaded with product
                         if (ocrSelectedFile) {
                           setImageFile(ocrSelectedFile)
