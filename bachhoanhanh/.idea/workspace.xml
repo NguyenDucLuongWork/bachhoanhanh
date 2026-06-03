@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useOcr.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useOcr.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useVouchers.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/hooks/useVouchers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocr-service/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocr-service/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocr-service/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ocr-service/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,8 +197,8 @@
               <entry key="order | #5" value="STOPPED" />
               <entry key="order | #7" value="STOPPED" />
               <entry key="order | #8" value="STOPPED" />
-              <entry key="order | customerLogin" value="STOPPED" />
-              <entry key="order | staffLogin" value="STOPPED" />
+              <entry key="products | #4" value="STOPPED" />
+              <entry key="products | #5" value="STOPPED" />
             </map>
           </value>
         </entry>
@@ -214,10 +215,10 @@
     <configuration name="order | #8" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/order.http" executionIdentifier="#8" index="8" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="order | customerLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/order.http" executionIdentifier="customerLogin" index="3" runType="Run single request">
+    <configuration name="products | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/products.http" executionIdentifier="#4" index="4" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="order | staffLogin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/order.http" executionIdentifier="staffLogin" index="2" runType="Run single request">
+    <configuration name="products | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-testing/products.http" executionIdentifier="#5" index="5" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="AiServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -299,11 +300,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.products | #4" />
+        <item itemvalue="HTTP Request.products | #5" />
         <item itemvalue="HTTP Request.order | #8" />
         <item itemvalue="HTTP Request.order | #7" />
         <item itemvalue="HTTP Request.order | #5" />
-        <item itemvalue="HTTP Request.order | customerLogin" />
-        <item itemvalue="HTTP Request.order | staffLogin" />
       </list>
     </recent_temporary>
   </component>
@@ -340,7 +341,7 @@
       <workItem from="1780219862699" duration="9081000" />
       <workItem from="1780354033651" duration="17027000" />
       <workItem from="1780376192062" duration="25028000" />
-      <workItem from="1780468677310" duration="11157000" />
+      <workItem from="1780468677310" duration="18058000" />
     </task>
     <servers />
   </component>
@@ -363,6 +364,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ocr-service/app.py</url>
+          <line>17</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
