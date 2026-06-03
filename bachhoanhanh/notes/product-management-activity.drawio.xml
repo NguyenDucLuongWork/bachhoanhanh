@@ -1,0 +1,290 @@
+<mxfile host="app.diagrams.net" modified="2026-06-02T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="product-list-activity" name="1. Xem danh sách sản phẩm">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-list" value="Activity Diagram - Xem danh sách sản phẩm" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="320" y="20" width="560" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="list-start" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="591" y="80" width="18" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a1" value="Admin mở trang quản lý sản phẩm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="120" width="340" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a2" value="Frontend gọi API&#xa;GET /products" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="190" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a3" value="Gateway route /products/**&#xa;đến product-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="270" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="list-d1" value="Redis cache&#xa;products::all có dữ liệu?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="500" y="350" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a4" value="Lấy danh sách sản phẩm&#xa;từ Redis cache" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="790" y="375" width="280" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a5" value="Query MariaDB&#xa;SELECT * FROM base_product" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="130" y="350" width="280" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a6" value="Lưu kết quả vào Redis cache" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="130" y="430" width="280" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a7" value="ProductController map&#xa;BaseProduct -> ProductResponse" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="530" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a8" value="Frontend nhận ProductResponse[]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="610" width="340" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="list-a9" value="Hiển thị danh sách sản phẩm&#xa;search / filter / sort trên UI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="690" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="list-end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="590" y="780" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="list-e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-start" target="list-a1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a1" target="list-a2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a2" target="list-a3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a3" target="list-d1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e5" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="list-d1" target="list-a4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e6" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="list-d1" target="list-a5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a5" target="list-a6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a4" target="list-a7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a6" target="list-a7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a7" target="list-a8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a8" target="list-a9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="list-e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="list-a9" target="list-end"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="product-create-activity" name="2. Thêm sản phẩm">
+    <mxGraphModel dx="1200" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1150" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-create" value="Activity Diagram - Thêm sản phẩm" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="390" y="20" width="520" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="create-start" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="641" y="80" width="18" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a1" value="Admin chọn Add product&#xa;và nhập thông tin sản phẩm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="120" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a2" value="Frontend build request&#xa;JSON hoặc multipart nếu có imageFile" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="200" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a3" value="POST /products" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="280" width="340" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a4" value="Gateway route request&#xa;đến product-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="350" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-d1" value="Có imageFile?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="430" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a5" value="Validate ảnh&#xa;và upload lên S3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="870" y="445" width="260" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a6" value="Set image URL&#xa;vào ProductRequest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="870" y="525" width="260" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a7" value="BaseProductService kiểm tra&#xa;barcode đã tồn tại chưa" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="620" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-d2" value="Barcode trùng?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="700" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="create-error" value="Trả lỗi tạo sản phẩm&#xa;Frontend hiển thị thông báo thất bại" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="120" y="718" width="300" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a8" value="INSERT base_product&#xa;vào MariaDB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="820" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-d3" value="Có attributes?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="900" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a9" value="AttributeService.setAll&#xa;INSERT attributes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="870" y="918" width="260" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a10" value="Evict cache products&#xa;và attributes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1010" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-a11" value="Trả ProductResponse&#xa;Frontend thêm sản phẩm vào danh sách" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1085" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="create-end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1180" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="create-e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-start" target="create-a1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a1" target="create-a2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a2" target="create-a3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a3" target="create-a4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a4" target="create-d1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e6" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="create-d1" target="create-a5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a5" target="create-a6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a6" target="create-a7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e9" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="create-d1" target="create-a7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a7" target="create-d2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e11" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="create-d2" target="create-error"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e12" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="create-d2" target="create-a8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a8" target="create-d3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e14" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="create-d3" target="create-a9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a9" target="create-a10"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e16" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="create-d3" target="create-a10"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a10" target="create-a11"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-a11" target="create-end"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="create-e19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="create-error" target="create-end"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="product-update-activity" name="3. Sửa sản phẩm">
+    <mxGraphModel dx="1200" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-update" value="Activity Diagram - Sửa sản phẩm" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="390" y="20" width="520" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="update-start" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="641" y="80" width="18" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a1" value="Admin chọn Edit product&#xa;và sửa thông tin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="120" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a2" value="Frontend gọi API&#xa;PUT /products/{id}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="200" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a3" value="Gateway route request&#xa;đến product-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="280" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="update-d1" value="Có imageFile mới?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="360" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a4" value="Upload ảnh mới lên S3&#xa;và set image URL mới" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="870" y="378" width="280" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a5" value="BaseProductService.getById(id)&#xa;lấy product hiện tại" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="490" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a6" value="UPDATE base_product&#xa;name, image, description, catalogId, price, prototypeId" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="570" width="340" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="update-d2" value="Ảnh cũ thay đổi&#xa;và do hệ thống quản lý?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="670" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a7" value="Xóa ảnh cũ khỏi S3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="870" y="695" width="280" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="update-d3" value="Có attributes?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="805" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a8" value="AttributeService.setAll&#xa;upsert attributes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="870" y="823" width="280" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a9" value="Evict cache products&#xa;và attributes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="930" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="update-a10" value="Trả ProductResponse&#xa;Frontend cập nhật sản phẩm trên UI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1010" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="update-end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1090" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="update-e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-start" target="update-a1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a1" target="update-a2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a2" target="update-a3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a3" target="update-d1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e5" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="update-d1" target="update-a4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a4" target="update-a5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e7" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="update-d1" target="update-a5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a5" target="update-a6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a6" target="update-d2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e10" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="update-d2" target="update-a7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a7" target="update-d3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e12" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="update-d2" target="update-d3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e13" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="update-d3" target="update-a8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a8" target="update-a9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e15" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="update-d3" target="update-a9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a9" target="update-a10"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="update-e17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="update-a10" target="update-end"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="product-delete-activity" name="4. Xóa sản phẩm">
+    <mxGraphModel dx="1200" dy="950" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-delete" value="Activity Diagram - Xóa sản phẩm" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="340" y="20" width="520" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-start" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="591" y="80" width="18" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a1" value="Admin chọn Delete product" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="120" width="340" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-d1" value="Admin xác nhận xóa?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="500" y="200" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-cancel" value="Hủy thao tác&#xa;không gọi API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="130" y="218" width="260" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a2" value="Frontend gọi API&#xa;DELETE /products/{id}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="330" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a3" value="Gateway route request&#xa;đến product-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="410" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a4" value="BaseProductService.getById(id)&#xa;lấy product cần xóa" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="490" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a5" value="AttributeService.removeAllByProduct(id)&#xa;DELETE attributes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="570" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a6" value="DELETE base_product" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="650" width="340" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-d2" value="Ảnh thuộc hệ thống quản lý?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="500" y="730" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a7" value="Xóa ảnh khỏi S3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="750" width="250" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a8" value="Evict cache products&#xa;và attributes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="850" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-a9" value="Trả 204 No Content&#xa;Frontend remove product khỏi danh sách" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="930" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="delete-end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="590" y="1020" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="delete-e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-start" target="delete-a1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a1" target="delete-d1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e3" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="delete-d1" target="delete-cancel"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e4" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="delete-d1" target="delete-a2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a2" target="delete-a3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a3" target="delete-a4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a4" target="delete-a5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a5" target="delete-a6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a6" target="delete-d2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e10" value="Có" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="delete-d2" target="delete-a7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a7" target="delete-a8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e12" value="Không" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=12;" edge="1" parent="1" source="delete-d2" target="delete-a8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a8" target="delete-a9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-a9" target="delete-end"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="delete-e15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="delete-cancel" target="delete-end"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
