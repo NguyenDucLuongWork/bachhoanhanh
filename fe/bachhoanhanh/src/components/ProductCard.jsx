@@ -3,8 +3,6 @@ import { formatPrice, getAvailableAmount } from '../utils/helpers'
 export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, onAddToCart, onBuyNow }) {
   const availableAmount = getAvailableAmount(product)
   const hasStock = availableAmount > 0
-  const stockStatus = hasStock ? 'In Stock' : 'Out of Stock'
-  const stockColor = hasStock ? '#10b981' : '#ef4444'
   
   return (
     <article className="store-card" onClick={() => onView(product.productId)}>
@@ -13,21 +11,6 @@ export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, on
           <img src={product.image} alt={product.name} />
         ) : (
           <div className="image-fallback">No image</div>
-        )}
-        {!isAdminUser && (
-          <span style={{
-            position: 'absolute',
-            top: '8px',
-            right: '8px',
-            background: stockColor,
-            color: 'white',
-            padding: '4px 8px',
-            borderRadius: '4px',
-            fontSize: '11px',
-            fontWeight: '600'
-          }}>
-            {stockStatus}
-          </span>
         )}
       </div>
 

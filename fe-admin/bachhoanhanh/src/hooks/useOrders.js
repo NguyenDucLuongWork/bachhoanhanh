@@ -4,9 +4,11 @@ import { API_ENDPOINTS } from '../config'
 export function useOrders(token) {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(false)
+  const [lastUserId, setLastUserId] = useState(null)
 
   const loadOrders = useCallback(async (userId = null) => {
     setLoading(true)
+    setLastUserId(userId)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
       let url = API_ENDPOINTS.ORDERS
@@ -16,9 +18,44 @@ export function useOrders(token) {
       }
       const res = await fetch(url, { headers })
       if (!res.ok) throw new Error('Failed to load orders')
-      const data = await res.json()
-      setOrders(data)
-      return { success: true, data }
+      let data = await res.json()
+      
+      // Ensure each order has a status field
+      let ordersWithStatus = (Array.isArray(data) ? data : []).map(order => ({
+        ...order,
+        status: (order.status || 'PENDING').toUpperCase()
+      }))
+      
+      // Check if any order is missing the status field (when status is falsy and was defaulted to pending)
+      const needsDetailFetch = ordersWithStatus.length > 0 && ordersWithStatus.some(o => !data.find(d => d.id === o.id)?.status)
+      
+      if (needsDetailFetch) {
+        try {
+          const detailedOrders = await Promise.all(
+            ordersWithStatus.map(async (order) => {
+              // Skip if order already has a real status (not just default)
+              const originalOrder = data.find(d => d.id === order.id)
+              if (originalOrder?.status) {
+                return order
+              }
+              
+              const detailRes = await fetch(API_ENDPOINTS.ORDERS + '/' + order.id, { headers })
+              if (detailRes.ok) {
+                const details = await detailRes.json()
+                return { ...order, ...details, status: (details.status || 'PENDING').toUpperCase() }
+              }
+              return order
+            })
+          )
+          ordersWithStatus = detailedOrders
+        } catch (e) {
+          console.error('Error fetching order details:', e)
+          // Continue with partial data
+        }
+      }
+      
+      setOrders(ordersWithStatus)
+      return { success: true, data: ordersWithStatus }
     } catch (e) {
       return { success: false, message: e.message }
     } finally {
@@ -92,14 +129,27 @@ export function useOrders(token) {
           headers,
           body: JSON.stringify({ status }),
         })
-        if (!res.ok) throw new Error('Update failed')
-        await loadOrders()
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => null)
+          throw new Error(errorData?.message || 'Update failed')
+        }
+        const updatedOrder = await res.json()
+        
+        // Update local state immediately
+        setOrders(prevOrders => 
+          prevOrders.map(order => 
+            order.id === id ? { ...order, ...updatedOrder, status: (updatedOrder.status || status).toUpperCase() } : order
+          )
+        )
+        
+        // Then refresh from server
+        await loadOrders(lastUserId)
         return { success: true, message: 'Order updated' }
       } catch (e) {
         return { success: false, message: e.message }
       }
     },
-    [token, loadOrders]
+    [token, loadOrders, lastUserId]
   )
 
   const cancelOrder = useCallback(
@@ -111,13 +161,22 @@ export function useOrders(token) {
           headers,
         })
         if (!res.ok) throw new Error('Cancel failed')
-        await loadOrders()
+        
+        // Update local state immediately - set status to 'CANCELLED'
+        setOrders(prevOrders =>
+          prevOrders.map(order =>
+            order.id === id ? { ...order, status: 'CANCELLED' } : order
+          )
+        )
+        
+        // Then refresh from server
+        await loadOrders(lastUserId)
         return { success: true, message: 'Order cancelled' }
       } catch (e) {
         return { success: false, message: e.message }
       }
     },
-    [token, loadOrders]
+    [token, loadOrders, lastUserId]
   )
 
   return {

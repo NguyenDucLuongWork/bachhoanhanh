@@ -6,15 +6,17 @@ import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
 import { formatPrice } from '../utils/helpers'
 
-const ORDER_STATUSES = ['pending', 'processing', 'shipped', 'delivered', 'cancelled']
+const ORDER_STATUSES = ['PENDING', 'ACCEPTED', 'SHIPPED', 'DELIVERED', 'CANCELLED']
 
 const STATUS_LABELS = {
-  pending: 'Pending',
-  processing: 'Processing',
-  shipped: 'Shipped',
-  delivered: 'Delivered',
-  cancelled: 'Cancelled',
+  PENDING: 'Pending',
+  ACCEPTED: 'Accepted',
+  SHIPPED: 'Shipped',
+  DELIVERED: 'Delivered',
+  CANCELLED: 'Cancelled',
 }
+
+const normalizeStatus = (status) => (status || 'PENDING').toUpperCase()
 
 export function OrdersPage({
   orders,
@@ -75,7 +77,7 @@ export function OrdersPage({
 
     // Filter by status
     if (statusFilter !== 'all') {
-      filtered = filtered.filter((o) => o.status === statusFilter)
+      filtered = filtered.filter((o) => normalizeStatus(o.status) === statusFilter)
     }
 
     return filtered
@@ -91,7 +93,7 @@ export function OrdersPage({
     )
 
     orders.forEach((order) => {
-      const status = order.status || 'pending'
+      const status = normalizeStatus(order.status)
       stats[status] = (stats[status] || 0) + 1
     })
 
@@ -251,24 +253,36 @@ export function OrdersPage({
                     </td>
                     <td>{order.voucherCode || '-'}</td>
                     <td>
-                      <select
-                        className="admin-status-select"
-                        value={order.status || 'pending'}
-                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                      >
-                        {ORDER_STATUSES.map((status) => (
-                          <option key={status} value={status}>
-                            {STATUS_LABELS[status]}
-                          </option>
-                        ))}
-                      </select>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span style={{ fontWeight: 500 }}>
+                          {STATUS_LABELS[normalizeStatus(order.status)] || normalizeStatus(order.status)}
+                        </span>
+                        {normalizeStatus(order.status) === 'PENDING' && (
+                          <div style={{ display: 'flex', gap: 6 }}>
+                            <button
+                              className="btn btn-sm"
+                              onClick={() => handleStatusChange(order.id, 'ACCEPTED')}
+                              style={{ padding: '4px 10px', fontSize: '12px' }}
+                            >
+                              Accept
+                            </button>
+                            <button
+                              className="btn btn-danger btn-sm"
+                              onClick={() => handleCancelClick(order.id)}
+                              style={{ padding: '4px 10px', fontSize: '12px' }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </td>
                     <td>
                       <div className="admin-order-actions">
                         <button className="btn btn-ghost btn-sm" onClick={() => handleViewDetails(order.id)}>
                           View
                         </button>
-                        {order.status !== 'cancelled' && (
+                        {normalizeStatus(order.status) !== 'CANCELLED' && (
                           <button className="btn btn-danger btn-sm" onClick={() => handleCancelClick(order.id)}>
                             Cancel
                           </button>
@@ -365,11 +379,11 @@ export function OrdersPage({
           onChange={(e) => setStatusFilter(e.target.value)}
         >
           <option value="all">All Status</option>
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="shipped">Shipped</option>
-          <option value="delivered">Delivered</option>
-          <option value="cancelled">Cancelled</option>
+          {ORDER_STATUSES.map((status) => (
+            <option key={status} value={status}>
+              {STATUS_LABELS[status]}
+            </option>
+          ))}
         </select>
       </div>
 

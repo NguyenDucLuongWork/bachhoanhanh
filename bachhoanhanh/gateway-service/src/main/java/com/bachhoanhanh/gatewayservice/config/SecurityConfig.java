@@ -99,8 +99,21 @@ public class SecurityConfig {
                         .pathMatchers("/products/**", "/attribute-types/**", "/prototypes/**", "/brands/**", "/catalogs/**", "/stocks/**").authenticated()
 
                         // --- Orders & Payments ---
-                                .pathMatchers(HttpMethod.GET, "/orders/**").permitAll()
-                                .pathMatchers("/orders/**", "/payments/**").authenticated()
+                        // 1. Cho phép xem (tùy logic của bạn, nếu chỉ user xem đơn của họ thì đổi thành authenticated)
+                        .pathMatchers(HttpMethod.GET, "/orders/**").permitAll()
+
+                        // 2. User đã đăng nhập được phép tạo đơn hàng và thanh toán
+                        .pathMatchers(HttpMethod.POST, "/orders/**", "/payments/**").authenticated()
+
+                        // 3. Phân quyền: Cả ADMIN và STAFF đều được cập nhật thông tin/trạng thái đơn hàng
+                        .pathMatchers(HttpMethod.PUT, "/orders/**", "/payments/**").hasAnyRole("ADMIN", "STAFF")
+                        .pathMatchers(HttpMethod.PATCH, "/orders/**", "/payments/**").hasAnyRole("ADMIN", "STAFF")
+
+                        // 4. Xóa đơn hàng: Bạn có thể cho cả STAFF, hoặc chỉ ADMIN mới được xóa (ở đây đang mở cho cả STAFF)
+                        .pathMatchers(HttpMethod.DELETE, "/orders/**").hasAnyRole("ADMIN", "STAFF")
+
+                        // 5. Bắt các request còn lại (bảo mật dự phòng)
+                        .pathMatchers("/orders/**", "/payments/**").authenticated()
 
                         // --- Cart ---
                         .pathMatchers("/cart/**").authenticated()

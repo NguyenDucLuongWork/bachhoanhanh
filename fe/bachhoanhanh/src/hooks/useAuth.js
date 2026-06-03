@@ -6,6 +6,7 @@ const ME_URL = '/users/me'
 const TOKEN_STORAGE_KEY = 'bhn_access_token'
 const USERNAME_STORAGE_KEY = 'bhn_username'
 const PROFILE_STORAGE_KEY = 'bhn_user_profile'
+const ALLOWED_ROLES = ['CUSTOMER']
 
 function decodeJwtPayload(token) {
   try {
@@ -27,6 +28,11 @@ function getRolesFromToken(token) {
   return Array.isArray(roles) ? roles.filter((role) => typeof role === 'string') : []
 }
 
+function hasAllowedRole(token) {
+  const roles = getRolesFromToken(token)
+  return roles.some((role) => ALLOWED_ROLES.includes(role))
+}
+
 function isTokenExpired(token) {
   const payload = decodeJwtPayload(token)
   if (!payload?.exp) return true
@@ -35,7 +41,7 @@ function isTokenExpired(token) {
 
 function getStoredToken() {
   const token = localStorage.getItem(TOKEN_STORAGE_KEY)
-  if (!token || isTokenExpired(token)) {
+  if (!token || isTokenExpired(token) || !hasAllowedRole(token)) {
     localStorage.removeItem(TOKEN_STORAGE_KEY)
     localStorage.removeItem(USERNAME_STORAGE_KEY)
     localStorage.removeItem(PROFILE_STORAGE_KEY)
@@ -128,6 +134,9 @@ export function useAuth() {
 
       const data = await res.json()
       const userRoles = getRolesFromToken(data.access_token)
+      if (!hasAllowedRole(data.access_token)) {
+        throw new Error('Customer access only. Use a CUSTOMER account.')
+      }
       localStorage.setItem(TOKEN_STORAGE_KEY, data.access_token)
       localStorage.setItem(USERNAME_STORAGE_KEY, user)
       setToken(data.access_token)
