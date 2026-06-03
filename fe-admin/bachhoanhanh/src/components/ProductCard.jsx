@@ -4,7 +4,6 @@ export function ProductCard({ product, onView, onEdit, isAdminUser, onAddToCart,
   const availableAmount = getAvailableAmount(product)
   const hasStock = availableAmount > 0
   const stockStatus = hasStock ? 'In Stock' : 'Out of Stock'
-  const stockColor = hasStock ? '#10b981' : '#ef4444'
   
   return (
     <article className="store-card" onClick={() => onView(product.productId)}>
@@ -15,17 +14,7 @@ export function ProductCard({ product, onView, onEdit, isAdminUser, onAddToCart,
           <div className="image-fallback">No image</div>
         )}
         {!isAdminUser && (
-          <span style={{
-            position: 'absolute',
-            top: '8px',
-            right: '8px',
-            background: stockColor,
-            color: 'white',
-            padding: '4px 8px',
-            borderRadius: '4px',
-            fontSize: '11px',
-            fontWeight: '600'
-          }}>
+          <span className={hasStock ? 'stock-badge in-stock' : 'stock-badge out-stock'}>
             {stockStatus}
           </span>
         )}

@@ -256,8 +256,8 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
 
       {/* Related Products */}
       {relatedProducts.length > 0 && !isAdminUser && (
-        <section style={{ marginTop: '40px' }}>
-          <div className="page-header" style={{ marginBottom: '20px' }}>
+        <section className="related-section">
+          <div className="page-header">
             <div>
               <h2>Related products</h2>
               <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '2px' }}>
@@ -269,46 +269,23 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
             {relatedProducts.map((relProduct) => (
               <div 
                 key={relProduct.productId}
-                style={{
-                  border: '1px solid var(--border)',
-                  borderRadius: '8px',
-                  padding: '12px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = 'none'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                }}
+                className="related-card"
                 onClick={() => onViewProduct(relProduct.productId)}
               >
-                <div style={{ height: '140px', background: 'var(--bg-alt)', borderRadius: '6px', marginBottom: '10px', overflow: 'hidden' }}>
+                <div className="related-card-media">
                   {relProduct.image ? (
-                    <img src={relProduct.image} alt={relProduct.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={relProduct.image} alt={relProduct.name} />
                   ) : (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--muted)' }}>
-                      No image
-                    </div>
+                    <div className="image-fallback">No image</div>
                   )}
                 </div>
-                <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600', lineHeight: '1.3' }}>
+                <h4>
                   {relProduct.name}
                 </h4>
-                <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: 'var(--muted)' }}>
+                <p>
                   {formatPrice(relProduct.originalPrice)} VND
                 </p>
-                <span style={{
-                  display: 'inline-block',
-                  fontSize: '11px',
-                  padding: '4px 8px',
-                  background: getAvailableAmount(relProduct) > 0 ? '#d1fae5' : '#fee2e2',
-                  color: getAvailableAmount(relProduct) > 0 ? '#065f46' : '#7f1d1d',
-                  borderRadius: '4px'
-                }}>
+                <span className={getAvailableAmount(relProduct) > 0 ? 'mini-stock in-stock' : 'mini-stock out-stock'}>
                   {getAvailableAmount(relProduct) > 0 ? 'In stock' : 'Out of stock'}
                 </span>
               </div>

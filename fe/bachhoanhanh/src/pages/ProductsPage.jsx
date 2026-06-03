@@ -215,13 +215,12 @@ export function ProductsPage({
           </div>
 
           {/* Filters and Sort */}
-          <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <label style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Sort by:</label>
+          <div className="store-filters">
+            <div className="store-filter-group">
+              <label>Sort by:</label>
               <select 
                 value={sortBy} 
                 onChange={(e) => setSortBy(e.target.value)}
-                style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid var(--border)' }}
               >
                 <option value="name">Name (A-Z)</option>
                 <option value="price-asc">Price (Low to High)</option>
@@ -229,15 +228,14 @@ export function ProductsPage({
               </select>
             </div>
 
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <label style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Price:</label>
+            <div className="store-filter-group">
+              <label>Price:</label>
               <input 
                 type="number" 
                 min="0" 
                 value={priceMin}
                 onChange={(e) => setPriceMin(Math.max(0, parseInt(e.target.value) || 0))}
                 placeholder="Min"
-                style={{ width: '80px', padding: '6px 8px', borderRadius: '6px', border: '1px solid var(--border)' }}
               />
               <span style={{ color: 'var(--muted)' }}>-</span>
               <input 
@@ -246,7 +244,6 @@ export function ProductsPage({
                 value={priceMax}
                 onChange={(e) => setPriceMax(Math.max(0, parseInt(e.target.value) || 1000000))}
                 placeholder="Max"
-                style={{ width: '80px', padding: '6px 8px', borderRadius: '6px', border: '1px solid var(--border)' }}
               />
             </div>
 
@@ -258,7 +255,6 @@ export function ProductsPage({
                   setPriceMin(0)
                   setPriceMax(1000000)
                 }}
-                style={{ fontSize: '12px' }}
               >
                 Clear filters
               </button>

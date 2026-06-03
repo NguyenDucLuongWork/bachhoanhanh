@@ -204,13 +204,12 @@ export function ProductsPage({
           </div>
 
           {/* Filters and Sort */}
-          <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <label style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Sort by:</label>
+          <div className="store-filters">
+            <div className="store-filter-group">
+              <label>Sort by:</label>
               <select 
                 value={sortBy} 
                 onChange={(e) => setSortBy(e.target.value)}
-                style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid var(--border)' }}
               >
                 <option value="name">Name (A-Z)</option>
                 <option value="price-asc">Price (Low to High)</option>
@@ -218,15 +217,14 @@ export function ProductsPage({
               </select>
             </div>
 
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <label style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Price:</label>
+            <div className="store-filter-group">
+              <label>Price:</label>
               <input 
                 type="number" 
                 min="0" 
                 value={priceMin}
                 onChange={(e) => setPriceMin(Math.max(0, parseInt(e.target.value) || 0))}
                 placeholder="Min"
-                style={{ width: '80px', padding: '6px 8px', borderRadius: '6px', border: '1px solid var(--border)' }}
               />
               <span style={{ color: 'var(--muted)' }}>-</span>
               <input 
@@ -235,7 +233,6 @@ export function ProductsPage({
                 value={priceMax}
                 onChange={(e) => setPriceMax(Math.max(0, parseInt(e.target.value) || 1000000))}
                 placeholder="Max"
-                style={{ width: '80px', padding: '6px 8px', borderRadius: '6px', border: '1px solid var(--border)' }}
               />
             </div>
 
@@ -247,7 +244,6 @@ export function ProductsPage({
                   setPriceMin(0)
                   setPriceMax(1000000)
                 }}
-                style={{ fontSize: '12px' }}
               >
                 Clear filters
               </button>
@@ -260,94 +256,72 @@ export function ProductsPage({
               <p style={{ fontSize: '14px' }}>No products match your filters.</p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto', marginTop: '20px' }}>
-              <table style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                backgroundColor: 'var(--card-bg)',
-                borderRadius: '8px',
-                overflow: 'hidden',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-              }}>
+            <div className="admin-product-table-wrap">
+              <table className="admin-product-table">
                 <thead>
-                  <tr style={{ 
-                    backgroundColor: 'var(--elevated-bg)',
-                    borderBottom: '2px solid var(--border)'
-                  }}>
-                    <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>ID</th>
-                    <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Barcode</th>
-                    <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Name</th>
-                    <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Description</th>
-                    <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Price</th>
-                    <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Catalog</th>
-                    <th style={{ padding: '12px 16px', textAlign: 'center', fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Available</th>
-                    <th style={{ padding: '12px 16px', textAlign: 'center', fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Actions</th>
+                  <tr>
+                    <th>ID</th>
+                    <th>Barcode</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Catalog</th>
+                    <th className="text-center">Available</th>
+                    <th className="text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredProducts.map((product, index) => (
+                  {filteredProducts.map((product) => (
                     <tr 
                       key={product.productId}
-                      style={{ 
-                        borderBottom: '1px solid var(--border)',
-                        backgroundColor: index % 2 === 0 ? 'transparent' : 'var(--elevated-bg)',
-                        transition: 'background-color 0.2s',
-                        cursor: 'pointer'
-                      }}
                       onClick={() => onViewProduct(product.productId)}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover-bg)'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = index % 2 === 0 ? 'transparent' : 'var(--elevated-bg)'}
                     >
-                      <td style={{ padding: '12px 16px', fontSize: '13px' }}>{product.productId}</td>
-                      <td style={{ padding: '12px 16px', fontSize: '13px', fontFamily: 'monospace', color: 'var(--muted)' }}>{product.barcode || '-'}</td>
-                      <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: '500' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <td>{product.productId}</td>
+                      <td className="mono-muted">{product.barcode || '-'}</td>
+                      <td>
+                        <div className="admin-product-name">
                           {product.image && (
                             <img 
                               src={product.image} 
                               alt={product.name}
-                              style={{ width: '32px', height: '32px', borderRadius: '4px', objectFit: 'cover' }}
                             />
                           )}
                           <span>{product.name}</span>
                         </div>
                       </td>
-                      <td style={{ padding: '12px 16px', fontSize: '13px', color: 'var(--muted)', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      <td className="admin-product-description">
                         {product.description || '-'}
                       </td>
-                      <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: '500' }}>
+                      <td className="admin-product-price">
                         {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.originalPrice || 0)}
                       </td>
-                      <td style={{ padding: '12px 16px', fontSize: '13px', color: 'var(--muted)' }}>{product.catalogId || '-'}</td>
-                      <td style={{ padding: '12px 16px', textAlign: 'center', fontSize: '13px', color: 'var(--muted)' }}>
+                      <td className="muted-cell">{product.catalogId || '-'}</td>
+                      <td className="text-center muted-cell">
                         {getAvailableAmount(product)}
                       </td>
-                      <td style={{ padding: '12px 16px', textAlign: 'center', fontSize: '12px' }}>
-                        <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                              <button 
-                            className="btn btn-ghost"
+                      <td>
+                        <div className="admin-row-actions">
+                          <button
+                            className="btn btn-ghost btn-sm"
                             onClick={(event) => {
                               event.stopPropagation()
                               setSelectedProduct(product)
                               setIsEditModalOpen(true)
                             }}
-                            style={{ padding: '4px 8px', fontSize: '12px', minWidth: 'auto' }}
                           >
                             Edit
                           </button>
                           {!isAdminUser && (
                             <>
                               <button 
-                                className="btn btn-ghost"
+                                className="btn btn-ghost btn-sm"
                                 onClick={() => onAddToCart?.(product)}
-                                style={{ padding: '4px 8px', fontSize: '12px', minWidth: 'auto' }}
                               >
                                 Cart
                               </button>
                               <button 
-                                className="btn btn-accent"
+                                className="btn btn-accent btn-sm"
                                 onClick={() => onBuyNow?.(product)}
-                                style={{ padding: '4px 8px', fontSize: '12px', minWidth: 'auto' }}
                               >
                                 Buy
                               </button>

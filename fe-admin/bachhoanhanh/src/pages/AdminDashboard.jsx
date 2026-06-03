@@ -139,7 +139,7 @@ export function AdminDashboard({ orders = [], loading = false, onLoadOrders, pro
             Sales overview and product performance
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div className="dashboard-actions">
           <button className="btn btn-ghost" onClick={() => onLoadOrders && onLoadOrders()}>
             Refresh
           </button>
@@ -150,7 +150,7 @@ export function AdminDashboard({ orders = [], loading = false, onLoadOrders, pro
             type="month"
             value={monthKey}
             onChange={handleMonthInput}
-            style={{ padding: '6px 8px', borderRadius: 8 }}
+            className="dashboard-month-input"
           />
           <button className="btn btn-ghost" onClick={() => changeMonth(1)}>
             &rarr;
@@ -158,63 +158,63 @@ export function AdminDashboard({ orders = [], loading = false, onLoadOrders, pro
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 16 }}>
-        <div style={{ padding: 12, borderRadius: 12, background: 'var(--surface)', border: '1px solid var(--border)' }}>
-          <div style={{ fontSize: 12, color: 'var(--muted)' }}>Revenue ({monthKey})</div>
-          <div style={{ fontSize: 20, fontWeight: 700 }}>{formatPrice(stats.monthTotal || 0)} VND</div>
-          <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 6 }}>
+      <div className="dashboard-layout">
+        <div className="dashboard-card dashboard-card-main">
+          <div className="dashboard-kicker">Revenue ({monthKey})</div>
+          <div className="dashboard-value">{formatPrice(stats.monthTotal || 0)} VND</div>
+          <div className="dashboard-note">
             Compared to last month:{' '}
             {stats.prevMonthTotal ? `${Math.round(((stats.monthTotal - stats.prevMonthTotal) / Math.max(1, stats.prevMonthTotal)) * 100)}%` : 'N/A'}
           </div>
 
-          <div style={{ marginTop: 12 }}>
+          <div className="dashboard-chart">
             <svg width="100%" height="140" viewBox="0 0 600 140" preserveAspectRatio="xMidYMid meet">
               <polyline fill="none" stroke="var(--accent)" strokeWidth="3" points={linePoints} />
             </svg>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: 11, color: 'var(--muted)' }}>
+            <div className="dashboard-chart-scale">
               <span>1</span>
               <span>{(stats.revenueByDay || []).length}</span>
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div style={{ padding: 12, borderRadius: 12, background: 'var(--surface)', border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 8 }}>
+        <div className="dashboard-side">
+          <div className="dashboard-card">
+            <div className="dashboard-card-title">
               Top selling products ({monthKey})
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+            <div className="dashboard-product-grid">
               {(stats.topProducts || []).map((product) => (
-                <div key={product.productId} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                  <div style={{ width: 56, height: 56, borderRadius: 6, overflow: 'hidden', background: 'var(--muted)', flex: '0 0 56px' }}>
+                <div key={product.productId} className="dashboard-product">
+                  <div className="dashboard-product-image">
                     {product.image ? (
-                      <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img src={product.image} alt={product.name} />
                     ) : (
-                      <div style={{ width: '100%', height: '100%' }} />
+                      <div />
                     )}
                   </div>
-                  <div style={{ fontSize: 13, minWidth: 0 }}>
-                    <div style={{ fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <div>
+                    <strong>
                       {product.name}
-                    </div>
-                    <div style={{ fontSize: 12, color: 'var(--muted)' }}>{product.qty} sold</div>
+                    </strong>
+                    <span>{product.qty} sold</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div style={{ padding: 12, borderRadius: 12, background: 'var(--surface)', border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 8 }}>Revenue today</div>
-            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 8 }}>{formatPrice(stats.todayTotal || 0)} VND</div>
-            <div style={{ maxHeight: 160, overflow: 'auto' }}>
+          <div className="dashboard-card">
+            <div className="dashboard-card-title">Revenue today</div>
+            <div className="dashboard-today-value">{formatPrice(stats.todayTotal || 0)} VND</div>
+            <div className="dashboard-order-list">
               {(stats.todayOrders || []).length === 0 ? (
-                <div style={{ color: 'var(--muted)', fontSize: 13 }}>No orders today</div>
+                <div className="dashboard-empty">No orders today</div>
               ) : (
                 stats.todayOrders.map((order) => (
-                  <div key={order.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px dashed var(--border)' }}>
-                    <div style={{ fontSize: 13 }}>#{order.id}</div>
-                    <div style={{ fontSize: 13, color: 'var(--muted)' }}>
+                  <div key={order.id} className="dashboard-order-row">
+                    <div>#{order.id}</div>
+                    <div>
                       {formatPrice(order.total || order.totalPrice || 0)} VND
                     </div>
                   </div>
