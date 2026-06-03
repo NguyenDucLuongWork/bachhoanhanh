@@ -41,11 +41,14 @@ export function StockPage({
 
   const filteredStocks = useMemo(() => {
     return stocks.filter((stock) => {
-      const matchesBarcode = searchBarcode.trim()
-        ? String(stock.productId).includes(searchBarcode.trim())
+      const query = searchBarcode.trim().toLowerCase()
+      const matchesBarcode = query
+        ? String(stock.productId).toLowerCase().includes(query)
         : true
+      const productName = getProductName(stock.productId).toLowerCase()
+      const matchesProductName = query ? productName.includes(query) : true
       const matchesUnavailable = showUnavailableOnly ? stock.available === false : true
-      return matchesBarcode && matchesUnavailable
+      return matchesBarcode && matchesProductName && matchesUnavailable
     })
   }, [stocks, searchBarcode, showUnavailableOnly])
 
@@ -126,7 +129,9 @@ export function StockPage({
     }
   }
 
-  const getProductName = (barcode) => products.find((product) => product.barcode === barcode)?.name || 'Unknown'
+  function getProductName(barcode) {
+    return products.find((product) => product.barcode === barcode)?.name || 'Unknown'
+  }
 
   useEffect(() => {
     if (!stockForm.productId) return
@@ -185,16 +190,18 @@ export function StockPage({
       <div className="panel panel-flat">
         <div className="panel-body">
           <div className="form-row">
-            <label htmlFor="stock-filter-barcode">Barcode</label>
+            <label htmlFor="stock-filter-query">Search</label>
             <input
-              id="stock-filter-barcode"
+              id="stock-filter-query"
               type="text"
               value={searchBarcode}
               onChange={(event) => setSearchBarcode(event.target.value)}
-              placeholder="Filter by product barcode"
+              placeholder="Filter by barcode or product name"
             />
+          </div>
+          <div className="form-row">
             <button className="btn btn-secondary" onClick={() => onRefresh(searchBarcode)}>
-              Search
+              Refresh stocks
             </button>
           </div>
           <div className="form-row">
