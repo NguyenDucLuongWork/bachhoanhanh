@@ -34,6 +34,7 @@ services:
   nginx:
     image: nginx:alpine
     container_name: nginx
+    restart: always
     ports:
       - "80:80"
     volumes:
@@ -255,15 +256,15 @@ services:
       - PORT=8090
       - LOG_LEVEL=DEBUG
       - TESSERACT_LANG=vie+eng
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
-      - OLLAMA_MODEL=${OLLAMA_MODEL}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8090/health"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 30s
-      
+
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
@@ -297,11 +298,4 @@ services:
         condition: service_started
       stock-service:
         condition: service_started
-      ocr-service:
-        condition: service_started
-
-networks:
-  default:
-    external:
-      name: cicd-network
 

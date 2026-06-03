@@ -4,6 +4,7 @@ import { ProductModal } from '../components/ProductModal'
 import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
+import { getAvailableAmount } from '../utils/helpers'
 
 const findCatalog = (nodes, id) => {
   for (const node of nodes) {
@@ -54,13 +55,14 @@ export function ProductsPage({
   const filteredProducts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
     let result = products.filter((product) => {
+      const isVisibleToCustomer = isAdminUser || getAvailableAmount(product) > 0
       const matchesCatalog = !selectedCatalog || selectedIds.includes(product.catalogId)
       const matchesQuery =
         !normalizedQuery ||
         product.name?.toLowerCase().includes(normalizedQuery) ||
         product.barcode?.toLowerCase().includes(normalizedQuery)
       const matchesPrice = product.originalPrice >= priceMin && product.originalPrice <= priceMax
-      return matchesCatalog && matchesQuery && matchesPrice
+      return isVisibleToCustomer && matchesCatalog && matchesQuery && matchesPrice
     })
 
     // Apply sorting
@@ -73,7 +75,7 @@ export function ProductsPage({
     }
 
     return result
-  }, [products, query, selectedCatalog, selectedIds, priceMin, priceMax, sortBy])
+  }, [products, query, selectedCatalog, selectedIds, priceMin, priceMax, sortBy, isAdminUser])
 
   const handleBarcodeSearch = async () => {
     if (!query.trim() || !/^\d+$/.test(query.trim())) return
