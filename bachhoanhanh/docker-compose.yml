@@ -59,6 +59,9 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_ENABLED: "true"
       KC_PROXY: edge
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: "8082"
+      KC_HOSTNAME_STRICT: "false"
     ports:
       - "8082:8080"
     volumes:
