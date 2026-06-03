@@ -29,10 +29,15 @@ import cv2
 import httpx
 import numpy as np
 import pytesseract
+import py_eureka_client.eureka_client as eureka_client
+
 from flask import Flask, g, jsonify, request
 from flask_cors import CORS
 from PIL import Image
 from rapidfuzz import process as fuzz_process
+
+
+
 
 # ---------------------------------------------------------------------------
 # Logging — structured JSON
@@ -755,6 +760,13 @@ def extract_multi():
 
 
 if __name__ == "__main__":
+
+    eureka_client.init(
+        eureka_server="http://eureka-server:8761/eureka",
+        app_name="OCR-SERVICE",
+        instance_port=8090
+    )
+
     port = int(os.environ.get("PORT", 8090))
     log.info("Starting OCR service", extra={
         "port":       port,

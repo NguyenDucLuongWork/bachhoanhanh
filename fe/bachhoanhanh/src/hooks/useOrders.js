@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { apiFetch } from '../utils/api'
 
 const ORDERS_URL = '/orders'
 
@@ -10,7 +11,7 @@ export function useOrders(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(ORDERS_URL, { headers })
+      const res = await apiFetch(ORDERS_URL, { headers })
       if (!res.ok) throw new Error('Failed to load orders')
       const data = await res.json()
       setOrders(data)
@@ -26,7 +27,7 @@ export function useOrders(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(ORDERS_URL + '/' + id, { headers })
+        const res = await apiFetch(ORDERS_URL + '/' + id, { headers })
         if (!res.ok) throw new Error('Failed to load order details')
         const data = await res.json()
         return { success: true, data }
@@ -57,7 +58,7 @@ export function useOrders(token) {
               quantity,
               voucherCode: voucherCode || null,
             }
-        const res = await fetch(ORDERS_URL, {
+        const res = await apiFetch(ORDERS_URL, {
           method: 'POST',
           headers,
           body: JSON.stringify(body),
@@ -83,7 +84,7 @@ export function useOrders(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(ORDERS_URL + '/' + id, {
+        const res = await apiFetch(ORDERS_URL + '/' + id, {
           method: 'PUT',
           headers,
           body: JSON.stringify({ status }),
@@ -102,7 +103,7 @@ export function useOrders(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(ORDERS_URL + '/' + id, {
+        const res = await apiFetch(ORDERS_URL + '/' + id, {
           method: 'DELETE',
           headers,
         })

@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { apiFetch } from '../utils/api'
 
 const CATALOGS_URL = '/catalogs'
 
@@ -10,7 +11,7 @@ export function useCatalogs(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(CATALOGS_URL, { headers })
+      const res = await apiFetch(CATALOGS_URL, { headers })
       if (!res.ok) throw new Error('Failed to load catalogs')
       const data = await res.json()
       setCatalogs(data)
@@ -26,7 +27,7 @@ export function useCatalogs(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(CATALOGS_URL + '?tree=true', { headers })
+      const res = await apiFetch(CATALOGS_URL + '?tree=true', { headers })
       if (!res.ok) throw new Error('Failed to load catalog tree')
       const data = await res.json()
       setCatalogs(data)
@@ -45,7 +46,7 @@ export function useCatalogs(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(CATALOGS_URL, {
+        const res = await apiFetch(CATALOGS_URL, {
           method: 'POST',
           headers,
           body: JSON.stringify(catalogData),
@@ -67,7 +68,7 @@ export function useCatalogs(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(CATALOGS_URL + '/' + id, {
+        const res = await apiFetch(CATALOGS_URL + '/' + id, {
           method: 'PUT',
           headers,
           body: JSON.stringify(catalogData),
@@ -86,7 +87,7 @@ export function useCatalogs(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(CATALOGS_URL + '/' + id, {
+        const res = await apiFetch(CATALOGS_URL + '/' + id, {
           method: 'DELETE',
           headers,
         })
