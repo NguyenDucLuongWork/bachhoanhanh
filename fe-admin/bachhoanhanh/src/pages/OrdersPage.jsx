@@ -251,17 +251,27 @@ export function OrdersPage({
                     </td>
                     <td>{order.voucherCode || '-'}</td>
                     <td>
-                      <select
-                        className="admin-status-select"
-                        value={order.status || 'pending'}
-                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                      >
-                        {ORDER_STATUSES.map((status) => (
-                          <option key={status} value={status}>
-                            {STATUS_LABELS[status]}
-                          </option>
-                        ))}
-                      </select>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span style={{ fontWeight: 500 }}>{STATUS_LABELS[(order.status || '').toLowerCase()]}</span>
+                        {(order.status || '').toLowerCase() === 'pending' && (
+                          <div style={{ display: 'flex', gap: 6 }}>
+                            <button
+                              className="btn btn-sm"
+                              onClick={() => handleStatusChange(order.id, 'processing')}
+                              style={{ padding: '4px 10px', fontSize: '12px' }}
+                            >
+                              Accept
+                            </button>
+                            <button
+                              className="btn btn-danger btn-sm"
+                              onClick={() => handleCancelClick(order.id)}
+                              style={{ padding: '4px 10px', fontSize: '12px' }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </td>
                     <td>
                       <div className="admin-order-actions">
