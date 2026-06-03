@@ -175,7 +175,7 @@ public class OrderService {
 
     private boolean shouldFinishStock(String status, Order order) {
         if (status == null || Boolean.TRUE.equals(order.getStockFinished())) return false;
-        return status.equals("PAID") || status.equals("DELIVERED") || status.equals("FINISHED");
+        return status.equals("ACCEPTED") || status.equals("PAID") || status.equals("DELIVERED") || status.equals("FINISHED");
     }
 
     private void finishStock(Order order) {

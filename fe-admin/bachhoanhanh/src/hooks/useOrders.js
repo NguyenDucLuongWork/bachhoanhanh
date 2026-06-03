@@ -23,7 +23,7 @@ export function useOrders(token) {
       // Ensure each order has a status field
       let ordersWithStatus = (Array.isArray(data) ? data : []).map(order => ({
         ...order,
-        status: order.status || 'pending'
+        status: (order.status || 'PENDING').toUpperCase()
       }))
       
       // Check if any order is missing the status field (when status is falsy and was defaulted to pending)
@@ -42,7 +42,7 @@ export function useOrders(token) {
               const detailRes = await fetch(API_ENDPOINTS.ORDERS + '/' + order.id, { headers })
               if (detailRes.ok) {
                 const details = await detailRes.json()
-                return { ...order, ...details, status: details.status || 'pending' }
+                return { ...order, ...details, status: (details.status || 'PENDING').toUpperCase() }
               }
               return order
             })
@@ -129,12 +129,16 @@ export function useOrders(token) {
           headers,
           body: JSON.stringify({ status }),
         })
-        if (!res.ok) throw new Error('Update failed')
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => null)
+          throw new Error(errorData?.message || 'Update failed')
+        }
+        const updatedOrder = await res.json()
         
         // Update local state immediately
         setOrders(prevOrders => 
           prevOrders.map(order => 
-            order.id === id ? { ...order, status } : order
+            order.id === id ? { ...order, ...updatedOrder, status: (updatedOrder.status || status).toUpperCase() } : order
           )
         )
         
@@ -158,10 +162,10 @@ export function useOrders(token) {
         })
         if (!res.ok) throw new Error('Cancel failed')
         
-        // Update local state immediately - set status to 'cancelled'
+        // Update local state immediately - set status to 'CANCELLED'
         setOrders(prevOrders =>
           prevOrders.map(order =>
-            order.id === id ? { ...order, status: 'cancelled' } : order
+            order.id === id ? { ...order, status: 'CANCELLED' } : order
           )
         )
         
