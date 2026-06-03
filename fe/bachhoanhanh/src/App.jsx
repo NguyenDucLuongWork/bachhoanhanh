@@ -7,6 +7,7 @@ import { ProductDetailPage } from './pages/ProductDetailPage'
 import { OrdersPage } from './pages/OrdersPage'
 import { CartPage } from './pages/CartPage'
 import { AccountPage } from './pages/AccountPage'
+import { ChatbotPage } from './pages/ChatbotPage'
 import { ToastContainer, useToast } from './components/Toast'
 import { OrderDetailsModal } from './components/OrderDetailsModal'
 import { useAuth } from './hooks/useAuth'
@@ -68,6 +69,11 @@ function App() {
         return
       }
     }
+    if (pathname === '/chat') {
+      setCurrentPage('chat')
+      window.history.replaceState({ page: 'chat' }, '', pathname)
+      return
+    }
     window.history.replaceState({ page: 'products' }, '', '/')
   }, [])
 
@@ -104,6 +110,8 @@ function App() {
     } else if (page === 'product-detail' && id) {
       setProductDetailId(id)
       window.history.pushState({ page: 'product-detail', productId: id }, '', `/products/${id}`)
+    } else if (page === 'chat') {
+      window.history.pushState({ page: 'chat' }, '', '/chat')
     } else {
       window.history.pushState({ page }, '', '/')
     }
@@ -191,6 +199,9 @@ function App() {
             onBuyNow={buyNow}
             onRequireLogin={requireLogin}
           />
+        )}
+        {currentPage === 'chat' && (
+          <ChatbotPage token={token} />
         )}
         {currentPage === 'product-detail' && productDetailId && (
           <ProductDetailPage

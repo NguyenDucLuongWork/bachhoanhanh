@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/auth': { target: API_BASE, changeOrigin: true },
+        '/api': { target: API_BASE, changeOrigin: true },
         '/products': { target: API_BASE, changeOrigin: true },
         '/prototypes': { target: API_BASE, changeOrigin: true },
         '/catalogs': { target: API_BASE, changeOrigin: true },

@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.local" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.prod" beforeDir="false" afterPath="$PROJECT_DIR$/.env.prod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ocr-service/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocr-service/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ocr-service/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ocr-service/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/vite.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe/bachhoanhanh/src/hooks/useAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe/bachhoanhanh/src/hooks/useAuth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe/bachhoanhanh/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe/bachhoanhanh/vite.config.js" afterDir="false" />
-    </list>
+    <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -350,7 +337,7 @@
       <workItem from="1780219862699" duration="9081000" />
       <workItem from="1780354033651" duration="17027000" />
       <workItem from="1780376192062" duration="25028000" />
-      <workItem from="1780468677310" duration="37654000" />
+      <workItem from="1780468677310" duration="38040000" />
     </task>
     <servers />
   </component>
