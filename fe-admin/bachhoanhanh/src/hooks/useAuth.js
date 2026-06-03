@@ -1,8 +1,6 @@
 import { useState, useCallback } from 'react'
+import { API_ENDPOINTS } from '../config'
 
-const AUTH_URL = '/auth/realms/bachhoanhanh/protocol/openid-connect/token'
-const REGISTER_URL = '/users/register'
-const ME_URL = '/users/me'
 const TOKEN_STORAGE_KEY = 'bhn_access_token'
 const USERNAME_STORAGE_KEY = 'bhn_username'
 const PROFILE_STORAGE_KEY = 'bhn_user_profile'
@@ -75,7 +73,7 @@ export function useAuth() {
 
   const loadMe = useCallback(async (accessToken) => {
     try {
-      const res = await fetch(ME_URL, {
+      const res = await fetch(API_ENDPOINTS.ME, {
         headers: { Authorization: 'Bearer ' + accessToken },
       })
       if (!res.ok) throw new Error('Failed to load user profile')
@@ -92,7 +90,7 @@ export function useAuth() {
     async (profileData) => {
       if (!token) return { success: false, message: 'Not authenticated' }
       try {
-        const res = await fetch(ME_URL, {
+        const res = await fetch(API_ENDPOINTS.ME, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -128,7 +126,7 @@ export function useAuth() {
       form.append('username', user)
       form.append('password', password)
 
-      const res = await fetch(AUTH_URL, {
+      const res = await fetch(API_ENDPOINTS.AUTH, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: form,
@@ -165,7 +163,7 @@ export function useAuth() {
           throw new Error('Phone, first name, last name and password are required')
         }
 
-        const res = await fetch(REGISTER_URL, {
+        const res = await fetch(API_ENDPOINTS.REGISTER, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

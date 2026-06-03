@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react'
-
-const CATALOGS_URL = '/catalogs'
+import { API_ENDPOINTS } from '../config'
 
 export function useCatalogs(token) {
   const [catalogs, setCatalogs] = useState([])
@@ -10,7 +9,7 @@ export function useCatalogs(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(CATALOGS_URL, { headers })
+      const res = await fetch(API_ENDPOINTS.CATALOGS, { headers })
       if (!res.ok) throw new Error('Failed to load catalogs')
       const data = await res.json()
       setCatalogs(data)
@@ -26,7 +25,7 @@ export function useCatalogs(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(CATALOGS_URL + '?tree=true', { headers })
+      const res = await fetch(API_ENDPOINTS.CATALOGS + '?tree=true', { headers })
       if (!res.ok) throw new Error('Failed to load catalog tree')
       const data = await res.json()
       setCatalogs(data)
@@ -45,7 +44,7 @@ export function useCatalogs(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(CATALOGS_URL, {
+        const res = await fetch(API_ENDPOINTS.CATALOGS, {
           method: 'POST',
           headers,
           body: JSON.stringify(catalogData),
@@ -67,7 +66,7 @@ export function useCatalogs(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(CATALOGS_URL + '/' + id, {
+        const res = await fetch(API_ENDPOINTS.CATALOGS + '/' + id, {
           method: 'PUT',
           headers,
           body: JSON.stringify(catalogData),
@@ -86,7 +85,7 @@ export function useCatalogs(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(CATALOGS_URL + '/' + id, {
+        const res = await fetch(API_ENDPOINTS.CATALOGS + '/' + id, {
           method: 'DELETE',
           headers,
         })

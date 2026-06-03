@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react'
-
-const AUTH_URL = '/auth/realms/bachhoanhanh/protocol/openid-connect/token'
+import { AUTH_TOKEN_URL } from '../config'
 const REGISTER_URL = '/users/register'
 const ME_URL = '/users/me'
 const TOKEN_STORAGE_KEY = 'bhn_access_token'
@@ -118,7 +117,7 @@ export function useAuth() {
       form.append('username', user)
       form.append('password', password)
 
-      const res = await fetch(AUTH_URL, {
+      const res = await fetch(AUTH_TOKEN_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: form,

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { API_ENDPOINTS } from '../config'
 
 export default function useOcr(baseUrl = '') {
   const [loading, setLoading] = useState(false)
@@ -16,7 +17,9 @@ export default function useOcr(baseUrl = '') {
 
       // Try a set of likely base URLs to handle dev/proxy/container differences
       const candidateBases = []
-      if (baseUrl) candidateBases.push(baseUrl.replace(/\/$/, ''))
+      // Use configured API endpoint first
+      const ocrBase = API_ENDPOINTS.OCR.replace(/\/api\/ocr$/, '')
+      if (ocrBase) candidateBases.push(ocrBase)
       // relative first (works when frontend proxies /api to backend)
       candidateBases.push('')
       // common local dev hosts

@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react'
-
-const ORDERS_URL = '/orders'
+import { API_ENDPOINTS } from '../config'
 
 export function useOrders(token) {
   const [orders, setOrders] = useState([])
@@ -10,7 +9,7 @@ export function useOrders(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(ORDERS_URL, { headers })
+      const res = await fetch(API_ENDPOINTS.ORDERS, { headers })
       if (!res.ok) throw new Error('Failed to load orders')
       const data = await res.json()
       setOrders(data)
@@ -26,7 +25,7 @@ export function useOrders(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(ORDERS_URL + '/' + id, { headers })
+        const res = await fetch(API_ENDPOINTS.ORDERS + '/' + id, { headers })
         if (!res.ok) throw new Error('Failed to load order details')
         const data = await res.json()
         return { success: true, data }
@@ -57,7 +56,7 @@ export function useOrders(token) {
               quantity,
               voucherCode: voucherCode || null,
             }
-        const res = await fetch(ORDERS_URL, {
+        const res = await fetch(API_ENDPOINTS.ORDERS, {
           method: 'POST',
           headers,
           body: JSON.stringify(body),
@@ -83,7 +82,7 @@ export function useOrders(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(ORDERS_URL + '/' + id, {
+        const res = await fetch(API_ENDPOINTS.ORDERS + '/' + id, {
           method: 'PUT',
           headers,
           body: JSON.stringify({ status }),
@@ -102,7 +101,7 @@ export function useOrders(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(ORDERS_URL + '/' + id, {
+        const res = await fetch(API_ENDPOINTS.ORDERS + '/' + id, {
           method: 'DELETE',
           headers,
         })

@@ -1,6 +1,5 @@
 ﻿import { useState, useCallback } from 'react'
-
-const STOCKS_URL = '/stocks'
+import { API_ENDPOINTS } from '../config'
 
 const buildHeaders = (token, extra = {}) => ({
   ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -15,7 +14,7 @@ const parseResponse = async (res) => {
 }
 
 const executeStockRequest = async (path, options = {}) => {
-  const url = `${STOCKS_URL}${path}`
+  const url = `${API_ENDPOINTS.STOCKS}${path}`
   const res = await fetch(url, options)
   const data = await parseResponse(res)
   return { res, data }
