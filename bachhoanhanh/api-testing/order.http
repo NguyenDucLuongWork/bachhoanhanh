@@ -1,0 +1,434 @@
+### ═══════════════════════════════════════════════════════
+### ORDER API TESTER - Full Coverage + Authentication
+### Base: http://bachhoanhanh/orders
+### Security: ALL /orders/** REQUIRE AUTHENTICATION
+### Valid statuses: PENDING | PAID | FAILED | CANCELLED | DELIVERED | FINISHED
+### ═══════════════════════════════════════════════════════
+
+@baseUrl = http://bachhoanhanh/orders
+@authUrl = http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token
+@clientId = gateway-client
+
+############################################################
+# 1. AUTHENTICATION
+############################################################
+
+### Login as ADMIN
+# @name adminLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id={{clientId}}&username=admin&password=123456
+
+> {%
+    client.global.set("admin_token", response.body.access_token);
+%}
+
+###
+
+### Login as STAFF
+# @name staffLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id={{clientId}}&username=teststaff&password=123456
+
+> {%
+    client.global.set("staff_token", response.body.access_token);
+%}
+
+###
+
+### Login as CUSTOMER
+# @name customerLogin
+POST {{authUrl}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id={{clientId}}&username=testcustomer&password=123456
+
+> {%
+    client.global.set("customer_token", response.body.access_token);
+%}
+
+###
+
+############################################################
+# 2. GET ORDERS
+############################################################
+
+### GET ALL ORDERS (admin/staff)
+GET {{baseUrl}}
+Authorization: Bearer {{admin_token}}
+
+###
+
+### GET ALL ORDERS - STAFF
+GET {{baseUrl}}
+Authorization: Bearer {{staff_token}}
+
+###
+
+### GET MY ORDERS - CUSTOMER (lấy theo keycloak_id từ JWT)
+GET {{baseUrl}}/my
+Authorization: Bearer {{customer_token}}
+
+###
+
+### GET ORDER BY ID
+GET {{baseUrl}}/1
+Authorization: Bearer {{customer_token}}
+
+###
+
+### GET ORDER BY ID - NOT FOUND
+GET {{baseUrl}}/999999
+Authorization: Bearer {{customer_token}}
+
+###
+
+############################################################
+# 3. CREATE ORDER - SINGLE PRODUCT
+############################################################
+
+### CREATE ORDER - 1 sản phẩm
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "4",
+  "quantity": 2
+}
+
+###
+
+### CREATE ORDER - invalid product
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "999999",
+  "quantity": 1
+}
+
+###
+
+### CREATE ORDER - quantity = 0 (expect 400)
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "4",
+  "quantity": 0
+}
+
+###
+
+### CREATE ORDER - quantity âm (expect 400)
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "4",
+  "quantity": -5
+}
+
+###
+
+############################################################
+# 4. CREATE ORDER - MULTIPLE ITEMS
+############################################################
+
+### CREATE MULTI ITEM ORDER
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "items": [
+    { "productId": "4", "quantity": 2 },
+    { "productId": "5", "quantity": 3 }
+  ]
+}
+
+###
+
+### CREATE MULTI ITEM ORDER WITH VOUCHER (WELCOME10 - 10%)
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "voucherCode": "WELCOME10",
+  "items": [
+    { "productId": "4", "quantity": 1 },
+    { "productId": "9", "quantity": 1 }
+  ]
+}
+
+###
+
+### CREATE ORDER WITH VOUCHER FLAT20K (min 100k)
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "voucherCode": "FLAT20K",
+  "items": [
+    { "productId": "9", "quantity": 1 }
+  ]
+}
+
+###
+
+### CREATE ORDER - invalid voucher (expect 400)
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "voucherCode": "INVALID_CODE",
+  "items": [
+    { "productId": "4", "quantity": 1 }
+  ]
+}
+
+###
+
+### CREATE ORDER - items rỗng (expect 400)
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "items": []
+}
+
+###
+
+############################################################
+# 5. UPDATE ORDER STATUS
+############################################################
+
+### MARK AS PAID (trigger finishStock nếu chưa done)
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "PAID"
+}
+
+###
+
+### MARK AS FAILED
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "FAILED"
+}
+
+###
+
+### MARK AS CANCELLED
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "CANCELLED"
+}
+
+###
+
+### MARK AS DELIVERED (trigger finishStock)
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "DELIVERED"
+}
+
+###
+
+### MARK AS FINISHED (trigger finishStock)
+PUT {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "FINISHED"
+}
+
+###
+
+### UPDATE - order không tồn tại (expect 404)
+PUT {{baseUrl}}/999999
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "PAID"
+}
+
+###
+
+############################################################
+# 6. DELETE / CANCEL ORDER
+############################################################
+
+### DELETE ORDER (set status = CANCELLED)
+DELETE {{baseUrl}}/2
+Authorization: Bearer {{staff_token}}
+
+###
+
+### DELETE - không tồn tại (expect 200 vì không check)
+DELETE {{baseUrl}}/999999
+Authorization: Bearer {{staff_token}}
+
+###
+
+############################################################
+# 7. SECURITY TESTS
+############################################################
+
+### GET ALL ORDERS - không có token (expect 401)
+GET {{baseUrl}}
+
+###
+
+### GET ORDER BY ID - không có token (expect 401)
+GET {{baseUrl}}/1
+
+###
+
+### CREATE ORDER - không có token (expect 401)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "productId": "4",
+  "quantity": 1
+}
+
+###
+
+### UPDATE - không có token (expect 401)
+PUT {{baseUrl}}/1
+Content-Type: application/json
+
+{
+  "status": "PAID"
+}
+
+###
+
+### DELETE - không có token (expect 401)
+DELETE {{baseUrl}}/1
+
+###
+
+############################################################
+# 8. CUSTOMER ROLE TESTS
+############################################################
+
+### CUSTOMER tạo order (expect 200)
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "productId": "5",
+  "quantity": 1
+}
+
+###
+
+### CUSTOMER xem orders của mình (expect 200)
+GET {{baseUrl}}/my
+Authorization: Bearer {{customer_token}}
+
+###
+
+### CUSTOMER update status (expect 200 hoặc 403 tuỳ security config)
+PUT {{baseUrl}}/1
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "status": "PAID"
+}
+
+###
+
+### CUSTOMER delete order (expect 200 hoặc 403 tuỳ security config)
+DELETE {{baseUrl}}/1
+Authorization: Bearer {{customer_token}}
+
+###
+
+############################################################
+# 9. FULL ORDER WORKFLOW
+############################################################
+
+### STEP 1 - CUSTOMER tạo order mới
+# @name createOrder
+POST {{baseUrl}}
+Authorization: Bearer {{customer_token}}
+Content-Type: application/json
+
+{
+  "voucherCode": "FLAT20K",
+  "items": [
+    { "productId": "4", "quantity": 2 },
+    { "productId": "5", "quantity": 5 }
+  ]
+}
+
+> {%
+    client.global.set("order_id", response.body.id);
+%}
+
+###
+
+### STEP 2 - Verify order vừa tạo (status = PENDING)
+GET {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{customer_token}}
+
+###
+
+### STEP 3 - STAFF mark PAID (trigger finishStock)
+PUT {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "PAID"
+}
+
+###
+
+### STEP 4 - STAFF mark DELIVERED
+PUT {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{staff_token}}
+Content-Type: application/json
+
+{
+  "status": "DELIVERED"
+}
+
+###
+
+### STEP 5 - Verify final state (stock_finished = true)
+GET {{baseUrl}}/{{order_id}}
+Authorization: Bearer {{customer_token}}
+
+###

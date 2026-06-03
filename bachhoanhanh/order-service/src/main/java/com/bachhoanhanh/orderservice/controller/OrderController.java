@@ -15,19 +15,37 @@ public class OrderController {
 
     private final OrderService orderService;
 
-
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
+    /** Admin/Staff: lấy tất cả đơn hàng */
     @GetMapping
     public ResponseEntity<List<Order>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
+    /** Customer: lấy đơn hàng của chính mình (keycloak_id từ header do gateway inject) */
+    @GetMapping("/my")
+    public ResponseEntity<List<Order>> getMyOrders(
+            @RequestHeader(value = "X-User-Id", required = false) String keycloakId
+    ) {
+        if (keycloakId == null || keycloakId.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(orderService.getOrdersByUser(keycloakId));
+    }
+
     @PostMapping
-    public ResponseEntity<?> createOrder(@RequestBody CreateOrderRequest request) {
+    public ResponseEntity<?> createOrder(
+            @RequestBody CreateOrderRequest request,
+            @RequestHeader(value = "X-User-Id", required = false) String keycloakId
+    ) {
         try {
+            // Ưu tiên header từ gateway, fallback về field trong body nếu có
+            if (keycloakId != null && !keycloakId.isBlank()) {
+                request.setKeycloakId(keycloakId);
+            }
             return ResponseEntity.ok(orderService.createOrder(request));
         } catch (RuntimeException ex) {
             return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
@@ -41,15 +59,18 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    public ResponseEntity<Order> updateStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body
+    ) {
         String status = body.get("status");
-        Order updatedOrder = orderService.updateOrderStatus(id, status);
-        return updatedOrder != null ? ResponseEntity.ok(updatedOrder) : ResponseEntity.notFound().build();
+        Order updated = orderService.updateOrderStatus(id, status);
+        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelOrder(@PathVariable Long id) {
-        orderService.updateOrderStatus(id, "cancelled");
+        orderService.updateOrderStatus(id, "CANCELLED");
         return ResponseEntity.ok().build();
     }
 }
