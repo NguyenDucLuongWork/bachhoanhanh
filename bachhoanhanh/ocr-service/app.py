@@ -274,7 +274,7 @@ def run_ocr(img: Image.Image, upload_filename: str = "<stream>", request_id: str
 
 @app.route("/health", methods=["GET"])
 def health():
-    """Liveness probe — also checks Ollama reachability."""
+    """Liveness probe — checks service is up; Ollama status is advisory only."""
     ollama_ok = False
     try:
         with httpx.Client(timeout=5) as client:
@@ -283,14 +283,13 @@ def health():
     except Exception:
         pass
 
-    status = "ok" if ollama_ok else "degraded"
-    http_code = 200 if ollama_ok else 503
+    # Service is always "ok" — Ollama degraded is surfaced but doesn't fail the probe
     return jsonify({
-        "status": status,
+        "status": "ok",
         "service": "ocr-service",
         "ollama": ollama_ok,
         "model": OLLAMA_MODEL,
-    }), http_code
+    }), 200          # ← always 200
 
 
 @app.route("/api/ocr/extract", methods=["POST"])
