@@ -31,7 +31,7 @@ import './styles/theme.css'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('products')
-  const { token, username, profile, roles, loading, login, registerCustomer, updateProfile, logout, isLoggedIn } = useAuth()
+  const { token, username, profile, roles, loading, login, updateProfile, logout, isLoggedIn } = useAuth()
   const { catalogs: catalogList, loadCatalogTree, loadCatalogs, addCatalog, updateCatalog, deleteCatalog, loading: catalogsLoading } = useCatalogs(token)
   const {
     prototypes,
@@ -59,6 +59,7 @@ function App() {
   const [checkoutOrder, setCheckoutOrder] = useState(null)
   const { toasts } = useToast()
   const isAdminUser = roles.includes('ADMIN') || roles.includes('STAFF')
+  const isStaffUser = roles.includes('STAFF') && !roles.includes('ADMIN')
 
   useEffect(() => {
     loadCatalogTree()
@@ -90,6 +91,12 @@ function App() {
       setCurrentPage('products')
     }
   }, [isLoggedIn, currentPage, pendingAction])
+
+  useEffect(() => {
+    if (!isLoggedIn && currentPage !== 'login') {
+      navigateTo('login')
+    }
+  }, [isLoggedIn, currentPage])
 
   useEffect(() => {
     if (currentPage === 'stocks') {
@@ -454,7 +461,6 @@ function App() {
         {currentPage === 'login' && (
           <LoginPage
             onLoginSuccess={handleLogin}
-            onRegisterSuccess={registerCustomer}
             loading={loading}
           />
         )}
@@ -604,6 +610,9 @@ function App() {
             staff={staff}
             loading={usersLoading}
             isAdminUser={isAdminUser}
+            isStaffUser={isStaffUser}
+            profile={profile}
+            onUpdateProfile={updateProfile}
             onLoadCustomers={loadCustomers}
             onLoadStaff={loadStaff}
             onSearchByPhone={searchCustomerByPhone}
