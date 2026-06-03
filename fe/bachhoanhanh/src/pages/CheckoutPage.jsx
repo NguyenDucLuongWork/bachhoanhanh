@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { apiFetch } from '../utils/api';
 
 function CheckoutPage() {
   const location = useLocation();
@@ -9,8 +10,6 @@ function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState('');
 
-  const GATEWAY_URL = 'http://localhost:9000';
-
   if (!order) {
     return <div className="section"><h3>Không tìm thấy thông tin đơn hàng để thanh toán!</h3></div>;
   }
@@ -18,7 +17,7 @@ function CheckoutPage() {
   const handlePayment = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${GATEWAY_URL}/payments/process`, {
+      const res = await apiFetch('/payments/process', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId: order.id, paymentMethod: method })

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { formatPrice } from '../utils/helpers'
 import { showToast } from '../components/Toast'
+import { apiFetch } from '../utils/api'
 
 const CITY_OPTIONS = ['Ha Noi', 'Ho Chi Minh City', 'Da Nang', 'Can Tho']
 const DISTRICT_OPTIONS = {
@@ -97,7 +98,7 @@ export function CartPage({
     if (vouchers.length > 0) return
     setVouchersLoading(true)
     try {
-      const res = await fetch('/vouchers')
+      const res = await apiFetch('/vouchers')
       if (!res.ok) throw new Error('Failed to load vouchers')
       const data = await res.json()
       setVouchers(data)
@@ -114,7 +115,7 @@ export function CartPage({
     setVoucherLoading(true)
     setVoucherPreview(null)
     try {
-      const res = await fetch('/vouchers/apply', {
+      const res = await apiFetch('/vouchers/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
