@@ -58,9 +58,9 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_ENABLED: "true"
-      KC_PROXY: edge
-      KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: "8082"
+      KC_PROXY_HEADERS: xforwarded
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-localhost}
+      KC_HOSTNAME_PORT: ${KEYCLOAK_HOSTNAME_PORT:-8082}
       KC_HOSTNAME_STRICT: "false"
     ports:
       - "8082:8080"
@@ -245,24 +245,6 @@ services:
       eureka-server:
         condition: service_started
 
-  ocr-service:
-    build: ./ocr-service
-    container_name: ocr-service
-    restart: always
-    ports:
-      - "8090:8090"
-    environment:
-      - PORT=8090
-      - LOG_LEVEL=DEBUG
-      - TESSERACT_LANG=vie+eng
-      - OLLAMA_BASE_URL=http://host.docker.internal:11434
-      - OLLAMA_MODEL=llama3.2
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8090/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
@@ -296,10 +278,3 @@ services:
         condition: service_started
       stock-service:
         condition: service_started
-      ocr-service:
-        condition: service_healthy
-
-networks:
-  default:
-    external:
-      name: cicd-network
