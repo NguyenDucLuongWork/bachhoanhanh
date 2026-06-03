@@ -2,67 +2,36 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
+// API base domain - configure via environment: VITE_API_BASE_URL
+// Example: VITE_API_BASE_URL=http://127.0.0.1:8080
+const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://103.173.226.31'
+
+// Helper function to create proxy configuration
+const createProxy = (target) => ({
+  target,
+  changeOrigin: true,
+  secure: false,
+})
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      // Proxy OCR requests to gateway or OCR service. Configure with VITE_OCR_GATEWAY
-      // Example .env: VITE_OCR_GATEWAY=http://127.0.0.1:8090
-      '/api/ocr': {
-        target: process.env.VITE_OCR_GATEWAY || process.env.OCR_GATEWAY || 'http://bachhoanhanh',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/api/ocr/': {
-        target: process.env.VITE_OCR_GATEWAY || process.env.OCR_GATEWAY || 'http://bachhoanhanh',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/auth': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/products': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/prototypes': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/catalogs': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/orders': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/payments': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/brands': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/users': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/vouchers': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/attribute-types': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
-      '/stocks': {
-        target: 'http://bachhoanhanh',
-        changeOrigin: true,
-      },
+      // All API endpoints proxy to the same domain
+      '/auth': createProxy(API_BASE_URL),
+      '/products': createProxy(API_BASE_URL),
+      '/prototypes': createProxy(API_BASE_URL),
+      '/catalogs': createProxy(API_BASE_URL),
+      '/orders': createProxy(API_BASE_URL),
+      '/payments': createProxy(API_BASE_URL),
+      '/brands': createProxy(API_BASE_URL),
+      '/users': createProxy(API_BASE_URL),
+      '/vouchers': createProxy(API_BASE_URL),
+      '/attribute-types': createProxy(API_BASE_URL),
+      '/stocks': createProxy(API_BASE_URL),
+      '/api/ocr': createProxy(process.env.VITE_OCR_GATEWAY || API_BASE_URL),
+      '/api/ocr/': createProxy(process.env.VITE_OCR_GATEWAY || API_BASE_URL),
     },
   },
 });

@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react'
-
-const PROTOTYPES_URL = '/prototypes'
+import { API_ENDPOINTS } from '../config'
 
 export function usePrototypes(token) {
   const [prototypes, setPrototypes] = useState([])
@@ -10,7 +9,7 @@ export function usePrototypes(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(PROTOTYPES_URL, { headers })
+      const res = await fetch(API_ENDPOINTS.PROTOTYPES, { headers })
       if (!res.ok) throw new Error('Failed to load prototypes')
       const data = await res.json()
       setPrototypes(data)
@@ -26,7 +25,7 @@ export function usePrototypes(token) {
     async (catalogId) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/by-catalog/' + catalogId, { headers })
+        const res = await fetch(API_ENDPOINTS.PROTOTYPES + '/by-catalog/' + catalogId, { headers })
         if (!res.ok) throw new Error('Failed to load prototypes by catalog')
         const data = await res.json()
         return { success: true, data }
@@ -41,7 +40,7 @@ export function usePrototypes(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/' + id, { headers })
+        const res = await fetch(API_ENDPOINTS.PROTOTYPES + '/' + id, { headers })
         if (!res.ok) throw new Error('Failed to get prototype')
         const data = await res.json()
         return { success: true, data }
@@ -59,7 +58,7 @@ export function usePrototypes(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(PROTOTYPES_URL, {
+        const res = await fetch(API_ENDPOINTS.PROTOTYPES, {
           method: 'POST',
           headers,
           body: JSON.stringify(prototypeData),
@@ -81,7 +80,7 @@ export function usePrototypes(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(PROTOTYPES_URL + '/' + id + '/info', {
+        const res = await fetch(API_ENDPOINTS.PROTOTYPES + '/' + id + '/info', {
           method: 'PATCH',
           headers,
           body: JSON.stringify(prototypeData),
@@ -103,7 +102,7 @@ export function usePrototypes(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(PROTOTYPES_URL + '/' + id + '/attributes', {
+        const res = await fetch(API_ENDPOINTS.PROTOTYPES + '/' + id + '/attributes', {
           method: 'PATCH',
           headers,
           body: JSON.stringify(prototypeData),
@@ -122,7 +121,7 @@ export function usePrototypes(token) {
     async (id, typeName) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/' + id + '/attributes/add?typeName=' + encodeURIComponent(typeName), {
+        const res = await fetch(API_ENDPOINTS.PROTOTYPES + '/' + id + '/attributes/add?typeName=' + encodeURIComponent(typeName), {
           method: 'PATCH',
           headers,
         })
@@ -140,7 +139,7 @@ export function usePrototypes(token) {
     async (id, typeName) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/' + id + '/attributes/remove?typeName=' + encodeURIComponent(typeName), {
+        const res = await fetch(API_ENDPOINTS.PROTOTYPES + '/' + id + '/attributes/remove?typeName=' + encodeURIComponent(typeName), {
           method: 'PATCH',
           headers,
         })
@@ -158,7 +157,7 @@ export function usePrototypes(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/' + id, {
+        const res = await fetch(API_ENDPOINTS.PROTOTYPES + '/' + id, {
           method: 'DELETE',
           headers,
         })

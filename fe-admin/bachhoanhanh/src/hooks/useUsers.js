@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react'
-
-const USERS_URL = '/users'
+import { API_ENDPOINTS } from '../config'
 
 export function useUsers(token) {
   const [customers, setCustomers] = useState([])
@@ -12,7 +11,7 @@ export function useUsers(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(`${USERS_URL}/customers`, { headers })
+      const res = await fetch(`${API_ENDPOINTS.USERS}/customers`, { headers })
       if (!res.ok) throw new Error('Failed to load customers')
       const data = await res.json()
       setCustomers(Array.isArray(data) ? data : [])
@@ -28,7 +27,7 @@ export function useUsers(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(`${USERS_URL}/staff`, { headers })
+      const res = await fetch(`${API_ENDPOINTS.USERS}/staff`, { headers })
       if (!res.ok) throw new Error('Failed to load staff')
       const data = await res.json()
       setStaff(Array.isArray(data) ? data : [])
@@ -43,7 +42,7 @@ export function useUsers(token) {
   const getCustomerDetail = useCallback(async (id) => {
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(`${USERS_URL}/${id}`, { headers })
+      const res = await fetch(`${API_ENDPOINTS.USERS}/${id}`, { headers })
       if (!res.ok) throw new Error('Failed to load customer details')
       const data = await res.json()
       setCustomerDetail(data)
@@ -56,7 +55,7 @@ export function useUsers(token) {
   const searchCustomerByPhone = useCallback(async (phone) => {
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(`${USERS_URL}/customers/search?phone=${encodeURIComponent(phone)}`, { headers })
+      const res = await fetch(`${API_ENDPOINTS.USERS}/customers/search?phone=${encodeURIComponent(phone)}`, { headers })
       if (!res.ok) throw new Error('Failed to search customer')
       const data = await res.json()
       return { success: true, data }
@@ -68,7 +67,7 @@ export function useUsers(token) {
   const createStaff = useCallback(async (staffData) => {
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(`${USERS_URL}/staff`, {
+      const res = await fetch(`${API_ENDPOINTS.USERS}/staff`, {
         method: 'POST',
         headers: { ...headers, 'Content-Type': 'application/json' },
         body: JSON.stringify(staffData),
@@ -85,7 +84,7 @@ export function useUsers(token) {
   const updateStaff = useCallback(async (id, staffData) => {
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(`${USERS_URL}/staff/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.USERS}/staff/${id}`, {
         method: 'PUT',
         headers: { ...headers, 'Content-Type': 'application/json' },
         body: JSON.stringify(staffData),
@@ -102,7 +101,7 @@ export function useUsers(token) {
   const updateCustomer = useCallback(async (id, customerData) => {
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(`${USERS_URL}/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.USERS}/${id}`, {
         method: 'PUT',
         headers: { ...headers, 'Content-Type': 'application/json' },
         body: JSON.stringify(customerData),
@@ -119,7 +118,7 @@ export function useUsers(token) {
   const deleteUser = useCallback(async (id) => {
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(`${USERS_URL}/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.USERS}/${id}`, {
         method: 'DELETE',
         headers,
       })

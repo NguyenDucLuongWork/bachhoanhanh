@@ -1,4 +1,57 @@
-# React + Vite
+# React + Vite - Bách Hoàn Anh Admin Frontend
+
+This is the admin frontend for Bách Hoàn Anh application built with React and Vite.
+
+## Setup
+
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure API Domain
+
+All API requests use a centralized configuration. To change the API domain:
+
+1. Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Edit `.env.local` and set your API domain:
+   ```
+   VITE_API_BASE_URL=http://your-api-domain:port
+   ```
+
+**Example configurations:**
+- Local development: `http://127.0.0.1:8080`
+- Production: `http://bachhoanhanh.example.com`
+- Docker: `http://bachhoanhanh`
+
+### 3. Run Development Server
+
+```bash
+npm run dev
+```
+
+The app will start at `http://localhost:5173` and proxy all API requests to your configured domain.
+
+## Environment Variables
+
+- `VITE_API_BASE_URL`: Main API domain (default: `http://bachhoanhanh`)
+- `VITE_OCR_GATEWAY`: Optional OCR service endpoint (uses `VITE_API_BASE_URL` if not set)
+
+## API Configuration
+
+All API endpoints are managed through `src/config.js`. The configuration automatically:
+- Loads the domain from `VITE_API_BASE_URL` environment variable
+- Constructs all API endpoint URLs
+- Makes it easy to change the domain without modifying code
+
+To add new API endpoints, edit `src/config.js` and add them to the `API_ENDPOINTS` object.
+
+## Template Features
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

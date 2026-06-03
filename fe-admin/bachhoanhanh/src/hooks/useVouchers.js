@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
+import { API_ENDPOINTS } from '../config'
 
-const VOUCHERS_URL = '/vouchers'
 const TOKEN_STORAGE_KEY = 'bhn_access_token'
 
 export function useVouchers(token) {
@@ -19,7 +19,7 @@ export function useVouchers(token) {
     try {
       // GET vouchers is public in the API contract. Only auth-required write operations
       // should include the bearer token.
-      const res = await fetch(VOUCHERS_URL, { headers: buildHeaders(false) })
+      const res = await fetch(API_ENDPOINTS.VOUCHERS, { headers: buildHeaders(false) })
       if (!res.ok) throw new Error('Failed to load vouchers')
       const data = await res.json()
       setVouchers(data)
@@ -34,7 +34,7 @@ export function useVouchers(token) {
   const getVoucherById = useCallback(
     async (id) => {
       try {
-        const res = await fetch(`${VOUCHERS_URL}/${id}`, { headers: buildHeaders(false) })
+        const res = await fetch(`${API_ENDPOINTS.VOUCHERS}/${id}`, { headers: buildHeaders(false) })
         if (!res.ok) {
           const errorData = await res.json().catch(() => null)
           throw new Error(errorData?.message || 'Voucher not found')
@@ -51,7 +51,7 @@ export function useVouchers(token) {
   const getVoucherByCode = useCallback(
     async (code) => {
       try {
-        const res = await fetch(`${VOUCHERS_URL}/code/${encodeURIComponent(code)}`, { headers: buildHeaders(false) })
+        const res = await fetch(`${API_ENDPOINTS.VOUCHERS}/code/${encodeURIComponent(code)}`, { headers: buildHeaders(false) })
         if (!res.ok) {
           const errorData = await res.json().catch(() => null)
           throw new Error(errorData?.message || 'Voucher not found')
@@ -70,7 +70,7 @@ export function useVouchers(token) {
       const currentToken = getCurrentToken()
       if (!currentToken) return { success: false, message: 'Not authenticated' }
       try {
-        const res = await fetch(VOUCHERS_URL, {
+        const res = await fetch(API_ENDPOINTS.VOUCHERS, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ export function useVouchers(token) {
       const currentToken = getCurrentToken()
       if (!currentToken) return { success: false, message: 'Not authenticated' }
       try {
-        const res = await fetch(`${VOUCHERS_URL}/${id}`, {
+        const res = await fetch(`${API_ENDPOINTS.VOUCHERS}/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export function useVouchers(token) {
       const currentToken = getCurrentToken()
       if (!currentToken) return { success: false, message: 'Not authenticated' }
       try {
-        const res = await fetch(`${VOUCHERS_URL}/${id}`, {
+        const res = await fetch(`${API_ENDPOINTS.VOUCHERS}/${id}`, {
           method: 'DELETE',
           headers: buildHeaders(true),
         })

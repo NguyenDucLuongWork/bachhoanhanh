@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
+import { API_ENDPOINTS } from '../config'
 
 const DEBUG = true
-const BRANDS_URL = '/brands'
 
 const buildHeaders = (token, extra = {}) => ({
   ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -31,7 +31,7 @@ const debugLog = (label, payload) => {
 }
 
 const executeBrandRequest = async (path, options = {}) => {
-  const url = `${BRANDS_URL}${path}`
+  const url = `${API_ENDPOINTS.BRANDS}${path}`
   const requestOptions = {
     method: options.method || 'GET',
     headers: options.headers || {},

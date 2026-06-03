@@ -179,7 +179,7 @@ const { products, addProduct, updateProduct, deleteProduct } = useProducts(token
 
 ## API Endpoints
 
-- Auth: `http://bachhoanhanh/auth/realms/bachhoanhanh/protocol/openid-connect/token`
-- Products: `http://bachhoanhanh/products`
+- Auth: `${VITE_API_BASE}/auth/realms/${VITE_AUTH_REALM}/protocol/openid-connect/token`
+- Products: `${VITE_API_BASE}/products`
 
 Authorization: JWT Bearer token in `Authorization` header
