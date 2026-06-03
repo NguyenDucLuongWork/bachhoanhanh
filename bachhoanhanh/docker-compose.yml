@@ -265,6 +265,41 @@ services:
       retries: 5
       start_period: 30s
 
+  chatbot-service:
+    build: ./chatbot-service
+    container_name: chatbot-service
+    restart: always
+    ports:
+      - "8091:8091"
+    environment:
+      PORT: 8091
+      LOG_LEVEL: INFO
+
+      # Ollama
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+      OLLAMA_MODEL: ${OLLAMA_MODEL}
+      OLLAMA_TIMEOUT: 120
+
+      # Internal services
+      PRODUCT_SERVICE_URL: http://product-service:8080
+      ORDER_SERVICE_URL: http://order-service:8081
+
+      MAX_PRODUCTS_IN_CONTEXT: 5
+      MAX_HISTORY_TURNS: 10
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8091/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    depends_on:
+      product-service:
+        condition: service_started
+      order-service:
+        condition: service_started
+
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
@@ -298,4 +333,14 @@ services:
         condition: service_started
       stock-service:
         condition: service_started
+      ocr-service:
+        condition: service_started
+      chatbot-service:
+        condition: service_started
+
+networks:
+  default:
+    external:
+      name: cicd-network
+
 
