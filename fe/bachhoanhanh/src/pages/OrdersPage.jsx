@@ -5,6 +5,8 @@ import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
 
+const normalizeStatus = (status) => (status || 'PENDING').toUpperCase()
+
 export function OrdersPage({
   orders,
   loading,
@@ -37,7 +39,7 @@ export function OrdersPage({
 
     // Filter by status
     if (statusFilter !== 'all') {
-      filtered = filtered.filter((o) => o.status === statusFilter)
+      filtered = filtered.filter((o) => normalizeStatus(o.status) === statusFilter)
     }
 
     return filtered
@@ -115,11 +117,11 @@ export function OrdersPage({
           onChange={(e) => setStatusFilter(e.target.value)}
         >
           <option value="all">All Status</option>
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="shipped">Shipped</option>
-          <option value="delivered">Delivered</option>
-          <option value="cancelled">Cancelled</option>
+          <option value="PENDING">Pending</option>
+          <option value="ACCEPTED">Accepted</option>
+          <option value="SHIPPED">Shipped</option>
+          <option value="DELIVERED">Delivered</option>
+          <option value="CANCELLED">Cancelled</option>
         </select>
       </div>
 

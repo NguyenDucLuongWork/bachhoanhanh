@@ -2,6 +2,7 @@ import { formatPrice } from '../utils/helpers'
 
 const statusColors = {
   pending: '#f97316',
+  accepted: '#3b82f6',
   processing: '#3b82f6',
   shipped: '#8b5cf6',
   delivered: '#22c55e',
@@ -10,6 +11,7 @@ const statusColors = {
 
 const statusLabels = {
   pending: 'Pending',
+  accepted: 'Accepted',
   processing: 'Processing',
   shipped: 'Shipped',
   delivered: 'Delivered',
