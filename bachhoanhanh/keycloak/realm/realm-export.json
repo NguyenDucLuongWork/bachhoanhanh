@@ -1,6 +1,7 @@
 {
   "realm": "bachhoanhanh",
   "enabled": true,
+  "sslRequired": "none",
   "roles": {
     "realm": [
       { "name": "ADMIN", "description": "Quản trị viên" },
