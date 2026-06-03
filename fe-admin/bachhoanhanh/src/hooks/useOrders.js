@@ -5,11 +5,16 @@ export function useOrders(token) {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const loadOrders = useCallback(async () => {
+  const loadOrders = useCallback(async (userId = null) => {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(API_ENDPOINTS.ORDERS, { headers })
+      let url = API_ENDPOINTS.ORDERS
+      if (userId) {
+        const sep = url.includes('?') ? '&' : '?'
+        url = `${url}${sep}userId=${encodeURIComponent(userId)}`
+      }
+      const res = await fetch(url, { headers })
       if (!res.ok) throw new Error('Failed to load orders')
       const data = await res.json()
       setOrders(data)

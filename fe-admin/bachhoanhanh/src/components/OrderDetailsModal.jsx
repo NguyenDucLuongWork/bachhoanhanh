@@ -10,10 +10,13 @@ export function OrderDetailsModal({
   onGoHome,
   token,
   staticQrImageUrl,
+  getCustomerDetail = null,
 }) {
   const [order, setOrder] = useState(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [paymentInfo, setPaymentInfo] = useState(null)
+  const [customerInfo, setCustomerInfo] = useState(null)
+  const [customerLoading, setCustomerLoading] = useState(false)
   const [autoOpenPayment, setAutoOpenPayment] = useState(() => {
     try {
       return localStorage.getItem('autoOpenPayment') === '1'
@@ -46,8 +49,37 @@ export function OrderDetailsModal({
   useEffect(() => {
     if (orderData) {
       setOrder(orderData)
+      setCustomerInfo(null)
     }
   }, [orderData, isOpen])
+
+  useEffect(() => {
+    let cancelled = false
+    const loadCustomer = async () => {
+      if (!isOpen || !orderData || !getCustomerDetail || !orderData.keycloakId) {
+        setCustomerInfo(null)
+        return
+      }
+      setCustomerLoading(true)
+      try {
+        const res = await getCustomerDetail(orderData.keycloakId)
+        if (!cancelled && res.success) {
+          setCustomerInfo(res.data)
+        } else {
+          setCustomerInfo(null)
+        }
+      } catch (e) {
+        console.error('Failed to load customer info:', e)
+        setCustomerInfo(null)
+      } finally {
+        setCustomerLoading(false)
+      }
+    }
+    loadCustomer()
+    return () => {
+      cancelled = true
+    }
+  }, [isOpen, orderData, getCustomerDetail])
 
   // When modal opens, create a checkout for this order (if pending)
   useEffect(() => {
@@ -130,6 +162,21 @@ export function OrderDetailsModal({
     <div className="modal-bg open">
       <div className="modal" style={{ maxWidth: '500px' }}>
         <h3>Order #{order.id}</h3>
+
+        {customerLoading || customerInfo ? (
+          <div style={{ marginBottom: '16px', padding: 12, borderRadius: 8, background: 'var(--surface)', border: '1px solid var(--border)' }}>
+            {customerLoading ? (
+              <div style={{ fontSize: '13px', color: 'var(--muted)' }}>Loading customer...</div>
+            ) : customerInfo ? (
+              <div>
+                <div style={{ fontSize: '12px', color: 'var(--muted)', textTransform: 'uppercase', marginBottom: 6, fontWeight: 600 }}>Customer</div>
+                <div style={{ fontWeight: 600, marginBottom: 4 }}>{customerInfo.firstName} {customerInfo.lastName}</div>
+                <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: 4 }}>{customerInfo.phone}</div>
+                <div style={{ fontSize: '12px', color: 'var(--muted)' }}>{customerInfo.email}</div>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
 
         <div style={{ marginBottom: '16px' }}>
           <label style={{ fontSize: '12px', color: 'var(--muted)', textTransform: 'uppercase' }}>

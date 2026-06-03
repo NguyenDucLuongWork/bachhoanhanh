@@ -19,8 +19,27 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
   useEffect(() => {
     if (!productId) return
 
+    let cancelled = false
     const productFromList = products.find((item) => String(item.productId) === String(productId))
     if (productFromList) {
+      // If the product in the list lacks attributes/brand details, fetch full details
+      const lacksAttributes = !productFromList.attributes || (typeof productFromList.attributes === 'object' && Object.keys(productFromList.attributes || {}).length === 0)
+      const lacksBrand = !productFromList.brandId && !productFromList.brandName && !productFromList.brandDescription
+      if ((lacksAttributes || lacksBrand) && getProductById) {
+        const loadProduct = async () => {
+          setLoading(true)
+          const result = await getProductById(productId)
+          if (!cancelled) {
+            if (result.success) setProduct(result.data)
+            else setProduct(productFromList)
+            setQuantity(1)
+            setLoading(false)
+          }
+        }
+        loadProduct()
+        return () => { cancelled = true }
+      }
+
       setProduct(productFromList)
       setQuantity(1)
       return
@@ -95,9 +114,41 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
 
   if (!product) return null
 
+  // Normalize attributes: sometimes backend returns a JSON string
+  let attributes = product.attributes || {}
+  if (typeof attributes === 'string') {
+    try {
+      attributes = JSON.parse(attributes)
+    } catch (e) {
+      // leave as string fallback
+      attributes = { RAW: attributes }
+    }
+  }
+
+  // If backend put brand inside attributes under key like 'BRAND', prefer top-level brand fields
+  const hasBrandInfo = !!(product.brandId || product.brandName)
+  if (!hasBrandInfo && attributes && typeof attributes === 'object') {
+    const brandKey = Object.keys(attributes).find((k) => String(k).trim().toUpperCase() === 'BRAND')
+    if (brandKey) {
+      const brandVal = attributes[brandKey]
+      if (brandVal) {
+        product.brandName = product.brandName || brandVal
+      }
+    }
+  }
+
   const relatedProducts = getRelatedProducts()
   const stockStatus = product.stock > 0 ? 'In Stock' : 'Out of Stock'
   const stockColor = product.stock > 0 ? '#10b981' : '#ef4444'
+
+  // Prepare attributes for display, removing BRAND key if we've shown brand separately
+  const attributesToShow = (() => {
+    if (!attributes || typeof attributes !== 'object') return {}
+    const copy = { ...attributes }
+    const brandKey = Object.keys(copy).find((k) => String(k).trim().toUpperCase() === 'BRAND')
+    if (brandKey && (product.brandName || product.brandId)) delete copy[brandKey]
+    return copy
+  })()
 
   return (
     <div className="page active commerce-shell">
@@ -125,18 +176,7 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
 
           <div className="detail-price">{formatPrice(product.originalPrice)} VND</div>
 
-          {product.brandName && (
-            <div style={{ marginBottom: '16px', display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Brand:</span>
-              <button
-                className="btn btn-ghost"
-                onClick={() => onViewBrand?.(product.brandName)}
-                style={{ padding: '6px 10px', fontSize: '13px', textDecoration: 'underline', color: 'var(--primary)' }}
-              >
-                {product.brandName}
-              </button>
-            </div>
-          )}
+          {/* Inline brand link removed; brand displayed in dedicated block below */}
 
           {/* Stock Status */}
           <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -243,52 +283,71 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
                 </div>
                 {productStocksLoading && <span style={{ color: 'var(--muted)' }}>Loading stock data…</span>}
               </div>
-              {productStocksLoading ? (
-                <p>Loading stock rows…</p>
-              ) : !productStocks || productStocks.length === 0 ? (
-                <div className="empty">
-                  <p>No stock records found for this product.</p>
-                </div>
-              ) : (
-                <div style={{ overflowX: 'auto' }}>
-                  <table className="data-table">
-                    <thead>
-                      <tr>
-                        <th>Stock ID</th>
-                        <th>Amount</th>
-                        <th>Available</th>
-                        <th>Import date</th>
-                        <th>Manufacture date</th>
-                        <th>Expiry date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {productStocks.map((stock) => (
-                        <tr key={stock.id || `${stock.productId}-${stock.amount}-${stock.expiryDate}`}> 
-                          <td>{stock.id || '-'}</td>
-                          <td>{stock.amount || 0}</td>
-                          <td>{stock.available ? 'Yes' : 'No'}</td>
-                          <td>{formatDate(stock.importDate)}</td>
-                          <td>{formatDate(stock.manufactureDate)}</td>
-                          <td>{formatDate(stock.expiryDate)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+                    {productStocksLoading ? (
+                      <p>Loading stock rows…</p>
+                    ) : !productStocks || productStocks.length === 0 ? (
+                      <div className="empty">
+                        <p>No stock records found for this product.</p>
+                      </div>
+                    ) : (
+                      <div style={{ overflowX: 'auto' }}>
+                        <table className="data-table">
+                          <thead>
+                            <tr>
+                              <th>Stock ID</th>
+                              <th>Amount</th>
+                              <th>Available</th>
+                              <th>Import date</th>
+                              <th>Manufacture date</th>
+                              <th>Expiry date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {productStocks.map((stock) => (
+                              <tr key={stock.id || `${stock.productId}-${stock.amount}-${stock.expiryDate}`}> 
+                                <td>{stock.id || '-'}</td>
+                                <td>{stock.amount || 0}</td>
+                                <td>{stock.available ? 'Yes' : 'No'}</td>
+                                <td>{formatDate(stock.importDate)}</td>
+                                <td>{formatDate(stock.manufactureDate)}</td>
+                                <td>{formatDate(stock.expiryDate)}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
             </div>
-          </section>
+                </section>
 
-          {product.brandDescription && (
-            <div style={{ marginTop: '16px', padding: '16px', borderRadius: '12px', background: 'var(--surface)', border: '1px solid var(--border)' }}>
-              <div style={{ fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Brand details</div>
-              <div style={{ fontSize: '13px', color: 'var(--muted)', lineHeight: '1.6' }}>
-                {product.brandDescription}
+          {/* Dedicated brand block: always show when brand info exists */}
+          {(product.brandId || product.brandName || product.brandDescription) && (
+            <div style={{ marginTop: '16px', padding: '16px', borderRadius: '12px', background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+              <div style={{ width: 72, height: 72, borderRadius: 8, overflow: 'hidden', background: 'var(--muted)', flex: '0 0 72px' }}>
+                {product.brandImage ? (
+                  <img src={product.brandImage} alt={product.brandName || 'Brand'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  <div style={{ width: '100%', height: '100%' }} />
+                )}
               </div>
-              <div style={{ marginTop: '10px', display: 'grid', gap: '4px', fontSize: '13px' }}>
-                <div><strong>Email:</strong> {product.brandEmail || 'n/a'}</div>
-                <div><strong>Phone:</strong> {product.brandPhone || 'n/a'}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontSize: '14px', fontWeight: 700 }}>{product.brandName || 'Brand'}</div>
+                    {product.brandDescription && <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 6 }}>{product.brandDescription}</div>}
+                  </div>
+                  {product.brandName && (
+                    <button className="btn btn-ghost" onClick={() => onViewBrand?.(product.brandName)}>
+                      View brand
+                    </button>
+                  )}
+                </div>
+
+                <div style={{ marginTop: 10, display: 'flex', gap: 12, flexWrap: 'wrap', fontSize: 13 }}>
+                  <div><strong>Email:</strong> {product.brandEmail || 'n/a'}</div>
+                  <div><strong>Phone:</strong> {product.brandPhone || 'n/a'}</div>
+                  <div><strong>ID:</strong> {product.brandId || '-'}</div>
+                </div>
               </div>
             </div>
           )}
@@ -304,18 +363,63 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
             </p>
           </div>
         </div>
-        {!product.attributes || Object.keys(product.attributes).length === 0 ? (
+        {!attributesToShow || Object.keys(attributesToShow).length === 0 ? (
           <div className="empty">
             <p>No attributes available</p>
           </div>
         ) : (
           <div className="attribute-grid">
-            {Object.entries(product.attributes).map(([key, value]) => (
-              <div key={key} className="attribute-tile">
-                <span>{key}</span>
-                <strong>{value}</strong>
-              </div>
-            ))}
+            {Object.entries(attributesToShow).map(([key, value]) => (
+                <div key={key} className="attribute-tile">
+                  <span>{String(key).replace(/_/g, ' ').toUpperCase()}</span>
+                  <strong>{typeof value === 'object' ? JSON.stringify(value) : String(value)}</strong>
+                </div>
+              ))}
+          </div>
+        )}
+      </section>
+
+      {/* Stock records moved below attributes as a dedicated table */}
+      <section style={{ marginTop: 20 }}>
+        <div className="page-header" style={{ marginBottom: '14px' }}>
+          <div>
+            <h2>Stock records</h2>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: '13px' }}>
+              Loaded by barcode: {product.barcode || 'N/A'}
+            </p>
+          </div>
+        </div>
+
+        {productStocksLoading ? (
+          <div className="empty"><p>Loading stock rows…</p></div>
+        ) : !productStocks || productStocks.length === 0 ? (
+          <div className="empty"><p>No stock records found for this product.</p></div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Stock ID</th>
+                  <th>Amount</th>
+                  <th>Available</th>
+                  <th>Import date</th>
+                  <th>Manufacture date</th>
+                  <th>Expiry date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {productStocks.map((stock) => (
+                  <tr key={stock.id || `${stock.productId}-${stock.amount}-${stock.expiryDate}`}> 
+                    <td>{stock.id || '-'}</td>
+                    <td>{stock.amount || 0}</td>
+                    <td>{stock.available ? 'Yes' : 'No'}</td>
+                    <td>{formatDate(stock.importDate)}</td>
+                    <td>{formatDate(stock.manufactureDate)}</td>
+                    <td>{formatDate(stock.expiryDate)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </section>

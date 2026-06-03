@@ -5,6 +5,7 @@ import { LoginPage } from './pages/LoginPage'
 import { ProductsPage } from './pages/ProductsPage'
 import { ProductDetailPage } from './pages/ProductDetailPage'
 import { OrdersPage } from './pages/OrdersPage'
+import { AdminDashboard } from './pages/AdminDashboard'
 import { CartPage } from './pages/CartPage'
 import { AccountPage } from './pages/AccountPage'
 import { BrandPage } from './pages/BrandPage'
@@ -54,6 +55,7 @@ function App() {
   const [productDetailId, setProductDetailId] = useState(null)
   const [brandDetailName, setBrandDetailName] = useState(null)
   const [customerDetailId, setCustomerDetailId] = useState(null)
+  const [ordersUserId, setOrdersUserId] = useState(null)
   const [cartItems, setCartItems] = useState([])
   const [pendingAction, setPendingAction] = useState(null)
   const [checkoutOrder, setCheckoutOrder] = useState(null)
@@ -161,8 +163,20 @@ function App() {
       return
     }
     if (route[0] === 'orders') {
+      if (route[1]) {
+        setOrdersUserId(route[1])
+        setCurrentPage('orders')
+        window.history.replaceState({ page: 'orders', userId: route[1] }, '', `${window.location.pathname}#/${route.join('/')}`)
+        return
+      }
+      setOrdersUserId(null)
       setCurrentPage('orders')
       window.history.replaceState({ page: 'orders' }, '', `${window.location.pathname}#/orders`)
+      return
+    }
+    if (route[0] === 'dashboard' || route[0] === 'admin') {
+      setCurrentPage('admin-dashboard')
+      window.history.replaceState({ page: 'admin-dashboard' }, '', `${window.location.pathname}#/dashboard`)
       return
     }
     if (route[0] === 'account') {
@@ -221,6 +235,13 @@ function App() {
         setCustomerDetailId(null)
         return
       }
+      if (route[0] === 'dashboard' || route[0] === 'admin') {
+        setCurrentPage('admin-dashboard')
+        setProductDetailId(null)
+        setBrandDetailName(null)
+        setCustomerDetailId(null)
+        return
+      }
       if (route[0] === 'cart') {
         setCurrentPage('cart')
         setProductDetailId(null)
@@ -228,9 +249,14 @@ function App() {
         return
       }
       if (route[0] === 'orders') {
-        setCurrentPage('orders')
         setProductDetailId(null)
         setBrandDetailName(null)
+        if (route[1]) {
+          setOrdersUserId(route[1])
+        } else {
+          setOrdersUserId(null)
+        }
+        setCurrentPage('orders')
         return
       }
       if (route[0] === 'account') {
@@ -326,7 +352,18 @@ function App() {
     } else if (page === 'orders') {
       setProductDetailId(null)
       setBrandDetailName(null)
-      window.history.pushState({ page: 'orders' }, '', `${basePath}#/orders`)
+      if (id) {
+        setOrdersUserId(id)
+        window.history.pushState({ page: 'orders', userId: id }, '', `${basePath}#/orders/${id}`)
+      } else {
+        setOrdersUserId(null)
+        window.history.pushState({ page: 'orders' }, '', `${basePath}#/orders`)
+      }
+    } else if (page === 'admin-dashboard') {
+      setProductDetailId(null)
+      setBrandDetailName(null)
+      setCustomerDetailId(null)
+      window.history.pushState({ page: 'admin-dashboard' }, '', `${basePath}#/dashboard`)
     } else if (page === 'account') {
       setProductDetailId(null)
       setBrandDetailName(null)
@@ -357,7 +394,9 @@ function App() {
   }
 
   const handleNavigate = (page) => {
-    if (page === 'products') {
+    if (page === 'admin-dashboard') {
+      navigateTo('admin-dashboard')
+    } else if (page === 'products') {
       navigateTo('products')
     } else if (page === 'brands') {
       navigateTo('brands')
@@ -489,6 +528,13 @@ function App() {
             onRequireLogin={requireLogin}
           />
         )}
+        {currentPage === 'admin-dashboard' && isAdminUser && (
+          <AdminDashboard
+            orders={orders}
+            loading={ordersLoading}
+            onLoadOrders={loadOrders}
+          />
+        )}
         {currentPage === 'product-detail' && productDetailId && (
           <ProductDetailPage
             productId={productDetailId}
@@ -583,6 +629,8 @@ function App() {
             onGoHome={() => setCurrentPage('products')}
             isAdminUser={isAdminUser}
             token={token}
+            userId={ordersUserId}
+            getCustomerDetail={getCustomerDetail}
           />
         )}
         {currentPage === 'cart' && isLoggedIn && (
@@ -621,7 +669,7 @@ function App() {
             onUpdateStaff={updateStaff}
             onUpdateCustomer={updateCustomer}
             onDeleteUser={deleteUser}
-            onViewCustomerDetail={(customerId) => navigateTo('customer-detail', customerId)}
+            onViewCustomerDetail={(customerId) => navigateTo('orders', customerId)}
           />
         )}
         {currentPage === 'customer-detail' && customerDetailId && isAdminUser && (
@@ -649,6 +697,7 @@ function App() {
         }}
         token={token}
         staticQrImageUrl="/qr.png"
+        getCustomerDetail={getCustomerDetail}
       />
 
       <ToastContainer toasts={toasts} />
