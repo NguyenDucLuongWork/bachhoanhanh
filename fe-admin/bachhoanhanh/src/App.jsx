@@ -533,6 +533,7 @@ function App() {
             orders={orders}
             loading={ordersLoading}
             onLoadOrders={loadOrders}
+            products={products}
           />
         )}
         {currentPage === 'product-detail' && productDetailId && (
