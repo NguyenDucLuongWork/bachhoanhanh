@@ -29,7 +29,10 @@ public class UserIdHeaderFilter implements GlobalFilter, Ordered {
 
                     ServerHttpRequest request = exchange.getRequest()
                             .mutate()
-                            .header("X-User-Id", subject)
+                            .headers(headers -> {
+                                headers.remove("X-User-Id");
+                                headers.set("X-User-Id", subject);
+                            })
                             .build();
 
                     return chain.filter(

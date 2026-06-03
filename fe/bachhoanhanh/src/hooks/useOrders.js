@@ -1,7 +1,9 @@
 import { useState, useCallback } from 'react'
+import { apiUrl } from '../config'
 import { apiFetch } from '../utils/api'
 
-const ORDERS_URL = '/orders'
+
+const ORDERS_URL = apiUrl('/orders')
 
 export function useOrders(token) {
   const [orders, setOrders] = useState([])

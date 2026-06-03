@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Loader } from '../components/Loader'
-import { formatPrice } from '../utils/helpers'
+import { formatPrice, getAvailableAmount } from '../utils/helpers'
 import { useStocks } from '../hooks/useStocks'
 
 function formatDate(value) {
@@ -41,7 +41,7 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
       }
 
       setProduct(productFromList)
-      setQuantity(1)
+      setQuantity(getAvailableAmount(productFromList) > 0 ? 1 : 0)
       return
     }
 
@@ -51,7 +51,7 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
       const result = await getProductById(productId)
       if (result.success) {
         setProduct(result.data)
-        setQuantity(1)
+        setQuantity(getAvailableAmount(result.data) > 0 ? 1 : 0)
       } else {
         setError(result.message)
       }
@@ -74,15 +74,17 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
   }
 
   const handleAddToCartWithQuantity = () => {
+    if (quantity <= 0) return
     const productWithQuantity = { ...product, requestedQuantity: quantity }
     onAddToCart(productWithQuantity)
-    setQuantity(1)
+    setQuantity(getAvailableAmount(product) > 0 ? 1 : 0)
   }
 
   const handleBuyNowWithQuantity = () => {
+    if (quantity <= 0) return
     const productWithQuantity = { ...product, requestedQuantity: quantity }
     onBuyNow(productWithQuantity)
-    setQuantity(1)
+    setQuantity(getAvailableAmount(product) > 0 ? 1 : 0)
   }
 
   if (loading) {
@@ -138,8 +140,9 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
   }
 
   const relatedProducts = getRelatedProducts()
-  const stockStatus = product.stock > 0 ? 'In Stock' : 'Out of Stock'
-  const stockColor = product.stock > 0 ? '#10b981' : '#ef4444'
+  const availableAmount = getAvailableAmount(product)
+  const stockStatus = availableAmount > 0 ? 'In Stock' : 'Out of Stock'
+  const stockColor = availableAmount > 0 ? '#10b981' : '#ef4444'
 
   // Prepare attributes for display, removing BRAND key if we've shown brand separately
   const attributesToShow = (() => {
@@ -182,7 +185,7 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
           <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--muted)' }}>Stock:</span>
             <span style={{ color: stockColor, fontWeight: '600' }}>
-              {stockStatus} ({product.stock || 0} units)
+              {stockStatus}
             </span>
           </div>
 
@@ -209,7 +212,7 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
                     type="number"
                     value={quantity}
                     onChange={(e) => {
-                      const val = Math.max(1, Math.min(product.stock, parseInt(e.target.value) || 1))
+                      const val = availableAmount > 0 ? Math.max(1, Math.min(availableAmount, parseInt(e.target.value) || 1)) : 0
                       setQuantity(val)
                     }}
                     style={{
@@ -222,14 +225,14 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
                     }}
                   />
                   <button
-                    onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                    disabled={quantity >= product.stock}
+                    onClick={() => setQuantity(Math.min(availableAmount, quantity + 1))}
+                    disabled={quantity >= availableAmount || availableAmount <= 0}
                     style={{
                       background: 'none',
                       border: 'none',
                       padding: '8px 12px',
-                      cursor: quantity >= product.stock ? 'not-allowed' : 'pointer',
-                      opacity: quantity >= product.stock ? 0.5 : 1,
+                      cursor: quantity >= availableAmount || availableAmount <= 0 ? 'not-allowed' : 'pointer',
+                      opacity: quantity >= availableAmount || availableAmount <= 0 ? 0.5 : 1,
                     }}
                   >
                     +
@@ -242,14 +245,14 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
                 <button 
                   className="btn btn-ghost" 
                   onClick={handleAddToCartWithQuantity}
-                  disabled={product.stock <= 0}
+                  disabled={availableAmount <= 0 || quantity <= 0}
                 >
                   Add to cart ({quantity})
                 </button>
                 <button 
                   className="btn btn-accent" 
                   onClick={handleBuyNowWithQuantity}
-                  disabled={product.stock <= 0}
+                  disabled={availableAmount <= 0 || quantity <= 0}
                 >
                   Buy now
                 </button>
@@ -475,11 +478,11 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
                   display: 'inline-block',
                   fontSize: '11px',
                   padding: '4px 8px',
-                  background: relProduct.stock > 0 ? '#d1fae5' : '#fee2e2',
-                  color: relProduct.stock > 0 ? '#065f46' : '#7f1d1d',
+                  background: getAvailableAmount(relProduct) > 0 ? '#d1fae5' : '#fee2e2',
+                  color: getAvailableAmount(relProduct) > 0 ? '#065f46' : '#7f1d1d',
                   borderRadius: '4px'
                 }}>
-                  {relProduct.stock > 0 ? `${relProduct.stock} in stock` : 'Out of stock'}
+                  {getAvailableAmount(relProduct) > 0 ? 'In stock' : 'Out of stock'}
                 </span>
               </div>
             ))}

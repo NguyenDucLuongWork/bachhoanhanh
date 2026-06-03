@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
-import { ProductCard } from '../components/ProductCard'
 import { ProductModal } from '../components/ProductModal'
-import { DeleteConfirmModal } from '../components/DeleteConfirmModal'
 import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
+import { getAvailableAmount } from '../utils/helpers'
 
 const findCatalog = (nodes, id) => {
   for (const node of nodes) {
@@ -24,7 +23,6 @@ export function ProductsPage({
   loading,
   onAddProduct,
   onUpdateProduct,
-  onDeleteProduct,
   onRefresh,
   prototypes,
   catalogs,
@@ -45,10 +43,7 @@ export function ProductsPage({
   const [priceMax, setPriceMax] = useState(1000000)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const [deletingId, setDeletingId] = useState(null)
-  const [modalLoading, setModalLoading] = useState(false)
 
   const selectedCatalogNode = selectedCatalog ? findCatalog(catalogs, selectedCatalog) : null
   const selectedIds = selectedCatalogNode ? collectCatalogIds(selectedCatalogNode) : []
@@ -97,7 +92,6 @@ export function ProductsPage({
   }
 
   const handleAddProduct = async (productData) => {
-    setModalLoading(true)
     const result = await onAddProduct(productData)
     if (result.success) {
       showToast(result.message)
@@ -105,11 +99,9 @@ export function ProductsPage({
     } else {
       showToast(result.message, true)
     }
-    setModalLoading(false)
   }
 
   const handleSaveEdit = async (productData) => {
-    setModalLoading(true)
     const result = await onUpdateProduct(selectedProduct.productId, productData)
     if (result.success) {
       showToast(result.message)
@@ -118,20 +110,6 @@ export function ProductsPage({
     } else {
       showToast(result.message, true)
     }
-    setModalLoading(false)
-  }
-
-  const handleConfirmDelete = async () => {
-    setModalLoading(true)
-    const result = await onDeleteProduct(deletingId)
-    if (result.success) {
-      showToast(result.message)
-      setIsDeleteModalOpen(false)
-      setDeletingId(null)
-    } else {
-      showToast(result.message, true)
-    }
-    setModalLoading(false)
   }
 
   if (loading) {
@@ -342,7 +320,7 @@ export function ProductsPage({
                       </td>
                       <td style={{ padding: '12px 16px', fontSize: '13px', color: 'var(--muted)' }}>{product.catalogId || '-'}</td>
                       <td style={{ padding: '12px 16px', textAlign: 'center', fontSize: '13px', color: 'var(--muted)' }}>
-                        {product.totalAvailableAmount != null ? product.totalAvailableAmount : '-'}
+                        {getAvailableAmount(product)}
                       </td>
                       <td style={{ padding: '12px 16px', textAlign: 'center', fontSize: '12px' }}>
                         <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -356,17 +334,6 @@ export function ProductsPage({
                             style={{ padding: '4px 8px', fontSize: '12px', minWidth: 'auto' }}
                           >
                             Edit
-                          </button>
-                          <button 
-                            className="btn btn-ghost"
-                            onClick={(event) => {
-                              event.stopPropagation()
-                              setDeletingId(product.productId)
-                              setIsDeleteModalOpen(true)
-                            }}
-                            style={{ padding: '4px 8px', fontSize: '12px', minWidth: 'auto', color: 'var(--error)' }}
-                          >
-                            Delete
                           </button>
                           {!isAdminUser && (
                             <>
@@ -424,12 +391,6 @@ export function ProductsPage({
         attributeTypes={attributeTypes}
       />
 
-      <DeleteConfirmModal
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleConfirmDelete}
-        isLoading={modalLoading}
-      />
     </div>
   )
 }
