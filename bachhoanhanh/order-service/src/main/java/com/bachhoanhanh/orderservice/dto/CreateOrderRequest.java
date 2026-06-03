@@ -1,64 +1,20 @@
 package com.bachhoanhanh.orderservice.dto;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class CreateOrderRequest {
-    private String productId;
-    private Integer quantity;
-    private List<OrderLineRequest> items;
+    private String keycloakId;   // set từ JWT trong controller, FE không cần gửi
+    private String productId;    // dùng khi order 1 sản phẩm đơn lẻ
+    private Integer quantity;    // dùng khi order 1 sản phẩm đơn lẻ
+    private List<OrderLineRequest> items; // dùng khi order nhiều sản phẩm
     private String voucherCode;
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public List<OrderLineRequest> getItems() {
-        return items;
-    }
-
-    public void setItems(List<OrderLineRequest> items) {
-        this.items = items;
-    }
-
-    public String getVoucherCode() {
-        return voucherCode;
-    }
-
-    public void setVoucherCode(String voucherCode) {
-        this.voucherCode = voucherCode;
-    }
-
+    @Data
     public static class OrderLineRequest {
         private String productId;
         private Integer quantity;
-
-        public String getProductId() {
-            return productId;
-        }
-
-        public void setProductId(String productId) {
-            this.productId = productId;
-        }
-
-        public Integer getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(Integer quantity) {
-            this.quantity = quantity;
-        }
     }
 }
-

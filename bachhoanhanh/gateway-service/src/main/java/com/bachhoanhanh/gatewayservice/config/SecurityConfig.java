@@ -99,7 +99,8 @@ public class SecurityConfig {
                         .pathMatchers("/products/**", "/attribute-types/**", "/prototypes/**", "/brands/**", "/catalogs/**", "/stocks/**").authenticated()
 
                         // --- Orders & Payments ---
-                        .pathMatchers("/orders/**", "/payments/**").authenticated()
+                                .pathMatchers(HttpMethod.GET, "/orders/**").permitAll()
+                                .pathMatchers("/orders/**", "/payments/**").authenticated()
 
                         // --- Cart ---
                         .pathMatchers("/cart/**").authenticated()

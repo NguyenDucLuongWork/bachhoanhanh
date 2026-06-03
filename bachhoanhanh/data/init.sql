@@ -508,9 +508,77 @@ INSERT INTO stock (product_id, amount, import_date, manufacture_date, expiry_dat
                                                                                                   ('893000222', 120, '2026-05-01', '2026-05-01', '2026-05-09', FALSE),
                                                                                                   ('893000333', 80,  '2026-05-01', '2026-04-25', '2026-06-01', FALSE),
                                                                                                   ('893000444', 200, '2026-05-01', '2026-03-01', '2026-11-06', TRUE),
-                                                                                                  ('893000555', 300, '2026-05-01', '2026-01-01', '2027-05-01', TRUE),
-                                                                                                  ('893000555', 60,  '2026-05-01', '2025-12-01', '2027-12-01', TRUE),
+                                                                                                  ('893000555', 300, '2026-05-01', '2026-01-01', '2027-05-01', TRUE),                                                                                          ('893000555', 60,  '2026-05-01', '2025-12-01', '2027-12-01', TRUE),
                                                                                                   ('893000777', 90,  '2026-05-01', '2025-11-01', '2027-11-01', TRUE),
                                                                                                   ('893000888', 150, '2026-05-01', '2026-01-01', '2027-02-01', TRUE),
                                                                                                   ('893000999', 40,  '2026-05-01', '2025-10-01', '2027-10-01', TRUE),
                                                                                                   ('893001000', 75,  '2026-05-01', '2025-06-01', '2027-12-31', TRUE);
+
+USE orderdb;
+
+CREATE TABLE IF NOT EXISTS orders (
+                                      id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                      keycloak_id     VARCHAR(255), -- ID người mua
+    subtotal        DOUBLE NOT NULL,
+    discount_amount DOUBLE DEFAULT 0,
+    voucher_code    VARCHAR(50),
+    total_price     DOUBLE NOT NULL,
+    status          VARCHAR(20) NOT NULL, -- PENDING, PAID, FAILED, CANCELLED
+    order_date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    stock_finished  BOOLEAN DEFAULT FALSE
+    );
+
+CREATE TABLE IF NOT EXISTS order_items (
+                                           id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                           order_id         BIGINT NOT NULL,
+                                           product_id       VARCHAR(100),
+    stock_product_id VARCHAR(100), -- Barcode dùng để trừ kho
+    name             VARCHAR(255),
+    quantity         INT NOT NULL,
+    price            DOUBLE NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+    );
+
+-- ───────────────────────────────────────────────────────
+-- ORDER DATA
+-- ───────────────────────────────────────────────────────
+
+-- Đơn hàng 1: Khách hàng mua nhiều món, dùng voucher giảm giá 20k
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (1, 'e3d7b2bf-943b-4f08-93ea-5189afc85172', 124000, 20000, 'FLAT20K', 104000, 'PAID', '2026-06-01 10:30:00', TRUE);
+
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES
+                                                                                            (1, '3', '893000333', 'Sữa tươi TH 1L', 2, 35000), -- 70k
+                                                                                            (1, '4', '893000444', 'Lay\'s Classic Potato Chips', 1, 22000), -- 22k
+(1, '6', '893000666', 'Sunlight Lemon Dishwash', 1, 32000); -- 32k
+-- Tổng subtotal: 124k
+
+-- Đơn hàng 2: Khách hàng mua bia và nước ngọt, đang chờ thanh toán
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (2, 'e3d7b2bf-943b-4f08-93ea-5189afc85172', 86000, 0, NULL, 86000, 'PENDING', '2026-06-02 14:15:00', FALSE);
+
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES
+(2, '5', '893000555', 'Coca-Cola Original 320ml', 5, 10000), -- 50k
+(2, '8', '893000888', 'Tiger Beer Crystal', 2, 18000); -- 36k
+
+-- Đơn hàng 3: Đơn hàng giá trị cao, dùng voucher phần trăm (WELCOME10)
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (3, 'e3d7b2bf-943b-4f08-93ea-5189afc85172', 290000, 29000, 'WELCOME10', 261000, 'PAID', '2026-06-03 08:00:00', TRUE);
+
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES
+(3, '9', '893000999', 'Omo Matic Liquid Detergent', 2, 145000);
+
+-- Đơn hàng 4: Đơn hàng bị lỗi/thanh toán thất bại
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (4, 'e3d7b2bf-943b-4f08-93ea-5189afc85172', 30000, 0, NULL, 30000, 'FAILED', '2026-06-03 09:45:00', FALSE);
+
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES
+(4, '10', '893001000', 'Chupa Chups Lollipops', 1, 30000);
+
+-- Đơn hàng 5: Mua thịt và rau tươi
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (5, 'e3d7b2bf-943b-4f08-93ea-5189afc85172', 145000, 0, NULL, 145000, 'PAID', '2026-06-03 15:00:00', TRUE);
+
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES
+(1, '1', '893000111', 'Ba rọi heo VietXanh', 1, 120000),
+(1, '2', '893000222', 'Xà lách thủy canh', 1, 25000);
