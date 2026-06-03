@@ -1,8 +1,10 @@
-import { formatPrice } from '../utils/helpers'
+import { formatPrice, getAvailableAmount } from '../utils/helpers'
 
-export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, onAddToCart, onBuyNow }) {
-  const stockStatus = product.stock > 0 ? 'In Stock' : 'Out of Stock'
-  const stockColor = product.stock > 0 ? '#10b981' : '#ef4444'
+export function ProductCard({ product, onView, onEdit, isAdminUser, onAddToCart, onBuyNow }) {
+  const availableAmount = getAvailableAmount(product)
+  const hasStock = availableAmount > 0
+  const stockStatus = hasStock ? 'In Stock' : 'Out of Stock'
+  const stockColor = hasStock ? '#10b981' : '#ef4444'
   
   return (
     <article className="store-card" onClick={() => onView(product.productId)}>
@@ -12,7 +14,6 @@ export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, on
         ) : (
           <div className="image-fallback">No image</div>
         )}
-        {product.catalogId && <span className="card-chip">{product.catalogId}</span>}
         {!isAdminUser && (
           <span style={{
             position: 'absolute',
@@ -40,12 +41,6 @@ export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, on
           {product.barcode && <span>#{product.barcode}</span>}
         </div>
 
-        {!isAdminUser && (
-          <div style={{ fontSize: '11px', color: '#666', marginBottom: '8px', marginTop: '4px' }}>
-            {product.stock > 0 ? `${product.stock} units available` : 'Not available'}
-          </div>
-        )}
-
         {isAdminUser ? (
           <div className="card-actions">
             <button
@@ -57,15 +52,6 @@ export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, on
             >
               Edit
             </button>
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={(event) => {
-                event.stopPropagation()
-                onDelete(product.productId)
-              }}
-            >
-              Delete
-            </button>
           </div>
         ) : (
           <div className="card-actions">
@@ -75,7 +61,7 @@ export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, on
                 event.stopPropagation()
                 onAddToCart(product)
               }}
-              disabled={product.stock <= 0}
+              disabled={!hasStock}
             >
               Add to cart
             </button>
@@ -85,7 +71,7 @@ export function ProductCard({ product, onView, onEdit, onDelete, isAdminUser, on
                 event.stopPropagation()
                 onBuyNow(product)
               }}
-              disabled={product.stock <= 0}
+              disabled={!hasStock}
             >
               Buy now
             </button>

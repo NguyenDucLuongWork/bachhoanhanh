@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Loader } from '../components/Loader'
-import { formatPrice } from '../utils/helpers'
+import { formatPrice, getAvailableAmount } from '../utils/helpers'
 
 const ATTRIBUTE_LABELS = {
   BRAND: 'Brand',
@@ -40,15 +40,6 @@ function formatDate(value) {
   if (!value) return '-'
   const date = new Date(value)
   return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('vi-VN')
-}
-
-function getAvailableAmount(product) {
-  if (!product) return 0
-  if (product.totalAvailableAmount != null) return Number(product.totalAvailableAmount) || 0
-  if (Array.isArray(product.availableStocks)) {
-    return product.availableStocks.reduce((sum, stock) => sum + Number(stock.amount || 0), 0)
-  }
-  return Number(product.stock || 0)
 }
 
 function getOrderedAttributes(attributes = {}) {
@@ -183,21 +174,9 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
               <span>Availability</span>
               <strong style={{ color: stockColor }}>{stockStatus}</strong>
             </div>
-            <div className="detail-stock-main">
-              {availableAmount} <span>units available</span>
-            </div>
             {nearestExpiry && (
               <div className="detail-stock-expiry">
                 Nearest expiry: {formatDate(nearestExpiry)}
-              </div>
-            )}
-            {availableStocks.length > 0 && (
-              <div className="detail-stock-list">
-                {availableStocks.slice(0, 3).map((stock) => (
-                  <span key={stock.id || `${stock.amount}-${stock.expiryDate}`}>
-                    {stock.amount} units until {formatDate(stock.expiryDate)}
-                  </span>
-                ))}
               </div>
             )}
           </div>
@@ -330,7 +309,7 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
                   color: getAvailableAmount(relProduct) > 0 ? '#065f46' : '#7f1d1d',
                   borderRadius: '4px'
                 }}>
-                  {getAvailableAmount(relProduct) > 0 ? `${getAvailableAmount(relProduct)} in stock` : 'Out of stock'}
+                  {getAvailableAmount(relProduct) > 0 ? 'In stock' : 'Out of stock'}
                 </span>
               </div>
             ))}
