@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import { AUTH_TOKEN_URL } from '../config'
+import { apiFetch } from '../utils/api'
 const REGISTER_URL = '/users/register'
 const ME_URL = '/users/me'
 const TOKEN_STORAGE_KEY = 'bhn_access_token'
@@ -64,7 +65,7 @@ export function useAuth() {
 
   const loadMe = useCallback(async (accessToken) => {
     try {
-      const res = await fetch(ME_URL, {
+      const res = await apiFetch(ME_URL, {
         headers: { Authorization: 'Bearer ' + accessToken },
       })
       if (!res.ok) throw new Error('Failed to load user profile')
@@ -81,7 +82,7 @@ export function useAuth() {
     async (profileData) => {
       if (!token) return { success: false, message: 'Not authenticated' }
       try {
-        const res = await fetch(ME_URL, {
+        const res = await apiFetch(ME_URL, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -117,7 +118,7 @@ export function useAuth() {
       form.append('username', user)
       form.append('password', password)
 
-      const res = await fetch(AUTH_TOKEN_URL, {
+      const res = await apiFetch(AUTH_TOKEN_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: form,
@@ -149,7 +150,7 @@ export function useAuth() {
           throw new Error('Phone, first name, last name and password are required')
         }
 
-        const res = await fetch(REGISTER_URL, {
+        const res = await apiFetch(REGISTER_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -56,6 +56,149 @@
           "view-realm"
         ]
       }
+    },
+    {
+      "id": "staff-uuid-001",
+      "username": "hoale",
+      "enabled": true,
+      "firstName": "Hoa",
+      "lastName": "Lê Thị",
+      "email": "hoa.le@bachhoanhanh.vn",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["STAFF"]
+    },
+    {
+      "id": "staff-uuid-002",
+      "username": "hoangtran",
+      "enabled": true,
+      "firstName": "Hoàng",
+      "lastName": "Trần Minh",
+      "email": "hoang.tran@bachhoanhanh.vn",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["STAFF"]
+    },
+    {
+      "id": "staff-uuid-003",
+      "username": "lanpham",
+      "enabled": true,
+      "firstName": "Lan",
+      "lastName": "Phạm Ngọc",
+      "email": "lan.pham@bachhoanhanh.vn",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["STAFF"]
+    },
+    {
+      "id": "cust-uuid-001",
+      "username": "namnguyen",
+      "enabled": true,
+      "firstName": "Nam",
+      "lastName": "Nguyễn Hoàng",
+      "email": "nam.nguyen@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-002",
+      "username": "thaodang",
+      "enabled": true,
+      "firstName": "Thảo",
+      "lastName": "Đặng Thu",
+      "email": "thao.dang@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-003",
+      "username": "tuanbui",
+      "enabled": true,
+      "firstName": "Tuấn",
+      "lastName": "Bùi Anh",
+      "email": "tuan.bui@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-004",
+      "username": "ngochuang",
+      "enabled": true,
+      "firstName": "Ngọc",
+      "lastName": "Hoàng Bảo",
+      "email": "ngoc.hoang@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-005",
+      "username": "quanvo",
+      "enabled": true,
+      "firstName": "Quân",
+      "lastName": "Võ Minh",
+      "email": "quan.vo@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-006",
+      "username": "oanhtruong",
+      "enabled": true,
+      "firstName": "Oanh",
+      "lastName": "Trương Kiều",
+      "email": "oanh.truong@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-007",
+      "username": "longly",
+      "enabled": true,
+      "firstName": "Long",
+      "lastName": "Lý Thanh",
+      "email": "long.ly@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-008",
+      "username": "linhdoan",
+      "enabled": true,
+      "firstName": "Linh",
+      "lastName": "Đoàn Thùy",
+      "email": "linh.doan@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-009",
+      "username": "huyphan",
+      "enabled": true,
+      "firstName": "Huy",
+      "lastName": "Phan Gia",
+      "email": "huy.phan@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
+    },
+    {
+      "id": "cust-uuid-010",
+      "username": "yenvu",
+      "enabled": true,
+      "firstName": "Yến",
+      "lastName": "Vũ Hải",
+      "email": "yen.vu@gmail.com",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "123456", "temporary": false }],
+      "realmRoles": ["CUSTOMER"]
     }
   ],
   "clients": [

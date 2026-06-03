@@ -114,6 +114,7 @@ public class SecurityConfig {
 
                         // Thêm vào khối authorizeExchange, sau phần vouchers:
                         .pathMatchers(HttpMethod.POST, "/api/ocr/**").authenticated()
+                        .pathMatchers("/api/chat/**").authenticated()
 
                         .anyExchange().permitAll()
 

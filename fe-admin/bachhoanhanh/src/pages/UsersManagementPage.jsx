@@ -304,19 +304,29 @@ export function UsersManagementPage({
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
                       <tr style={{ borderBottom: '1px solid var(--border)' }}>
-                        <th style={{ padding: 12, textAlign: 'left', fontWeight: 600, color: 'var(--muted)' }}>Name</th>
-                        <th style={{ padding: 12, textAlign: 'left', fontWeight: 600, color: 'var(--muted)' }}>Phone</th>
-                        <th style={{ padding: 12, textAlign: 'left', fontWeight: 600, color: 'var(--muted)' }}>Email</th>
+                          <th style={{ padding: 12, textAlign: 'left', fontWeight: 600, color: 'var(--muted)' }}>Name</th>
+                          <th style={{ padding: 12, textAlign: 'left', fontWeight: 600, color: 'var(--muted)' }}>Phone</th>
+                          <th style={{ padding: 12, textAlign: 'left', fontWeight: 600, color: 'var(--muted)' }}>Email</th>
+                          <th style={{ padding: 12, textAlign: 'left', fontWeight: 600, color: 'var(--muted)' }}>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {searchResult.map((item, index) => (
-                        <tr key={item.id || index} style={{ borderBottom: '1px solid var(--border)' }}>
-                          <td style={{ padding: 12 }}>{item.firstName} {item.lastName}</td>
-                          <td style={{ padding: 12 }}>{item.phone}</td>
-                          <td style={{ padding: 12 }}>{item.email}</td>
-                        </tr>
-                      ))}
+                        {searchResult.map((item, index) => (
+                          <tr key={item.keycloakId || item.id || index} style={{ borderBottom: '1px solid var(--border)' }}>
+                            <td style={{ padding: 12 }}>{item.firstName} {item.lastName}</td>
+                            <td style={{ padding: 12 }}>{item.phone}</td>
+                            <td style={{ padding: 12 }}>{item.email}</td>
+                            <td style={{ padding: 12, display: 'flex', gap: 8 }}>
+                              <button
+                                className="btn btn-small"
+                                onClick={() => onViewCustomerDetail(item.keycloakId || item.id)}
+                                style={{ fontSize: 12, padding: '6px 12px' }}
+                              >
+                                View
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
@@ -383,7 +393,7 @@ export function UsersManagementPage({
                     </thead>
                     <tbody>
                       {customers.map((customer) => (
-                        <tr key={customer.id} style={{ borderBottom: '1px solid var(--border)', hover: { background: 'var(--surface)' } }}>
+                        <tr key={customer.keycloakId || customer.id} style={{ borderBottom: '1px solid var(--border)', hover: { background: 'var(--surface)' } }}>
                           <td style={{ padding: 12 }}>
                             {customer.firstName} {customer.lastName}
                           </td>
@@ -392,7 +402,7 @@ export function UsersManagementPage({
                           <td style={{ padding: 12, display: 'flex', gap: 8 }}>
                             <button
                               className="btn btn-small"
-                              onClick={() => handleViewCustomer(customer.id)}
+                              onClick={() => handleViewCustomer(customer.keycloakId || customer.id)}
                               style={{ fontSize: 12, padding: '6px 12px' }}
                             >
                               View

@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { apiFetch } from '../utils/api'
 
 const PROTOTYPES_URL = '/prototypes'
 
@@ -10,7 +11,7 @@ export function usePrototypes(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(PROTOTYPES_URL, { headers })
+      const res = await apiFetch(PROTOTYPES_URL, { headers })
       if (!res.ok) throw new Error('Failed to load prototypes')
       const data = await res.json()
       setPrototypes(data)
@@ -26,7 +27,7 @@ export function usePrototypes(token) {
     async (catalogId) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/by-catalog/' + catalogId, { headers })
+        const res = await apiFetch(PROTOTYPES_URL + '/by-catalog/' + catalogId, { headers })
         if (!res.ok) throw new Error('Failed to load prototypes by catalog')
         const data = await res.json()
         return { success: true, data }
@@ -41,7 +42,7 @@ export function usePrototypes(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/' + id, { headers })
+        const res = await apiFetch(PROTOTYPES_URL + '/' + id, { headers })
         if (!res.ok) throw new Error('Failed to get prototype')
         const data = await res.json()
         return { success: true, data }
@@ -59,7 +60,7 @@ export function usePrototypes(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(PROTOTYPES_URL, {
+        const res = await apiFetch(PROTOTYPES_URL, {
           method: 'POST',
           headers,
           body: JSON.stringify(prototypeData),
@@ -81,7 +82,7 @@ export function usePrototypes(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(PROTOTYPES_URL + '/' + id + '/info', {
+        const res = await apiFetch(PROTOTYPES_URL + '/' + id + '/info', {
           method: 'PATCH',
           headers,
           body: JSON.stringify(prototypeData),
@@ -103,7 +104,7 @@ export function usePrototypes(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(PROTOTYPES_URL + '/' + id + '/attributes', {
+        const res = await apiFetch(PROTOTYPES_URL + '/' + id + '/attributes', {
           method: 'PATCH',
           headers,
           body: JSON.stringify(prototypeData),
@@ -122,7 +123,7 @@ export function usePrototypes(token) {
     async (id, typeName) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/' + id + '/attributes/add?typeName=' + encodeURIComponent(typeName), {
+        const res = await apiFetch(PROTOTYPES_URL + '/' + id + '/attributes/add?typeName=' + encodeURIComponent(typeName), {
           method: 'PATCH',
           headers,
         })
@@ -140,7 +141,7 @@ export function usePrototypes(token) {
     async (id, typeName) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/' + id + '/attributes/remove?typeName=' + encodeURIComponent(typeName), {
+        const res = await apiFetch(PROTOTYPES_URL + '/' + id + '/attributes/remove?typeName=' + encodeURIComponent(typeName), {
           method: 'PATCH',
           headers,
         })
@@ -158,7 +159,7 @@ export function usePrototypes(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PROTOTYPES_URL + '/' + id, {
+        const res = await apiFetch(PROTOTYPES_URL + '/' + id, {
           method: 'DELETE',
           headers,
         })
