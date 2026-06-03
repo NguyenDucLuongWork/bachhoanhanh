@@ -58,9 +58,9 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_ENABLED: "true"
-      KC_PROXY: edge
-      KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: "8082"
+      KC_PROXY_HEADERS: xforwarded
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-localhost}
+      KC_HOSTNAME_PORT: ${KEYCLOAK_HOSTNAME_PORT:-8082}
       KC_HOSTNAME_STRICT: "false"
     ports:
       - "8082:8080"
@@ -263,7 +263,7 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
-
+      
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
@@ -304,3 +304,4 @@ networks:
   default:
     external:
       name: cicd-network
+
