@@ -13,12 +13,23 @@ export function Header({ username, roles = [], cartCount = 0, currentPage, onNav
       </button>
 
       <nav className="shop-nav" id="main-nav">
-        <button
-          onClick={() => onNavigate('products')}
-          className={currentPage === 'products' || currentPage === 'product-detail' ? 'active' : ''}
-        >
-          {isAdminUser ? 'Admin Dashboard' : 'Store'}
-        </button>
+        {isAdminUser ? (
+          <>
+            <button onClick={() => onNavigate('admin-dashboard')} className={currentPage === 'admin-dashboard' ? 'active' : ''}>
+              Dashboard
+            </button>
+            <button onClick={() => onNavigate('products')} className={currentPage === 'products' || currentPage === 'product-detail' ? 'active' : ''}>
+              Products
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={() => onNavigate('products')}
+            className={currentPage === 'products' || currentPage === 'product-detail' ? 'active' : ''}
+          >
+            Store
+          </button>
+        )}
         <button onClick={() => onNavigate('brands')} className={currentPage === 'brands' ? 'active' : ''}>
           Brands
         </button>

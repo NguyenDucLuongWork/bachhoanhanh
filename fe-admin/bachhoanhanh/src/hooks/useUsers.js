@@ -14,6 +14,9 @@ export function useUsers(token) {
       const res = await fetch(`${API_ENDPOINTS.USERS}/customers`, { headers })
       if (!res.ok) throw new Error('Failed to load customers')
       const data = await res.json()
+
+      console.log('API Response (Customers):', data);
+
       setCustomers(Array.isArray(data) ? data : [])
       return { success: true, data }
     } catch (e) {

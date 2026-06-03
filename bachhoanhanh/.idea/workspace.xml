@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ocr-service/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocr-service/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ocr-service/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ocr-service/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/AdminDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/AdminDashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,7 +339,7 @@
       <workItem from="1780219862699" duration="9081000" />
       <workItem from="1780354033651" duration="17027000" />
       <workItem from="1780376192062" duration="25028000" />
-      <workItem from="1780468677310" duration="18058000" />
+      <workItem from="1780468677310" duration="26943000" />
     </task>
     <servers />
   </component>

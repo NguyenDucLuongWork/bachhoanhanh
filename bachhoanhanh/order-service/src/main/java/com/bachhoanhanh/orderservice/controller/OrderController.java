@@ -19,12 +19,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    /** Admin/Staff: lấy tất cả đơn hàng */
-    @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
-        return ResponseEntity.ok(orderService.getAllOrders());
-    }
-
     /** Customer: lấy đơn hàng của chính mình (keycloak_id từ header do gateway inject) */
     @GetMapping("/my")
     public ResponseEntity<List<Order>> getMyOrders(
@@ -72,5 +66,15 @@ public class OrderController {
     public ResponseEntity<Void> cancelOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "CANCELLED");
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Order>> getOrders(
+            @RequestParam(value = "userId", required = false) String userId
+    ) {
+        if (userId != null && !userId.isBlank()) {
+            return ResponseEntity.ok(orderService.getOrdersByUser(userId));
+        }
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 }

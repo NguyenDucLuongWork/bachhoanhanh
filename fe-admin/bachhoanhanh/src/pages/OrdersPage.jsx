@@ -27,6 +27,8 @@ export function OrdersPage({
   onGoHome,
   isAdminUser = false,
   token,
+  userId = null,
+  getCustomerDetail = null,
 }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
@@ -35,10 +37,33 @@ export function OrdersPage({
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [cancelingId, setCancelingId] = useState(null)
   const [modalLoading, setModalLoading] = useState(false)
+  const [customerInfo, setCustomerInfo] = useState(null)
+  const [customerLoading, setCustomerLoading] = useState(false)
 
   useEffect(() => {
-    onLoadOrders()
-  }, [onLoadOrders])
+    onLoadOrders(userId)
+  }, [onLoadOrders, userId])
+
+  useEffect(() => {
+    let cancelled = false
+    const loadCustomer = async () => {
+      if (!userId || !getCustomerDetail) {
+        setCustomerInfo(null)
+        return
+      }
+      setCustomerLoading(true)
+      const res = await getCustomerDetail(userId)
+      if (!cancelled) {
+        if (res.success) setCustomerInfo(res.data)
+        else setCustomerInfo(null)
+        setCustomerLoading(false)
+      }
+    }
+    loadCustomer()
+    return () => {
+      cancelled = true
+    }
+  }, [userId, getCustomerDetail])
 
   const filteredOrders = useMemo(() => {
     let filtered = orders
@@ -72,6 +97,8 @@ export function OrdersPage({
 
     return stats
   }, [orders])
+
+  
 
   const handleViewDetails = async (id) => {
     const result = await onGetOrderDetails(id)
@@ -130,6 +157,27 @@ export function OrdersPage({
           </button>
         </div>
 
+        {userId && (
+          <div style={{ margin: '16px 0', padding: 12, borderRadius: 12, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', gap: 12, alignItems: 'center' }}>
+            {customerLoading ? (
+              <div>Loading customer...</div>
+            ) : customerInfo ? (
+              <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                <div style={{ width: 48, height: 48, borderRadius: 24, background: 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700 }}>
+                  {((customerInfo.firstName || '')[0] || (customerInfo.lastName || '')[0] || 'U').toUpperCase()}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700 }}>{customerInfo.firstName} {customerInfo.lastName}</div>
+                  <div style={{ fontSize: 13, color: 'var(--muted)' }}>{customerInfo.phone} • {customerInfo.email}</div>
+                  <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 6 }}>ID: {customerInfo.keycloakId || customerInfo.id}</div>
+                </div>
+              </div>
+            ) : (
+              <div style={{ color: 'var(--muted)' }}>Customer not found</div>
+            )}
+          </div>
+        )}
+
         <div className="order-stats-grid">
           <div className="order-stat-tile">
             <span>Total orders</span>
@@ -143,6 +191,7 @@ export function OrdersPage({
           ))}
         </div>
 
+        
         <div className="search-bar">
           <input
             type="text"
@@ -246,6 +295,7 @@ export function OrdersPage({
           onGoHome={onGoHome}
           token={token}
           staticQrImageUrl="/qr.png"
+          getCustomerDetail={getCustomerDetail}
         />
 
         <DeleteConfirmModal
@@ -271,6 +321,27 @@ export function OrdersPage({
           Refresh
         </button>
       </div>
+
+      {userId && (
+        <div style={{ margin: '16px 0', padding: 12, borderRadius: 12, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', gap: 12, alignItems: 'center' }}>
+          {customerLoading ? (
+            <div>Loading customer...</div>
+          ) : customerInfo ? (
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+              <div style={{ width: 48, height: 48, borderRadius: 24, background: 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700 }}>
+                {((customerInfo.firstName || '')[0] || (customerInfo.lastName || '')[0] || 'U').toUpperCase()}
+              </div>
+              <div>
+                <div style={{ fontWeight: 700 }}>{customerInfo.firstName} {customerInfo.lastName}</div>
+                <div style={{ fontSize: 13, color: 'var(--muted)' }}>{customerInfo.phone} • {customerInfo.email}</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 6 }}>ID: {customerInfo.keycloakId || customerInfo.id}</div>
+              </div>
+            </div>
+          ) : (
+            <div style={{ color: 'var(--muted)' }}>Customer not found</div>
+          )}
+        </div>
+      )}
 
       <div className="search-bar">
         <input
@@ -333,6 +404,7 @@ export function OrdersPage({
         onGoHome={onGoHome}
         token={token}
         staticQrImageUrl="/qr.png"
+        getCustomerDetail={getCustomerDetail}
       />
 
       <DeleteConfirmModal
