@@ -1729,3 +1729,66 @@ VALUES (299, 'cust-uuid-007', 173000, 0, NULL, 173000, 'FAILED', '2026-05-16 16:
 INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (299, '2', '893000222', 'Xà lách thủy canh', 2, 25000);
 INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (299, '8', '893000888', 'Tiger Beer Crystal', 1, 18000);
 INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (299, '3', '893000333', 'Sữa tươi TH 1L', 3, 35000);
+
+                                                                                            -- DATA GENERATED FROM 2026-06-01 TO 2026-06-04
+-- Total Orders: 10
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (300, 'cust-uuid-008', 174000, 0, NULL, 174000, 'PENDING', '2026-06-03 11:02:21', false);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (300, '8', '893000888', 'Tiger Beer Crystal', 3, 18000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (300, '7', '893000777', 'Colgate Cavity Protection', 3, 40000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (301, 'cust-uuid-005', 246000, 0, NULL, 246000, 'PENDING', '2026-06-03 19:59:42', true);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (301, '4', '893000444', 'Lay''s Classic Potato Chips', 3, 22000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (301, '3', '893000333', 'Sữa tươi TH 1L', 1, 35000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (301, '9', '893000999', 'Omo Matic Liquid Detergent', 1, 145000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (302, 'cust-uuid-007', 520000, 30000, 'BIGSALE30', 490000, 'PENDING', '2026-06-01 12:53:30', true);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (302, '2', '893000222', 'Xà lách thủy canh', 3, 25000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (302, '9', '893000999', 'Omo Matic Liquid Detergent', 3, 145000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (302, '5', '893000555', 'Coca-Cola Original 320ml', 1, 10000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (303, 'cust-uuid-002', 80000, 0, NULL, 80000, 'PENDING', '2026-06-01 11:01:36', true);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (303, '5', '893000555', 'Coca-Cola Original 320ml', 2, 10000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (303, '10', '893001000', 'Chupa Chups Lollipops', 2, 30000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (304, 'e3d7b2bf-943b-4f08-93ea-5189afc85172', 79000, 0, NULL, 79000, 'PAID', '2026-06-03 18:40:35', true);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (304, '8', '893000888', 'Tiger Beer Crystal', 3, 18000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (304, '2', '893000222', 'Xà lách thủy canh', 1, 25000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (305, 'staff-uuid-001', 307000, 30000, 'BIGSALE30', 277000, 'PENDING', '2026-06-02 09:22:08', false);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (305, '3', '893000333', 'Sữa tươi TH 1L', 3, 35000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (305, '2', '893000222', 'Xà lách thủy canh', 2, 25000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (305, '1', '893000111', 'Ba rọi heo VietXanh', 1, 120000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (305, '6', '893000666', 'Sunlight Lemon Dishwash', 1, 32000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (306, 'cust-uuid-001', 241000, 0, NULL, 241000, 'PENDING', '2026-06-04 10:33:25', false);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (306, '6', '893000666', 'Sunlight Lemon Dishwash', 3, 32000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (306, '10', '893001000', 'Chupa Chups Lollipops', 2, 30000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (306, '3', '893000333', 'Sữa tươi TH 1L', 1, 35000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (306, '2', '893000222', 'Xà lách thủy canh', 2, 25000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (307, 'cust-uuid-007', 403000, 30000, 'BIGSALE30', 373000, 'PENDING', '2026-06-02 15:04:04', false);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (307, '8', '893000888', 'Tiger Beer Crystal', 1, 18000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (307, '1', '893000111', 'Ba rọi heo VietXanh', 1, 120000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (307, '7', '893000777', 'Colgate Cavity Protection', 3, 40000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (307, '9', '893000999', 'Omo Matic Liquid Detergent', 1, 145000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (308, 'cust-uuid-002', 462000, 30000, 'BIGSALE30', 432000, 'PENDING', '2026-06-02 12:26:10', true);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (308, '4', '893000444', 'Lay''s Classic Potato Chips', 3, 22000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (308, '1', '893000111', 'Ba rọi heo VietXanh', 2, 120000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (308, '6', '893000666', 'Sunlight Lemon Dishwash', 3, 32000);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (308, '10', '893001000', 'Chupa Chups Lollipops', 2, 30000);
+
+INSERT INTO orders (id, keycloak_id, subtotal, discount_amount, voucher_code, total_price, status, order_date, stock_finished)
+VALUES (309, 'staff-uuid-002', 35000, 0, NULL, 35000, 'PENDING', '2026-06-01 15:21:47', true);
+INSERT INTO order_items (order_id, product_id, stock_product_id, name, quantity, price) VALUES (309, '3', '893000333', 'Sữa tươi TH 1L', 1, 35000);
+

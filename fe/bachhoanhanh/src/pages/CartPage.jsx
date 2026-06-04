@@ -311,16 +311,19 @@ export function CartPage({
             </label>
             <p className="payment-copy">Pay when the order arrives. The store may confirm your phone number before dispatch.</p>
 
-            <label className="payment-option">
+            <label className="payment-option" style={{ opacity: 0.6, cursor: 'not-allowed' }}>
               <input
                 type="radio"
                 name="paymentMethod"
                 checked={paymentMethod === 'transfer'}
                 onChange={() => setPaymentMethod('transfer')}
+                disabled
               />
               <strong>Bank transfer before delivery</strong>
             </label>
-            <p className="payment-copy">Use this option when you want to complete payment before delivery confirmation.</p>
+            <p className="payment-copy" style={{ marginTop: '-8px' }}>
+              Bank transfer is temporarily unavailable.
+            </p>
           </div>
 
           <label className="policy-check">

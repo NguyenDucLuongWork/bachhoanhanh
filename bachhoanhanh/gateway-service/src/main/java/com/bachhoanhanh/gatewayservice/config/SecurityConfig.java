@@ -110,7 +110,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.PATCH, "/orders/**", "/payments/**").hasAnyRole("ADMIN", "STAFF")
 
                         // 4. Xóa đơn hàng: Bạn có thể cho cả STAFF, hoặc chỉ ADMIN mới được xóa (ở đây đang mở cho cả STAFF)
-                        .pathMatchers(HttpMethod.DELETE, "/orders/**").hasAnyRole("ADMIN", "STAFF")
+                        .pathMatchers(HttpMethod.DELETE, "/orders/**").authenticated()
 
                         // 5. Bắt các request còn lại (bảo mật dự phòng)
                         .pathMatchers("/orders/**", "/payments/**").authenticated()

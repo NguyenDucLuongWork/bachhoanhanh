@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 // Example: VITE_API_BASE_URL=http://127.0.0.1:8080
 
 const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://103.173.226.31'
-//const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://103.173.226.31'
+//const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://bachhoanhanh'
 
 
 // Helper function to create proxy configuration

@@ -57,13 +57,13 @@ export function LoginPage({ onLoginSuccess, onRegisterSuccess, loading }) {
         {mode === 'login' ? (
           <>
             <h2>Welcome back</h2>
-            <p>Sign in with a seed account or a phone number registered through the store.</p>
+            <p>Sign in with your customer account to continue shopping.</p>
             <form onSubmit={handleLogin}>
               <div className="field">
                 <label>Username or phone</label>
                 <input
                   type="text"
-                  placeholder="testcustomer or 0912345678"
+                  placeholder="Phone number or username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   disabled={busy}
@@ -86,8 +86,8 @@ export function LoginPage({ onLoginSuccess, onRegisterSuccess, loading }) {
           </>
         ) : (
           <>
-            <h2>Create customer account</h2>
-            <p>New customer accounts use phone number as the login username.</p>
+            <h2>Create your customer account</h2>
+            <p>Create a customer account to start ordering and tracking purchases.</p>
             <form onSubmit={handleRegister}>
               <div className="field">
                 <label>Phone</label>
@@ -149,12 +149,6 @@ export function LoginPage({ onLoginSuccess, onRegisterSuccess, loading }) {
         )}
 
         <hr className="divider" />
-        <div className="seed-accounts">
-          <strong>Seed accounts</strong>
-          <span>admin / 123456</span>
-          <span>teststaff / 123456</span>
-          <span>testcustomer / 123456</span>
-        </div>
       </div>
     </div>
   )

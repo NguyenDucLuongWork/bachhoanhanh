@@ -40,7 +40,6 @@ function App() {
     loadPrototypes,
     createPrototype,
     updatePrototypeInfo,
-    updatePrototypeAttributes,
     addAttributeToPrototype,
     removeAttributeFromPrototype,
     deletePrototype,
@@ -534,6 +533,7 @@ function App() {
             loading={ordersLoading}
             onLoadOrders={loadOrders}
             products={products}
+            onViewProduct={handleViewProduct}
           />
         )}
         {currentPage === 'product-detail' && productDetailId && (
@@ -612,9 +612,8 @@ function App() {
             onRefresh={loadPrototypes}
             onCreatePrototype={createPrototype}
             onUpdatePrototypeInfo={updatePrototypeInfo}
-            onUpdatePrototypeAttributes={updatePrototypeAttributes}
-            onAddAttribute={addAttributeToPrototype}
-            onRemoveAttribute={removeAttributeFromPrototype}
+            onAddPrototypeAttribute={addAttributeToPrototype}
+            onRemovePrototypeAttribute={removeAttributeFromPrototype}
             onDeletePrototype={deletePrototype}
           />
         )}

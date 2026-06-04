@@ -57,4 +57,12 @@ public class AttributeTypeService {
         }
         attributeTypeRepository.deleteById(name);
     }
+    public AttributeType findOrCreate(String typeName) {
+        return attributeTypeRepository.findByName(typeName)
+                .orElseGet(() -> {
+                    AttributeType newType = new AttributeType();
+                    newType.setName(typeName);
+                    return attributeTypeRepository.save(newType);
+                });
+    }
 }
