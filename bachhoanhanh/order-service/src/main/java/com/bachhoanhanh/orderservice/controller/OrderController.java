@@ -19,12 +19,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    /** Admin/Staff: lấy tất cả đơn hàng */
-    @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
-        return ResponseEntity.ok(orderService.getAllOrders());
-    }
-
     /** Customer: lấy đơn hàng của chính mình (keycloak_id từ header do gateway inject) */
     @GetMapping("/my")
     public ResponseEntity<List<Order>> getMyOrders(
@@ -59,18 +53,32 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateStatus(
+    public ResponseEntity<?> updateStatus(
             @PathVariable Long id,
             @RequestBody Map<String, String> body
     ) {
-        String status = body.get("status");
-        Order updated = orderService.updateOrderStatus(id, status);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+        try {
+            String status = body.get("status");
+            Order updated = orderService.updateOrderStatus(id, status);
+            return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "CANCELLED");
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Order>> getOrders(
+            @RequestParam(value = "userId", required = false) String userId
+    ) {
+        if (userId != null && !userId.isBlank()) {
+            return ResponseEntity.ok(orderService.getOrdersByUser(userId));
+        }
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 }

@@ -1,6 +1,10 @@
 import { useState, useCallback } from 'react'
+import { apiUrl } from '../config'
+import { apiFetch } from '../utils/api'
 
-const ORDERS_URL = '/orders'
+
+const ORDERS_URL = apiUrl('/orders')
+const ORDERS_ME_URL = apiUrl('/orders/my')
 
 export function useOrders(token) {
   const [orders, setOrders] = useState([])
@@ -10,11 +14,14 @@ export function useOrders(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(ORDERS_URL, { headers })
+      const res = await apiFetch(ORDERS_ME_URL, { headers })
       if (!res.ok) throw new Error('Failed to load orders')
       const data = await res.json()
-      setOrders(data)
-      return { success: true, data }
+      const sortedOrders = Array.isArray(data)
+        ? [...data].sort((a, b) => Number(b.id) - Number(a.id))
+        : data
+      setOrders(sortedOrders)
+      return { success: true, data: sortedOrders }
     } catch (e) {
       return { success: false, message: e.message }
     } finally {
@@ -26,7 +33,7 @@ export function useOrders(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(ORDERS_URL + '/' + id, { headers })
+        const res = await apiFetch(ORDERS_URL + '/' + id, { headers })
         if (!res.ok) throw new Error('Failed to load order details')
         const data = await res.json()
         return { success: true, data }
@@ -57,7 +64,7 @@ export function useOrders(token) {
               quantity,
               voucherCode: voucherCode || null,
             }
-        const res = await fetch(ORDERS_URL, {
+        const res = await apiFetch(ORDERS_URL, {
           method: 'POST',
           headers,
           body: JSON.stringify(body),
@@ -83,7 +90,7 @@ export function useOrders(token) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(ORDERS_URL + '/' + id, {
+        const res = await apiFetch(ORDERS_URL + '/' + id, {
           method: 'PUT',
           headers,
           body: JSON.stringify({ status }),
@@ -102,7 +109,7 @@ export function useOrders(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(ORDERS_URL + '/' + id, {
+        const res = await apiFetch(ORDERS_URL + '/' + id, {
           method: 'DELETE',
           headers,
         })

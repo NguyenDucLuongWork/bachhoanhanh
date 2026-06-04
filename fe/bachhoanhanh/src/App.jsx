@@ -7,6 +7,7 @@ import { ProductDetailPage } from './pages/ProductDetailPage'
 import { OrdersPage } from './pages/OrdersPage'
 import { CartPage } from './pages/CartPage'
 import { AccountPage } from './pages/AccountPage'
+import { ChatbotPage } from './pages/ChatbotPage'
 import { ToastContainer, useToast } from './components/Toast'
 import { OrderDetailsModal } from './components/OrderDetailsModal'
 import { useAuth } from './hooks/useAuth'
@@ -59,14 +60,19 @@ function App() {
 
   useEffect(() => {
     const pathname = window.location.pathname
-    if (pathname.startsWith('/products/')) {
-      const id = pathname.split('/products/')[1]
+    if (pathname.startsWith('/product/')) {
+      const id = pathname.split('/product/')[1]
       if (id) {
         setProductDetailId(id)
         setCurrentPage('product-detail')
         window.history.replaceState({ page: 'product-detail', productId: id }, '', pathname)
         return
       }
+    }
+    if (pathname === '/chat') {
+      setCurrentPage('chat')
+      window.history.replaceState({ page: 'chat' }, '', pathname)
+      return
     }
     window.history.replaceState({ page: 'products' }, '', '/')
   }, [])
@@ -103,7 +109,9 @@ function App() {
       window.history.pushState({ page: 'products' }, '', '/')
     } else if (page === 'product-detail' && id) {
       setProductDetailId(id)
-      window.history.pushState({ page: 'product-detail', productId: id }, '', `/products/${id}`)
+      window.history.pushState({ page: 'product-detail', productId: id }, '', `/product/${id}`)
+    } else if (page === 'chat') {
+      window.history.pushState({ page: 'chat' }, '', '/chat')
     } else {
       window.history.pushState({ page }, '', '/')
     }
@@ -191,6 +199,9 @@ function App() {
             onBuyNow={buyNow}
             onRequireLogin={requireLogin}
           />
+        )}
+        {currentPage === 'chat' && (
+          <ChatbotPage token={token} />
         )}
         {currentPage === 'product-detail' && productDetailId && (
           <ProductDetailPage

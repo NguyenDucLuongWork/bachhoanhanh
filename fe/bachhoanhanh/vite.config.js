@@ -5,13 +5,20 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
+
+  //const API_BASE = env.BACKEND_URL || env.VITE_API_BASE || 'http://bachhoanhanh'
   const API_BASE = env.BACKEND_URL || env.VITE_API_BASE || 'http://103.173.226.31'
 
   return {
     plugins: [react(), tailwindcss()],
     server: {
+      allowedHosts: [
+        'surfing-sodium-signed-nearly.trycloudflare.com', 
+        'packard-careers-went-hospitals.trycloudflare.com'
+      ],
       proxy: {
         '/auth': { target: API_BASE, changeOrigin: true },
+        '/api': { target: API_BASE, changeOrigin: true },
         '/products': { target: API_BASE, changeOrigin: true },
         '/prototypes': { target: API_BASE, changeOrigin: true },
         '/catalogs': { target: API_BASE, changeOrigin: true },

@@ -2,6 +2,7 @@ import { formatPrice } from '../utils/helpers'
 
 const statusColors = {
   pending: '#f97316',
+  accepted: '#3b82f6',
   processing: '#3b82f6',
   shipped: '#8b5cf6',
   delivered: '#22c55e',
@@ -10,6 +11,7 @@ const statusColors = {
 
 const statusLabels = {
   pending: 'Pending',
+  accepted: 'Accepted',
   processing: 'Processing',
   shipped: 'Shipped',
   delivered: 'Delivered',
@@ -17,8 +19,9 @@ const statusLabels = {
 }
 
 export function OrderCard({ order, onViewDetails, onCancel, onStatusChange }) {
-  const statusColor = statusColors[order.status] || '#a1a1aa'
-  const statusLabel = statusLabels[order.status] || order.status
+  const normalizedStatus = (order.status || '').toLowerCase()
+  const statusColor = statusColors[normalizedStatus] || '#a1a1aa'
+  const statusLabel = statusLabels[normalizedStatus] || order.status
 
   return (
     <div className="product-card">
@@ -67,7 +70,7 @@ export function OrderCard({ order, onViewDetails, onCancel, onStatusChange }) {
           >
             View
           </button>
-          {order.status === 'pending' && (
+          {normalizedStatus === 'pending' && (
             <button
               className="btn btn-sm"
               style={{

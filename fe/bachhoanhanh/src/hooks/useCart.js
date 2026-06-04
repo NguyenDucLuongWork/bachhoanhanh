@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { showToast } from '../components/Toast'
+import { apiFetch } from '../utils/api'
 
 const CART_URL = '/cart'
 
@@ -19,7 +20,7 @@ export function useCart(token) {
     }
     setLoading(true)
     try {
-      const res = await fetch(CART_URL, { headers: authHeaders() })
+      const res = await apiFetch(CART_URL, { headers: authHeaders() })
       if (!res.ok) throw new Error('Failed to load cart')
       const data = await res.json()
       setCartItems(data)
@@ -44,7 +45,9 @@ export function useCart(token) {
     async (product) => {
       if (!token) return { success: false, message: 'Login required' }
       try {
-        const res = await fetch(CART_URL + '/items', {
+        console.log(token)
+
+        const res = await apiFetch(CART_URL + '/items', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -79,7 +82,7 @@ export function useCart(token) {
     async (productId, quantity) => {
       if (!token) return { success: false, message: 'Login required' }
       try {
-        const res = await fetch(CART_URL + '/items/' + productId, {
+        const res = await apiFetch(CART_URL + '/items/' + productId, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -103,7 +106,7 @@ export function useCart(token) {
     async (productId) => {
       if (!token) return { success: false, message: 'Login required' }
       try {
-        const res = await fetch(CART_URL + '/items/' + productId, {
+        const res = await apiFetch(CART_URL + '/items/' + productId, {
           method: 'DELETE',
           headers: authHeaders(),
         })
@@ -125,7 +128,7 @@ export function useCart(token) {
       return { success: true }
     }
     try {
-      const res = await fetch(CART_URL, {
+      const res = await apiFetch(CART_URL, {
         method: 'DELETE',
         headers: authHeaders(),
       })

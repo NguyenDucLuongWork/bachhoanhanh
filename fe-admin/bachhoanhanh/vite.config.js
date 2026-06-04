@@ -3,8 +3,10 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 // API base domain - configure via environment: VITE_API_BASE_URL
-// Example: VITE_API_BASE_URL=http://127.0.0.1:8080
-const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://bachhoanhanh'
+
+const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://103.173.226.31'
+//const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://bachhoanhanh'
+
 
 // Helper function to create proxy configuration
 const createProxy = (target) => ({
@@ -17,6 +19,10 @@ const createProxy = (target) => ({
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
+    allowedHosts: [
+      'surfing-sodium-signed-nearly.trycloudflare.com', 
+      'packard-careers-went-hospitals.trycloudflare.com'
+    ],
     proxy: {
       // All API endpoints proxy to the same domain
       '/auth': createProxy(API_BASE_URL),

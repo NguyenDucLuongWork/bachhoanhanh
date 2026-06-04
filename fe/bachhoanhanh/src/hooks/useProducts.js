@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { apiFetch } from '../utils/api'
 
 const PRODUCTS_URL = '/products'
 const ATTRIBUTE_TYPES_URL = '/attribute-types'
@@ -26,7 +27,7 @@ export function useProducts(token) {
   const loadAttributeTypes = useCallback(async () => {
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(ATTRIBUTE_TYPES_URL, { headers })
+      const res = await apiFetch(ATTRIBUTE_TYPES_URL, { headers })
       if (!res.ok) throw new Error('Failed to load attribute types')
       const data = await res.json()
       setAttributeTypes(data)
@@ -40,7 +41,7 @@ export function useProducts(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await fetch(PRODUCTS_URL, { headers })
+      const res = await apiFetch(PRODUCTS_URL, { headers })
       if (!res.ok) throw new Error('Failed to load products')
       const data = await res.json()
       setProducts(data)
@@ -60,7 +61,7 @@ export function useProducts(token) {
           ...request.headers,
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(PRODUCTS_URL, {
+        const res = await apiFetch(PRODUCTS_URL, {
           method: 'POST',
           headers,
           body: request.body,
@@ -84,7 +85,7 @@ export function useProducts(token) {
           ...request.headers,
           ...(token ? { Authorization: 'Bearer ' + token } : {}),
         }
-        const res = await fetch(PRODUCTS_URL + '/' + id, {
+        const res = await apiFetch(PRODUCTS_URL + '/' + id, {
           method: 'PUT',
           headers,
           body: request.body,
@@ -104,7 +105,7 @@ export function useProducts(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PRODUCTS_URL + '/' + id, {
+        const res = await apiFetch(PRODUCTS_URL + '/' + id, {
           method: 'DELETE',
           headers,
         })
@@ -122,7 +123,7 @@ export function useProducts(token) {
     async (name) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PRODUCTS_URL + '/search?name=' + encodeURIComponent(name), { headers })
+        const res = await apiFetch(PRODUCTS_URL + '/search?name=' + encodeURIComponent(name), { headers })
         if (!res.ok) throw new Error('Search failed')
         const data = await res.json()
         return { success: true, data }
@@ -137,7 +138,7 @@ export function useProducts(token) {
     async (prototypeId) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PRODUCTS_URL + '/by-prototype/' + prototypeId, { headers })
+        const res = await apiFetch(PRODUCTS_URL + '/by-prototype/' + prototypeId, { headers })
         if (!res.ok) throw new Error('Failed to load products by prototype')
         const data = await res.json()
         return { success: true, data }
@@ -152,7 +153,7 @@ export function useProducts(token) {
     async (barcode) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PRODUCTS_URL + '/barcode/' + barcode, { headers })
+        const res = await apiFetch(PRODUCTS_URL + '/barcode/' + barcode, { headers })
         if (!res.ok) throw new Error('Failed to get product by barcode')
         const data = await res.json()
         return { success: true, data }
@@ -167,7 +168,7 @@ export function useProducts(token) {
     async (id) => {
       try {
         const headers = token ? { Authorization: 'Bearer ' + token } : {}
-        const res = await fetch(PRODUCTS_URL + '/' + id, { headers })
+        const res = await apiFetch(PRODUCTS_URL + '/' + id, { headers })
         if (!res.ok) throw new Error('Failed to load product details')
         const data = await res.json()
         return { success: true, data }

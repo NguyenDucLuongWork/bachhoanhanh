@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ProductModal } from '../components/ProductModal'
 import { Loader } from '../components/Loader'
 import { showToast } from '../components/Toast'
@@ -44,6 +44,11 @@ export function ProductsPage({
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
+
+  // Refresh data when page becomes active
+  useEffect(() => {
+    onRefresh()
+  }, [])
 
   const selectedCatalogNode = selectedCatalog ? findCatalog(catalogs, selectedCatalog) : null
   const selectedIds = selectedCatalogNode ? collectCatalogIds(selectedCatalogNode) : []

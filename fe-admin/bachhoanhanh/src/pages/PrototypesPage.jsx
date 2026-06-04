@@ -6,15 +6,17 @@ const emptyForm = {
   productId: '',
   name: '',
   catalogId: '',
-  attributeTypeNames: [],
+  attributes: {}, // Key-value pairs
 }
 
 function unpackAttributes(prototype) {
-  if (Array.isArray(prototype.attributeTypeNames) && prototype.attributeTypeNames.length > 0) {
-    return prototype.attributeTypeNames
+  if (prototype.attributes && typeof prototype.attributes === 'object') {
+    return prototype.attributes
   }
-  if (!prototype.packedAttributes) return []
-  return prototype.packedAttributes.split(',').filter(Boolean)
+  if (!prototype.packedAttributes) return {}
+  // Legacy support: convert string format to object
+  const pairs = prototype.packedAttributes.split(',').filter(Boolean)
+  return Object.fromEntries(pairs.map(p => [p, '']))
 }
 
 export function PrototypesPage({
@@ -25,9 +27,8 @@ export function PrototypesPage({
   onRefresh,
   onCreatePrototype,
   onUpdatePrototypeInfo,
-  onUpdatePrototypeAttributes,
-  onAddAttribute,
-  onRemoveAttribute,
+  onAddPrototypeAttribute,
+  onRemovePrototypeAttribute,
   onDeletePrototype,
 }) {
   const [searchQuery, setSearchQuery] = useState('')
@@ -35,6 +36,7 @@ export function PrototypesPage({
   const [editingId, setEditingId] = useState(null)
   const [form, setForm] = useState(emptyForm)
   const [saving, setSaving] = useState(false)
+  const [selectedAttributeByPrototype, setSelectedAttributeByPrototype] = useState({})
 
   const filteredPrototypes = useMemo(() => {
     return prototypes.filter((prototype) => {
@@ -50,7 +52,7 @@ export function PrototypesPage({
 
   const stats = useMemo(() => {
     const catalogCount = new Set(prototypes.map((prototype) => prototype.catalogId).filter(Boolean)).size
-    const attributeCount = prototypes.reduce((sum, prototype) => sum + unpackAttributes(prototype).length, 0)
+    const attributeCount = prototypes.reduce((sum, prototype) => sum + Object.keys(unpackAttributes(prototype)).length, 0)
     return {
       total: prototypes.length,
       catalogs: catalogCount,
@@ -69,20 +71,25 @@ export function PrototypesPage({
       productId: prototype.productId || '',
       name: prototype.name || '',
       catalogId: prototype.catalogId || '',
-      attributeTypeNames: unpackAttributes(prototype),
     })
   }
 
-  const toggleAttribute = (name) => {
-    setForm((prev) => {
-      const selected = prev.attributeTypeNames.includes(name)
-      return {
-        ...prev,
-        attributeTypeNames: selected
-          ? prev.attributeTypeNames.filter((item) => item !== name)
-          : [...prev.attributeTypeNames, name],
-      }
-    })
+  const handleAddPrototypeAttribute = async (prototypeId) => {
+    const selectedType = selectedAttributeByPrototype[prototypeId]
+    if (!selectedType) {
+      showToast('Please select an attribute to add', true)
+      return
+    }
+    const result = await onAddPrototypeAttribute(prototypeId, selectedType)
+    showToast(result.message || (result.success ? 'Attribute added' : 'Add failed'), !result.success)
+    if (result.success) {
+      setSelectedAttributeByPrototype((prev) => ({ ...prev, [prototypeId]: '' }))
+    }
+  }
+
+  const handleRemovePrototypeAttribute = async (prototypeId, attributeType) => {
+    const result = await onRemovePrototypeAttribute(prototypeId, attributeType)
+    showToast(result.message || (result.success ? 'Attribute removed' : 'Remove failed'), !result.success)
   }
 
   const handleSubmit = async (event) => {
@@ -97,7 +104,6 @@ export function PrototypesPage({
       productId: form.productId.trim(),
       name: form.name.trim(),
       catalogId: form.catalogId.trim(),
-      attributeTypeNames: form.attributeTypeNames,
     }
 
     const result = editingId
@@ -110,26 +116,10 @@ export function PrototypesPage({
   }
 
   const updateExistingPrototype = async (payload) => {
-    const infoResult = await onUpdatePrototypeInfo(editingId, {
+    return onUpdatePrototypeInfo(editingId, {
       name: payload.name,
       catalogId: payload.catalogId,
     })
-    if (!infoResult.success) return infoResult
-
-    return onUpdatePrototypeAttributes(editingId, {
-      attributeTypeNames: payload.attributeTypeNames,
-    })
-  }
-
-  const handleQuickAddAttribute = async (prototype, typeName) => {
-    if (!typeName) return
-    const result = await onAddAttribute(prototype.productId, typeName)
-    showToast(result.message || 'Attribute added', !result.success)
-  }
-
-  const handleRemoveAttribute = async (prototype, typeName) => {
-    const result = await onRemoveAttribute(prototype.productId, typeName)
-    showToast(result.message || 'Attribute removed', !result.success)
   }
 
   const handleDelete = async (prototype) => {
@@ -206,21 +196,6 @@ export function PrototypesPage({
               ))}
             </select>
           </div>
-          <div className="field">
-            <label>Attributes</label>
-            <div className="prototype-attribute-picker">
-              {attributeTypes.map((attribute) => (
-                <label key={attribute.name}>
-                  <input
-                    type="checkbox"
-                    checked={form.attributeTypeNames.includes(attribute.name)}
-                    onChange={() => toggleAttribute(attribute.name)}
-                  />
-                  <span>{attribute.name}</span>
-                </label>
-              ))}
-            </div>
-          </div>
           <div className="prototype-form-actions">
             <button className="btn btn-accent" type="submit" disabled={saving}>
               {saving ? 'Saving...' : editingId ? 'Update prototype' : 'Create prototype'}
@@ -263,14 +238,13 @@ export function PrototypesPage({
                   <th>Name</th>
                   <th>Catalog</th>
                   <th>Attributes</th>
-                  <th>Quick add</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredPrototypes.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="admin-orders-empty">
+                    <td colSpan="5" className="admin-orders-empty">
                       No prototypes found
                     </td>
                   </tr>
@@ -284,37 +258,50 @@ export function PrototypesPage({
                         <td>{prototype.catalogId}</td>
                         <td>
                           <div className="prototype-chip-list">
-                            {attributes.length === 0 ? (
+                            {Object.keys(attributes).length === 0 ? (
                               <span className="prototype-muted">No attributes</span>
                             ) : (
-                              attributes.map((typeName) => (
-                                <button
-                                  key={typeName}
-                                  type="button"
-                                  onClick={() => handleRemoveAttribute(prototype, typeName)}
-                                  title="Remove attribute"
-                                >
-                                  {typeName}
-                                </button>
+                              Object.entries(attributes).map(([key, value]) => (
+                                <span key={key} className="attribute-badge">
+                                  <strong>{key}</strong>: {value || '—'}
+                                  <button
+                                    type="button"
+                                    className="btn btn-ghost btn-xs"
+                                    onClick={() => handleRemovePrototypeAttribute(prototype.productId, key)}
+                                  >
+                                    ×
+                                  </button>
+                                </span>
                               ))
                             )}
                           </div>
-                        </td>
-                        <td>
-                          <select
-                            className="admin-status-select"
-                            value=""
-                            onChange={(e) => handleQuickAddAttribute(prototype, e.target.value)}
-                          >
-                            <option value="">Select attribute</option>
-                            {attributeTypes
-                              .filter((attribute) => !attributes.includes(attribute.name))
-                              .map((attribute) => (
-                                <option key={attribute.name} value={attribute.name}>
-                                  {attribute.name}
-                                </option>
-                              ))}
-                          </select>
+                          <div className="attribute-selector-row prototype-attribute-row">
+                            <select
+                              value={selectedAttributeByPrototype[prototype.productId] || ''}
+                              onChange={(e) =>
+                                setSelectedAttributeByPrototype((prev) => ({
+                                  ...prev,
+                                  [prototype.productId]: e.target.value,
+                                }))
+                              }
+                            >
+                              <option value="">Add attribute</option>
+                              {attributeTypes
+                                .filter((attr) => !(attr.name in attributes))
+                                .map((attr) => (
+                                  <option key={attr.name} value={attr.name}>
+                                    {attr.name}
+                                  </option>
+                                ))}
+                            </select>
+                            <button
+                              type="button"
+                              className="btn btn-accent btn-sm"
+                              onClick={() => handleAddPrototypeAttribute(prototype.productId)}
+                            >
+                              Add
+                            </button>
+                          </div>
                         </td>
                         <td>
                           <div className="admin-order-actions">

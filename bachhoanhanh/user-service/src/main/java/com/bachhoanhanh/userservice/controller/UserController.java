@@ -21,7 +21,6 @@ public class UserController {
 
     // Thêm @Valid để các annotation trong DTO có hiệu lực
     @PostMapping("/staff")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> createStaff(@Valid @RequestBody CreateStaffRequest req) {
         return ResponseEntity.ok(userService.createStaff(req));
     }
@@ -33,7 +32,6 @@ public class UserController {
     }
 
     @DeleteMapping("/{keycloakId}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable String keycloakId) {
         userService.deleteUser(keycloakId);
         return ResponseEntity.noContent().build();
@@ -57,26 +55,22 @@ public class UserController {
 
     // Admin fetches any user by ID
     @GetMapping("/{keycloakId}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> getUserById(
             @PathVariable String keycloakId) {
         return ResponseEntity.ok(userService.getUserById(keycloakId));
     }
 
     @GetMapping("/staff")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<StaffProfileResponse>> getStaffs() {
         return ResponseEntity.ok(userService.getStaffs());
     }
 
     @GetMapping("/customers")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<CustomerProfileResponse>> getCustomers() {
         return ResponseEntity.ok(userService.getCustomers());
     }
 
     @GetMapping("/customers/search")
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<CustomerProfileResponse> getCustomerByPhone(
             @RequestParam String phone) {
         return ResponseEntity.ok(userService.getCustomerByPhone(phone));
