@@ -1,0 +1,48 @@
+{
+  "rewrites": [
+    {
+      "source": "/auth/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/products/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/prototypes/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/catalogs/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/orders/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/cart/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/payments/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/users/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/vouchers/:path*",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/attribute-types/:path*",
+      "destination": "/api/proxy"
+    }
+  ]
+}
