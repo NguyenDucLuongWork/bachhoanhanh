@@ -5,24 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.env.local" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/init.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/com/bachhoanhanh/gatewayservice/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/attribute/repository/AttributeTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/attribute/repository/AttributeTypeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/attribute/service/AttributeTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/attribute/service/AttributeTypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/prototype/service/PrototypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/bachhoanhanh/productservice/prototype/service/PrototypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/AdminDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/AdminDashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/OrdersPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/OrdersPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/ProductsPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/ProductsPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/PrototypesPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/PrototypesPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/StockPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/pages/StockPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/styles/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/src/styles/theme.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/vite.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe/bachhoanhanh/src/hooks/useAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe/bachhoanhanh/src/hooks/useAuth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe/bachhoanhanh/src/pages/CartPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe/bachhoanhanh/src/pages/CartPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe/bachhoanhanh/src/pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe/bachhoanhanh/src/pages/LoginPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fe/bachhoanhanh/src/pages/ProductDetailPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../fe/bachhoanhanh/src/pages/ProductDetailPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
