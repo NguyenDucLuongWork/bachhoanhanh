@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://bachhoanhanh'
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://103.173.226.31'
 const AUTH_REALM = import.meta.env.VITE_AUTH_REALM || 'bachhoanhanh'
 const isDev = import.meta.env.DEV === true || import.meta.env.MODE === 'development'
 
