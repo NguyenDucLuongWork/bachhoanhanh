@@ -4,6 +4,7 @@ import { apiFetch } from '../utils/api'
 
 
 const ORDERS_URL = apiUrl('/orders')
+const ORDERS_ME_URL = apiUrl('/orders/my')
 
 export function useOrders(token) {
   const [orders, setOrders] = useState([])
@@ -13,11 +14,14 @@ export function useOrders(token) {
     setLoading(true)
     try {
       const headers = token ? { Authorization: 'Bearer ' + token } : {}
-      const res = await apiFetch(ORDERS_URL, { headers })
+      const res = await apiFetch(ORDERS_ME_URL, { headers })
       if (!res.ok) throw new Error('Failed to load orders')
       const data = await res.json()
-      setOrders(data)
-      return { success: true, data }
+      const sortedOrders = Array.isArray(data)
+        ? [...data].sort((a, b) => Number(b.id) - Number(a.id))
+        : data
+      setOrders(sortedOrders)
+      return { success: true, data: sortedOrders }
     } catch (e) {
       return { success: false, message: e.message }
     } finally {
