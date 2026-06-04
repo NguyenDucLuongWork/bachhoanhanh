@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="badba2ea-f2cf-4737-9d71-48e36ce9f758" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.local" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/init.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../fe-admin/bachhoanhanh/vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
