@@ -128,7 +128,24 @@ export function OrdersPage({
       })
     }
 
-    return filtered
+    // Sort orders: newest first by date only
+    const sorted = filtered.slice().sort((a, b) => {
+      const da = getOrderDate(a)
+      const db = getOrderDate(b)
+
+      if (da && db) {
+        return db.getTime() - da.getTime()
+      } else if (da && !db) {
+        return -1
+      } else if (!da && db) {
+        return 1
+      }
+
+      // keep original relative order when no dates
+      return 0
+    })
+
+    return sorted
   }, [orders, searchQuery, statusFilter, startDate, endDate, showPendingOnly])
 
   const orderStats = useMemo(() => {
