@@ -275,54 +275,6 @@ export function ProductDetailPage({ productId, getProductById, onBack, isAdminUs
             </div>
           </div>
 
-          <section className="panel panel-flat" style={{ marginTop: '18px' }}>
-            <div className="panel-body">
-              <div style={{ marginBottom: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
-                <div>
-                  <h3 style={{ margin: 0 }}>Stock records</h3>
-                  <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: '13px' }}>
-                    Loaded by barcode: {product.barcode || 'N/A'}
-                  </p>
-                </div>
-                {productStocksLoading && <span style={{ color: 'var(--muted)' }}>Loading stock data…</span>}
-              </div>
-                    {productStocksLoading ? (
-                      <p>Loading stock rows…</p>
-                    ) : !productStocks || productStocks.length === 0 ? (
-                      <div className="empty">
-                        <p>No stock records found for this product.</p>
-                      </div>
-                    ) : (
-                      <div style={{ overflowX: 'auto' }}>
-                        <table className="data-table">
-                          <thead>
-                            <tr>
-                              <th>Stock ID</th>
-                              <th>Amount</th>
-                              <th>Available</th>
-                              <th>Import date</th>
-                              <th>Manufacture date</th>
-                              <th>Expiry date</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {productStocks.map((stock) => (
-                              <tr key={stock.id || `${stock.productId}-${stock.amount}-${stock.expiryDate}`}> 
-                                <td>{stock.id || '-'}</td>
-                                <td>{stock.amount || 0}</td>
-                                <td>{stock.available ? 'Yes' : 'No'}</td>
-                                <td>{formatDate(stock.importDate)}</td>
-                                <td>{formatDate(stock.manufactureDate)}</td>
-                                <td>{formatDate(stock.expiryDate)}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
-            </div>
-                </section>
-
           {/* Dedicated brand block: always show when brand info exists */}
           {(product.brandId || product.brandName || product.brandDescription) && (
             <div style={{ marginTop: '16px', padding: '16px', borderRadius: '12px', background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
