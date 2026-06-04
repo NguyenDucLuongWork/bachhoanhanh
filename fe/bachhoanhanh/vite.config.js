@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), tailwindcss()],
     server: {
+      allowedHosts: [
+        'surfing-sodium-signed-nearly.trycloudflare.com', 
+        'packard-careers-went-hospitals.trycloudflare.com'
+      ],
       proxy: {
         '/auth': { target: API_BASE, changeOrigin: true },
         '/api': { target: API_BASE, changeOrigin: true },

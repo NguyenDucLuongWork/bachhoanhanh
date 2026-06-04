@@ -60,8 +60,8 @@ function App() {
 
   useEffect(() => {
     const pathname = window.location.pathname
-    if (pathname.startsWith('/products/')) {
-      const id = pathname.split('/products/')[1]
+    if (pathname.startsWith('/product/')) {
+      const id = pathname.split('/product/')[1]
       if (id) {
         setProductDetailId(id)
         setCurrentPage('product-detail')
@@ -109,7 +109,7 @@ function App() {
       window.history.pushState({ page: 'products' }, '', '/')
     } else if (page === 'product-detail' && id) {
       setProductDetailId(id)
-      window.history.pushState({ page: 'product-detail', productId: id }, '', `/products/${id}`)
+      window.history.pushState({ page: 'product-detail', productId: id }, '', `/product/${id}`)
     } else if (page === 'chat') {
       window.history.pushState({ page: 'chat' }, '', '/chat')
     } else {
